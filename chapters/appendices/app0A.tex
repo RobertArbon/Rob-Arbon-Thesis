@@ -1,0 +1,123 @@
+%
+% file: localoperator.tex
+% author: Victor Brena
+% description: Briefly describes properties of the local operator.
+%
+
+\chapter{AADH simulations}
+\label{app:aadh}
+
+This appendix describes the setup of the AADH simulations. 
+
+\section{Crystal structure preparation}
+The crystal structure of AADH (PDB accession code 2AGY) was prepared by Dr Kara Ranaghan as part of \cite{masgrau_atomic_2006}, but with the whole protein included (rather than the 10 angstrom ball around one of the active sites). The tail residues were not modelled. 
+
+\section{Active site definition}
+2AGY consists of two $\alpha$ segments (A and B) and two $\beta$ segments (D and H). The active site was defined, following \cite{ranaghan_ab_2017}, as the following residues in the D and H segments: 
+\begin{itemize}
+    \item Ala-82
+    \item Asp-84
+    \item TTW-109
+    \item Asp-128
+    \item Trp-160
+    \item Thr-172
+\end{itemize}
+
+
+\section{Solvation}
+A solvation shell was created using the package Solvate version 1.0 \cite{grubmuller1996solvate} which I modified to take into account the CHARMM extended PSF format, using the following command:
+\begin{lstlisting}
+solvate -t 12.0 -r 100.0 -n 10 -s -w [input] [output]
+\end{lstlisting}
+Then a water box $130 \times 130 \times 130  $  was created using VMD version 1.9.3 [] with the following command: 
+\begin{lstlisting}
+[psf] [pdb] -o solvate -s WT -minmax {{-65 -65 -65} {65 65 65}} -x 0 -y 0 -z 0 +x 0 +y 0 +z 0 -b 1.2.
+\end{lstlisting}
+The system was neutralized  with VMD using Sodium Chloride at a concentration of xxx. 
+
+\section{Non-bonded forces}
+The minimization, heating and equilibration steps were performed in CHARMM 42a2 [] with the OpenMM [] plug-in using the CHARMM-36m force-field []. The treatment of non-bonded forces and imaging conventions were defined as follows:
+% /newhome/ra15808/aadh/md/4_minimize/minimize.inp/out
+\begin{lstlisting}
+!
+! Setup crystal
+!
+crystal free
+crystal defi cubic 132.95 132.95 132.95 90.0 90.0 90.0
+crystal build cutoff 14 noper 0
+image byseg xcen 66.47 ycen 66.47 zcen 66.47 sele protein end
+image byres xcen 66.47 ycen 66.47 zcen 66.47 sele water .or. ions end
+
+!
+! Setup non-bonded forces
+!
+NBONDED inbfrq -1 imgfrq -1 nbxmod 5 -                      
+        atom cdiel fshift - 
+        vatom vdistance vfswitch -
+        elec ewald pmew fftx 144 ffty 144 fftz 144 kappa .34 spline order 6 -    
+        cutnb 14.0 ctofnb 12.0 ctonnb 10.0 -      
+        cutim 14 -
+        eps 1.0 e14fac 1.0 wmin 1.5                     
+\end{lstlisting}
+
+\section{Minimization}
+The minimization proceeded by first constraining all heavy atoms  using a Root Mean Square Deviation (RMSD) constratint with a force constant of $5$ (units?)
+
+\begin{lstlisting}
+cons rmsd force 5 mass comp sele heavy_all end
+\end{lstlisting}
+and then minimizing with steepest descent and ABNR algorithms: 
+\begin{lstlisting}
+mini sd nstep 100
+mini abnr nstep 3000 nprint 100 tolg 0.01
+\end{lstlisting}
+This was repeated with a constraint on the heavy protein atoms, the heavy protein backbone atoms, and then finally with no constraints. The final unconstrained minimization proceeded with 5000 instead of 3000 ABNR steps. 
+
+\section{Heating}
+The system was heated from $10\mathrm{K}$ to $310\mathrm{K}$ in steps of $25\mathrm{K}$ with a harmonic constraint on the heavy protein backbone atoms with a force constant of 10 (units?) and the SHAKE algorithm to constrain the hydrogen atoms. At each heating step $10\mathrm{ps}$ of Langevin dynamics in a NVT ($T=310\mathrm{K}$) ensemble were run with a time-step of $2\mathrm{fs}$ and a damping constant of $\gamma=5$ (units?). 
+
+\section{Equilibration}
+The system underwent equilibration in two stages: restrained equilibration and unrestrained equilibration. In the restrained equilibration stage, 11 steps of $20\mathrm{ps}$ Langevin dynamics were run in an NPT ensemble ($P=1\mathrm{atm}$, $T=310\mathrm{K}$), with a damping constant of $\gamma=1$ (units), a pressure frequeny of $25$ (units?), and a time-step of $2\mathrm{fs}$. The backbone atoms had a harmonic constraint of $10$ (units?) while the hydrogen atoms were constrained with SHAKE. At each step the constraint force constant was reduced in steps of $1$ (units?).  
+
+After this, $200\mathrm{ps}$ of equilibration was run under the same conditions as before with no constraints. 
+
+[correlation charts]
+
+\section{Production sampling}
+
+The simulation system was transferred to AMBER 16.0 [] and under the same conditions a single $100\mathrm{ns}$ trajectory was produced using: 
+
+\begin{lstlisting}
+AADH production trajectory
+&cntrl
+  imin   = 0,                    ! Standard MD, no minimization
+  irest  = 1,                    ! Restart simulation
+  ntx    = 5,                    ! Read in coordinates and velocities
+  ntpr   = 50000,                ! print frequency for energy info 
+  ntwx   = 50000,                ! write every 100ps
+  ntwr   = -50000,               ! write unique restart every 100ps 
+  iwrap  = 1,                    ! wrap coordinates for long trajectory
+  ntc    = 2,                    ! RESTRAINTS SHAKE for TIP3P
+  nscm   = 1000,                 ! frequency to remove C.o.M motion
+  dt     = 0.002,                ! timestep
+  nrespa = 1,                    ! RESPA time step. 
+  nstlim = 50000000,             ! Number of time steps
+  tempi  = 310.0,                ! initial temperature
+  temp0  = 310.0,                ! final temperature
+  ntt    = 3,                    ! Temp control 3 = Langevin
+  gamma_ln = 5.0,                ! collision frequency
+  ntf    = 2,                    ! omit H-atoms in potential evaluation
+  ntb    = 1,                    ! Constant Volume PBC for non-bonded forces
+  cut    = 12.0,                 ! Non-bonded cutoff
+  fswitch = 10.0,                ! Switching function start length
+/
+\end{lstlisting}
+
+The positions and velocities at every $1\mathrm{ns}$ were used as initial frames for $100 \times 100 \mathrm{ns}$ trajectories. The $\alpha$-C and the heavy atom RMSD (relative to the crystal structure) of the initial frames are shown in figure xxx. The same RMSDs of each trajectory are shown in figures xxx and xxx. The distribution of RMSDs are shown in figure xxx. 
+
+[Initial trajectory rmsd]
+
+[Trajectory RMSDs]
+
+[RMSD distributions]
+

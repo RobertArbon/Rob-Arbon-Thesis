@@ -1,0 +1,21 @@
+\let\textcircled=\pgftextcircled
+\chapter{Hidden Markov Model model selection}
+\label{chap:hmm}
+
+\section{Introduction}
+MSMs accurately model the conformational dynamics, in part due to the large number, $n$, of discrete states which make up the basis for the transition matrix. In order to characterise the metastable states of the system this discrete microstate bases must be coarse grained, or lumped, into macrostates. There are a number of ways of performing this lumping. One of the first was Perron Cluster Cluster Analysis (PCCA) [] which assumes a microstates within the same macrostate interconvert rapidly, while microstates in different macrostates interconvert slowly. This separation of timescales results in a block diagonal structure of the transition matrix, with the blocks corresponding to the macrostates. The number of macrostates, $m$, is chosen by looking for gaps in the eigenvalue spectrum of the transition matrix. The PCCA lumping was very sensitive numerical noise and so a variant, PCCA+ was developed which used a different algorithm to estimate the lumping by maximizing objective functions for either metastability or the crispness of the assignment. Many other schemes have been proposed tackling different deficiencies [HNEG, BACE, MPP, CatProcess, OptDimRed, Renorm]. One of the most popular methods is Hidden Markov Models []. HMMs are a well developed statistical tool, widely understood with a number of attractive properties: They drop the assumption that the time evolution of the microstates are Markovian and have been shown to be robust to poor discretizations of the state space. 
+
+A number of questions present themselves when faced with the task of lumping: 
+\begin{enumerate}
+    \item How do you judge which lumping scheme is best for your purposes?
+    \item How many macrostates are there in the system and how confident can you be in this number? 
+\end{enumerate}
+
+The answer to these questions 
+
+\section{Results and discussion}
+
+\section{Conclusion}
+
+\section{Methods}
+

@@ -1,0 +1,281 @@
+%
+\let\textcircled=\pgftextcircled
+\chapter{Theory}
+\label{chap:theory}
+
+\section{Introduction}
+In this chapter I will set out the theory of modelling biomolecular dynamics using molecular dynamics data the theory of Markov processes. This theory will be used throughout the thesis. In addition I will set out briefly the theory of Gaussian Processes regression and Bayesian optimization which will be used in chapter \ref{chap:msm} on Markov state model (MSM) optimization. 
+
+\section{Markov State Models}
+We consider an N atom biomolecular system and represent all the continuous spatial and momentum coordinates as a function of continuous time, the trajectory, with $x(t)$. The probability that this trajectory will start at some given point in phase space, $x$, and then transition at a time $\tau$ later to a small region, $dy$ around the point $y$ is given by: 
+
+\subsection{Markovian dynamics}
+\begin{equation}
+p(\mathbf{x}, \mathbf{y} ; \tau)=\mathbf{P}[\mathbf{x}(t+\tau) \in \mathbf{y}+d \mathbf{y} | \mathbf{x}(t)=\mathbf{x}]
+\end{equation}
+
+This transition probability is independent of the trajectory before the time t and so it is said to be Markovian. If the system is ergodic, i.e. all parts of the phase space are connected, and stationary, i.e. transition probabilities are independent of time, then there exists a unique equilibrium probability distribution, the stationary distribution, $\mu(x)$. This represents the probability of finding the system in the part of phase $x dx$ when the system is in equilibrium. If the system is reversible then detailed balance also fulfilled: 
+
+\begin{equation}
+\mu(\mathbf{x}) p(\mathbf{x}, \mathbf{y} ; \tau)=\mu(\mathbf{y}) p(\mathbf{y}, \mathbf{x} ; \tau)
+\end{equation}
+
+We will proceed assuming that any process or trajectory is ergodic, stationary and reversible, unless otherwise stated. In order to calculate expectations of observables we will need to think of ensembles of trajectories evolving in time. In this case it makes more sense to talk about the probability of observing a trajectory at a point in phase space $p(x;t)$ and its normalized dual quantity, $u(x;t)$: 
+
+\begin{equation}
+p(\mathbf{x} ; t)=\mu(\mathbf{x}) u(\mathbf{x} ; t)
+\end{equation}
+
+A full description of the dynamics of the system is en $\mathcal{T}(\tau)$ This operates to evolve $u(\mathbf{x} ; t)$ to $u(\mathbf{x} ; t+\tau)$
+
+\begin{equation}
+u(\mathbf{y} ; t+\tau)=\mathcal{T}(\tau) \cdot u(\mathbf{y} ; t)=\frac{1}{\mu(\mathbf{y})} \int d \mathbf{x} p(\mathbf{x}, \mathbf{y} ; \tau) \mu(\mathbf{x}) u(\mathbf{x} ; t)
+\end{equation}
+
+All the dynamical information of the system is contained within $\mathcal{T},$ its eigenvectors, $\psi_{i}(\mathbf{x})$ and eigenvalues $\lambda_{i} .$ The eigenvalues all satisfy $\left|\lambda_{i}\right| \leq 1,$ with the largest, $\lambda_{1}=1$ corresponding to the unit eigenvector, $\psi_{1}(x)=1 .$ In the unnormalized picture, with eigenvectors denoted by $\phi_{i}(\mathbf{x}),$ this corresponds to the stationary distribution:
+
+\begin{equation}
+\phi_{1}(\mathbf{x})=\mu(\mathbf{x}) \psi_{1}(\mathbf{x})=\mu(\mathbf{x})
+\end{equation}
+
+We will take the other eigenvectors to be ordered according to their eigenvalues. The remaining eigenvectors correspond to relaxation processes which take any initial distribution, $u(\mathbf{x} ; t=0),$ towards the equilibrium distribution on a timescale related to its eigenvalue.
+
+\subsection{Metastable states}
+
+The definition of metastable states can be seen by decomposing $u(\mathbf{x} ; t)$ as a linear combination of the eigenvectors:
+
+\begin{equation}
+u(\mathbf{x} ; t+k \tau)=\mathbf{1}+\sum_{i=2}^{\infty} e^{-k \tau / t_{i}}\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x})
+\end{equation}
+
+where $k=1,2,3 \ldots . t_{i}=-\frac{\tau}{\ln \lambda_{i}}$ are the implied timescales for the relaxation process represented by $\psi_{i}(\mathbf{x}) .$ The bracket quantity is given by:
+
+\begin{equation}
+\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle=\int d \mathbf{x} \mu(\mathbf{x}) u(\mathbf{x} ; t) \psi_{i}(\mathbf{x})
+\end{equation}
+
+Each term in the sum in equation xx will decay exponentially as $k \rightarrow \infty,$ (i.e. at long times) leaving just the first term, $1,$ or the $\mu(\mathbf{x})$ in the unnormalized picture.
+
+For situations where there is a value, $m,$ such that $\lambda_{m} \gg \lambda_{m+1}$ then we can truncate equation 3.1 and have an approximate description of the dynamics, with a truncation error $E$ :
+
+\begin{equation}
+\begin{split}
+u(\mathbf{x},  t+k \tau) &=\mathbf{1}+\sum_{i=2}^{m} e^{-k \tau / t_{i}}\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x})+E \\
+& \simeq \mathbf{1}+\sum_{i=2}^{m} e^{-k \tau / t_{i}}\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x})
+\end{split}
+\end{equation}
+
+
+These $m-1$ eigenvectors are known as the dominant eigenvectors. This coarse-grained description becomes more accurate in the limit long time limit i.e. $k \tau \gg t_{m}$
+The sign structure of the dominant eigenvectors can be used to infer the location of metastable states within the phase space. To demonstrate how, we will use the 1 D four well potential which is shown in Figure $1 .$ Panel (b) shows the potential and panel (c) shows the normalized eigenvectors, $\psi_{i}(x) .$ The slowest relaxation process, $\psi_{2}(x),$ changes sign at $x=$ 0 clearly defining the boundary between the two sets of states separated by the highest potential barrier. Perron Cluster Cluster Analysis uses the two remaining dominant eigenvectors to partition the phase space (the $x$ axis) into four metastable states. This is shown in Figure $2 .$ The coloured lines in panel (b) show the probability that each point on the x axis belongs to one of four different metastable states. This is a fuzzy clustering of the $x$ axis.
+
+Prinz potential explainer here
+
+
+\subsection{Estimating the transition matrix}
+The data for estimating the transition matrix is usually molecular dynamics trajectories, consisting of potentially all atomic positions at discrete time points, $k=1,2,3, \dots k^{\prime}$ in some units). This data necessitates estimating the transfer operator in a discrete form, known as the transition matrix, T. This requires partitioning state space into $n$ discrete sets $S_{i}, i=1 \ldots n$ To do this we define membership functions, $s_{i}(\mathbf{x}),$ which map points in phase space to the probability of membership of each partition. The simplest such function are crisp step functions, where the trajectory is either in $\left(s_{i}(\mathbf{x})=1\right)$ or not in $s_{i}(\mathbf{x})=0$ ) of a set:
+
+
+\begin{equation}
+s_{i}(\mathbf{x})=\left\{\begin{array}{ll}
+1, & \mathbf{x} \in S_{i} \\
+0, & \mathbf{x} \notin S_{i}
+\end{array}\right.
+\end{equation}
+
+The MD data is an $k^{\prime} \times 3 N$ matrix, $\mathbf{x}(k),$ which is transformed into a sparse $k^{\prime} \times n$ matrix, $\mathbf{s}(k),$ which contains exactly one 1 on each row, whose position indicates which discrete state the system is in, i.e. $s_{k j}=s_{j}(\mathbf{x}(k)) .$ A more compact dense representation is the index form: $\mathbf{y}(k)=\left\{j: s_{k j}=1\right\},$ i.e. a vector of length $k^{\prime}$ whose elements are a number $1-n$ indicating which state the system is in.
+ 
+ For each discrete state $i$ its local stationary probability, $\pi_{i}$ is:
+\begin{equation}
+\pi_{i}=\int_{\mathrm{x} \in \delta_{s}} d x \mu(\mathrm{x})
+\end{equation}
+
+With these definitions we can write the transition matrix in terms of the correlation function between states:
+\begin{equation}
+\begin{split}
+T_{i j}(\tau) &= \frac{\left\langle s_{i},\left.T(\tau) \cdot s_{i}\right\rangle_{\mu}\right.}{\left\langle s_{i} s_{i}\right\rangle_{\mu}} \\
+& =\frac{c_{i j}^{c o n r}(\tau)}{\pi_{i}}
+\end{split}
+\end{equation}
+
+
+Which in matrix form becomes: 
+\begin{equation}
+\mathbf{T}(\tau)=\mathbf{\Pi}^{-1} \mathbf{C}(\tau)
+\end{equation}
+
+The action of this operator on the state vector (equivalent to equation $2-4$ ) becomes:
+\begin{equation}
+\mathbf{T}(\tau) \cdot \mathbf{u}(t)=\lambda \mathbf{u}(t+\tau)
+\end{equation}
+ 
+ Both $c_{i}^{\text {corr}}(\tau)$ and $\pi_{i}$ are efficiently calculated from a single discrete trajectory and the results of multiple trajectories are easily combined making the process of estimating $T_{i j}(\tau)$ parallelisable. The left and right eigenvectors of the transition matrix have the same interpretation as $\phi_{i}(\mathbf{x})$ and $\psi_{i}(\mathbf{x})$ respectively and from now on I shall use these symbols in the discrete picture (equation $4-3$ ) as well as in the continuous picture (equation $2-4$ ).
+
+The transition matrix element, $T_{i j}$ has the interpretation of the probability of the system transitioning from state $i$ to state $j$ conditional on being in state $i .$ This is the same as the transfer operator, equation $2-4 .$ In practice a transition matrix estimated from a set of trajectories may not obey detailed balance (equation $2-2$ ), even if
+the underlying dynamics does. In order to correct for this an iterative algorithm constrains $T_{i j}$ to obey detailed balance, see [ref].
+To determine the metastable states and their kinetics we first inspect the eigenvalues to find a value of $m$ such that equation $3-3$ holds approximately. We then use PCCA to assign a probability for each of the $n$ discrete states $\left(s_{i}\right)$ to be a member of each of the $m$ metastable states $\left(z_{j}\right)$. This is summarised in the $n \times m$ membership matrix, $\mathbf{M}$:
+
+\[
+M_{i j}=\mathrm{P}(z=j | s=i)
+\]
+
+The membership matrix for a four well potential (calculated using PCCA) is shown in Figure 2 ). All kinetic and thermodynamic observables for metastable states (e.g. timescales) can be calculated from the transition matrix, T and the membership matrix, $\mathbf{M}$
+The method for identifying and quantifying metastable states using Markov state models for an $N$ atom system can be summmarised as:
+. Sample the dynamics of the system and record the $3 \mathrm{N}$ cartesian coordinates for a total of $k^{\prime}$ 'timesteps, ensuring $k^{\prime}$ is large enough that all the relevant regions of phase spaccarradequately sampled The resulting trajectory wil be a $k^{\prime} \times 3 N$ matrix, $x^{2}$
+2. Define astofn membership fincicions, $s$ which transform x imto a $k^{\prime} \times 1$ discratet trajectory $y(t)$
+3. Estimate the $n \times n$ transition matirix Twing equation 4.3 for apre-specificad lag time $\tau$.
+4. Inspect the cigenvalues $\lambda_{i}$ to determine the $m$ dominant cigenvectors.
+5. Use PCCA to estimate the membership matrix.$\mathbf{M}$.
+
+This procedure leaves the choice of three parameters up to researcher: the lag time $\tau$, the discretization functions $s_{i}$ and the number of metastable states $m$.
+
+\subsection{Model specification}
+\subsubsection{Choice of $\tau$}
+ The lag time is not a hvperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For
+Iarge values of $\tau,$ the truncation of the dynamics to the dynamics of the metastable states becomes more accurate. However, there may be processes of interest with timescales, $t_{i}<\tau$ which will not be captured.
+
+As a compromise, $\tau$ is usually chosen by inspection of the data through the following procedure. Starting from a given discrete trajectory, $s(t)$ estimate the largest implied timescale, $t_{2}$, for a range of different values of $\tau$. Choose the smallest $\tau$ such that $\frac{d t_{2}}{d \tau} \simeq$ constant. We shall see in chapter 3 that this procedure leads to bias in
+the estimation of the resulting timescales.
+
+\subsubsection{Choice of $s_i$}
+The choice of the discretization function comes down to two consecutive choices: a) a choice of continuous feature(s) of the system and b) the clustering algorithm usod to partition the continious feature into discrete states. The intermediate stage of projection onto $p$ chemically significant features we will denote as $\chi_{j}, j=1 \ldots p,$ so the process is summarised as:
+The choice of continuous feature may be determined (or strongly suggested) by the question being asked and/or from prior knowledge of the system. For example, for describing protein folding the backbone dihedrals angles d reaction coordinates and using these has been useful in revealing folding pathways. However, the clustering algorithm, including the number of cluster centres, still needs to be selected in some objective way. The kev to slecting $s$ objectively was the framing of the estimation of Markov state models as variational optimization of the transfer operator. The transfer operator is seelf-adioint that the the be be and sonation and that a that truation trainge and that that the eigenvalues. If we consider the chisp, indicatorfinacion basis,s, forthe tramficroppratatorand find the linear combinations of basisfüction which maximize the eigenvalues then we arrive atequation for the definition of the transition matrix.
+
+We can also maximize the eigenvalues in the continuous basis, $\chi_{j}$ and we get:
+$\mathbf{T}(\mathbf{r})=\mathbf{s}^{-1} \mathbf{c}(\mathbf{\tau})$
+Where S, the overlap matrix of the basis functions, arises because $\chi_{j}$ (unlike $s_{i}$ ) are not orthonormal:
+
+\begin{equation}
+s_{i j}=\left\langle x_{i} | x_{j}\right\rangle_{\mu}
+\end{equation}
+
+Solving equation 5-2 is known as Time Lagged Independent Component Analysis (TICA).
+An MSM is the result of variationally optimizing a trajectory in a given crisp dataset. In ref $[\mathrm{l}$ this variational optimization was taken a step füther to introduce an objective function which could be used to optimize between alternative basis functions. This objective function is, the Generalized Matrix Rayleighh Quotient, GMRQ, is defined as
+
+\begin{equation}
+\begin{split}
+\operatorname{GMRQ}\left(\mathbf{A}, \mathbf{C}, \mathbf{S} ; s_{i}\right) &=\operatorname{Tr}\left(\mathbf{A}^{T} \mathbf{C A}\left(\mathbf{A}^{T} \mathbf{S} \mathbf{A}\right)^{-1}\right) \\
+&=\sum_{i=1}^{m} \lambda_{i}
+\end{split}
+\end{equation}
+
+Here A is the matrix of eigenvectors $\mathbf{C} \& \mathbf{S}$ maintain their previous meanings truncated to the space of the $m$ dominant eigenvectors. The value of the $G M R Q$ $a^{3}$
+Iffer is the at matinit at egenetion $C_{\alpha}$ s maninatin their previnus meainngs tuncited to the space of the $m$ dominant eigenvectors. Th: bounded from above by the value when the eigenvectors are the true eigenvetors $\left(A_{j}=\psi_{j}\right)$ forms an upper bound to estimated value:
+$G M R Q(\mathbf{A}) \leq G M R Q(\boldsymbol{\Psi})$
+By selecting $s_{i}$ so as to maximize the $G M R Q$ we have a data driven way of approximating the true eigenvectors. To avoid overfiting to the data at hand a cross validated version of equation $5-4$ is given by:
+\begin{equation}
+\operatorname{cv-GRMQ}(s_{i})=\frac{1}{k} \sum_{=1}^{k} \operatorname{GMRQ}\left(A^{-j}, C^{j}, S^{j} ; s_{i}\right)
+\end{equation}
+
+This approach was extended yet further by to include Markov process which don't obey detailed balance. These are a series of objective functions are called the Variational Approach to Markov Processes (VAMP) scores, indexed by $k$ and are analogous to the GMRQ':
+\begin{equation}
+\operatorname{VAMP}(r ; s_{i})=\sum_{i=1}^{m}\left(\lambda_{i}\right)^{r}
+\end{equation}
+
+So VAMP(1) would be the sum of the first dominant eigenvalues, equivalent to the GMRQ, and VAMP(2) would be the sum of the eigenvalues squared. Maximizing VAMP(2) objective function is equivalent to maximizing the kinetic variance. An objective function for minimizing the truncation error $(E \text { in equation } 3-3)$ VAMP-E, is also given in [ref] as:
+\begin{equation}
+\operatorname{V A M P-E}(r; s_{i})=\operatorname{Tr}\left[2 \mathbf{T} \mathbf{A}^{\mathrm{T}} \mathbf{C A}-\mathbf{T}\left(\mathbf{A}^{\mathrm{T}} \mathbf{S} \mathbf{A}\right) \mathbf{T}\left(\mathbf{A}^{\mathrm{T}} \mathbf{S} \mathbf{A}\right)\right]
+\end{equation}
+
+\subsubsection{Choice of $m$}
+With optimal choices of $s$ (and $\tau$ ) the transition matrix represents a complete description of the dynamics of the system. In order to extract chemical significance from the transition matrix we must cluster the microstates into the metastable states of the system. This means:
+1. choosing the number of metastable states deciding how many metastable states there are (the value of $m$ ) and;
+2. assigning a probability for being in metastable state $i$ given we observe the system in state $s_{i}$, summarized in a membership matrix (equation 4-6).
+As with the choice of $s,$ pre-existing knowledge may constrain that choice but a simple data driven way of determining $m$ is to look at the ratio of successive eigenvalues ( $\lambda_{i} / \lambda_{i+1}$ ) or implied timescales $\left(t_{i} / t_{i+1}\right)$ and choose $m$ such that:
+\begin{equation}
+m=\arg \max \left(\frac{\lambda_{i}}{i_{i+1}}\right)
+\end{equation}
+
+This approach is ambiguous however, it may give different answers depending on whether $\lambda$ or $t$ are used and is susceptible to noise for small values of $\lambda$ or $t$ leading to large values of $m$. There may also be more than one plausible value of $m$ due to sampling error.
+There are a number of other ways of clustering the transition matrix which dictate the methods used to choose $m$. Clustering with PCCA provides two possible associated objective functions which can be used to select $m$ either on the full data or by using cross validation. These two functions either select for 'crispness' of the assignment (i:e. by trying to have as many 1s and 0s in $M_{i j}$ ) or for metastability.
+
+The other popular method for clustering the microstates is by estimating a hidden Markov model (HMM). $m$ can be selected using information criteria, bootstrapping and cross-validation and others. We will explore these more fully in chapter 3 .
+
+\section{Hidden Markov Models}
+
+Hidden Markov models were proposed as an altermative to Markov models/PCCA clustering method described so far. A Hidden Markov process consists of a Markov process of $m$ discrete states which are not observed, described by a transition matrix, $\widehat{T}(\tau)$ (he $\tau$ indiction we are talking about thin unobserved process). Whille the system is in one of these hidden states the system 'emits' an observed state according to a multinomial emission distribution (continuous emission distributions to describe protein dynamics have been used see for example $[\text { refl), described here by the } n \times m \text { emission matrix } \mathbf{E}$ :
+\begin{equation}
+E_{i j}=\mathrm{P}(s=i | z=j)
+\end{equation}
+
+So, if the system is in a hidden state $z_{j}$ then we will observe a state $s_{i}$ with a probability $E_{i j}$. This emission matrix is related to the membership matrix via Bayes' relation:
+\begin{equation}
+P(z=j | s=i)=\frac{P(s=i | z=j j P(z=j)}{P(s=i)}
+\end{equation}
+
+This relation allows us to describe the metastable states in terms of the observed states.
+
+In order to estimate an HMM we follow the starting steps:
+Use membership functions $s_{i}$ to discretize $\mathbf{x}(k) \rightarrow \mathbf{s}(k)$
+2. Estimate an MSM for a given lag time, $\mathbf{T}(\tau)$
+3. Choose a number of metastable/hidden states, $m$, for e.g. by inspection of eigenvalues $\lambda_{i}$
+4. Use PCCA to estimate a crude approximation to $\tilde{\mathbf{T}}(\tau)$ and $\mathbf{E}: \tilde{\mathbf{T}}^{0}(\tau) \& \mathbf{E}^{0}$
+5. Use $\mathbf{T}^{0}(\tau) \& \mathbf{E}^{0}$ as a starting point for the Baum-Welch expectation maximisation algorithm to estimate final $\widetilde{\mathbf{T}}(\tau)$ and $\mathbf{E}$
+The benefit of the HMM approach is that the discrete trajectories $s(k)$ are not required to be Markovian, nor does the discretization function $s_{i}$ need to be optimal (in
+e sense of maximising the VAMP scores), in order to estimate the implied timescales as discussed in [ref].
+
+\subsubsection{Model validation}
+
+Model validation is the process of checking how well the statistical model fits the data generating process. For protein dynamics we can ask ourselves: if we train a model, T, on some random sample of the protein dynamics, x, then how well does this We can assess the validity of a model either for the data in hand (in-sample, or internal validity) or for any future realisation of data (the out of sample or external validity. In the case of MSMs or HMMs we test whether the following relation holds:
+$\mathbf{T}(k \tau) \simeq \mathbf{T}^{\mathbf{k}}(\tau)$
+The lef-hand side is a transition matrix estimated with a lag time of $k r$ while the right-hand side is the matrix at time $\tau$ predicted from the matrix estimated with a lag of $\tau$. This equality will hold exactly for exact Markov process. For an $n \times n$ transition matrix, there will be $n^{2}$ comparisons to make which may become probibitivively computationally expensive. Instrad the comparison can be made for weighted combinations of microstates- the most natural combinations of microstates are the motestate and isble states This comparison is the Chappan-Kolmogorov (C-K) test
+
+The C-K test equation 7 -1 holds by comparing the two terms for weighted combinations of the microstates. If a combination of microstates, $A$, is defined by a vector of $n$ weights, $w_{A}$, then the probability of being in that set at a time $k \tau$ later can be calculated in two ways:
+LHS, equation 7 -1: using the counts of transitions from state $i$ to state $j$ in a given $k \tau, c_{i j}(k \tau)$ in the discretized trajectories:
+
+\begin{equation}
+p_{\text {trajectory }}(A, A: k r)=\sum_{k A}\left[w_{A i} \frac{\sum_{j \in A} c_{i}(k \tau)}{\sum_{i}^{N} c_{i j}(k \tau)}\right.
+\end{equation}
+RHS, equation 7-1: using the estimated transition matrix:
+
+\begin{equation}
+p_{\text {wsw }}(A, A, k \tau)=\sum_{\text {eft }}\left[w_{\tilde{1}}^{\top} \mathbf{k}^{\mathrm{k}}(\tau)\right]_{i}
+\end{equation}
+
+The Chapman-Kolmogorov test tests their equality:
+\begin{equation}
+p_{M S M}(A, A ; k \tau)=p_{\text {trajectory}}(A, A ; k \tau)
+\end{equation}
+
+The weights are typically the relevant columns of the membership matrix, i.e. $\left[w_{A}\right]_{i}=M_{i A}$
+
+\section{Gaussian Processes}
+
+Gaussian processes regression (GPR) takes the set of all possible draws from a multivariate normal distribution with a given mean and kernel (known as the prior distribution of functions) and selects only those draws which are consistent with a set of N observations $(y_i,\lambda_i ),i=1-N$ (known as the posterior distribution of functions). This process is shown in figure xxx: in panel (a) we have all possible draws from a multivariate normal (only 5 are actually plotted) and in panel (b) we the effect of the training process: only a subset of the possible draws which run through the observations remain. 
+
+\subsubsection{Covariance}
+The kernel plays a central role in training a GPR model. In this work we consider kernels in the Mat{\'e}rn class: 
+\begin{equation}
+k_{\text {Mat{\'e}rn}}\left(r_{i} ; v\right)=\frac{2^{1-v}}{\Gamma(v)}\left(\sqrt{2 v}\left(\frac{r_{i}}{l_{i}}\right)\right)^{v} K_{v}\left(\sqrt{2 v}\left(\frac{r_{i}}{l_{i}}\right)\right)
+\end{equation}
+
+Here $K_{\nu}$ is a modified Bessel function, $r_i=|\lambda_i-\lambda_i'|$ is the distance between two observations of the hyperparameter $\lambda_i$ and $l_i$ is the characteristic length scale of the variable $\lambda_i$, i.e. how rapidly the function changes as $\lambda_i$ changes. The values of $\nu$ we consider are $\nu=1/2$ (which corresponds to an exponential function), $\nu=3/2,5/2$ (known as the Matérn 3/2 and 5/2 kernels), and $\nu=\infty$ (which corresponds to a Gaussian function). Draws from GPs with these kernels are shown in panel (c) of figure xxx which show how the parameter $\nu$ determines the ‘roughness’ of the GP. 
+
+Multidimensional inputs can be accommodated in a number of different ways, in this work we consider purely multiplicative kernels, e.g. $k^{tot}(\lambda,\lambda')=\eta\cdot k_{\tau} (r_{\tau};\nu)\cdot k_m (r_m;\nu)\cdot k_n (r_n;\nu)$, where variable $\eta$ determines the amplitude of the function fluctuations. This type of kernel implies that correlation in y can occur only when all variables are simultaneously close (as defined by the length-scale $l$) to each other. In most cases underlying response surface is not directly observed as the measurements are noisy, due to the finite amount of simulation data used to fit the models. In this case we modify our modelling equation to account for uncorrelated noise term: $y=f(x)+\epsilon$ where $\epsilon  \sim \mathcal{N}(0,\sigma_{n} )$. The effect of $\eta$ and $\sigma$ on Gaussian processes is shown in panel (d) of figure xxx for a $\nu = \infty$ kernel. 
+
+\subsubsection{Parameter estimation}
+
+The kernels incorporate a set of unknown parameters $({l_i },\sigma_n,\eta)$ which must be determined, this is usually achieved by maximizing the marginal likelihood (MML):
+
+[insert equation]
+
+Alternatively, a Bayesian approach of setting prior distributions on each kernel parameter and sampling from the posterior distribution, can be used. We will make use of both approaches in this work.  
+
+\subsubsection{Model evaluation}
+Two common metrics for evaluating MML GPR models are the standardized mean square error (MSME): 
+
+\begin{equation}
+M S M E=\left(\frac{1}{N}\right) \sum_{i=1}^{N} \frac{\left(f(x)-y_{o b s}\right)^{2}}{\sigma_{o b s}^{2}}
+\end{equation}
+
+And the mean standardized log loss: 
+
+\begin{equation}
+M S L L=\left(\frac{1}{N}\right) \sum_{i=1}^{N}\left[\left(\frac{1}{2} \log \left(2 \pi \sigma_{i}\right)+\frac{\left(f(x)-y_{o b s}\right)^{2}}{\sigma_{i}^{2}}\right)-\left(\frac{1}{2} \log \left(2 \pi \sigma_{o b s}\right)+\frac{\left(\bar{y}_{o b s}-y_{o b s}\right)^{2}}{\sigma_{o b s}^{2}}\right)\right]
+\end{equation}
+
+the MSME puts the scale of the mean square error on the scale of the observed values, so that a MSME of 1 indicates that the GPR model predictions ($f(x)$) are no better than the grand mean of the observations. Similarly, the MSLL is the difference in the negative log probability  of the observations under the GPR model and a null model (a Gaussian $\sim \mathcal{N}(\bar{y}_{obs},\sigma_{obs}^2 )$). A MSLL of $0$ indicates the GPR model is no better than the null while a more negative value indicates a better fit. 
+
+\section{Bayesian Optimization}\label{sec:BO}
+
+calculated the response surface $\Psi(\chi, n;X_{50})$ over the whole search space. Using this surface I calculated the expected improvement, $EI(\chi, n;X_{50})$ (see section xxx equation xxx for definition) and found the hyperparameters corresponding to the maximum. I scored this set of hyperparameters and added the results to the dataset, $X_{50} \rightarrow X_{51}$. I performed ten iterations of this process 
