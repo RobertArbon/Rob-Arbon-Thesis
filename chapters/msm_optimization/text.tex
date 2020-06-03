@@ -159,7 +159,7 @@ The kernels over the individual dimensions, $k_{M}(\cdot; \nu, l)$, were kernels
 When modelling the response surface for visualisation and Bayesian optimisation, Maximum a posteriori (MAP) estimates  of the kernel hyper-parameters ($\Theta = (\eta, \sigma_{n}, l_{1}, l_{2}, ...)$) with weakly informative priors were used (see Equation xxx in section \ref{chap:theory}). When determining the uncertainty in the parameters for use in the MSM hyper-parameter relevance calculations, the full posterior distribution was sampled using Markov Chain Monte Carlo and a No U-Turn sampler with two independent chains with $500$ tuning steps and $1000$ sampling steps. Convergence was checked using the R-hat statistic (\cite{gelmanBayesianDataAnalysis2014}). 
 
 The prior distributions for the variance terms, $\eta$ and $\sigma_{n}$, were $\mathrm{Half-Cauchy}(\beta=2)$ and the priors for the length-scale parameters, $l_{i}$, were $\mathrm{Gamma}(\alpha=1, \beta=0.05)$, these distributions are shown in Figure \ref{fig:priors} panels (a) and (b) respectively.  Examples of a 1D Gaussian process with a Gaussian covariance kernel with $\eta$ and $l$ drawn from these priors are shown Figure \ref{fig:priors} panel (c).  
-
+ 
 The half-Cauchy distribution  was used for the variance parameters  based on its use in other settings (\cite{polsonHalfCauchyPriorGlobal2012}). It was  only necessary for the scale of this distribution to give significant density in the range $0-5$ as the $\operatorname{VAMP-2}(k)$ score will lie in the range $[1,5]$ for alanine dipeptide and $[1, 4]$ for AADH which limits the possible values of $\eta$ and $\sigma_{n}$ \footnote{There is always one eigenvalue equal to $1$ and the remaining eigenvalues lie in the range $[0, 1]$ thus $\operatorname{VAMP-2}(k=4)$ will be at least $1^2 + 0^2 + 0^2 + 0^2=1$ and at most $1^2 + 1^2 + 1^2 + 1^2=4$}. The prior for $l$ was justified on the basis that, after scaling the predictors to lie in $[0, 1]$, values of $l \gg 1$ imply a flat response, meaning significant density on $l \gg 1$ isn't necessary. 
 
 \begin{figure}
@@ -175,17 +175,21 @@ In order to find the best GPR model for a given response surface, every combinat
 
 In order to determine the best combination of kernel function and predictor transformation two model selection metrics were used:  mean standardized log loss (MSLL) and the standardized mean square error (SMSE). Each metric was calculated used 10-fold cross validation and any model with $MSLL > 0$ or $SMSE > 1$ was discarded. The remaining models were ranked separately according to MSLL and SMSE ($R_{MSLL}$, $R_{SMSE}$) and ranked according to $\sqrt{R_{MSLL}**2 + R_{SMSE}**2}$. This ranking method was used to ensure a balance between the two selection metrics. 
 
-All data processing was performed using in Python 3.7 using Scikit-learn \cite{pedregosaScikitlearnMachineLearning2011}, Numpy \cite{waltNumPyArrayStructure2011}, Scipy \cite{virtanenSciPyFundamentalAlgorithms2020}, Pandas \cite{mckinneyPandasFoundationalPython2011} and project Jupyter \cite{kluyverJupyterNotebooksPublishing2016}. All GPR calculations were performed in the Python package PyMC3 . 
+The final estimated response surface, $\hat{f}(\mathbf{\lambda})$, for alanine dipeptide and AADH was estimated using the full trial data set, $\mathcal{D}_{1:N}$. It is always possible to sample more hyper-parameters and add to the trial data set, which in principle would change $\hat{f}(\mathbf{\lambda})$ and so for completeness the estimate response surface should be written $\hat{f}(\mathbf{\lambda}; \mathcal{D}_{1:N})$. This dependence on $\mathcal{D}$ is due to the finite amount of hyper-parameter trials used to estimate the response surface, the true response surface $f(\mathbf{\lambda})$ has no dependence on the number of trials. 
 
-
-
-Model selection from amongst the different kernels was performed by evaluating Mean Standardized Log Loss (MSLL) and Standardized Means Square Error (SMSE) using 10-fold cross-validation. The GPR mean function and kernel parameters were calculated by maximizing the marginal likelihood. 
-
-In order to determine the distribution of the relevance of each hyperparameter a fully Bayesian approach was used. The posterior distributions of kernel parameters were sampled from two independent Markov Chain Monte Carlo chains of $1000$ iterations with $500$ tuning steps using the NUTS [] sampler. Convergence of the sampling was tested using the Gelman-Rubin statistic,$\hat{R}$. All reported models had   $0.99<\hat{R}<1.01$, indicating convergence. 
-
-All charts were produced using the Python packages Matplotlib and Seaborn. Code development was performed in Jupyter notebooks and the PyCharm IDE. 
+All GPR modelling was performed with the python package PyMC3 \cite{salvatierProbabilisticProgrammingPython2016} with some visualisation performed using GPy \cite{gpy2014}. 
 
 \subsubsection{Bayesian Optimization}
+
+The values of the MSM hyper-parameters \emph{within the  training data} that maximize $\hat{f}(\mathbf{\lambda}; \mathcal{D}_{1:N})$ are the optimal hyper-parameters which, in the language of black box optimization techniques, are known as the \emph{incumbent}, $\hat{\mathbf{\lambda}^{*}}$. Bayesian optimisation was used to answer the following questions about the $\hat{f}(\mathbf{\lambda}; \mathcal{D}_{1:N})$ and the estimated incumbents. 
+
+\begin{enumerate}
+    \item Is the $\hat{f}(\mathbf{\lambda}; \mathcal{D}_{1:N})$ sufficiently accurate that the estimated incumbent $\hat{\lambda^{*}}$ also maximizes the true response surface $f(\mathbf{\lambda}^{*})$
+    \item Is it possible 
+\end{enumerate}
+
+
+
 
 The expected improvement acquisition function was calculated for each response surface using a grid of 100 points over each continuous/integer valued variables and for each level of each categorical variables. The calculated points of the acquisition function were ranked and the top hyperparameters were scored according to the method in section \ref{sec:msm_fitting}. 
 
