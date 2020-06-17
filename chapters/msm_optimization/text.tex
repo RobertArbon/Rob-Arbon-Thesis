@@ -497,23 +497,78 @@ These optimisation results clearly indicate that the response surface is reasona
         \includegraphics[width=0.4\linewidth]{chapters/msm_optimization/figures/aadh_implied_timescales_long.png}}
 \end{figure}
 
+
+\begin{figure}[ht!]
+    \centering
+    \caption{Optimised response surface}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d_opt.png.png}
+    \label{fig:aadh_rsm_opt}
+\end{figure}
+
+
+
 So far the response surface for AADH has been modelled and optimised with a combination of randomly sampling and Bayesian optimisation under two assumptions about the model specification: that $\tau^{MSM}$ and $k$, the number of eigenvalues in the VAMP-2 score, are correctly specified. To test this figure \ref{fig:aadh_its} shows the eigenvalue spectrum as a function of $\tau^{MSM}$ for the optimum hyperparameters. Panel (a) shows detail around the  $\tau^{MSM} \simeq 2$ which clearly shows the top three implied timescales \footnote{$k=4$ in the VAMP-2 score but this includes the trivial eigenvalue $\lambda = 1$} are increasing albeit slowly which suggests that $\tau^{MSM}$ is too small. Looking at the implied timescales on a longer timescale $1 < \tau^{MSM} < \SI{50}{\nano\second}$ (panel (b)) shows that the longest relaxation process never becomes independent of $\tau$, while the second longest process does become independent at around $\SI{20}{ns}$. 
 
-At $\tau = \SI{2}{\nano\second}$ there is a clear separation of timescales between the fourth and and fifth timescales suggesting $k=5$ would be more appropriate. However at $\tau = \SI{20}{\nano\second}$ a there is a clear separation between the third and fourth timescale, suggesting $k=4$ is still appropriate.  
+At $\tau = \SI{2}{\nano\second}$ there is a clear separation of timescales between the fourth and and fifth timescales suggesting $k=5$ would be more appropriate. However at $\tau = \SI{20}{\nano\second}$ a there is a clear separation between the third and fourth timescale, suggesting the value used in the original specification, $k=4$, is appropriate.  The question of how many metastable states, corresponding to how many time scales can be considered dominant, will be investigated in chapter \ref{chap:hmm}. 
 
+It is not clear whether changing the value of $\tau^{MSM}$ or $k$ in the VAMP-2 definition will change the optimum hyper-parameters. If the character of relaxation processes doesn't change then differences in $\tau^{MSM}$ are unlikely to change the optimum hyper-parameters, although the absolute values of the response surface will change. Given the discontinuity in the second relaxation process at $\SI{6}{\nano\second}$ this may not be apply here. Including additional fast relaxation processes, as has occurred here, in the definition of the response is again unlikely to affect the optimum, however the obverse is unlikely to be true.
 
-Despite the relatively high relevance of $\tau$ the response is flat for $\SI{1}{\nano\second} \tau < \SI{50}{\nano\second}$ indicating that the linear approximation to the transfer operator (i.e. TICA) remains constant in this range of time scales. 
+Despite these limitations, knowledge of the response surface and of the eigenvalue spectrum suggests sensitivity analyses and further work to understand the validity of the MSM.  The goal of sensitivity analyses is to have faith that reasonable changes in model choices and hyper-parameters do not materially affect inferences from the model. Typically we are concerned with inferring relaxation timescales ($t_{i}$), the character of the relaxation process ($\Psi_{i}$) and the lumping of the microstates into metastable states. The VAMP-2 score has served as a proxy for the inferences required from the model but this is not sufficient  for a number of reasons.  First, as discussed above it will be sensitive to both the MSM lag time and the number of eigenfunctions used in the definition. Second, as figure \ref{fig:ala1_evcompare} has demonstrated, VAMP-2 is not sensitive to the discretisation error. Third, the phenomenon of the Rashomon effect \cite{BreimanStatisticalModeling} in statistical modelling, where  multiple \emph{different} statistical models result in the performance metric, could be at play here.
 
+The standard validation check of MSMs, the Chapman-Kolmogorov test, relies on coarse graining transition matrix, which will be discussed in detail in chapter \ref{chap:hmm}. This discussion will center on the eigenvalue spectrum and qualitative aspects of the free energy surface and eigenfunctions.  For the optimal response surface, these are shown in figure \ref{fig:aadh_msm_best} and will serve as a base-case for the following sensitivity analyses informed by the response surface (figure \ref{fig:aadh_rsm_opt}) and eigenvalue spectrum (figure \ref{fig:aadh_its}).
 
+\begin{figure}
+    \centering
+    \caption{MSM of AADH with optimum hyper-parameters: $\chi= (\phi, \psi, \chi)$ torsions, $\tau=\SI{10}{\nano\second}$, $m=2$ and $n=310$. Panels (a), (b) and (c) show the non-trivial eigenvectors used in the VAMP-2 score, the horizontal and vertical axes are the first two TICA components. Panel (d) are the first ten implied timescales, colored according to whether they were used in the VAMP-2 score. The error bars are the $\SI{95}{\percent}$ credible intervals.  Panel (e) is the free energy with the same axes as panels (a) - (c). The MSM was estimated using MCMC with 500 samples of the posterior.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_best.png}
+    \label{fig:aadh_msm_best}
+\end{figure}
 
+Sensitivity 1, changed the MSM lag from $\SI{2}{\nano\second}$ to $\SI{20}{\nano\second}$ (figure xxx). This changed both the absolute and relative values of the three slowest implied timescales. For example in the base case $t_2/t_4 \simeq 10$ where as in sensitivity 1, $t_2/t_4 \simeq 100$. However, the sign structure of both $\Psi_{2}$ and $\Psi_{3}$ did not change which suggest that the implied metastable states are unlikely to be affected.  
 
-The response surface is at its maximum over the range $1 < m < 5$ indicating 
+\begin{figure}
+    \centering
+    \caption{MSM of AADH, sensitivity 1}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_1.png}
+    \label{fig:aadh_msm_sens_1}
+\end{figure}
 
+Sensitivity 2, changed the hyper-parameters to the best performing set with the interatomic distances feature ($\tau = \SI{1}{\nano\second}, m=2, n=110$). This was justified because of the similarity in response values (incumbent: $\mu=3.56 \pm 0.18$, sensitivity 2: $\mu=3.44 \pm 0.35$). There is a clear similarity in the free energy surface and the sign structure of $\Psi_{2}$. There is a greater separation in timescales between $t_{2}$ and $t_{3}$ ($t_{2}/t_{3} \simeq 10$) than the base case ($t_{2}/t_{3} \simeq 3$) suggesting that $\Psi_{3}$ from the base case is not resolved by this feature. 
+\begin{figure}
+    \centering
+    \caption{MSM of AADH, sensitivity 2}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_2.png}
+    \label{fig:aadh_msm_sens_2}
+\end{figure}
+Sensitivity 3, changed the value of $\tau$ to $\SI{85}{\nano\second}$ which is value of $\tau$ for which there is the smallest response values overlap with the incumbent (incumbent: $\mu=3.56 \pm 0.18$, sensitivity 3: $\mu=3.30 \pm 0.24$).  Here there is a distinct difference in the absolute values of the timescales and the free energy surface compared to the incumbent. The difference between the two TICA representations is significant: the normalized overlap between the two TICA components of the incumbent and sensitivity three is $0.63$ and $0.56$ and there are  differences in the weights attached to each feature shown in figure \ref{fig:aadh_msm_sens_3_tica}. 
 
+\begin{figure}
+    \centering
+    \caption{MSM of AADH, sensitivity 3}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_3.png}
+    \label{fig:aadh_msm_sens_3}
+\end{figure}
+\begin{figure}
+    \centering
+    \caption{Comparison of TICA eigenvectors between base case (blue) and sensitivity 3 (orange)}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_3_tica.png}
+    \label{fig:aadh_msm_sens_3_tica}
+\end{figure}
 
-\subsection{Limitations}
 
 \section{Conclusions}
+
+This chapter demonstrated the use of response surfaces and Bayesian optimisation for understanding and optimizing the hyper-parameters of an MSMs with the following method. The response of an MSM to a randomly selected set of hyper-parameters was measured using standard the MSM metric, VAMP-2. These data were used with Gaussian process regression (GPR) to model the response surface of the MSM. Input warping and the type of kernel used in the  GPR were chosen using cross-validation of the standardised log loss and squared error metrics.  Bayesian optimisation was used to find the optimum of the response surface using the expected improvement as a hyper-parameter selection policy. Once the optimum had been found and the corresponding MSM was estimated, the response surface and eigenvalue spectrum was used to explore the robustness of the optimum hyper-parameters with a series of sensitivity tests. 
+
+Parts of this method was first trialled on the case of alanine dipeptide with a two hyper-parameter response surface. Despite the non-stationary nature of the response surface a GPR with stationary kernels was able to fit the observed data well. The GPR fitting process was seen to be simple and computationally feasible, even with 100s of observations, using recently developed approximations to the full covariance matrix of the GP. The response surface was almost solely a function of the feature (with only a slight dependence on the number of microstates for the two best performing features) and the GP kernel hyper-parameters, the \emph{relevances} of the individual kernel functions, reflected this. The irrelevance of $n$ was suggested as being due to the small number of eigenvectors which were rapidly well approximated with approximately $100$ microstates. For large $n$ the large amount of simulation data meant over-fitting did not become a problem. These two features combined to render to a flat response of the MSM to values of $n$. 
+
+Bayesian optimisation was also trialled on the alanine dipeptide system to determine a suitable number of observations per MSM hyper-parameter, $p$. The optimisation trials did not strongly suggest a particular value of $p$ as the response surface did not improve significantly on any optimisation run. This was due the irrelevance of $n$ and the two identical maxima (at $\chi=(\phi, \psi)$ torsions and the heavy atom positions).  This resulted in an overly simplistic surface which was easily optimized with just random trial data. Problems with fitting the GPR of such a surface in a low data case ($p=15$) were indicated as the incumbent actually decreased in some of the optimisation runs, as a result a value of $p=25$ was used. 
+
+A response surface was fit
+
+
+
+
 
 
 \section{Appendix}\label{app:msm_opt}
