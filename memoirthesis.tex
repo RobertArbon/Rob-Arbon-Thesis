@@ -29,6 +29,7 @@
 %
 %
 % Adding metadata:
+\let\ordinal\relax
 \usepackage{datetime}
 \usepackage{ifpdf}
 \ifpdf
@@ -165,7 +166,7 @@
 \usepackage{graphicx}					%Calls figure environment
 % \newsubfloat{figure}                    % allows the subfigure env
 \usepackage{longtable,rotating}			%Long tab environments including rotation. 
-\usepackage{tabularx}               % for better tables
+\usepackage{tabularx}              % for better tables
 \usepackage[utf8]{inputenc}			%Needed to encode non-english characters 
 									%directly for mac
 \usepackage{colortbl}					%Makes coloured tables
@@ -179,7 +180,7 @@
 		     sort&compress]{natbib}		%Calls bibliography commands 
 \usepackage{url}						%Supports url commands
 % \usepackage{etex}						%eTeXÕs extended support for counters
-\usepackage{fixltx2e}					%Eliminates some in felicities of the 
+% \usepackage{fixltx2e}					%Eliminates some in felicities of the 
 									%original LaTeX kernel
 \usepackage[spanish,english]{babel}		%For languages characters and hyphenation
 \usepackage{color}                    				%Creates coloured text and background
@@ -417,6 +418,9 @@
 \clearemptydoublepage
 \import{chapters/water_hopping/}{text.tex}
 \clearemptydoublepage
+\import{chapters/aadh/}{text.tex}
+
+\clearemptydoublepage
 \import{chapters/msm_optimization/}{text.tex}
 \clearemptydoublepage
 \import{chapters/hmm_selection/}{text.tex}
@@ -427,13 +431,13 @@
 %
 % And the appendix goes here
 \appendix
-\import{chapters/appendices/}{app0A.tex}
-\clearemptydoublepage
+% \import{chapters/appendices/}{app0A.tex}
+% \clearemptydoublepage
 %
 % Apparently the guidelines don't say anything about citations or
 % bibliography styles so I guess we can use anything.
 \backmatter
-\bibliographystyle{siam}
+\bibliographystyle{plain}
 \refstepcounter{chapter}
 \bibliography{thesisbiblio}
 \clearemptydoublepage

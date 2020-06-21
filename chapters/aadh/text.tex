@@ -5,15 +5,15 @@
 %
 
 \chapter{AADH simulations}
-\label{app:aadh}
+\label{chap:aadh}
 
 This appendix describes the setup of the AADH simulations. 
 
 \section{Crystal structure preparation}
-The crystal structure of AADH (PDB accession code 2AGY) was prepared by Dr Kara Ranaghan as part of \cite{masgrau_atomic_2006}, but with the whole protein included (rather than the 10 angstrom ball around one of the active sites). The tail residues were not modelled. 
+The crystal structure of AADH (PDB accession code 2AGY) was prepared by Dr Kara Ranaghan as part of xx, but with the whole protein included (rather than the 10 angstrom ball around one of the active sites). The tail residues were not modelled. 
 
 \section{Active site definition}
-2AGY consists of two $\alpha$ segments (A and B) and two $\beta$ segments (D and H). The active site was defined, following \cite{ranaghan_ab_2017}, as the following residues in the D and H segments: 
+2AGY consists of two $\alpha$ segments (A and B) and two $\beta$ segments (D and H). The active site was defined, following xx, as the following residues in the D and H segments: 
 \begin{itemize}
     \item Ala-82
     \item Asp-84
@@ -25,7 +25,7 @@ The crystal structure of AADH (PDB accession code 2AGY) was prepared by Dr Kara 
 
 
 \section{Solvation}
-A solvation shell was created using the package Solvate version 1.0 \cite{grubmuller1996solvate} which I modified to take into account the CHARMM extended PSF format, using the following command:
+A solvation shell was created using the package Solvate version 1.0 xx which I modified to take into account the CHARMM extended PSF format, using the following command:
 \begin{lstlisting}
 solvate -t 12.0 -r 100.0 -n 10 -s -w [input] [output]
 \end{lstlisting}

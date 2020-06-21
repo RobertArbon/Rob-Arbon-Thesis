@@ -239,9 +239,6 @@ p_{M S M}(A, A ; k \tau)=p_{\text {trajectory}}(A, A ; k \tau)
 
 The weights are typically the relevant columns of the membership matrix, i.e. $\left[w_{A}\right]_{i}=M_{i A}$
 
-\section{Gaussian Processes}
-
-Gaussian processes regression (GPR) takes the set of all possible draws from a multivariate normal distribution with a given mean and kernel (known as the prior distribution of functions) and selects only those draws which are consistent with a set of N observations $(y_i,\lambda_i ),i=1-N$ (known as the posterior distribution of functions). This process is shown in figure xxx: in panel (a) we have all possible draws from a multivariate normal (only 5 are actually plotted) and in panel (b) we the effect of the training process: only a subset of the possible draws which run through the observations remain. 
 
 \subsubsection{Covariance}
 The kernel plays a central role in training a GPR model. In this work we consider kernels in the Mat{\'e}rn class: 
