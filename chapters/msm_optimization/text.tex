@@ -117,42 +117,42 @@ The response of each trial was measured by building an MSM with a lag time of $\
 
 % To build this reference model, the bond distances identified as important in the catalytic step in  table 3 of \cite{ranaghanInitioQMMM2017} were used as features. TICA was used with a lag time of $\tau = \SI{0.1}{\nano\second}$ and $m=xx$ of the top components were retained, corresponding to retaining $\SI{95}{\percent}$ of the total variance. Mini-batch KMeans [ref] was used to cluster the trajectories into $n=1000$ microstates. This number was chosen as the square root of the number of observations in accordance with the heuristic discussed in \cite{husicOptimizedParameterSelection2016}
 \begin{table}
-    \mycaption{The hyper-parameter search space of alanine dipeptide. Randomly sampled values of $\mathbf{x} = (\chi, n)$ were used to fit and score a MSM to create the hyper-parameter trial data set. The Cartesian coordinates were first aligned to a single, randomly chosen, trajectory frame so that features (2) and (5) did not include spurious rotational or translational motion.}
+    \mycaption{The hyper-parameter search space of alanine dipeptide. Prior to featurization the Cartesian coordinates of the MD trajectories were first aligned to a single, randomly chosen, trajectory frame so that features (2) and (5) did not include spurious rotational or translational motion.  The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
     \centering
-    \begin{tabularx}{0.9\textwidth}{ |>{\raggedright\arraybackslash}X|l|l| >{\raggedright\arraybackslash}X | } 
+    \begin{tabularx}{0.9\textwidth}{ |>{\raggedright\arraybackslash}X|l|l|c| >{\raggedright\arraybackslash}X | } 
     \hline
-    \textbf{Hyper-parameter} & \textbf{Type} & \textbf{Search space} & \textbf{Details} \\
+    \textbf{Hyper-parameter} & \textbf{Type} & \textbf{Range} &\textbf{Dim.} & \textbf{Details} \\
      \hline\hline
-    Feature, $\chi$ & Categorical & (1) $(\phi, \psi)$ torsions &   \\
-    & & (2) (x, y, z) coordinates & Heavy atoms only  \\
-    & & (3) $\phi$ torsion &  \\ 
-    & & (4) $\psi$ torsion &  \\ 
-    & & (5) RMSD &  Heavy atoms only\\ 
+    Feature, $\chi$ & Categorical & (1) $(\phi, \psi)$ & $2$ & Torsions \\
+    & & (2) (x, y, z) & $30$ & Heavy atoms only  \\
+    & & (3) $\phi$ & $1$ & Torsion \\ 
+    & & (4) $\psi$ & $1$ & Torsion \\ 
+    & & (5) RMSD & $1$ & Heavy atoms only\\ 
     \hline 
-    Cluster centres, $n$ & Integer & \numlist[list-final-separator = { ... }]{10;11;1000} & Clustered using k-means clustering \\
+    Cluster centres, $n$ & Integer & \numlist[list-final-separator = { ... }]{10;11;1000} & & Clustered using k-means clustering \\
      \hline
     \end{tabularx}
     \label{tab:ala2searchspace}
 \end{table}
 
 \begin{table}
-    \mycaption{The hyperparameter search space for AADH. Randomly sampled values of $\mathbf{x} = (\chi, \tau, m, n)$ were used to fit and score a MSM to create the hyper-parameter trial data set. TICA was applied to every feature except RMSD. Torsional angles, $\theta$, were given $(\sin(\theta),\cos(\theta)$ representations. The Cartesian coordinates were first aligned to a single, randomly chosen, trajectory frame so that feature (5) did not include spurious rotational or translational motion.}
+    \mycaption{The hyperparameter search space for AADH. TICA was applied to every feature except RMSD. Torsional angles, $\theta$, were given $(\sin(\theta),\cos(\theta)$ representations. The Cartesian coordinates were first aligned to a single, randomly chosen, trajectory frame so that feature (5) did not include spurious rotational or translational motion. The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
     \centering
-    \begin{tabularx}{0.9\textwidth}{ |>{\raggedright\arraybackslash}l|l|>{\raggedright\arraybackslash}X| >{\raggedright\arraybackslash}X | } 
+    \begin{tabularx}{0.9\textwidth}{ |>{\raggedright\arraybackslash}l|l|>{\raggedright\arraybackslash}X|c| >{\raggedright\arraybackslash}X | } 
     \hline
-    \textbf{Hyper-parameter} & \textbf{Type} & \textbf{Search space} & \textbf{Details} \\
+    \textbf{Hyper-parameter} & \textbf{Type} & \textbf{Range} & \textbf{Dim.} &\textbf{Details} \\
      \hline\hline
-    Feature, $\chi$ & Categorical & (1) $(\phi, \psi, \chi)$ torsions & \\
-    & & (2) Inter-atomic distances & Heavy atoms only ($|\mathbf{r}_{1}-\mathbf{r}_{2}|$) \\
-    & & (3) Contacts & alpha-Carbon ($C_{\alpha}-C_{\alpha}$)\\ 
-    & & (4) Contacts & Heavy atoms only ($X-X$)\\ 
-    & & (5) RMSD &  Heavy atoms only\\ 
+    Feature, $\chi$ & Categorical & (1) $(\phi, \psi, \chi)$ & $\num{116}$  & \\
+    & & (2) $|\mathbf{r}_{1}-\mathbf{r}_{2}|$  & $\num{ 2346}$& Heavy atoms inter-atomic distances \\
+    & & (3) $C_{\alpha}-C_{\alpha}$ & $\num{15}$ & alpha-Carbon contacts\\ 
+    & & (4) $X-X$  & $\num{15}$ & Heavy atoms contacts\\ 
+    & & (5) RMSD & $\num{1}$ &  Heavy atoms only\\ 
     \hline
-    TICA lag time, $\tau$ & Integer &\SIlist[list-final-separator = { ... }]{1;1.1;100}{ns} & \\
+    TICA lag time, $\tau$ & Integer &\SIlist[list-final-separator = { ... }]{1;1.1;100}{ns} &  & \\
     \hline
-    TICA components, $m$& Integer &\numlist[list-final-separator = { ... }]{1;2;20} & \\
+    TICA components, $m$& Integer &\numlist[list-final-separator = { ... }]{1;2;20} & & \\
     \hline
-    Cluster centres, $n$ & Integer & \numlist[list-final-separator = { ... }]{10;11;1000} &  Clustered using k-means clustering  \\
+    Cluster centres, $n$ & Integer & \numlist[list-final-separator = { ... }]{10;11;1000}& &  Clustered using k-means clustering  \\
     
      \hline
     \end{tabularx}
@@ -161,7 +161,7 @@ The response of each trial was measured by building an MSM with a lag time of $\
 
 \begin{table}
     \centering
-    \caption{MSM model, scoring and cross validation (CV) details used in creating the hyper-parameter trial data sets for alanine dipeptide and AADH. The number of trials reported is the number after removing models that failed to fit for any reason.}
+    \mycaption{MSM model, scoring and cross validation (CV) details used in creating the hyper-parameter trial data sets for alanine dipeptide and AADH. The number of trials reported is the number after removing models that failed to fit for any reason.}
     \begin{tabular}{|c|c|c|}
     \hline
     & Ala\textsubscript{1} & AADH \\
@@ -187,10 +187,8 @@ To ensure the  measured response was generalisable \cite{friedman2001elements}, 
 
 The model was then scored on the remaining \SI{50}{\percent} (the test data) using the same pipeline without re-estimating the various model parameters (the expression for calculating the cross validated $\operatorname{VAMP}$ scores is described in \cite{mcgibbonVariationalCrossvalidationSlow2015} and \cite{wuVariationalApproachLearning2019}). This was repeated $20$ times, shuffling the trajectories in between each iteration.  The final trial response was calculated as the mean of the scores on the test data. All MSM fitting and MD trajectory analysis was performed in Python 3.7 using the packages PyEMMA \cite{schererPyEMMASoftwarePackage2015a}, MDTraj \cite{mcgibbonMDTrajModernOpen2015}, NumPy \cite{waltNumPyArrayStructure2011}, Pandas \cite{mckinneyPandasFoundationalPython2011}, Matplotlib \cite{hunterMatplotlib2DGraphics2007},  Seaborn \cite{michaelwaskomMwaskomSeabornV02020} and the Jupyter Project \cite{kluyverJupyterNotebooksPublishing2016}. 
 
-\subsection{Gaussian process regression}\label{subsec:rsm}
-The response surface of both systems was modelled using Gaussian process (GP) regression model with the $\operatorname{VAMP-2}$ score measured on the test data as a response ($y$) and the MSM hyper-parameters as predictors ($\mathbf{x})$. 
-
-A GP is specified by a mean function, $\mu(\mathbf{x})$ and a covariance function, $k(\mathbf{x}, \mathbf{x}^{\prime})$ (this section will follow the exposition and conventions in \cite{rasmussenGaussianProcessesMachine2006}) where $\mathbf{x}$ are some arbitrary inputs. The GP, $f$, is related to these functions as follows: 
+\subsection{Gaussian process regression}\label{subsec:gp}
+A Gaussian process (GP) is specified by a mean function, $\mu(\mathbf{x})$ and a covariance function, $k(\mathbf{x}, \mathbf{x}^{\prime})$ (this section will follow the exposition and conventions in \cite{rasmussenGaussianProcessesMachine2006}) where $\mathbf{x}$ are some arbitrary inputs. The GP, $f$, is related to these functions as follows: 
 
 \begin{equation}
     \begin{aligned}
@@ -254,89 +252,66 @@ and the mean standardized log loss (MSLL):
 MSLL=\left(\frac{1}{N}\right) \sum_{i=1}^{N}\left[\left(\frac{1}{2} \log \left(2 \pi \sigma_{i}\right)+\frac{\left(f(x)-y_{i}\right)^{2}}{\sigma_{i}^{2}}\right)-\left(\frac{1}{2} \log \left(2 \pi \sigma_{obs}\right)+\frac{\left(\bar{y}-y_{i}\right)^{2}}{\sigma_{obs}^{2}}\right)\right]
 \end{equation}  
 
-Where $\sigma_{obs}$ is the observed standard deviation of the training data response, $y_{i}$, and $\sigma_{i}^{2}$ refers to   
-A variety of combinations of predictor transformations and covariance structures were tried the best combinations for each response surface determined using standard GPR model selection techniques. 
+Here $\sigma_{obs}^{2}$ is the observed variance of the training data response, $\mathbb{E}\left[(y_{i}-\bar{y})^{2}\right]$, and $\sigma_{i}^{2}$ refers to the GP predicted variance at the observation $i$ (including the noise term). The standardization puts the log loss and mean square error on the same scale as the observations. So a $SMSE < 1$ indicates the predictions have smaller mean square error than replacing all the predictions with the mean of the observations. Similarly, $MSLL<0$ indicates the predictions have a larger log predictive density than replacing all of the predictions with a single Gaussian with mean and variance equal to the mean and variance of the observations.   
 
-To reduce the computational effort required to fit the GPR models, a sparse approximation to the full covariance of the GP, called the Fully Independent Training Conditional (FITC), was used \cite{quinonero-candelaUnifyingViewSparse2005}. In this approximation a number of observations must be designated as inducing points. This number was set to $\SI{10}{\percent}$ of the total number of observations and their location determined by k-means clustering. This fraction was chosen by fitting a GPR with the number of inducing points ranging from $\SI{10}{\percent}$ to $\SI{100}{\percent}$ of the total observations. The quartiles of the posterior for each variable of the model were independent of the number of inducing points in this range. See xx for details. 
+\subsection{Response surface modelling}\label{subsec:rsm}
+The response surface of both systems was modelled using Gaussian process (GP) regression model with the $\operatorname{VAMP-2}$ score measured on the test data as a response ($y$) and the MSM hyper-parameters as predictors ($\mathbf{x})$. A variety of combinations of predictor pre-processing and covariance structures were tried and the best combinations for each response surface determined using the SMSE and MSLL. 
 
-In order to fit a GPR a number of modelling choices need to specified, these are: 
+To reduce the computational effort required to fit the GPR models, a sparse approximation to the full covariance of the GP, called the Fully Independent Training Conditional (FITC)\cite{quinonero-candelaUnifyingViewSparse2005}, was used. In this approximation a number of observations must be designated as inducing points. This number was set to $\SI{10}{\percent}$ of the total number of observations and their location determined by k-means clustering. This fraction was chosen by fitting a GPR with the number of inducing points ranging from $\SI{10}{\percent}$ to $\SI{100}{\percent}$ of the total observations. The quartiles of the posterior for each variable of the model were found to be independent of the number of inducing points in this range.  
+
+In order to fit a GP model a number of modelling choices need to specified, these are: 
 \begin{enumerate}
-    \item the prior of the mean function, $\mu(\mathbf{\lambda})$;
-    \item the choice of kernel function, $k(\mathbf{\lambda}, \mathbf{\lambda}')$, for determining the covariance of the response;
+    \item the prior of the mean function, $\mu(\mathbf{x})$;
+    \item the kernel function, $k(\mathbf{x}, \mathbf{x}^{\prime})$;
     \item the prior distributions of kernel hyperparameters;
-    \item the transformations of the predictors 
+    \item the transformations of the predictors.
 \end{enumerate}
 
-The prior of mean function  was set to zero everywhere: $\mu(\mathbf{\lambda})=\mathbf{0}$. The kernel function was restricted to stationary kernels, i.e. where $k(\mathbf{\lambda}, \mathbf{\lambda'}) = k(|\mathbf{\lambda} - \mathbf{\lambda'}|)$, with the form: 
+The prior of mean function  was set to zero everywhere: $\mu(\mathbf{x})=\mathbf{0}$. The kernel function was restricted to stationary kernels, i.e. where $k(\mathbf{x}, \mathbf{x}^{\prime}) = k(|\mathbf{x} - \mathbf{x}^{\prime}|)$, with the form: 
 
 \begin{equation}\label{eqn:kernel_form}
-    k(|\mathbf{\lambda}-\mathbf{\lambda}'|; \Theta) = 
-    \eta^{2}\prod_i k_{M}(|\lambda_{i}-\lambda_{i}'|; \nu, l_i)
-    +\sigma_{n}^{2}\delta_{\lambda, \lambda'}
+    k(|\mathbf{x}-\mathbf{x}^{\prime}|; \theta) = 
+    \eta^{2}\prod_i k_{M}(|\mathbf{x}_{i}-\mathbf{x}_{i}^{\prime}|; \nu, l_i)
+    +\sigma_{n}^{2}\delta_{\mathbf{x}, \mathbf{x}^{\prime}}
 \end{equation}
 
-The index of the product runs over the predictors of the GPR with separate kernel functions ($k_{M}$) over each predictor, however,  for a given model, the value of $\nu$ for each predictor was the same. The multiplicative form of this kernel means that the response is correlated when the values of the predictors are simultaneously similar, with the degree of similarity required set by the length-scale parameters $l_{i}$.  The $\eta$ terms controls the total variation in the response function, the larger the value of $\eta$ the more the response is able vary over the whole predictor space. The $\sigma_{n}^{2}$ term is the variance of the response with identical predictor values, this allows the GPR to account for variation in the response due to the cross validation procedure and the finite amount of MD data used to fit the MSM. 
+The index of the product runs over the predictors of the GP with separate kernel functions ($k_{M}$) over each predictor, however, for a given model, the value of $\nu$ for each predictor was the same. The multiplicative form of this kernel means that the response is correlated when the values of the predictors are simultaneously similar, with the degree of similarity required set by the length-scale parameters $l_{i}$.  The $\eta$ terms controls the total variation in the response function, the larger the value of $\eta$ the more the response is able vary over the whole predictor space. The $\sigma_{n}^{2}$ term is the noise term (the variance of the response with identical predictor values) which allows the GP to account for variation in the response due to the cross validation procedure and the finite amount of MD data used to fit the MSM. 
 
-The kernels over the individual dimensions, $k_{M}(\cdot; \nu, l)$, were kernels in the Mat\'{e}rn class with values of $\nu=\sfrac{1}{2},\sfrac{3}{2},\sfrac{5}{2},\infty$. These are alternatively known as an exponential,Mat\'{e}rn 3-2, Mat\'{e}rn 5-2 and  Gaussian kernels respectively and are defined as follows: 
+The kernels over the individual predictors, $k_{M}(\cdot; \nu, l)$, were kernels in the Mat\'{e}rn class with values of $\nu=\sfrac{1}{2},\sfrac{3}{2},\sfrac{5}{2},\infty$. These are alternatively known as an exponential,Mat\'{e}rn 3-2, Mat\'{e}rn 5-2 and  Gaussian (Radial Basis Function, RBF) kernels respectively and are defined as follows: 
 
 \begin{align}
-k_{\text{Mat\'{e}rn-\sfrac{1}{2}}}\left(x, x^{\prime}\right) &=\exp (-r) \label{eqn:kern_exp}\\
-k_{\text{Mat\'{e}rn-\sfrac{3}{2}}}\left(x, x^{\prime}\right) &= \exp (-\sqrt{3} r)(1+\sqrt{3} r) \label{eqn:kern_m32} \\
-k_{\text{Mat\'{e}rn-\sfrac{5}{2}}}\left(x, x^{\prime}\right) &= \exp (-\sqrt{5} r)\left(1+\sqrt{5} r+\frac{5}{3} r^{2}\right) \label{eqn:kern_m52}\\
-k_{\text{Mat\'{e}rn-}\infty}\left(x, x^{\prime}\right) &= \exp \left(-\frac{1}{2} r^{2}\right) \label{eqn:kern_gauss}
+k_{\text{Exp}}\left(x, x^{\prime}; \sfrac{1}{2}\right) &=\exp (-r) \label{eqn:kern_exp}\\
+k_{\text{M-\sfrac{3}{2}}}\left(x, x^{\prime}; \sfrac{3}{2}\right) &= \exp (-\sqrt{3} r)(1+\sqrt{3} r) \label{eqn:kern_m32} \\
+k_{\text{M-\sfrac{5}{2}}}\left(x, x^{\prime}; \sfrac{5}{2}\right) &= \exp (-\sqrt{5} r)\left(1+\sqrt{5} r+\frac{5}{3} r^{2}\right) \label{eqn:kern_m52}\\
+k_{\text{RBF}}\left(x, x^{\prime}; \infty\right) &= \exp \left(-\frac{1}{2} r^{2}\right) \label{eqn:kern_gauss}
 \end{align}
-Where $r = \sfrac{(x-x^{\prime})}{l}$. These kernels were chosen based on common usage \cite{shahriariTakingHumanOut2016} and the range from `rough' Gaussian process with the exponential kernel, where correlation in the response drops off rapidly with changes in the predictors, to smooth processes with the Gaussian kernel, see chapter 5 of \cite{rasmussenGaussianProcessesMachine2006} for a full description of the Mat\'{e}rn kernels and their properties.  
-
-When modelling the response surface for visualisation and Bayesian optimisation, Maximum a posteriori (MAP) estimates  of the kernel hyper-parameters ($\theta = (\eta, \sigma_{n}, l_{1}, l_{2}, ...)$) with weakly informative priors were used (see Equation xxx in section \ref{chap:theory}). The prior distributions for the variance terms, $\eta$ and $\sigma_{n}$, were $\mathrm{Half-Cauchy}(\beta=2)$ and the priors for the length-scale parameters, $l_{i}$, were $\mathrm{Gamma}(\alpha=1, \beta=0.05)$, these distributions are shown in Figure \ref{fig:priors} panels (a) and (b) respectively.  Examples of a 1D Gaussian process with a Gaussian covariance kernel with $\eta$ and $l$ drawn from these priors are shown Figure \ref{fig:priors} panel (c).  
- 
-The half-Cauchy distribution  was used for the variance parameters  based on its use in other settings (\cite{polsonHalfCauchyPriorGlobal2012}). It was  only necessary for the scale of this distribution to give significant density in the range $0-5$ as the $\operatorname{VAMP-2}(k)$ score will lie in the range $[1,5]$ for alanine dipeptide and $[1, 4]$ for AADH which limits the possible values of $\eta$ and $\sigma_{n}$ The prior for $l$ was justified on the basis that, after scaling the predictors to lie in $[0, 1]$, values of $l \gg 1$ imply a flat response, meaning significant density on $l \gg 1$ isn't necessary. 
+where $r = |x-x^{\prime}|/l$. These kernels were chosen based on their common usage \cite{shahriariTakingHumanOut2016} and  range from `rough' exponential kernel, where correlation in the response drops off rapidly with changes in the predictors, to smooth processes with the Gaussian kernel. See chapter 5 of \cite{rasmussenGaussianProcessesMachine2006} for a full description of the Mat\'{e}rn kernels and their properties.  
 
 \begin{figure}
     \centering
-    \caption{Prior functions used specification of the GPR model of the response surface for both alanine dipeptide and AADH. The variance parameters  length-scale parameters $l_{i}$ have the }
+    \mycaption{Prior functions used specification of the GP models of the response surface for both alanine dipeptide and AADH. The variance parameters, $\eta$, $\sigma_n$ use the half-Cauchy with $\beta=2$, panel (a). The length-scale parameters $l_{i}$ use the Gamma distribution with $\alpha=1, \beta=0.05$, panel (b). 10 draws from a Gaussian process using an RBF kernel with kernel hyper-parameters $l$ and $\eta$ drawn from these prior distributions is shown in panel (c).}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/prior_functions.png}
     \label{fig:priors}
 \end{figure}
 
-All predictors were scaled to lie in the range $[0, 1]$ to aid interpretation of the kernel length-scale parameters, $l$. Before scaling the integer predictors ($\tau$, $m$ and $n$) two other transformations, $T(\cdot)$, were considered: the identity $I(\cdot)$, and a logarithmic transformation, $\log(\cdot)$. The categorical predictor, $\chi$, was dummy coded \cite{dalyDummyCodingVs2016} to give a $d$ dimensional vector of $1$s and $0$s. For example the input vector, $\mathbf{x}$ for $n=10$ and $\chi=(\phi, \psi)$ is $\mathbf{x} = (1, 0, 0, 0, 0, 10)$, and for $n=10$ and $\chi=(x, y, z)$ is  $\mathbf{x} = (0, 1, 0, 0, 0, 10)$ and so on. 
+When modelling the response surface for visualisation and Bayesian optimisation, Maximum a posteriori (MAP) estimates  of the kernel hyper-parameters, $\theta = (\eta, \sigma_{n}, l_{1}, l_{2}, ...)$, with weakly informative priors were used. The prior distributions for the variance terms, $\eta$ and $\sigma_{n}$, were $\mathrm{half-Cauchy}(\beta=2)$ and the priors for the length-scale parameters, $l_{i}$, were $\mathrm{Gamma}(\alpha=1, \beta=0.05)$, these distributions are shown in Figure \ref{fig:priors} panels (a) and (b) respectively.  Examples of a 1D Gaussian process with a Gaussian covariance kernel with $\eta$ and $l$ drawn from these priors are shown Figure \ref{fig:priors} panel (c).  
 
-In order to find the best GPR model for a given response surface, every combination of kernel function and integer predictor transformation was estimated and evaluated using the MAP estimates for the kernel hyper-parameters. This meant that for the response surface of alanine dipeptide with a single integer predictor, $8$ different models were estimated ($4$ different kernels and $2$ predictor transformations). For the response surface of AADH, with three integer predictors, $32$ different models were estimated ($4$ different kernels and $2\times2\times2=8$ different predictor transformations). 
+The r\^ole of weakly informative priors is to exclude unrealistic or disallowed values of the parameters without imposing strong prior beliefs on the outcome. The half-Cauchy distribution  was used for $\eta$ and $\sigma_n$  based on its recommended use in other settings (\cite{polsonHalfCauchyPriorGlobal2012}). It was  only necessary for the scale of this distribution to give significant density in the range $0-5$ as the $\operatorname{VAMP-2}(k)$ score will lie in the range $[1,5]$ for alanine dipeptide and $[1, 4]$ for AADH which limits the possible values of $\eta$ and $\sigma_{n}$. The prior for $l$ was justified on the basis that, after scaling the predictors to lie in $[0, 1]$, values of $l \gg 1$ imply a flat response, meaning significant density for $l \gg 1$ isn't necessary. 
 
-In order to determine the best combination of kernel function and predictor transformation two model selection metrics were used:  mean standardised log loss (MSLL) and the standardised mean square error (SMSE). Each metric was calculated used 10-fold cross validation and any model with $MSLL > 0$ or $SMSE > 1$ was discarded. The remaining models were ranked separately according to MSLL and SMSE ($R_{MSLL}$, $R_{SMSE}$) and ranked according to $\sqrt{R_{MSLL}^2 + R_{SMSE}^2}$. This ranking method was used to ensure a balance between the two selection metrics. 
+All predictors were scaled to lie in the range $[0, 1]$ to aid interpretation of the kernel length-scale parameters, $l$. Before scaling the integer predictors ($\tau$, $m$ and $n$) two input warpings, $T(\cdot)$, were considered: the identity $I(\cdot)$, and a logarithmic transformation, $\log(\cdot)$.  Input warpings are used \cite{snoekInputWarpingBayesian2014a} to mitigate the problems of modelling non-stationary functions using stationary GP models. The categorical predictor, $\chi$, was dummy coded \cite{dalyDummyCodingVs2016} to give a $d$ dimensional vector of $1$s and $0$s. For example, the input vector, $\mathbf{x}$, for the first feature would be $\mathbf{x} = (1, 0, 0, 0, 0,)$, for the second feature would be $\mathbf{x} = (0, 1, 0, 0, 0, 10)$ and so on. 
 
-The final estimated response surface, $\hat{f}(\mathbf{\lambda})$, for alanine dipeptide and AADH was estimated using the full trial data set, $\mathcal{D}_{1:N}$. It is always possible to sample more hyper-parameters and add to the trial data set, which in principle would change $\hat{f}(\mathbf{\lambda})$ and so for completeness the estimate response surface should be written $\hat{f}(\mathbf{\lambda}; \mathcal{D}_{1:N})$. This dependence on $\mathcal{D}$ is due to the finite amount of hyper-parameter trials used to estimate the response surface, the true response surface $f(\mathbf{\lambda})$ has no dependence on the number of trials. 
+In order to find the best GPR model for a given response surface, every combination of kernel function and  predictor warping was estimated using the MAP estimates for the kernel hyper-parameters and evaluated using the MSLL and SMSE metrics. This meant that for the response surface of alanine dipeptide eight different models were estimated (four different kernels and two warpings for $n$). For the response surface of AADH, with three integer predictors, $32$ different models were estimated (four different kernels and $2\times2\times2=8$ different predictor warpings). For each model both metrics were calculated used 10-fold cross validation and any model with $MSLL > 0$ or $SMSE > 1$ was discarded. The remaining models were ranked separately according to MSLL and SMSE ($R_{MSLL}$, $R_{SMSE}$) and the ranks combined according to $\sqrt{R_{MSLL}^2 + R_{SMSE}^2}$. This ranking method was used to ensure a balance between the two selection metrics compared to, say, the mean of the two ranks.  
 
 All GPR modelling was performed with the Python package PyMC3 \cite{salvatierProbabilisticProgrammingPython2016} with some visualisation performed using package GPy \cite{gpy2014}. 
 
 \subsection{Hyper-parameter relevance}\label{subsec:meth_rel}
-The characteristic length-scales of the GP kernels, $l$, determine the correlation of the response between points with different values of the accompanying predictor. For $l=1$ with an exponential kernel then inputs separated by $|x-x^{\prime}|= 1$ will on average have a correlation of $\exp^{-0.1}\simeq 0.9$. This means for large values of $l$ the response with respect to changes in $x$ will be flat, or in other words, $x$ is irrelevant to determining the response. This prompts the definition of \emph{relevance}, $R = \sfrac{1}{l}$: when $R$ is large, the small changes in $x$ result in larger changes in the response, meaning it is relevant to determining the response. Henceforth, the kernel functions (equations \ref{eqn:kern_exp} - \ref{eqn:kern_m52}) will be parameterized by $R$ instead of $l$. 
+The characteristic length-scales in equation \ref{eqn:kernel_form}, $l$, each correspond to a different predictor, or level of categorical predictor. They determine the covariance of the response between points with different values of that predictor. For example, with $l=1$ in an exponential kernel then inputs separated by $|x-x^{\prime}|= 1$ will on average have a covariance of $\exp^{-0.1}\simeq 0.9$. This means for large values of $l$ the response with respect to changes in $x$ will be flat, or in other words, $x$ is irrelevant to determining the response. This prompts the definition of \emph{relevance}, $R = \sfrac{1}{l}$: when $R$ is large, the small changes in $x$ result in larger changes in the response, meaning it is relevant to determining the response. Hereafter the kernel functions (equations \ref{eqn:kern_exp} - \ref{eqn:kern_m52}) will be parameterized interchangeably with $R$ and $l$ as convenient.  
 
-The relevance of the MSM hyper-parameters is important quantity and so to calculate the uncertainty a fully Bayesian approach was used. The same GP model was used to calculate the relevance as was used in modelling the response surface, i.e. same kernel and same predictor transformations. Instead of using the MAP estimates for the GP hyper-parameters, the full posterior distribution was sampled using Markov Chain Monte Carlo and a No U-Turn sampler with two independent chains with $500$ tuning steps and $1000$ sampling steps. Convergence was checked using the R-hat statistic (\cite{gelmanBayesianDataAnalysis2014}). 
+The relevance of the MSM hyper-parameters is important for understanding and visualising the response surface and so to calculate the uncertainty in $R$ a fully Bayesian approach was used. After model selection using the maximum marginal likelihood models described in section \ref{subsec:rsm}, the GP model hyper-parameters were re-estimated by sampling the posterior distribution using Markov Chain Monte Carlo. A No U-Turn sampling algorithm, using two independent chains with $500$ tuning steps and $1000$ sampling steps. Convergence was checked using the R-hat statistic \cite{gelmanBayesianDataAnalysis2014}. 
 
 
-\subsubsection{MSM Optimization}\label{subsec:meth_opt}
-The maximum of the response surface \emph{at the trial values} (known as the incumbent $(\mu^{*}, \mathbf{\lambda}^{*}$, \cite{shahriariTakingHumanOut2016}) gives the optimum hyper-parameters  by making full use of all the trial information. Bayesian optimisation was used to determine whether it is possible to arrive at the same incumbent, or better, using a smaller number of trials. A limited optimisation procedure was first performed on alanine dipeptide to demonstrate its effectiveness and to determine some of its parameters. A more extensive optimisation procedure was then performed on AADH. General introductions to Bayesian optimisation which cover all the methods used here can be found in \cite{NIPS2012_4522} and \cite{shahriariTakingHumanOut2016}. 
-
-Bayesian optimization is a method for optimizing ``black-box'' objective functions - those which can be sampled from but are otherwise unknown. The response of an MSM to its hyper-parameters is a black-box objective function because it is not possible to determine the response without first fitting the MSM. Bayesian optimisation is a type of sequential model based \cite{hutterSequentialModelbasedOptimization2011} optimisation technique. These techniques entail first sampling the response of the objective function over its search space to create a trial data set. A statistical model called the \emph{surrogate function}, which serves as a proxy for the objective function, is built using the sampled responses. An utility function, known as the \emph{acquisition function}, determines the anticipated utility of a set of inputs in optimizing the objective function, based on the predictions and uncertainty in the surrogate function.  The objective function is then sampled using the set of inputs which maximize the acquisition function. This new trial is added to trial data set and process repeated. This algorithm in summarised in xxx. 
-
-The surrogate function used was a GPR model with kernel and predictor transformations chosen using the method described in section xx using the MAP estimates of the hyper-parameters of the GPR, $\theta$. The number of trials used to seed the surrogate function was determined by performing the optimisation seeded with $N=10, 30, 50$ trials, each repeated 10 times, and comparing the trajectory of the incumbent, its uncertainty and the consistency of the MSM hyper-parameters. The acquisition function used was the \emph{expected improvement} which gives the difference between the current incumbent and the  response at a given input, averaged using the uncertainty of the response. The improvement, $I$ at an input value $\mathbf{x}$ over the incumbent, $\mu^{*}$, using the response of surrogate function, $f(\mathbf{x}; \theta) = \nu_{N} \sim \mathcal{N}(\mu_{N}(\mathbf{x}), \sigma_N^{2}(\mathbf{x}))$, is defined as: 
-
-\begin{equation}
-    I(\mathbf{x}, \nu_{N}, \theta; \mu^{*}):=(\nu_{N} - \mu^{*}) \mathbb{I}(\nu_{N} > \mu^{*})
-\end{equation}
-
-Here the $\mathbb{I}$ is an indicator function which prevents the improvement from being negative and the subscript $N$ denotes the dependence of the distribution of $\nu$ on the data used to estimate $f(\mathbf{x})$. The expected improvement is the expectation of $I$, averaged over the distribution of $\nu$ which can be calculated analytically as: 
-
-\begin{align}
-        \alpha_{EI}(\mathbf{x}; \mathcal{D}_{N}) & := \mathbb{E}\left[I(\mathbf{x}, f(\cdot; \theta), \mu^{*})\right] \\
-        & = (\mu_{N}(\mathbf{x}) - \mu^{*})\Phi\left( \frac{ \mu_{N}(\mathbf{x}) - \mu^{*} }{\sigma_{N}(\mathbf{x} } \right ) + \sigma_{N}(\mathbf{x})\phi\left( \frac{ \mu_{N}(\mathbf{x}) - \mu^{*} }{\sigma_{N}(\mathbf{x} } \right )
-\end{align}
-
-It is possible to take the expectation over both the distribution of $\nu$ and of the GP hyper-parameters $\theta$, this has been suggested and shown to be effective \cite{NIPS2012_4522}). However this was not done in this work because the extra computational cost involved. The candidate MSM hyper-parameters were determined as those which had the highest expected improvement as calculated on a $4 \times 100 \times 20 \times 100$ ($\chi \times \tau \times m \times n$) evenly spaced grid over the search space.
-
-10 steps of this optimization procedure was performed on 10 random subsets of the alanine dipeptide trial data  set with $N=10, 30, 50$ observations  (stratified over the features $\chi$), corresponding to $5, 15, 25$ observations per predictor. These numbers were arbitrarily chosen but were influenced by conventional advice for parametric regression models (\cite{harrelRegressionModelingStrategies2015}) which states that the number of observations should be at least $15$ observations per predictor, thus $5, 15$ \& $25$, observations per predictor constituted a low, medium, and high information cases.  As discussed further in subsection \ref{subsec:ala1}, $25$ observations per predictor was found to result in satisfactory improvement in the incumbent and so was chosen as the number of trials used to seed the optimization procedure for AADH. 
-
-It was observed during these experiments that the same candidate hyper-parameters were being proposed by the algorithm. This was deemed partly due to the simple nature of the response surface and partly due to the granularity of the grid used in the maximisation of the acquisition function. To ensure that each candidate hyper-parameter is unique, the Bayesian optimisation algorithm was modified so that only  hyper-parameters sets not already in the trial data set were considered as candidates. The final Bayesian optimisation algorithm is described in algorithm \ref{alg:bayes_opt}.
+\subsection{Bayesian Optimization}\label{subsec:bayes_opt}
+Bayesian optimization is a method for optimizing ``black-box'' objective functions - those which can be sampled but are otherwise unknown \cite{shahriariTakingHumanOut2016}. The response of an MSM to its hyper-parameters is a black-box objective function because it is not possible to determine the response without first fitting the MSM. Bayesian optimisation is a type of sequential model based \cite{hutterSequentialModelbasedOptimization2011} optimisation technique. These techniques entail first sampling the response of the objective function over a search space to create a trial data set. A statistical model called the \emph{surrogate function}, which serves as a proxy for the objective function, is built using the sampled responses. An utility function, known as the \emph{acquisition function}, determines the anticipated utility of a set of inputs in optimizing the objective function, based on the predictions and uncertainty in the surrogate function.  The objective function is then sampled using the set of inputs which maximize the acquisition function. This new trial is added to trial data set and process repeated. This algorithm (with modifications discussed below) is summarised in algorithm \ref{alg:bayes_opt}. 
 
 \begin{algorithm}\label{alg:bayes_opt}
 \KwData{Trial data: $\mathcal{D}_{N} = \{(y_{1}, \mathbf{x}_{1}), ...,(y_{N}, \mathbf{x}_{N}) \}$}
@@ -344,49 +319,82 @@ It was observed during these experiments that the same candidate hyper-parameter
 \KwResult{$\mathbf{x}^{*} = \argmax_{\mathbf{x}}{f(\mathbf{x}; \mathcal{D}_{N+p})}$}
 \BlankLine
 \For{$i\leftarrow N$ \KwTo $N+p$}{
-    estimate GPR $f(\mathbf{x}; \mathcal{D}_{i})$\;
+    estimate GP surrogate $f(\mathbf{x}; \mathcal{D}_{i})$\;
     calculate incumbent: $\mu^{*} = \argmax{f(\mathbf{x};\mathcal{D}_{i})}\ \mathrm{s.t.}\ (y, \mathbf{x}) \in \mathcal{D}_{i}$\;
     estimate acquisition function: $\alpha_{\mathrm{EI}}(\mathbf{x}; \mathcal{D}_{i})\ \mathbf{x} \in \mathbf{X}$\;
     select candidate: $\mathbf{x}_{i+1} = \argmax_{\mathbf{x}}\alpha_{\mathrm{EI}}(\mathbf{x}; \mathcal{D}_{i})\ \mathrm{s.t.}\ (\mathbf{x} \in \mathbf{X})\ \&\ (\mathbf{x} \notin \mathcal{D}_{i})$\;
     query objective function to obtain: $y_{i+1}$\;
     augment data: $\mathcal{D}_{i+1} \leftarrow \{\mathcal{D}_{i}, (y_{i+1}, \mathbf{x}_{i+1})\}$
 }
-\caption{Bayesian Optimisation}
+\caption{Bayesian Optimisation.}
 \end{algorithm}
+
+In principle, any function capable of predicting a response along with its uncertainty can be used in Bayesian optimisation, examples include random forests [] and Tree Parzen estimator models []. However Gaussian process models are commonly used [][][], especially for hyper-parameter optimisation problems\cite{bergstraAlgorithmsHyperParameterOptimizationa}\cite{martinez-cantinBayesOptBayesianOptimization2014}, due to their flexibility in modelling non-linearities; their natural incorporation of uncertainty due to data sparsity; the resulting analytical expressions for acquisition functions, and the fact that they are closed under sampling \cite{NIPS2012_4522}\cite{brochuTutorialBayesianOptimization2010} (this last fact essentially asserts that updating a GP with additional observations the model remains a GP). 
+
+There are a wide variety of candidate selection policies, corresponding to different acquisition functions, each of which trades off exploration or the search space with exploitation of more certain optima of the response function. Improvement based policies, such as probability of improvement \cite{Kushner1963} and expected improvement \cite{mockus1978application}, suggest candidates that lead to increases over an incumbent target, $\mu^{*}$.  Optimistic policies, such as the upper confidence bound \cite{icml2010_129}, minimize the cumulative regret (the sum of the difference between the true maximum and the function evaluations at the candidate inputs). Other policies are based on information theoretic approaches (such as the.....) 
+
+This work uses the the expected improvement, $\mathbb{E}[I]$ where the improvement, $I$, is defined :  
+\begin{equation}
+    I(\mathbf{x}, f, \mu^{*}):=(f(\mathbf{x}) - \mu^{*}) \mathbb{I}(f(\mathbf{x}) > \mu^{*})
+\end{equation}
+
+Here the $\mathbb{I}$ is an indicator function which prevents the improvement from being negative and the incumbent is defined as the maximum of the response surface \emph{at the trial values}. The expected improvement is the expectation of $I$, averaged over the distribution of $f(\mathbf{x})$ which can be calculated analytically for maximum marginal likelihood GPs as: 
+
+\begin{align}
+        \alpha_{EI}(\mathbf{x}) := &  \mathbb{E}\left[I(\mathbf{x}, f(\mathbf{x}), \mu^{*})\right] \\
+         =  &(\mu(\mathbf{x}) - \mu^{*})\Phi\left( \frac{ \mu(\mathbf{x}) - \mu^{*} }{\sigma(\mathbf{x})} \right ) + \sigma(\mathbf{x})\phi\left( \frac{ \mu(\mathbf{x}) - \mu^{*} }{\sigma(\mathbf{x} } \right )
+\end{align}
+
+Here $\Phi, \phi$ are the normal cumulative and probability distribution functions respectively, and $\sigma(\mathbf{x})$ is the variance of the GP at the point $\mathbf{x}$. It is possible to take the expectation over both the distribution of $f$ and of the GP hyper-parameters $\theta$ and this has been suggested and shown to be effective \cite{NIPS2012_4522}). However this was not done in this work because the extra computational cost involved. The candidate MSM hyper-parameters were determined as those which had the highest expected improvement as calculated on a $4 \times 100 \times 20 \times 100$ ($\chi \times \tau \times m \times n$) evenly spaced grid over the search space.
+
+It was observed during these experiments that the same candidate hyper-parameters were being proposed by the algorithm. This was deemed due to the granularity of the grid used in the maximisation of the acquisition function. To ensure that each candidate hyper-parameter is unique, the Bayesian optimisation algorithm was modified so that only  hyper-parameters sets not already in the trial data set were considered as candidates. This is reflected in the conditions on the `select candidate' step of algorithm \ref{alg:bayes_opt}.
+
+Although not explicitly discussed in the theoretical literature, software packages seed the process with randomly selected hyper-parameter trials so that the initial response surface contains some information, rather than just a random draw from the prior function distribution. The default number of trials in Bayesian optimisation software packages lie in the range x - y. Conventional advice \cite{harrelRegressionModelingStrategies2015} for parametric models (e.g. multi-variable linear regression) puts the required number of observations for estimating parameters as at least $15$ observations per parameter. An appropriate number was partially explored in this work. 
+
+\subsection{MSM Optimisation}
+Bayesian optimisation was used to determine whether the maximum of the response surface estimated from the trial data set could be improved and whether this maximum could be reached with smaller trial data set.
+
+A limited optimisation procedure was first performed on the alanine dipeptide system to demonstrate its effectiveness and to determine how many randomly sampled seed trials are needed to initalise the BO procedure, $N_{seed}$. $p=10$ steps of the BO algorithm was performed on five random subsets of the alanine dipeptide trial data set with $N_{seed}=30, 50$ observations (stratified over the features $\chi$), corresponding to $15, 25$ observations per predictor. As discussed further in section \ref{subsec:ala1}, $25$ observations per predictor was found to result in satisfactory improvement in the incumbent.  
 
 For AADH two optimisation experiments were performed:
 \begin{enumerate}
-    \item $p=50$ steps of Bayesian optimisation was performed using a response surface seeded with all of the randomly sampled hyper-parameter trial data ($N=361$);
-    \item $p=50$ steps of Bayesian optimisation was performed on five subsets  of the hyper-parameter trial data with  $N=100$.
+    \item $p=50$ steps of Bayesian optimisation was performed using a response surface seeded with all of the randomly sampled hyper-parameter trial data ($N_{seed}=361$);
+    \item $p=50$ steps of Bayesian optimisation was performed on five subsets  of the hyper-parameter trial data with  $N_{seed}=100$, which corresponded to $25$ observations per predictor.
 \end{enumerate} 
-In both cases the kernel and input transformations were determined using the method in section xx. 
+
+In both cases the hyper-parameters of the response surface model (input warpings, kernel type, kernel hyper-parameters) were determined using the method in section \ref{subsec:rsm}. 
 
 
 \section{Results and discussion}
 \subsection{Alanine Dipeptide}\label{subsec:ala1}
 \subsubsection{Response surface}\label{subsubsec:ala_rsm}
-The average MSM response for each trial are shown in figure \ref{fig:ala1_train_test}. The test response ($f^{test} = f(\chi, n; x^{test})$, blue points) and the degree of over-fitting ($f^{train} - f^{test}$, orange) are shown as a function of $n$. The  features are ordered according to the  mean of the test response. As expected the  $(\phi, \psi)$ feature has the highest average response. Perhaps unexpectedly, the heavy atom $(x,y,z)$ coordinates feature performs almost as well. Each feature shows an almost flat response to increasing $n$ and each with a negligible degree of over-fitting. 
-The test response was modelled as a Gaussian Process with $\chi$ and $n$ as predictors. Model selection on the combinations of kernel functions and predictor transformations was performed and the results are shown in table \ref{tab:ala2_fit_results}.  
 
-The largest improvement in fit, as measured by both the MSLL and SMSE, comes from changing the transformation from $I(n)$ to $\log{(n)}$. This is unsurprising given that the shape of the response for the $(\phi, \psi)$ and $(x,y,z)$ features (panels (a) and (c) in figure \ref{fig:ala1_train_test}) is a clearly non-stationary process: the correlation with respect to changes in $n$ is much lower for $n\leq 100$ than for $n\geq 100$ where the response is flat. The log transformation smooths the response with respect to $n$ and makes the assumption of a stationarity more plausible. The best fitting model, as judged by both the smallest SMSE and MSLL, uses a log transformation of the number of clusters and $k_{M}$ in \ref{eqn:kernel_form} equal to a Mat{\'e}rn 5-2 kernel \ref{eqn:kern_m52}. I use these two modelling choices in all further modelling of the alanine dipeptide response surface.  
-
-The response surface for alanine dipeptide is shown in figure \ref{fig:ala1_response}.  The blue line shows the mean of the Gaussian process and the shaded blue area represents two standard deviations about the mean value (i.e. the width of the Gaussian process but ignoring the predicted measurement error, $\sigma_n$). This response surface fits the observed data well, both in terms of the mean response and its uncertainty. There are a number of features of the response surface which are worth discussing. 
-
-\begin{figure}[!ht]
+\begin{figure}[p]
     \centering
-    \caption{The response surface for MSMs of alanine dipeptide as a function of the feature, $\chi$ (panels a - e) and number of clusters, $n$ (horizontal axis).  }
+    \mycaption{The $\operatorname{VAMP-2}$ scores of the hyperparameter trials for MSMs of alanine dipeptide. The test response, $f^{test} = f(\chi, n; \mathbf{X}^{test})$ is shown in blue, panels: a, c, e, g, i,  while the degree of over-fitting, $f^{train} - f^{test}$, is shown in orange, panels: b, d, f, h, j. Each row represents a different value of the feature ($\chi$) and the horizontal axis represent the number of clusters, ($n$). Each trial was scored with $20$ iterations of 50:50 shuffle split cross validation. The error bars represent the $25$th and $75$th quantiles of the cross-validation folds. 
+    The features are ordered according to the mean of the their test scores.}
+    \includegraphics[height=0.8\textheight]{chapters/msm_optimization/figures/ala1_train_test_results.png}
+    \label{fig:ala1_train_test}
+\end{figure}
+
+The average MSM response for each trial are shown in figure \ref{fig:ala1_train_test}. The test response ($f^{test} = f(\chi, n; X^{test})$, blue points) and the difference between train and test response, ($\Delta f = f^{train} - f^{test}$, orange) are shown as a functions of $n$. The features are ordered according to the  mean of the test response. As expected [][] the  $(\phi, \psi)$ feature has the highest average response, but unexpectedly, the heavy atom $(x,y,z)$ coordinates feature performs just as well. 
+
+The difference between the train and test response, the \emph{over-fitting} reflects the consistency between the eigenvectors estimated on the training data and those implied from the time-lagged covariance and overlap matrices ($C$ and $\Pi$  in \ref{eqn:tran_def}) estimated  on the test data. So a small $\Delta f$ implies that the picture of the relaxation processes are represented equally well, with the given hyper-parameters, in the training and test data (even if they're both inaccurate pictures). This will arise, as is likely in this case, with large volumes of data.    
+
+The response surface (figure \ref{fig:ala1_response}) was modelled as a Gaussian process with $\chi$ and $n$ as predictors. A Mat\'{e}rn 5-2 kernel and logarithmic input warping of $n$ were chosen using a combination of the MSLL and SMSE model selection criteria (see table \ref{tab:ala2_fit_results} for the full model selection results). The choice of logarithmic warping of $n$ is unsurprising given that the response for the $(\phi, \psi)$ and $(x,y,z)$ features (panels (a) and (c) in figure \ref{fig:ala1_train_test}) is a clearly non-stationary process: the covariance of the response with respect to changes in $n$ is much lower for $n\leq 100$ than for $n\geq 100$ where the response reaches a plateau. The log transformation smooths the response with respect to $n$ and makes the assumption of a stationarity more plausible.  This response surface fits the observed data well, both in terms of the mean response and its uncertainty. There are a number of features of the response surface which are worth discussing. 
+
+\begin{figure}
+    \centering
+    \mycaption{The response surface of alanine dipeptide as a function of the feature, $\chi$ (panels a - e) and number of clusters, $n$ (horizontal axis). The features are ordered according to their average response. A Mat\'{e}rn 5-2 kernel and logarithmic warping of the predictor $n$  was used. The blue line is the mean of the surface, the blue shaded bands represent the uncertainty ($\pm2\sigma$ excluding the noise term $\sigma_{n}$, and the black crosses are the observed values (the cross validated mean of VAMP-2).}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/ala1_response_surface.png}
     \label{fig:ala1_response}
 \end{figure}
 
-First, for there is a decrease in response as $n \rightarrow 10$ for the $(\phi, \psi)$ and $(x,y,z)$ coordinate features but not the remaining features (although this is due to the sparse sampling for $n<20$ and no sampling for $n<10$). This is expected from from previous studies \cite{wuVariationalApproachLearning2019}\cite{mcgibbonVariationalCrossvalidationSlow2015} and is due to decreasing eigenfunction discretization error, $\delta$  \cite{prinzMarkovModelsMolecular2011} as a $n$ increases. In the language of statistical learning theory \cite{friedman2001elements}, this is the high ``Bias'' regime of the ``Bias-variance'' trade-off. The discretizaton error for the $i$'th normalized eigenfunction $\Psi_{i}$ is given by: 
+First, there is a decrease in response as $n \rightarrow 10$ for the $(\phi, \psi)$ and $(x,y,z)$ coordinate features but not the remaining features (although this is due to the sparse sampling for $n<20$ and no sampling for $n<10$). This is expected from previous studies \cite{wuVariationalApproachLearning2019}\cite{mcgibbonVariationalCrossvalidationSlow2015} and is due to decreasing eigenfunction discretization error, $\delta$  \cite{prinzMarkovModelsMolecular2011} as a $n$ increases. In the language of statistical learning theory \cite{friedman2001elements}, this is the high ``Bias'' regime of the ``Bias-variance'' trade-off. The discretizaton error for the $i$'th normalized eigenfunction $\Psi_{i}$ is given by: 
 
 \begin{equation}
-    \delta_{i} \equiv\left\|\Psi_{i}(\mathbf{z})-\hat{\Psi}_{i}(\mathbf{z})\right\|_{\pi, 2}=\left(\int_{\Omega} d \mathbf{z} \pi(\mathbf{z})(\Psi_{i}(\mathbf{z})-\hat{\Psi}_{i}(\mathbf{z}))^{2}\right)^{1 / 2}
+    \delta_{i} \equiv\left\|\Psi_{i}\left(\mathbf{z})-\hat{\Psi}_{i}(\mathbf{z}\right)\right\|_{\pi, 2}=\left(\int_{\Omega} d \mathbf{z} \pi(\mathbf{z})(\Psi_{i}(\mathbf{z})-\hat{\Psi}_{i}(\mathbf{z}))^{2}\right)^{1 / 2}
 \end{equation}
-
-Here $\mathbf{z}$ are the relevant coordinates of the system, $\pi$ is the stationary distribution and the integral runs over all of the state space, $\Omega$. Figure \ref{fig:ala1_evcompare} demonstrates this for the $\phi$ feature. Panel (a) shows the stationary distribution, which has been truncated for $\phi \simeq 0, 2$ due to the temporal resolution of the MD trajectories. Panels (b), (c) and (d) show the difference between the second normalised eigenvector ($\Psi_{2}$) estimated with $n=500$ basis states, (black line, labelled `True', because it assumes the discretization error here is negligible), and the same eigenvector estimated with $2, 5, 50$ basis states (blue line, labelled `Approx.'). The red shaded area shows the discretization error which decreases as $n$ increases as the approximate eigenfunction gets closer to the `True' eigenfunction. For this feature, and likely for the other 1D features, the largest increase in VAMP-2 occurs below $n=10$ which explains the the drop in response with decreasing $n$ is not observed. 
-
 \begin{figure}
     \centering
     \caption{}
@@ -394,170 +402,242 @@ Here $\mathbf{z}$ are the relevant coordinates of the system, $\pi$ is the stati
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/ala1_ev_n_compare.png}
 \end{figure}
 
-Second, the response for $n > 100$ for all features is constant which is a result of the number of eigenvectors/eigenvalues used in the VAMP-2 score and the volume of MD data. Only the first $4$ non-trivial eigenvectors are used in the VAMP-2 score so the decrease in discretization error with increasing $n$ will eventually approach zero for these eigenvectors. As $n$ continues to increase we expect to enter the high variance regime of the ``Bias-variance'' trade-off as the number of transitions between states becomes smaller resulting in higher statistical uncertainty in the elements of transition matrix. 
+Here $\mathbf{z}$ are the relevant coordinates of the system, $\pi$ is the stationary distribution and the integral runs over all of the state space, $\Omega$. The integrand is the difference between the true normalized eigenfunction $\Psi$ and approximate eigenfunction $\hat{\Psi}$. 
 
-Third, large uncertainty of response surface for $n \leq 20$ is a result of transformation of the $n$ into log-space and the comparatively sparse sampling in this region. Identifying the type of input transformation (or input \emph{warping})is important for efficient optimisation \cite{snoekInputWarpingBayesian2014a} discussed further below in this chapter.
+To get a sense of how the response and the discrietisation error are related, approximations to dominant eigenfunction, $\hat{\Psi}_{2}$, for the $\phi$ feature, are plotted in figure \ref{fig:ala1_evcompare}. For reference, panel (a) shows the stationary distribution. The truncation around the values of $\phi \simeq 0, 2$ is due to the temporal resolution of the MD trajectories. The Panels (b), (c) and (d) show the difference between the true second normalised eigenvector ( black line labelled $\Psi_{2}$ (True)) and the same eigenvector estimated with $2, 5, 50$ basis states (blue line, labelled $\Psi_{2}$ (Approx.)). The true eigenvector was taken as $\Psi_{2}$ estimated with $n=500$ basis states (i.e. with negligible discretization error) rather than the eigenvector measured in the $(\psi, \phi)$ space for simplicity. The red shaded area shows the discretization error which is summed to give $\delta$. As $n$ increases from $2$ to $10$ to $50$, $\delta$ decreases (from $67.98$ to $51.54$ to $1.99$) while the response increases from $1.25$ to $1.98$ to $1.99$. For this feature, and likely for the other one-dimensional features ($\psi$, RMSD) the largest decrease in VAMP-2 occurs below $n=10$ which explains why the drop in response with decreasing $n$ is not observed. 
 
-Fourth, it is clear from inspection of figure \ref{fig:ala1_response} that the most relevant hyperparameter for determining the test response is the feature, $\chi$, while the number of cluster centres,  $n$, is almost irrelevant. This information can be encoded the learned parameters of a Gaussian process regression model which will be of benefit in more complicated systems with more than two hyperparameters. 
+Second, the response for all features for $n > 100$ is constant. This is a result of the volume of MD simulation data. The discretisation error will eventually become negligible for all of the  non-trivial eigenvectors used in the VAMP-2 score as $n$ increases. As already mentioned, this explains the rapid increase in the response for $n<100$. In general, as $n$ increases the statistical uncertainty in the elements of the estimated transition matrix will increase and the model enters the high variance regime of the ``Bias-variance'' trade-off.  However, with the large volume simulation data the number of observations ($750\times(1000-9) = \num{743250}$ pairs of observed transitions) is comparable to the degrees of freedom for a reversible MSM \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} ($\sfrac{1}{2}n(n-1)+n-1=\num{500499}$ for $n=1000$).   
+
+Third, large uncertainty of response surface for $n \leq 20$ is a result of the logarithmic warping  of $n$ and the comparatively sparse sampling in this region (as all sampling was done without prior logarithmic warping). 
+
+Fourth, it is clear from inspection of figure \ref{fig:ala1_response} that the most relevant hyperparameter for determining the test response is the feature, $\chi$, while the number of cluster centres,  $n$, is almost irrelevant. This information is encoded in the learned hyper-parameters of a Gaussian process which will be of benefit in more complicated systems with more than two hyperparameters. 
  
 \subsubsection{Hyper-parameter relevance}\label{subsubsec:ala_relevance}
-This last observation can be quantified and understood by calculating the relevance of each predictor using the estimated length-scale parameters of the kernel. There are five levels of the categorical predictor $\chi$ each with an associated relevance ($R_{\chi_{1}}, ..., R_{\chi_{1}}$) as well as the relevance of the number of cluster centres, $R_{n}$. The interpretation of these two sets is slightly different. 
 
 \begin{figure}
     \centering
-    \caption{Box plots of the relevance of hyper-parameters of alanine dipeptide. The distribution of the parameters of the response surface (shown in figure \ref{fig:ala1_response}) were estimated using MCMC. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the log-transformed number of cluster centres, $n$ is shown in orange (labelled `Other').}
+    \mycaption{The relevance of the hyper-parameters of alanine dipeptide. The distribution of the parameters of the response surface (shown in figure \ref{fig:ala1_response}) were estimated using MCMC. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the log-transformed number of cluster centres, $n$ is shown in orange (labelled `Other').}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/ala1_relevance.png}
     \label{fig:ala1_relevance}
 \end{figure}
 
 \begin{table}
     \centering
-    \caption{Caption}
-    \begin{tabular}{|l|l|}
+    \mycaption{Median and $\SI{95}{\percent}$ credible intervals for the kernel hyper-parameters of the alanine dipeptide response surface estimated using MCMC. The length-scale parameters in \ref{eqn:kernel_form} are re-written here as relevances.}
+    \begin{tabular}{|l|l|l|}
     \hline
-                          Hyper-parameter &    Median (95\% C.I.) \\
+                          Hyper-parameter &    Median & $\SI{95}{\percent}$ C.I. \\
     \hline\hline
-     $R_{(\phi, \psi)\ \mathrm{torsion}}$ &  0.321 (0.020-4.456) \\
-        $R_{(x, y, z)\ \mathrm{coords.}}$ &  0.344 (0.024-5.572) \\
-             $R_{\phi\ \mathrm{torsion}}$ &  0.068 (0.015-1.176) \\
-             $R_{\psi\ \mathrm{torsion}}$ &  0.056 (0.013-1.327) \\
-                               $R_{RMSD}$ &  0.081 (0.016-1.406) \\
-                          $R_{\log{(n)}}$ &  0.029 (0.013-0.063) \\
-                                   $\eta$ &  2.518 (1.141-5.530) \\
-                               $\sigma_n$ &  0.006 (0.006-0.007) \\
+     $R_{(\phi, \psi)\ \mathrm{torsion}}$ &  0.321 & 0.020-4.456 \\
+        $R_{(x, y, z)\ \mathrm{coords.}}$ &  0.344 & 0.024-5.572 \\
+             $R_{\phi\ \mathrm{torsion}}$ &  0.068 & 0.015-1.176 \\
+             $R_{\psi\ \mathrm{torsion}}$ &  0.056 & 0.013-1.327 \\
+                               $R_{RMSD}$ &  0.081 & 0.016-1.406 \\
+                          $R_{\log{(n)}}$ &  0.029 & 0.013-0.063 \\
+                                   $\eta$ &  2.518 & 1.141-5.530 \\
+                               $\sigma_n$ &  0.006 & 0.006-0.007 \\
     \hline
     \end{tabular}
     \label{tab:ala1_rel_post}
 \end{table}
 
-The relevance of $n$ determines the correlation of the response to changes in $n$ \emph{within the same feature}. The covariance between $n$ and $n^{\prime}$ on the same feature will be (using the equation \ref{eqn:kernel_form})):
+This last observation can be quantified and understood by estimating the relevance of each predictor. The posterior distributions of the six relevance parameters of the response surface are summarised in box plots in figure \ref{fig:ala1_relevance}, and  the median and $\SI{95}{\percent}$ credible intervals  are tabulated in table \ref{tab:ala1_rel_post}. The interpretation of the relevance features (levels of $\chi$) will be different to that of the other hyper-parameters. 
 
-\begin{equation}
+The relevance of $n$ determines the covariance of the response to changes in $n$ \emph{within the same feature}. This can be seen from the equation \ref{eqn:kernel_form} and making use of the fact that all kernel functions, $k(x, x^{\prime})=1$ for $x-x^{\prime}=0$:
+\begin{equation*}
 \begin{split}
     k^{tot}(\mathbf{x}, \mathbf{x}^{\prime})& = k\left((1, 0, 0, 0, 0, n), (1, 0, 0, 0, 0, n^{\prime})\right) \\
     & = \eta^{2}\cdot 1 \cdot 1\cdot 1 \cdot 1\cdot 1 \cdot k_{M}(n, n^{\prime}; R_{n}) \\
     & = \eta^{2}\cdot k(n, n^{\prime})
 \end{split}
-\end{equation}
-In the last line the noise term $\sigma_{n}$, $\nu$ and $R$ have been dropped for clarity and use has been made of the fact that for kernels  $k(0, 0)=k(1,1)=1$. The covariance between the response at $n$ and $n^{\prime}$ is determined by the kernel parameter $R_{n}$ (and $\eta$ although this is the same for all predictors). The median values of the response surface parameters are shown in table \ref{tab:ala1_rel_post} and these imply that for change $n=10$ and $n=1000$ (a change of $1$ on the normalized scale) the correlation will be $k_{M52}(0,1; 0.029) \simeq 0.99$. 
+\end{equation*}
+The median relevance of $\log{(n)}$ is equal to $\num{0.029}$ and these imply that for change $n=10$ and $n=1000$ (a change of $1$ on the normalized scale) the covariance will be $\eta^{2}k_{M-52}(0,1; 0.029) \simeq 0.99\eta^{2}$. In other words, the response will be independent of the $n$ as already noted. 
 
 The relevance of the different features determines the amount of information sharing between different features. Between a high relevance feature and all other features, there is little information sharing; between low relevance features there is a large amount of information sharing. To see this, consider the covariance between points at $n$ and $n^{\prime}$ on two different features, $\chi_1$ and $\chi_2$: 
-
-\begin{equation}
+\begin{equation*}
 \begin{split}
-    k(\mathbf{x}, \mathbf{x}^{\prime})& = k\left((1, 0, 0, 0, 0, n), (0, 1, 0, 0, 0, n')\right) \\
-    & = \eta^{2}\times k_{M}\left(1, 0; l_{\chi_1}\right) \times k_{M}\left(0, 1; l_{\chi_2}\right) \cdot 1 \cdot 1\cdot 1 \cdot k_{M}(n, n^{\prime}; l_{n}) \\
+    k^{tot}(\mathbf{x}, \mathbf{x}^{\prime})& = k\left((1, 0, 0, 0, 0, n), (0, 1, 0, 0, 0, n')\right) \\
+    & = \eta^{2}\times k_{M}\left(1, 0; R_{\chi_1}\right) \times k_{M}\left(0, 1; R_{\chi_2}\right) \cdot 1 \cdot 1\cdot 1 \cdot k_{M}(n, n^{\prime}; R_{n}) \\
     &=  \eta^{2}\cdot k_{1}\cdot k_{2}\cdot k(n, n^{\prime})
 \end{split}
-\end{equation}
+\end{equation*}
 
-Here the notation is again simplified by making use of the fact that the kernel functions over different features can only take on value of $k_{i}(0, 1)=k_{i}(1, 0) = k_{i}(1)=k_{i}$. For low relevance features, low $R$ implies $k\simeq 1$ and the covariance of the response between $n$ on $\chi_1$ and $n^{\prime}$ on $\chi_2$ will be the similar to the covariance between $n$ and $n^{\prime}$ on the same feature. With high relevance features, high $R$ implies $k \ll 1$ and there will be little correlation between the response at $n$ on feature $\chi_1$ and $n^{\prime}$ on features $\chi_2$.   The features for alanine dipeptide are all relatively low relevance (i.e. less than $1$) which is a reflection of the  consistently flat response to changes in $n$ discussed above. However the $(\phi, \psi)$ and $(x,y,z)$ coordinate features have slightly higher relevance which is required to accommodate the drop in the response for low $n$ compared to the flat response for the other features.  
+If either $R_{\chi_1}$ or $R_{\chi_2}$ is large then $k_1 \cdot k_2 \simeq 0$ and there will no correlation between $n$ on feature $\chi_1$ and $n^{\prime}$ on feature $\chi_2$. If both $R_{\chi_1}$ and $R_{\chi_2}$ are small then $k_1 \cdot k_2 \simeq 1$ and covariance between $n$ on feature $\chi_1$ and $n^{\prime}$ on $\chi_2$ will be similar to the covariance between $n$ and $n^{\prime}$ on the same feature.  The features for alanine dipeptide are all relatively low relevance (i.e. less than $1$) which is a reflection of the  consistently flat response to changes in $n$ discussed above. Even between  two largest relevance features $(\phi, \psi)$ and $(x,y,z)$, the covariance between $n$ and $n^{\prime}$ on these two features is only altered by  $k_{1}\cdot k_{2} = 0.91\cdot0.92 \simeq 0.83$. 
+
 
 \subsubsection{Optimization}\label{subsubsec:ala_opt}
 
-\begin{figure}[!ht]
+\begin{figure}[p]
     \centering
-    \mycaption{Bayesian optimisation trajectories of alanine dipeptide seeded with 30 hyper-parameter trials, panel \ref{fig:ala_opt_traj_30},  and 50 hyper-parameter trials, panel \ref{fig:ala_opt_traj_50}, for five different random subsets  (`iterations') of the total hyper-parameter trial data set. The orange values are the trajectories calculated from random sampling, the blue values are the Bayesian optimisation trajectories. The first row (sub-panels (a) - (e)) are the VAMP-2 response, the second row (sub-panels (f) - (j)) show the accompanying number of cluster centres, and the third row (sub-panels (k) - (o)) are the  accompanying feature.}\label{fig:ala_opt_traj}
-    \subtop[30 hyper-parameter trials\label{fig:ala_opt_traj_30}]{
+    \mycaption{Bayesian optimisation trajectories of alanine dipeptide seeded with $30$ hyper-parameter trials ($15$ observations per predictor), panel \ref{fig:ala_opt_traj_30},  and 50 hyper-parameter trials ($25$ observations per predictor), panel \ref{fig:ala_opt_traj_50}, for five different random subsets  (`iterations') of the total hyper-parameter trial data set. The orange values are the trajectories calculated from random sampling, the blue values are the Bayesian optimisation trajectories. The first row (sub-panels (a) - (e)) are the VAMP-2 response, the second row (sub-panels (f) - (j)) show the accompanying number of cluster centres, and the third row (sub-panels (k) - (o)) are the  accompanying feature.}\label{fig:ala_opt_traj}
+    \subtop[$N_{seed}=30$\label{fig:ala_opt_traj_30}]{
         \includegraphics[width=0.7\linewidth]{chapters/msm_optimization/figures/ala1_opt_traj_start_obs_30.png}}
     
-    \subtop[50 hyper-parameter trials\label{fig:ala_opt_traj_50}]{
+    \subtop[$N_{seed}=50$ \label{fig:ala_opt_traj_50}]{
         \includegraphics[width=0.7\linewidth]{chapters/msm_optimization/figures/ala1_opt_traj_start_obs_50.png}}
 \end{figure}
 
-The maximum of the response surface \emph{at the trial values} gives the optimum hyperparameters incorporating uncertainty and making full use of all the trial information. For alanine dipeptide the optimum hyper-parameters (using the GPR described in section \ref{subsubsec:ala_rsm}) these parameter are shown in in table xxx.  Given the large amount of sampling required to reach these values, a natural question to ask is: ``could we have arrived at these values with less sampling through optimization''? 
 
-In order to answer this question an appropriate number of seed trial observations had to be determined first. The optimisation trajectories (i.e. the value of the incumbent and the associated predictors) are shown in figure \ref{fig:ala_opt_traj} seeded with 30 trials (or 15 observations per predictor, panel \ref{fig:ala_opt_traj_30} and 50 trials (or 25 observations per predictor, panel \ref{fig:ala_opt_traj_50}), and repeated five times to get a sense of the variation between optimisation trajectories. Each optimisation trajectory consisted of 10 steps of Bayesian optimisation (the blue points) but the figure also shows the trajectory calculated using the randomly sampled trials for comparison (the orange points). The input transformation and kernel function used were the same as those used on the full trial data set. In principle these GPR modelling choices should be determined independently for each data set but given the simplicity of the response surface it was deemed unnecessary for this system. With 30 seed trials, the incumbent trajectories of iteration 2, 3, \& 5 decreased, while for all iterations seeded with 50 seed trials \ref{fig:ala_opt_traj} the incumbent trajectories remained constant or increased. 50 seed trials, or 25 observations per predictor were therefore deemed appropriate. 
+% Optimum MSM hyper-parameters for AADH pre- and post-Bayesian optimisation (BO). Each column represents a Bayesian optimisation experiment, seeded with $N_{seed}$ randomly sampled hyper-parameter trials. Five iterations of optimisation were run with $N_{seed}=100$ (labelled $\# 1, 2$ etc.) and a single iteration optimising the response surface using all the trial data ($N_{seed}=361$). Each row is a variable or outcome with values associated with the optimum value of $\mu$ before and after the BO.
 
-There are a number of observations of the optimisation trajectories which reflect on the alanine dipeptide response surface described in section \ref{subsubsec:ala_rsm} and the usefulness of Bayesian optimisation for this system. First, the incumbent trajectories clearly show that Bayesian optimisation does not increase the value of the incumbent. This is likely a reflection of the simple nature of the response surface and the irrelevance of the number of cluster centres. Second, the response surface (in the search space domain tested) is bimodal with peaks at $\chi=(\phi, \psi)$ torsions and $(x, y, z)$ coordinates. This is reflected in the clear lack of substantive difference between the incumbent value in, for example, panels (a) and (c) with different values of $\chi$ in panels (k) an (m)  of figure \ref{fig:ala_opt_traj}. Third, the almost complete irrelevance of $n$ as a hyper-parameter is clearly shown in panels (f) to (j) in which $n \simeq 1000, 500 \& 100$ are arrived at with no clear difference in the value of the incumbent. Fourth, it is possible that with more optimisation steps it could be possible to arrive at the maximum of the response surface with less seed trial observations. While this is a possibility, the fact that Bayesian optimisation is an inherently serial algorithm, while random sampling is embarrassingly parallel, it was considered more wall-time efficient (if not CPU-time efficient) to err on the side of more random seed trial data and less optimisation steps. 
 
-% \begin{figure}
-%     \centering
-%     \includegraphics[width=0.8\linewidth]{chapters/msm_optimization/figures/ala1_opt_comparison.png}
-%     \caption{Caption}
-%     \label{fig:ala1_best_msm_ts}
-% \end{figure}
-% \begin{figure}
-%     \centering
-%     \begin{subfigure}[b]{0.3\textwidth}
-%         \includegraphics[width=\textwidth]{chapters/msm_optimization/figures/ala1_opt_traj_start_obs_30.png}
-%         \caption{A gull}
-%         \label{fig:gull}
-%     \end{subfigure}
-%     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-%       %(or a blank line to force the subfigure onto a new line)
-%     \begin{subfigure}[b]{0.3\textwidth}
-%         \includegraphics[width=\textwidth]{chapters/msm_optimization/figures/ala1_opt_traj_start_obs_50.png}
-%         \caption{A tiger}
-%         \label{fig:tiger}
-%     \end{subfigure}
-%     ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-%     %(or a blank line to force the subfigure onto a new line)
-% \end{figure}
+\begin{table}
+    \centering
+    \mycaption{Optimum MSM hyper-parameters for alanine dipeptide pre- and post- Bayesian optimisation (BO).  Each row represents a BO experiment, seeded with $N_{seed}$ randomly sampled hyper-parameters trials. Five iterations of optimisation were run with $N_{seed}=30, 50$ (labelled $\# 1, 2$ etc.). The number of optimisation steps is equal to the difference in the pre/post value of $N_{total}$.  The optimum of the response surface estimated with all the trial data ($N_{total}=500$) is included even though it was not optimised using BO. Each column is a variable or outcome with values associated with the optimum value of $\mu$ before and after the BO.  
+    }
+\begin{tabular}{|ll|rr|rr|rr|ll|rr|}
+\hline
+   &   & $N_{total}$ & & $\mu$ & & $\sigma$ & & $\chi$ &  & $n$ & \\
+ $N_{seed}$  &   \#  &         Pre & Post &   Pre &  Post &      Pre &  Post &  Pre & Post & Pre & Post \\
+\hline\hline
+0  & 1 &         500 &      & 3.318 &       &    0.002 &       &     $(x, y, z)$ &              & 762 &      \\
+\hline
+30 & 1 &          30 &   40 & 3.302 & 3.338 &    0.004 & 0.192 &  $(\phi, \psi)$ &     $(x, y, z)$ & 577 &  969 \\
+   & 2 &          30 &   40 & 3.318 & 3.233 &    0.005 & 0.086 &  $(\phi, \psi)$ &     $(x, y, z)$ & 540 &  133 \\
+   & 3 &          30 &   40 & 3.076 & 2.947 &    0.557 & 0.420 &  $(\phi, \psi)$ &  $(\phi, \psi)$ &  88 &   10 \\
+   & 4 &          30 &   40 & 3.065 & 3.315 &    0.553 & 0.132 &     $(x, y, z)$ &     $(x, y, z)$ & 627 & 1000 \\
+   & 5 &          30 &   40 & 3.313 & 3.258 &    0.005 & 0.194 &     $(x, y, z)$ &  $(\phi, \psi)$ & 968 &  684 \\
+   \hline
+50 & 1 &          50 &   60 & 3.330 & 3.337 &    0.012 & 0.032 &     $(x, y, z)$ &     $(x, y, z)$ & 251 &  333 \\
+   & 2 &          50 &   60 & 3.306 & 3.338 &    0.022 & 0.040 &  $(\phi, \psi)$ &  $(\phi, \psi)$ & 540 &  540 \\
+   & 3 &          50 &   60 & 3.309 & 3.327 &    0.013 & 0.013 &     $(x, y, z)$ &     $(x, y, z)$ & 176 &  670 \\
+   & 4 &          50 &   60 & 3.307 & 3.318 &    0.005 & 0.004 &  $(\phi, \psi)$ &     $(x, y, z)$ & 634 & 1000 \\
+   & 5 &          50 &   60 & 3.308 & 3.327 &    0.004 & 0.058 &     $(x, y, z)$ &     $(x, y, z)$ & 390 &  314 \\
+\hline
+\end{tabular}
+
+    \label{tab:ala1_best_params}
+\end{table}
+
+The maximum of the response surface \emph{at the trial values} gives the optimum hyperparameters incorporating uncertainty and making full use of all the trial information. For alanine dipeptide, the maximum of the response surface, $\mu=\num{3.318}\pm\num{0.004}$, corresponds to using the $(x, y, z)$ coordinates feature with $n=762$. Given its simplicity, visual inspection of the response surface (figure \ref{fig:ala1_response}) was deemed sufficient to confirm that no more sampling was necessary to locate the maximum. 
+
+Bayesian optimisation was used to determine whether this maximum could be achieved using a smaller number of trials and to test the code written to perform the optimisation. $p=10$ steps of Bayesian optimisation was performed on five, randomly sampled, subsets of the full hyper-parameter trial data set with sizes $N_{seed}=30,50$.  The optimisation trajectories (i.e. the value of the incumbent and the associated predictors)  with $N_{seed}=30$ trials (or 15 observations-per-predictor) is shown in figure \ref{fig:ala_opt_traj_30} and with $N_{seed}=50$ (or 25 observations-per-predictor) is shown in figure \ref{fig:ala_opt_traj_50}). The $10$ steps of Bayesian optimisation are shown in blue (horizontal axis values $N_{seed} \rightarrow N_{seed}+10$) and for comparison the figure also shows, in orange, the trajectory calculated using randomly sampled trials  (horizontal axis values $N_{seed}-10 \rightarrow N_{seed}$). The input warping  and kernel function used in the response surfaces for all of the Bayesian optimisation experiments were the same as those used on the full trial data set. In principle these modelling choices should be determined independently for each data set but given the simplicity of the response surface it was deemed unnecessary. 
+
+With $N_{seed}=30$ the incumbent trajectories of iteration 2, 3, \& 5 decreased , while for all iterations seeded with $50$ seed trials \ref{fig:ala_opt_traj} the incumbent trajectories remained constant or increased. In both cases the optimal values of $\chi$ were consistently oscillating between $(\phi, \psi)$ and $(x, y, z)$ while the optimal value of $n$ did not converge to a single value across the iterations. A value of  $N_{seed} = 50$ or $25$ observations per predictor were therefore deemed tentatively appropriate. 
+
+There are a number of observations of the optimisation trajectories which reflect on the alanine dipeptide response surface described in section \ref{subsubsec:ala_rsm} and the usefulness of Bayesian optimisation for this system. First, the incumbent trajectories clearly show that Bayesian optimisation does not increase the value of the incumbent by a significant amount. This is a reflection of the simple nature of the response surface and the irrelevance of the number of cluster centres. Second, the response surface (in the search space domain tested) is bimodal with peaks at $\chi=(\phi, \psi)$ torsions and $(x, y, z)$ coordinates. This is reflected in the clear lack of substantive difference between the final values of $\mu$ listed in table \ref{tab:ala1_best_params}.  Third, the almost complete irrelevance of $n$ as a hyper-parameter is clearly shown in panels (f) to (j) in which $n \simeq 1000, 500 \& 100$ are arrived at with no clear difference in the value of the incumbent. Fourth, it is possible that with more optimisation steps it could be possible to arrive at the maximum of the response surface with less seed trial observations. While this is a possibility, the fact that Bayesian optimisation is an inherently serial algorithm (parallel variants which sample the acquisition function rather than optimise do exist []), while random sampling is embarrassingly parallel, it was considered more wall-time efficient (if not CPU-time efficient) to err on the side of more random seed trial data and less optimisation steps. 
 
 \subsection{Aromatic Amine Dehydrogenase}\label{subsec:aadh}
+Having explored the use of response surfaces and Bayesian optimisation in the well known alanine dipeptide system with a two-dimensional hyper-parameter space. These techniques were applied to the unknown case of the active site of AADH. 
+
 \subsubsection{Response surface}\label{subsubsec:aadh_rsm}
-The average MSM response for each trial are shown in figure \ref{fig:aad_train_test}, shown grouped in panels according to the value $\chi$,  and ranked according to mean test response (shown in blue). The panels are ordered according to their average of the test responses and the mean response on the training data is shown in orange. There is clear range of response values in the range $2 < VAMP-2 < 4$ with the $(\phi, \psi, \chi)$ torsions and the interatomic distances feature ( $\left|\mathbf{r}_{1}-\mathbf{r}_{2}\right|$) both performing the best out of the five features. 
 
-The response surface as a function of the feature, $\chi$, TICA lag time, $\tau$, number of TICA components retains $m$, and the number of cluster centres, $n$ was estimated with a MML GPR. Model selection on the kernel and input transformation revealed an exponential kernel (equation \ref{eqn:kern_exp}) and a linear input transformation were most appropriate, with an MSLL of $-0.01298$ and a SMSE of $0.3087$, see table \ref{tab:aadh_rsm_metrics_all_data} for the other model selection metrics. A more intuitive assessment of the fit of the can be found in figure  \ref{fig:aadh_rsm_fit} which shows the observed and predicted values for each feature. There is clearly a good fit for all the features except for the $(\phi, \psi, \chi)$ torsions where the predicted values are slightly under (over) estimated for the highest (lowest) values with this feature. 
-
-The RMSD feature was left out of the response surface because the $\tau$ and $m$ hyper-parameters do not apply and this poses problems for incorporating this feature into the response surface modelled by a GP.  While this is a problem in general for this method, the poor performance of RMSD as a feature both here, in alanine dipeptide mean that this does not impact many of the conclusions that can be drawn. 
-
-The multidimensional nature of the response surface poses problems for visualisation. However, calculating the hyper-parameter relevance before attempting to do this can help by guiding in the displayed granularity of the inputs. Figure \ref{fig:aadh_relevance} shows the relevance for the levels of $\chi$ (in blue) and the remaining hyper-parameters (orange) and figure \ref{fig:aadh_rsm} show the response surface. $\tau$ and $m$ are the two highest relevance features so the response surface is shown as a 2D heat map with $\tau$ on the vertical and $m$ on the horizontal axis. Only odd values of $m$ are shown give the slightly lower relevance of this feature. The number of cluster features is again the lowest relevance feature and so heat maps for only two value of $n$ are shown: the value at the maximum ($n=207$ although the value displayed was rounded to $210$) and $n=1000$. With only four features, it is relatively simple to show the response surface for each of them. As all features are relatively low relevance their response surfaces are expected to be very similar. The maximum of the response surface is shown highlighted in white and the corresponding values are shown in table \ref{tab:aadh_opt_results}. 
-
-In order to test the convergence of this maximum, 50 steps of Bayesian optimisation was performed seeding the algorithm with all $361$ trials. This resulted in a small, $\SI{0.5}{\percent}$ improvement in the response and small changes in the optimal hyper-parameters.  In order to see whether this maximum could be reached with a few number of trials, five subsets of the trial data set, with 100 observations, were optimized with 50 steps of Bayesian optimisation. The response surface kernel and input transformations were determined by the GP model selection methods described in section \ref{subsec:rsm}. 
-
-The incumbent trajectories are shown in are shown in figure \ref{fig:aadh_opt_traj_d}. The maximum of the response surface with $N=361$ randomly sampled trials are shown as orange lines, and the maximum of the surface with an $N=410$ trials including the $50$ steps of Bayesian optimisation are shown as blue lines.  The figure clearly shows that the Bayesian optimisation does not improve the maximum of the response nor does it greatly affect the value of the optimal hyperparameters. The uncertainty in the incumbent decreased in three of the five incumbent trajectories however.  The final and starting values of the optimisation trajectories are tabulated in table \ref{tab:aadh_opt_results}. 
-
-These optimisation results clearly indicate that the response surface is reasonably well converged for even $100$ trials and that the number of seed trials determined from alanine dipeptide was not applicable here.  
-
-
-
-
-\begin{figure}[!ht]
+\begin{figure}[p]
     \centering
-    \caption{Relevance of MSM for active site D}
-    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/AADH_relevance_d.png}
+    \mycaption{The $\operatorname{VAMP-2}$ scores of the hyperparameter trials for MSMs of AADH. The test response, $f^{test}=f\left(\chi, \tau, m, n; \mathbf{X}^{test}\right)$, is shown in blue, for (a) the $\phi, \psi, \chi$ torsions, (c) all distances between heavy atoms, (e) alpha-Carbon contact distances, (g) heavy atom contact distances, (i) root mean square deviation of heavy atoms. The difference between $f^{train}$ and $f^{test}$ is shown in orange for (b) the the $\phi, \psi, \chi$ torsions and so on. The horizontal axis is the rank of the trial according to the test score. Each trial was scored with $20$ iterations of 50:50 shuffle split cross-validation. The error bars represent the 25th and 75th quantiles of the cross-validation folds. The features are ordered according to the mean of the their test scores.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_train_test_results.png}
+    \label{fig:aad_train_test}
+\end{figure}
+
+The mean MSM response for the randomly sampled hyper-parameter trials are shown in  figure \ref{fig:aad_train_test} with the test response shown in blue and the difference between the training and test response shown in orange.  The panels correspond to the value $\chi$ and are ordered according to their average of the test responses. The horizontal axis is the rank of the trial determined by their test response. There is clear range of response values in the range $2 < \operatorname{VAMP-2} < 4$ with the $(\phi, \psi, \chi)$ torsions  (panel (a)) and the interatomic distances feature ( $\left|\mathbf{r}_{1}-\mathbf{r}_{2}\right|$) (panel (c)) both performing the best out of the five features. 
+
+In contrast to the case of alanine dipeptide, all features show a marked degree of over-fitting $\Delta f$. However, within each feature there are combinations of the remaining hyper-parameters for which $\Delta f=0$ implying that it is possible to create a consistent picture of relaxation processes which generalize well for each feature. The response of the $(\phi, \psi, \chi)$ feature  approaches the maximum response of $VAMP-2 = 4$ for the highest ranked trials, indicating the possibility of the three slow relaxation processes. 
+
+\begin{figure}
+    \centering
+    \mycaption{Goodness of fit for the response surface of AADH conditional on each feature. The horizontal axis ($y$) are the observed trial values and the vertical axis is the mean response ($f(\mathbf{x})$). The error bars are $\pm 2\sigma$ where $\sigma$ is the standard deviation of the response surface including the noise term $\sigma_n$.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_fit_d.png}
     
+    \label{fig:aadh_rsm_fit}
+\end{figure}
+
+The response surface as a function of the feature, $\chi$, TICA lag time, $\tau$, number of TICA components retains $m$, and the number of cluster centres, $n$ was estimated with a GP. The RMSD feature was left out of the response surface because the $\tau$ and $m$ hyper-parameters do not apply, creating a \emph{conditional} search space [] which  poses problems GP although there are attempts to mitigate this []. While this is a problem in general for this method, the poor performance of RMSD as a feature both here and in alanine dipeptide mean that this will not affect finding the optimum hyper-parameters. 
+
+Model selection on the kernel and input warping revealed an exponential kernel (equation \ref{eqn:kern_exp}) and a linear input transformation for $\tau, m$ and $n$ were most appropriate, with an MSLL of $-0.01298$ and a SMSE of $0.3087$ (see table \ref{tab:aadh_rsm_metrics_all_data} for the other models' selection metrics). A more intuitive assessment of the fit of the can be found in figure  \ref{fig:aadh_rsm_fit} which shows the observed and predicted values for each feature. There is clearly a good fit for all the features except for the $(\phi, \psi, \chi)$ torsions where the predicted values are slightly under/over estimated for the highest/lowest values with this feature. This creates the possibility of a false bimodal response surface which must be checked when determining the optimal hyper-parameters. 
+
+\begin{figure}
+    \centering
+    \mycaption{The relevance of the hyper-parameters of AADH. The distribution of the parameters of the response surface were estimated using MCMC. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the the other hyper-parameters are shown in orange, labelled `Other'.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/AADH_relevance_d.png}
     \label{fig:aadh_relevance}
 \end{figure}
 
-\begin{figure}[!ht]
+\begin{table}
     \centering
-    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d.png}
-    \caption{Caption}
+    \mycaption{Median and $\SI{95}{\percent}$ credible intervals for the kernel hyper-parameters of the AADH response surface estimated using MCMC. The length-scale parameters in equation \ref{eqn:kernel_form} are re-written here as relevances.}
+    \begin{tabular}{|l|r|l|}
+    \hline
+                             Hyper-parameter &  Median &     (95\% C.I.) \\
+    \hline\hline
+                    $R_{(\phi, \psi, \chi)}$ &   0.073 &  (0.021-0.248) \\
+     $R_{|\mathbf{r_{1}} - \mathbf{r_{2}}|}$ &   0.032 &  (0.012-0.098) \\
+                 $R_{C_{\alpha}-C_{\alpha}}$ &   0.025 &  (0.009-0.084) \\
+                                   $R_{X-X}$ &   0.030 &  (0.012-0.083) \\
+                                  $R_{\tau}$ &   0.246 &  (0.126-0.474) \\
+                                     $R_{m}$ &   0.044 &  (0.022-0.095) \\
+                                     $R_{n}$ &   0.009 &  (0.005-0.018) \\
+                                      $\eta$ &   1.540 &  (1.117-2.154) \\
+                                  $\sigma_n$ &   0.011 &  (0.001-0.035) \\
+    \hline
+    \end{tabular}
+    \label{tab:aadh_rel}
+\end{table}
+
+The multidimensional nature of the response surface poses problems for visualisation and for understanding the interaction between the hyper-parameters in determining the response. However, calculating the hyper-parameter relevance can help by suggesting the displayed granularity of the inputs. Figure \ref{fig:aadh_relevance} shows the posterior distribution of relevance for the features (blue) and the remaining hyper-parameters (orange). The median and $\SI{95}{\percent}$ credible intervals are tabulated in table \ref{tab:aadh_rel}. 
+
+Figure \ref{fig:aadh_rsm} shows  a projection of the response surface, $f(\mathbf{x};\mathcal{D}_{361})$, informed by the relevance. $\tau$ and $m$ are the two highest relevance hyper-parameters ($R_{\tau} = 0.246 (0.126-0.474)$, $R_{m} = 0.044 (0.022-0.095)$) so the response surface is shown as a 2D heat map with $\tau$ on the vertical and $m$ on the horizontal axis. Only odd values of $m$ are shown given the slightly lower relevance of this feature. The number of cluster features is, like the case of alanine dipeptide, the lowest relevance hyper-parameter ($R_{n} = 0.009 (0.005-0.018)$ and so heat maps for only two value of $n$ are shown: the value at the maximum of the response surface ($n=207$ although the value displayed is rounded to $210$) and $n=1000$. With only four features, it is  simple to show the response surface for each of them. With a larger number of features, displaying the high relevance features and \emph{only one} of the low relevance features would be sufficient. This is clearly borne out with this surface - the two lower relevance features, the contact distances, are very similar and including both in the visualisation is redundant. However, as all features have absolutely low relevance ($R<1$) then their response surfaces are expected to be similar. The maximum of the response surface is shown highlighted in white, occurs at $\mathbf{x}=\left(\chi=(\phi, \psi, \chi), \tau = \SI{12.5}{\nano\second}, m=1, n=207\right)$ with a value of $\mu=3.54 3\pm 0.396$. The features of this response surface will be discussed in the context of sensitivity analysis in later sections. 
+
+\begin{figure}[p]
+    \centering
+    \mycaption{The response surface of AADH using the unoptimised hyper-parameter trial data set. For each feature two heat maps are shown for $n=210, 1000$ with $\tau$ on the vertical axis and $m$ on the horizontal axis: for the dihedrals feature panel (a) shows the heat map for $n=210$  and panel (b) shows the heat map for $n=1000$ and similarly for the remaining features. The white star denotes the approximate location of the maximum of the surface, the true maximum occurs at $\tau=\SI{12.5}{\nano\second}, m=1, n=207$. }
+    \includegraphics[width=0.7\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d.png}
     \label{fig:aadh_rsm}
 \end{figure}
 
 \begin{table}
     \centering
-    \begin{tabular}{|l|l|r|r|r|l|r|r|r|}
+    \mycaption{Optimum MSM hyper-parameters for AADH pre- and post-Bayesian optimisation (BO). Each column represents a Bayesian optimisation experiment, seeded with $N_{seed}$ randomly sampled hyper-parameter trials. Five iterations of optimisation were run with $N_{seed}=100$ (labelled $\# 1, 2$ etc.) and a single iteration optimising the response surface using all the trial data ($N_{seed}=361$). Each row is a variable or outcome with values associated with the optimum value of $\mu$ before and after the BO.}
+    \begin{tabular}{|ll|lllll|l|}
     \hline
-       Sampling &        Label &  Num. Trials & $\mu$ & $\sigma$ &                $\chi$ & $\tau$ & $m$ & $n$ \\
+    &$N_{seed}$ & 100 & & & & &361\\
+    &\#&1&2&3&4&5&1\\
     \hline\hline
-         Random &              & 361 &  3.54 & 0.20 &  $(\phi, \psi, \chi)$ &   12.5 &   1 & 207 \\
-     Bayes Opt. &              &410 &  3.56 & 0.09 &  $(\phi, \psi, \chi)$ &   10.0 &   2 & 310 \\
-     Bayes Opt. &  Iteration 0 &150 &  3.50 & 0.20 &  $(\phi, \psi, \chi)$ &    1.0 &   2 &  10 \\
-     Bayes Opt. &  Iteration 1 &150 &  3.56 & 0.12 &  $(\phi, \psi, \chi)$ &    4.0 &   1 & 180 \\
-     Bayes Opt. &  Iteration 2 &150 &  3.54 & 0.10 &  $(\phi, \psi, \chi)$ &    3.0 &   2 &  10 \\
-     Bayes Opt. &  Iteration 3 &150 &  3.58 & 0.08 &  $(\phi, \psi, \chi)$ &    1.0 &   1 & 230 \\
-     Bayes Opt. &  Iteration 4 &150 &  3.57 & 0.07 &  $(\phi, \psi, \chi)$ &    1.0 &   1 & 540 \\
+    $N_{total}$&Pre&100&100&100&100&100&361\\
+    &Post&150&150&150&150&150&410\\
+    \hline
+    $\mu$&Pre&3.487&3.355&3.599&3.473&3.478&3.543\\
+    &Post&3.500&3.558&3.545&3.581&3.569&3.558\\
+    \hline
+    $\sigma$&Pre&0.152&0.135&0.306&0.234&0.126&0.198\\
+    &Post&0.202&0.117&0.101&0.084&0.072&0.091\\
+    \hline
+    $\chi$&Pre&$(\phi,\psi,\chi)$&$|\mathbf{r_{i}}-\mathbf{r_{j}}|$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$|\mathbf{r_{i}}-\mathbf{r_{j}}|$&$(\phi,\psi,\chi)$\\
+    &Post&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$\\
+    \hline
+    $\tau$&Pre&51.0&57.8&12.5&12.5&18.0&12.5\\
+    &Post&1.0&4.0&3.0&1.0&1.0&10.0\\
+    \hline
+    $m$&Pre&1&3&1&1&1&1\\
+    &Post&2&1&2&1&1&2\\
+    \hline
+    $n$&Pre&396&234&207&207&79&207\\
+    &Post&10&180&10&230&540&310\\
     \hline
     \end{tabular}
-    \caption{Caption}
     \label{tab:aadh_opt_results}
 \end{table}
 
-\begin{figure}
+In order to test the convergence of the maximum of $f(\mathbf{x}; \mathcal{D}_{361})$, $50$ steps of Bayesian optimisation was performed. The values of the response and associated hyper-parameters pre- and post-optimisation (i.e. $f(\mathbf{x}; \mathcal{D}_{361})$ and $f(\mathbf{x}; \mathcal{D}_{410})$) are tabulated in table \ref{tab:aadh_opt_results}. The optimisation resulted in a small improvement in the response from $\mu=3.543 \pm 0.396 \rightarrow 3.558 \pm 0.182$ (a $\SI{0.4}{\percent}$ improvement) with no change in the optimum feature ($(\phi, \psi, \chi)$ dihedrals) and only small changes in the other hyper-parameters.  
+
+In order to see whether this maximum could be reached with a fewer number of trials, five response surfaces fit on random subsets of the trial data with $100$ observations, $f^{i}(\mathbf{x};\mathcal{D}_{100}), i = 1 - 5$, were optimized with $50$ steps of Bayesian optimisation. The kernel and input warping for $f^{i}(\mathbf{x};\mathcal{D}_{100})$ were determined for each $i$ separately. The model selection metrics for each combination of kernel and input warping are tabulated in tables \ref{tab:aadh_rsm_metrics_iter_1} - \ref{tab:aadh_rsm_metrics_iter_5}. The results of the optimisation trials are shown in table \ref{tab:aadh_opt_results} and the incumbent trajectories are shown in are shown in figure \ref{fig:aadh_opt_traj_d}. Also shown in figure \ref{fig:aadh_opt_traj_d} are the maximum of the response surface $f(\mathbf{x};\mathcal{D}_{361})$ shown as orange lines, and the maximum of $f(\mathbf{x};\mathcal{D}_{410})$ shown as blue lines. 
+
+\begin{figure}[p]
     \centering
+    \mycaption{The Bayesian optimisation trajectories for AADH. Each column shows the trajectories of the incumbent $\mu\pm 2\sigma$ (panels (a) - (e)), and the accompanying value of: $\chi$ (panels (f) - (j)), $m$ (panels (k) - (o)), $\tau$ (panels (p) - (t)) and $n$ (panels (u) - (y)). The location of the final value of the trajectory is highlighted with a black star. For reference the corresponding values determined from the response surface using all the hyper-parameter trials are shown as solid horizontal lines: the response surface before optimisation are shown in orange and after Bayesian optimisation in blue.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_opt_traj_act_s_d.png}
-    \caption{Caption}
+    
     \label{fig:aadh_opt_traj_d}
 \end{figure}
 
-\subsubsection{Response surface and MSM observables}
+ It is clear from  table \ref{tab:aadh_opt_results} that after Bayesian optimisation each subset had maxima indistinguishable from the maxima of $f(\mathbf{x};\mathcal{D}_{461})$: each had the same optimal feature ($(\phi, \psi, \chi)$ dihedrals), slightly smaller values of $\tau$ ($1 - \SI{4}{\nano\second}$ cf. $\SI{10}{\nano\second}$), similar values of $m$ ($1 - 2$ cf. $2$) but with a range of different values of $n$ ($10 - 540$ cf. $310$). The extent to which these differences to make a difference the final MSM and its interpretation will be discussed in section \ref{subsubsec:observables} in the context of several sensitivity analyses. 
+ 
+It is also clear that Bayesian optimisation only had a small effect on the value of the incumbent and on the optimum hyper-parameters.  The value of incumbent throughout the procedure (figure \ref{fig:aadh_opt_traj_d} panels (a) - (e)) remain relatively flat. The largest increase came from iteration $4$, with $\Delta \mu 0.108$ and there was even a slight decrease in iteration $3$ with $\Delta \mu = -0.054$. The optimisation procedure also had negligible effects on the value of $\chi$, $m$ and $n$. It did however explore large values of  $\tau$ before settling on its final optimum value in most of the iterations.
 
-\begin{figure}[!ht]
+The maxima and optimum hyper-parameters of the optimized response surfaces $f^{i}(\mathbf{x};\mathcal{D}_{150})$ are almost indistinguishable from $f(\mathbf{x};\mathcal{D}_{461})$. However the optimisation procedure did not strongly affect the optima of $f^{i}(\mathbf{x};\mathcal{D}_{100})$ compared to $f^{i}(\mathbf{x};\mathcal{D}_{150})$. This suggests that the Bayesian optimisation procedure could be seeded with much fewer trials if a GP model of the response surface could be estimated reliably. 
+
+\subsubsection{Response surface and MSM observables}\label{subsubsec:observables}
+
+\begin{figure}
     \centering
     \mycaption{AADH implied timescales}\label{fig:aadh_its}
     \subtop[$1<\tau^{MSM}<\SI{5}{\nano\second}$ \label{fig:aadh_its_short}]{
@@ -568,16 +648,16 @@ These optimisation results clearly indicate that the response surface is reasona
 \end{figure}
 
 
-\begin{figure}[!ht]
+\begin{figure}
     \centering
     \caption{Optimised response surface}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d_opt.png.png}
     \label{fig:aadh_rsm_opt}
 \end{figure}
 
+So far the response surface for AADH has been modelled and optimised with a combination of random hyper-parameter sampling and Bayesian optimisation under two assumptions about the model specification: that $\tau(MSM) = \SI{2}{\nano\second}$ and $k=4$, the number of eigenvalues in the VAMP-2 score, are reasonable assumptions about the lag time and number of slow relaxation processes. As these were established on the basis of the reference MSM it is important to to test these assumptions are still reasonable with the final optimized MSM. 
 
-
-So far the response surface for AADH has been modelled and optimised with a combination of randomly sampling and Bayesian optimisation under two assumptions about the model specification: that $\tau^{MSM}$ and $k$, the number of eigenvalues in the VAMP-2 score, are correctly specified. To test this figure \ref{fig:aadh_its} shows the eigenvalue spectrum as a function of $\tau^{MSM}$ for the optimum hyperparameters. Panel (a) shows detail around the  $\tau^{MSM} \simeq 2$ which clearly shows the top three implied timescales \footnote{$k=4$ in the VAMP-2 score but this includes the trivial eigenvalue $\lambda = 1$} are increasing albeit slowly which suggests that $\tau^{MSM}$ is too small. Looking at the implied timescales on a longer timescale $1 < \tau^{MSM} < \SI{50}{\nano\second}$ (panel (b)) shows that the longest relaxation process never becomes independent of $\tau$, while the second longest process does become independent at around $\SI{20}{ns}$. 
+The hyper-parameters of final MSM correspond to the optimum of the Bayesian optimised response surface $f(\mathbf{x};\mathcal{D}_{410})$ and are specified in table \ref{tab:aadh_opt_results}. The eigenvalue spectra of a series of MSMs fit with these hyper-parameters but different lag times $\tau(MSM)$ are shown in figure \ref{fig:aadh_its}. Panel (a) shows shows lags of  $\SI{0.1}{\nano\second} < \tau(MSM) < \SI{5}{\nano\second}$ which clearly shows the top three implied timescales \footnote{$k=4$ in the VAMP-2 score but this includes the trivial eigenvalue $\lambda = 1$} are increasing albeit slowly which suggests that $\tau^{MSM}$ is too small. Looking at the implied timescales on a longer timescale $1 < \tau^{MSM} < \SI{50}{\nano\second}$ (panel (b)) shows that the longest relaxation process never becomes independent of $\tau$, while the second longest process does become independent at around $\SI{20}{ns}$. 
 
 At $\tau = \SI{2}{\nano\second}$ there is a clear separation of timescales between the fourth and and fifth timescales suggesting $k=5$ would be more appropriate. However at $\tau = \SI{20}{\nano\second}$ a there is a clear separation between the third and fourth timescale, suggesting the value used in the original specification, $k=4$, is appropriate.  The question of how many metastable states, corresponding to how many time scales can be considered dominant, will be investigated in chapter \ref{chap:hmm}. 
 
@@ -646,13 +726,7 @@ The best performing feature was the dihedral angles of the residues. The feature
 
 \subsection{Alanine Dipeptide}
 
-\begin{figure}[!ht]
-    \centering
-    \caption{The $\operatorname{VAMP-2}$ scores of the hyperparameter trials for MSMs of alanine dipeptide. The test response, $f^{test} = f(\chi, n; x^{test})$ is shown in blue, panels: a, c, e, g, i,  while the degree of over-fitting, $f^{train} - f^{test}$, is shown in orange, panels: b, d, f, h, j. Each row represents a different value of the feature ($\chi$) and the horizontal axis represent the number of clusters, ($n$). Each trial was scored with $20$ iterations of 50:50 shuffle split cross validation. The error bars represent the $25$th and $75$th quantiles of the cross-validation folds. 
-    The features are ordered according to the mean of the their test scores.}
-    \includegraphics[height=0.8\textheight]{chapters/msm_optimization/figures/ala1_train_test_results.png}
-    \label{fig:ala1_train_test}
-\end{figure}
+
 
 \begin{table}[h]
     \centering
@@ -683,12 +757,7 @@ The best performing feature was the dihedral angles of the residues. The feature
 
 \subsection{AADH}
 
-\begin{figure}
-    \centering
-    \caption{The $\operatorname{VAMP-2}$ scores of the hyperparameter trials for MSMs of AADH with featurised with (a) the $\phi, \psi, \chi$ torsions, (b) all distances between heavy atoms, (c) alpha-Carbon contact distances, (d) heavy atom contact distances, (e) root mean square deviation of heavy atoms. The trials are scored on the test set (blue) and on the training set (orange) for the H active site. The horizontal axis is the rank of the trial according to the test score. Each trial was scored with 20 iterations of 50:50 shuffle split cross validation. The error bars represent the 25th and 75th quantiles of the cross-validation folds. The features are ordered according to the mean of the their test scores.}
-    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_train_test_results.png}
-    \label{fig:aad_train_test}
-\end{figure}
+
 
 
 
@@ -736,12 +805,7 @@ The best performing feature was the dihedral angles of the residues. The feature
     \end{tabularx}
 \end{table}
 
-\begin{figure}[!ht]
-    \centering
-    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_fit_d.png}
-    \caption{Caption}
-    \label{fig:aadh_rsm_fit}
-\end{figure}
+
 
 
 \begin{table}
