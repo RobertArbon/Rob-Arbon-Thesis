@@ -134,8 +134,7 @@ This procedure leaves the choice of three parameters up to researcher: the lag t
  The lag time is not a hvperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For
 Iarge values of $\tau,$ the truncation of the dynamics to the dynamics of the metastable states becomes more accurate. However, there may be processes of interest with timescales, $t_{i}<\tau$ which will not be captured.
 
-As a compromise, $\tau$ is usually chosen by inspection of the data through the following procedure. Starting from a given discrete trajectory, $s(t)$ estimate the largest implied timescale, $t_{2}$, for a range of different values of $\tau$. Choose the smallest $\tau$ such that $\frac{d t_{2}}{d \tau} \simeq$ constant. We shall see in chapter 3 that this procedure leads to bias in
-the estimation of the resulting timescales.
+As a compromise, $\tau$ is usually chosen by inspection of the data through the following procedure. Starting from a given discrete trajectory, $s(t)$ estimate the largest implied timescale, $t_{2}$, for a range of different values of $\tau$. Choose the smallest $\tau$ such that $\frac{d t_{2}}{d \tau} \simeq 0$. 
 
 \subsubsection{Choice of $s_i$}
 The choice of the discretization function comes down to two consecutive choices: a) a choice of continuous feature(s) of the system and b) the clustering algorithm usod to partition the continious feature into discrete states. The intermediate stage of projection onto $p$ chemically significant features we will denote as $\chi_{j}, j=1 \ldots p,$ so the process is summarised as:
@@ -238,41 +237,3 @@ p_{M S M}(A, A ; k \tau)=p_{\text {trajectory}}(A, A ; k \tau)
 \end{equation}
 
 The weights are typically the relevant columns of the membership matrix, i.e. $\left[w_{A}\right]_{i}=M_{i A}$
-
-
-\subsubsection{Covariance}
-The kernel plays a central role in training a GPR model. In this work we consider kernels in the Mat{\'e}rn class: 
-\begin{equation}
-k_{\text {Mat{\'e}rn}}\left(r_{i} ; v\right)=\frac{2^{1-v}}{\Gamma(v)}\left(\sqrt{2 v}\left(\frac{r_{i}}{l_{i}}\right)\right)^{v} K_{v}\left(\sqrt{2 v}\left(\frac{r_{i}}{l_{i}}\right)\right)
-\end{equation}
-
-Here $K_{\nu}$ is a modified Bessel function, $r_i=|\lambda_i-\lambda_i'|$ is the distance between two observations of the hyperparameter $\lambda_i$ and $l_i$ is the characteristic length scale of the variable $\lambda_i$, i.e. how rapidly the function changes as $\lambda_i$ changes. The values of $\nu$ we consider are $\nu=1/2$ (which corresponds to an exponential function), $\nu=3/2,5/2$ (known as the Matérn 3/2 and 5/2 kernels), and $\nu=\infty$ (which corresponds to a Gaussian function). Draws from GPs with these kernels are shown in panel (c) of figure xxx which show how the parameter $\nu$ determines the ‘roughness’ of the GP. 
-
-Multidimensional inputs can be accommodated in a number of different ways, in this work we consider purely multiplicative kernels, e.g. $k^{tot}(\lambda,\lambda')=\eta\cdot k_{\tau} (r_{\tau};\nu)\cdot k_m (r_m;\nu)\cdot k_n (r_n;\nu)$, where variable $\eta$ determines the amplitude of the function fluctuations. This type of kernel implies that correlation in y can occur only when all variables are simultaneously close (as defined by the length-scale $l$) to each other. In most cases underlying response surface is not directly observed as the measurements are noisy, due to the finite amount of simulation data used to fit the models. In this case we modify our modelling equation to account for uncorrelated noise term: $y=f(x)+\epsilon$ where $\epsilon  \sim \mathcal{N}(0,\sigma_{n} )$. The effect of $\eta$ and $\sigma$ on Gaussian processes is shown in panel (d) of figure xxx for a $\nu = \infty$ kernel. 
-
-\subsubsection{Parameter estimation}
-
-The kernels incorporate a set of unknown parameters $({l_i },\sigma_n,\eta)$ which must be determined, this is usually achieved by maximizing the marginal likelihood (MML):
-
-[insert equation]
-
-Alternatively, a Bayesian approach of setting prior distributions on each kernel parameter and sampling from the posterior distribution, can be used. We will make use of both approaches in this work.  
-
-\subsubsection{Model evaluation}
-Two common metrics for evaluating MML GPR models are the standardized mean square error (MSME): 
-
-\begin{equation}
-M S M E=\left(\frac{1}{N}\right) \sum_{i=1}^{N} \frac{\left(f(x)-y_{o b s}\right)^{2}}{\sigma_{o b s}^{2}}
-\end{equation}
-
-And the mean standardized log loss: 
-
-\begin{equation}
-M S L L=\left(\frac{1}{N}\right) \sum_{i=1}^{N}\left[\left(\frac{1}{2} \log \left(2 \pi \sigma_{i}\right)+\frac{\left(f(x)-y_{o b s}\right)^{2}}{\sigma_{i}^{2}}\right)-\left(\frac{1}{2} \log \left(2 \pi \sigma_{o b s}\right)+\frac{\left(\bar{y}_{o b s}-y_{o b s}\right)^{2}}{\sigma_{o b s}^{2}}\right)\right]
-\end{equation}
-
-the MSME puts the scale of the mean square error on the scale of the observed values, so that a MSME of 1 indicates that the GPR model predictions ($f(x)$) are no better than the grand mean of the observations. Similarly, the MSLL is the difference in the negative log probability  of the observations under the GPR model and a null model (a Gaussian $\sim \mathcal{N}(\bar{y}_{obs},\sigma_{obs}^2 )$). A MSLL of $0$ indicates the GPR model is no better than the null while a more negative value indicates a better fit. 
-
-\section{Bayesian Optimization}\label{sec:BO}
-
-calculated the response surface $\Psi(\chi, n;X_{50})$ over the whole search space. Using this surface I calculated the expected improvement, $EI(\chi, n;X_{50})$ (see section xxx equation xxx for definition) and found the hyperparameters corresponding to the maximum. I scored this set of hyperparameters and added the results to the dataset, $X_{50} \rightarrow X_{51}$. I performed ten iterations of this process 

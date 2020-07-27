@@ -196,6 +196,7 @@
 \usepackage{alltt}						%LaTeX commands are not disabled in 
 									%verbatim-like environment
 \usepackage[ruled,vlined]{algorithm2e}
+\usepackage{chemfig}
 % \usepackage[version=0.96]{pgf}			%PGF/TikZ is a tandem of languages for producing vector graphics from a 
 % \usepackage{tikz}						%geometric/algebraic description.
 % \usetikzlibrary{arrows,shapes,snakes,
@@ -245,6 +246,10 @@
 \newcommand{\whiteged}{\hfill$\square$}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+\DeclareSIUnit[number-unit-product = {}]\cal{\mathrm{cal}}
+\DeclareSIUnit[number-unit-product = {}]\atm{\mathrm{atm}}
+\DeclareSIUnit\molar{\mole\per\cubic\deci\metre}
 
 \newcounter{proofcount}
 % \renewenvironment{proof}[1][\proofname.]{\par
@@ -411,7 +416,7 @@
 % The bulk of the document is delegated to these chapter files in
 % subdirectories.
 \mainmatter
-%
+
 \import{chapters/introduction/}{text.tex}
 \clearemptydoublepage
 \import{chapters/theory/}{text.tex}
@@ -419,7 +424,6 @@
 \import{chapters/water_hopping/}{text.tex}
 \clearemptydoublepage
 \import{chapters/aadh/}{text.tex}
-
 \clearemptydoublepage
 \import{chapters/msm_optimization/}{text.tex}
 \clearemptydoublepage
