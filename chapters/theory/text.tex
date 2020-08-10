@@ -213,7 +213,7 @@ Use membership functions $s_{i}$ to discretize $\mathbf{x}(k) \rightarrow \mathb
 The benefit of the HMM approach is that the discrete trajectories $s(k)$ are not required to be Markovian, nor does the discretization function $s_{i}$ need to be optimal (in
 e sense of maximising the VAMP scores), in order to estimate the implied timescales as discussed in [ref].
 
-\subsubsection{Model validation}
+\subsubsection{Model validation}\label{sec:model_validation}
 
 Model validation is the process of checking how well the statistical model fits the data generating process. For protein dynamics we can ask ourselves: if we train a model, T, on some random sample of the protein dynamics, x, then how well does this We can assess the validity of a model either for the data in hand (in-sample, or internal validity) or for any future realisation of data (the out of sample or external validity. In the case of MSMs or HMMs we test whether the following relation holds:
 $\mathbf{T}(k \tau) \simeq \mathbf{T}^{\mathbf{k}}(\tau)$
