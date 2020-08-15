@@ -7,7 +7,7 @@ The previous chapter demonstrated optimizing the discretization of MD trajectori
 
 In all coarse-graining methods the number of macrostates must be stipulated as a hyper-parameter. For PCCA(+) and HMMs it is usual to inspect the eigenvalue spectrum of the MSM and look for gaps in successive eigenvalues or implied timescales. The motivation behind this is that these gaps define a separation of timescales into slow relaxation processes dominate the long term macrostate evolution. The problem with this method is that in practice insufficient sampling leads to gaps which statistically indistinguishable.  Other methods utilise different criteria which suffer from problems of subjectivity,  see the previous referenced papers and \cite{bowmanQuantitativeComparisonAlternative2013} for a discussion.  
 
-Bayes factors [] have been proposed as a method of not only choosing the number of macrostates for a coarse graining method but of quantitatively comparing arbitrary coarse-graining schemes. The Bayes factor of two models, $M_{1}$ and $M_{2}$ is equal to the ratio of the integrated likelihood of the data, $D$, given the model: 
+Bayes factors [] have been proposed as a method of not only choosing the number of macrostates for a coarse graining method but of quantitatively comparing arbitrary coarse-graining schemes. The Bayes factor of two models, $M_{1}$ and $M_{2}$ is equal to the ratio of the integrated (marginal) likelihood of the data, $D$, given the model: 
 
 \begin{equation}
 \operatorname{BF} = \frac{P(D|M_1)}{P(D|M_2)}
@@ -48,25 +48,15 @@ This chapter investigates the use of information criteria and likelihood based m
 This work evaluates model selection techniques for Hidden Markov Models on two systems: the Prinz potential and AADH. 
 
 \subsubsection{Prinz potential}
-\begin{figure}
+\begin{figure}[p]
     \centering
-    \mycaption{The Prinz potential. Panel (a) shows the potential $V(x)$ in blue and the stationary distribution $\pi(x)$ in orange. Panel (b) shows the first $12$ eigenvalues (evaluated with $\tau=5$ time-steps). Panel (c) shows the implied timescales (in units of the time-step $\Delta t=0.001$) in blue and the values of $\tau = 5, 8, 37, 94, 484$ time-steps used in the model selection  experiments as black dashed lines.}
-    \includegraphics[height=0.4\textheight]{chapters/hmm_selection/figures/prinz_pot.png}
+    \mycaption{The Prinz potential. Panel (a) shows the potential $V(x)$ in blue and the stationary distribution $\pi(x)$ in orange. Panel (b) shows the exact ratio of successive eigenvalues resolvable with a $\tau=5$ MSM. Panel (c) shows the exact ratio of successive timescales with a a $\tau=5$ MSM.   Panel (d) shows the HMM estimated implied timescales, $\hat{t}_{i}$, as coloured dashed lines with \SI{95}{\percent} credible intervals. The exact values, $t_{i}$, are shown as similarly coloured solid lines. The values of $\tau = 5, 8, 15, 65, 130$ used in the model selection experiments are shown as vertical black lines.}
+    \includegraphics[width=0.8\textwidth]{chapters/hmm_selection/figures/prinz_pot.png}
     \label{fig:prinz}
 \end{figure}
 
-The Prinz potential \cite{prinzMarkovModelsMolecular2011} is a four well potential shown in figure \ref{fig:prinz}. The potential is given by: 
-\begin{equation}\label{eqn:prinz_pot}
-       V(x) = 4\left(x^8 + 0.8 \exp{\left(-80 x^2\right)} + 0.2 \exp{\left(-80 (x-0.5)^2\right)} + 0.5\exp{\left(-40 (x+0.5)^2\right)}\right).
-\end{equation}
-Exact eigenvalues and trajectories of simulated Brownian motion were calculated using code from MSMBuilder \cite{beauchampMSMBuilder2ModelingConformational2011} version 3.9.0.  The simulations solved the following stochastic differential equation: 
 
-\begin{equation}\label{eqn:prinz_dynamics}
-    \frac{\mathrm{d}x_t}{\mathrm{d}t} = -\frac{\mathrm{d}V(x)}{\mathrm{d}x} + \sqrt{2D} * R(t)
-\end{equation}
-
-with $D = 1000$, and $R\sim \mathcal{N}(0, 1)$, $\mathrm{Cov}\left[R(t), R(t^{\prime})\right]=\delta_{t, t^{\prime}}$. The time-step used was $\Delta t = 0.001$.  Each trajectory was initiated from a random draw of the stationary distribution and was twice the longest relaxation process timescale, i.e. $2\times 844=1688$ time-steps long. The trajectories were clustered into $n = \left\lfloor\sqrt{100\times 1688}\right\rfloor =410$ discrete states using k-means clustering \cite{friedman2001elements}. This number of states was based on the heuristic described in \cite{husicWardClusteringImproves2017a}.
-
+The Prinz potential \cite{prinzMarkovModelsMolecular2011} is a four well potential shown in figure \ref{fig:prinz}.  Panel (a) shows the potential, $V(x)$ in blue and the stationary distribution $\pi(x)$, with the four metastable states, in orange. From this potential  $100$ independent trajectories were sampled, discretised and used as data for estimating the HMMs in this work. See appendix \ref{app:hmm} for full details of the Prinz potential and simulation details. Panel (b) show the exact ratio of successive eigenvalues resolvable by a $\tau=5$ MSM. The large gap between the fourth and fifth eigenvalues is clearly seen, implying four metastable states. Panel (c) shows the exact ratio of implied timescales. The implied timescales show the largest gap between the second and third implied timescale. Panel (d) shows the mean implied timescales and \SI{95}{\percent} credible intervals as a function of the Markov lag time, estimated using these data with a Bayesian HMM. The exact timescales are shown as solid coloured lines. The number of hidden states was set was determined by the lag time and the exact timescales of the full Prinz transfer operator (see table \ref{tab:prinz_its_exact}). For example for $\tau = 130$ only $t_2 = 844$ is resolvable so a two hidden state HMM was used.
 
 \subsubsection{AADH}
 The data for the AADH system comprise the MSMs and associated discrete trajectories of the base case and three sensitivities described in chapter \ref{chap:msm} section \ref{subsubsec:sensitivity_analysis}. The model specifications are tabulated here in table \ref{tab:aadh_final_msm_specs}. 
@@ -90,83 +80,150 @@ The data for the AADH system comprise the MSMs and associated discrete trajector
 
 \subsection{Model selection criteria}
 
-This work will compare the use of the following model selection techniques for coarse graining MSMs using HMMs.  
-
-\subsubsection{The Akaike Information Criterion, AIC}. The AIC is defined as:
-
-\begin{equation}
-    \operatorname{AIC} = -2\left(\log{L\left(\{s_t\}|\hat{\theta}\right)} - d\right)
-\end{equation}
-
-Where $\hat{\theta}$ is shorthand for the maximum likelihood estimates of the model parameters, i.e. $\tilde{\mathbf{T}}, \mathbf{E}$. So $L(\{s_t\}|\theta)$ is the likelihood of the observed data $\{s_t\}$ given the hidden Markov model parameters,  and $d$ is the degrees of freedom in the model. For a reversible hidden Markov model with $g$ hidden states and $n$ observed states  $d = \sfrac{1}{2}g(g-1) + (g-1) + g(n-1)$ \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. The origin of the two terms in parentheses arises from the approximation of the KL divergence using the empirical density instead of the true underlying density (the log-likelihood term) and a bias correction (the $d$ term). The $-2$ is there to make an equivalence with Mallows $C_p$ \cite{friedman2001elements}. The selected model is the one which has the smallest AIC or in other words, the model which has the smallest KL divergence relative to the true data generating process. 
-
-\subsubsection{The cross-validated log-likelihood, CVLL}. The cross-validated log-likelihood also approximates the KL-divergence \cite{celeuxSelectingHiddenMarkov2008}. The CVLL is calculated in the following way: 
+This work will compare the use of the following model selection techniques for selecting the number of hidden states in a HMM: 
 \begin{enumerate}
-    \item The observed trajectories are split into $N$ training $\mathbf{s}^{i}$ and test $\mathbf{s}^{-i}$, $i = 1, ..., N$ sets using 50:50 shuffle-split, as described in chapter \ref{chap:msm} section \ref{sec:methods}. 
-    \item For each $i$, fit a HMM using the training data $\mathbf{s}^{i}$. 
-    \item Calculate the likelihood of the test data $\mathbf{s}^{-i}$, given the HMM parameters estimated on the training data, $L(\mathbf{s}^{-i}|\hat{\theta}^{i})$ using the forward part of the Baum-Welch algorithm. 
-    \item The Cross-validated log-likelihood is then average over the splits: 
-    \begin{equation}
-        \operatorname{CV-LL} = \frac{1}{N}\sum_{i}^{N}L\left(\mathbf{s}^{-i}\middle|\theta\right)
-    \end{equation}
+    \item The Akaike Information Criterion, AIC; 
+    \item The cross-validated log-likelihood, CVLL; 
+    \item The Bayesian Information Criterion, BIC; 
+    \item The Integrated Classification Likelihood Criterion, ICL.
 \end{enumerate}
-The selected model is the one with the largest CVLL.  
 
+Each of these will be defined in the sections that follow but a number of common concepts and conventions are useful to define first. 
 
-\subsubsection{Bayesian information criterion, BIC}. The BIC is defined as: 
-\begin{equation}
-    \operatorname{BIC} = -2\left(\log{\left(L\left(\{s_t\}\middle|\theta\right)\right)} - \frac{1}{2}d\log{\left(N_{obs}\right)}\right)
+The likelihood of  a hidden Markov model is given by \cite{noeProjectedHiddenMarkov2013a}: 
+\begin{equation}\label{eqn:obs_lik_full}
+\begin{split}
+    L(\tilde{\mathbf{T}}, \mathbf{E}; \{s_t\}) & = p(\{s_t\} | \tilde{\mathbf{T}}, \mathbf{E}) \\
+    & = \sum_{\substack{\{h_t\} \in \\ \text{all paths}}} \tilde{\pi}E_{s_{0}, h_{0}}\prod_{t=1}^{t_{max}}\tilde{T}_{h_{t-1}, h_t}E_{s_t, h_t}    
+\end{split}
 \end{equation}
-Where $d$ is the degrees of freedom and $N_{obs}$ is the number of observations.  
-The exponential of the BIC is an approximation to the marginal likelihood of the model:
-\begin{equation}
-    p(\{s_t\}) = \int p\left(\{s_{t}\}\middle |\theta \right)p(\theta) \mathrm{d}\theta
-\end{equation}
-So that the difference in the BIC between two models, $BIC_{1}-BIC_{2}$ is an approximation to the log of the Bayes factor, assuming both models are equally likely. The selected model is the one with the smallest BIC. 
 
-\subsubsection{Integrated classification likelihood criterion, ICL}. 
-The integrated classification likelihood is similar to the BIC, but the starting point is the classification likelihood: 
-\begin{equation}
+
+Here $\{s_t\}$ are the observed state trajectories and $\{h_t\}$ are the (unknown) hidden state trajectories. This quantity will be simplified to $L(\theta)$. likelihood is maximized by the Baum Welch algorithm [][] and the corresponding value will be denoted $L(\hat{\theta})$ where $\hat{\theta}$ are the maximum likelihood estimates of the HMM parameters. It is usual to work with the log likelihood and this will be denoted $LL(\hat{\theta})$. 
+
+The optimal values of the CVLL and the AIC both minimize the \emph{Kullback-Leibler} divergence, $D_{KL}(p||p^*)$ - a measure of the difference of one probability distribution, here the modelled distribution,  $p(\{s_t\} | \hat{\theta})$  and a reference distribution, $p^{*}(\{s_t\})$: 
+
+\begin{equation}\label{eqn:kl_div}
+\begin{split}
+    D_{KL}(p||p^*) & = \int p^{*}(\{s_t\}) \log{\left(\frac{ p^{*}(\{s_t\}) }{p(\{s_t\} | \hat{\theta})}  \right)} d(\{s_t\}) \\ 
+    & = \int p^{*}(\{s_t\}) \log{\left(p^{*}(\{s_t\})\right)}d(\{s_t\}) - \int p^{*}(\{s_t\})\log{\left(p(\{s_t\} | \hat{\theta})\right)} d(\{s_t\})
+\end{split}
+\end{equation}
+
+The optimal values of the BIC and ICL maximize the types of integrated likelihood. Minimizing the BIC is equivalent to choosing the model with the largest Bayes factor or the model with the largest posterior probability, given the data. The likelihood used is the observed likelihood (equation \ref{eqn:obs_lik_full}) but integrated over the parameters $\tilde{\mathbf{T}}$ and $\mathbf{E}$: 
+
+\begin{equation}\label{eqn:obs_lik_int}
+        p(\{s_t\}) = \int p\left(\{s_{t}\}\middle |\theta \right)p(\theta) \mathrm{d}\theta
+\end{equation}
+
+In the case of the ICL, the likelihood is the complete data likelihood: 
+\begin{equation}\label{eqn:class_lik_int}
     p(\{(s_t, h_t)\} = \int p\left(\{(s_{t}, h_{t})\}\middle |\theta \right)p(\theta) \mathrm{d}\theta
 \end{equation}
-The final approximation (to the log of the integral) becomes: 
 
-\begin{equation}
-        \operatorname{ICL} = -2\left(\log{\left(L\left(\{(s_t, h_{t})\}\middle|\theta\right)\right)} + H(\mathbf{M}) - \frac{1}{2}d\log{\left(N_{obs}\right)}\right)
+Although the hidden states are not observed, the hidden states for each MD frame is  taken to be the state with the largest posterior probability, given the observed state i.e. $\arg\max_{i}p(h=i|s=j)$.  
+
+
+\subsubsection{The Akaike Information Criterion, AIC}. 
+
+The AIC is defined as:
+\begin{equation}\label{eqn:aic}
+    \operatorname{AIC} = -2\left(\log{L\left(\{s_t\}|\hat{\theta}\right)} - d\right)
+\end{equation}
+where $d$ is the number of degrees of freedom of the model. For a reversible hidden Markov model with $g$ hidden states and $n$ observed states  $d = \sfrac{1}{2}g(g-1) + (g-1) + g(n-1)$ \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
+
+
+The AIC arises from the approximation of the second term in the definition of the $D_{KL}$ (equation \ref{eqn:kl_div}), the first being independent of the model and thus irrelevant. The derivation starts by approximating the true distribution $p^{*}(\{s_t\})$ with the empirical distribution, giving rise to the $\log{L\left(\{s_t\}|\hat{\theta}\right)}$ term.  This will naturally over-fit to the data and the  $d$ term is a bias correction term to account for this.  $d$ is only equal to the degrees of freedom of the model under the assumption that the true model is under consideration. The $-2$ is there to make an equivalence with Mallows $C_p$ \cite{friedman2001elements}. The selected model is the one which has the smallest AIC or in other words, the model which has the smallest KL divergence relative to the true data generating process. 
+
+\subsubsection{The cross-validated log-likelihood, CVLL}. Maximizing the the cross-validated log-likelihood also minimizes the KL-divergence \cite{celeuxSelectingHiddenMarkov2008}. The CVLL is calculated in the following way: 
+\begin{enumerate}
+    \item The observed trajectories are split into $N$ training $\{s_t\}^{i}$ and test $\{s_t\}^{-i}$, $i = 1, ..., N$ sets using 50:50 shuffle-split, as described in chapter \ref{chap:msm} section \ref{sec:methods}. 
+    \item For each $i$, fit a HMM using the training data $\{s_t\}^{i}$. 
+    \item Calculate the likelihood using the test data,  $L(\hat{\theta}^{i}|\{s_t\}^{-i})$, using the forward part of the Baum-Welch algorithm. 
+    \item The Cross-validated log-likelihood is then average over the splits: 
+    \begin{equation}
+        \operatorname{CVLL} = \frac{1}{N}\sum_{i}^{N}L\left(\theta \middle |\{s\}^{-i}\right)
+    \end{equation}
+\end{enumerate}
+
+In order to make the values of the CVLL comparable to the other criteria the CVLL was multiplied by: $2$ to account for the parameters being estimated on half of the data (and the log-likelihood scales linearly with the number of observations), and then $-2$ to account for the same factor in the definition of AIC, BIC and ICL. Thus the \emph{minimum} of the CVLL determines the selected model.  
+
+
+\subsubsection{Bayesian information criterion, BIC}. 
+
+The BIC is defined as: 
+\begin{equation}\label{eqn:bic}
+    \operatorname{BIC} = -2\left(\log{\left(L\left(\{s_t\}\middle|\theta\right)\right)} - \frac{1}{2}d\log{\left(N_{obs}\right)}\right)
+\end{equation}
+where $d$ is the degrees of freedom and $N_{obs}$ is the number of observations.  The difference in BIC between two models, $BIC_{1}-BIC_{2}$ is an approximation to the log of the Bayes factor, the selected model is then the one with the smallest BIC. The number of observations is equal to the number of pairs of frames separated by the lag time and so decreases with $\tau$. If there are $q$ independent MD trajectories, of $t_{max}$ frames each, then the number of observations is $N_{obs} = q(t_{max}-\tau)$. The derivation of the BIC approximates the log of the observed likelihood,  $\log{\left(p(\{s_t\}\right)}$, (see equation \ref{eqn:obs_lik_int}) under the assumption that the prior distribution of the parameters $p(\theta)$ is relatively non-informative. There are several drawbacks to the use of the BIC in assessing the number of components in mixture models. First like the AIC, the BIC is also only valid under the assumption that the true model is in the models under consideration. Second,  use of the BIC for assessing mixture models  is not theoretically justified, however simulation studies have shown it to be useful [].  
+
+\subsubsection{Integrated classification likelihood criterion, ICL}. 
+The integrated classification likelihood criterion is derived in a  similar fashion to the BIC, but the starting point is the classification likelihood, equation \ref{eqn:class_lik_int}. The final approximation to $\log{(p(\{(s_t, h_t)\})}$ becomes: 
+
+\begin{equation}\label{eqn:icl}
+\begin{split}
+        \operatorname{ICL} &= -2\left(\log{\left(L\left(\{(s_t, h_{t})\}\middle|\theta\right)\right)} - H\left(\mathbf{M}\right) - \frac{1}{2}d\log{\left(N_{obs}\right)}\right)     \\
+        & = \operatorname{BIC} + 2H\left(\mathbf{M}\right)
+\end{split}
 \end{equation}
 
-Where all the symbols retain their meaning from the definition of BIC and $H(s_{t}, \mathbf{M})$ is the classification entropy. The classification entropy quantifies the uncertainty with which the model assigns each observed state to hidden state. It is equivalent to the Shannon entropy from information theory. For example in a two hidden state system the classification entropy for a single observed state $i$ will be $p(h=1|s_t=i)\log{p(h=1|s_t=i)} + p(h=2|s_t=i)\log{p(h=2|s_t=i)}$. The classification entropy for all the data will be: 
-
+The $H\left(\mathbf{M}\right)$ is classification entropy, it is  the information entropy for assignment of each observation to a hidden state, summed over all the observations: 
 \begin{equation}
-    H(\mathbf{M}) = \sum_{j}^{g}\sum_{t}^{N_{obs}} M_{s_{t}, j}
+    H(\mathbf{M}) = -\sum_{t}^{t_{max}} \sum_{j}^{g} M_{s_{t}, j}\log{\left(M_{s_{t}, j}\right)}
 \end{equation}
 
-Where $M_{i,j} = P(h=j|s=i)$ are the elements of the membership matrix, the Bayesian inverse of the emission matrix.  
+The elements of the membership matrix  $M_{i,j}$ are the probability of being in a hidden state $j$ given an observed state $i$, $P(h=j|s=i)$. The inner sum is the entropy of single observation which quantifies the uncertainty with which the model assigns the given observed state to a hidden state. For example in a two hidden state system the classification entropy for a single observed state $i$ will be $p(h=1|s_t=i)\log{p(h=1|s_t=i)} + p(h=2|s_t=i)\log{p(h=2|s_t=i)}$. The ICL inherits the drawbacks and assumptions of the BIC but has been shown to be practically useful for selecting the number of components in mixture models. 
 
-\subsection{Model selection experiments}
-Maximum likelihood Hidden Markov models were fit with $\tau=5, 8, 37, 94, 484$ time-steps and with $g = 2, 3, ..., 10$ hidden states,  using the discretised Prinz potential trajectories. In total $5\times9=45$ different HMMs were fit. The values of $\tau$ were chosen because they allow resolution of $7, 5, 3, 2, 1$ relaxation processes respectively. The first eight relaxation processes have implied timescales of $844.4, 125.5,  64.3,  11.9,  10.3,   7.3,   6.7, 4.4$ time-steps. This number of relaxation processes corresponds to $8, 6, 4, 3, 2$ potential metastable states \cite{noeProjectedHiddenMarkov2013a}. 
 
-For each of the $45$ models the $\operatorname{CVLL}$, $\operatorname{AIC}$, $\operatorname{BIC}$, $\operatorname{ICL}$ were calculated. For each value of $\tau$ up to four different value of $g$ were selected corresponding to the four different selection criteria. Each of the selected models were validated with using the CK test and implied timescale plots described in chapter \ref{chap:theory} section \ref{sec:model_validation}. 
+\subsection{Model selection}
 
-The same method was applied to AADH using the trajectories and lag times specified in table \ref{tab:aadh_final_msm_specs}. 
+The model selection criteria, CVLL, AIC, BIC and ICL, will be used to select the optimum number of hidden states in a maximum likelihood HMM, using the discrete trajectories sampled from the Prinz potential. Five different values of the Markov lag time will be used, they are $\tau=5, 8, 15, 65, 130$. These values of $\tau$ were chosen because they resolve, respectively $7, 5, 3, 2, 1$ implied timescales in the full MSM state space. As the top three of these timescales are dominant, they resolve $4, 4, 4, 3, 2$ hidden states and so provide an easy way of comparing the performance of the indicators over different numbers of true hidden states\cite{noeProjectedHiddenMarkov2013a}. The implied timescales for HMMs using the `true' number of states is shown in figure \ref{fig:prinz}, panel (b). The vertical black lines are located at the chosen values of $\tau$.
+
+For each value of $\tau$, nine different maximum likelihood Markov models were estimated with $2 - 10$ hidden states. Up to four different models were selected by the four selection criteria and these were compared to the model with the true number of hidden states by means of the Chapman-Kolmogorov test using Bayesian estimation to determine the uncertainty in the parameter estimates. However, the CK test was only performed if a Bayesian model could be converged. The convergence criterion was set to $|\hat{R}-1|<0.1$ using Gelman-Rubin R-hat statistic on two independent MCMC chains. The same methodology was applied to the four different discretisations and values of $\tau$ tabulated in table \ref{tab:aadh_final_msm_specs}. 
+
 
 \section{Results and discussion}\label{sec:hmm_results}
 \subsection{Prinz Potential}
 
+\begin{table}
+    \centering
+    \mycaption{The selected number of hidden states, $\hat{g}$, by the CVLL, AIC, BIC and ICL for each value of $\tau$. The true values, $g^{\mathrm{true}}$ are also shown. Numbers highlighted in bold are where $\hat{g}=g^{\mathrm{true}}$. }
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+    $\tau$ & $g^{\mathrm{true}}$ & CVLL & AIC & BIC & ICL  \\
+    \hline\hline
+     $5$  & $4$ & $\mathbf{4}$  & $10$ & $10$ & $5$ \\
+     $8$  & $4$ & $\mathbf{4}$ & $10$ & $8$  & $\mathbf{4}$  \\
+     $15$ & $4$ & $\mathbf{4}$  & $9$  & $6$  & $\mathbf{4}$  \\
+     $65 $& $3$ & $4$  & $5$  & $4$  & $\mathbf{3}$  \\
+     $130$& $2$ & $4$  & $4$  & $3$  & $3$  \\
+     \hline
+    \end{tabular}
+    \label{tab:prinz_criteria_results}
+\end{table}
+
+The selected number of hidden states using each criterion are shown in table \ref{tab:prinz_criteria_results}.  The ICL performs best by correctly identifying the number of hidden states in three out of the five different cases. 
+It fails at $\tau=5$ where the estimated implied timescales (figure \ref{fig:prinz}, panel (d)) show the model is not quite Markovian. The selected value of $5$ is close to the true value of $4$  and the relative values of the ICL for $g=4 - 7$ are also quite similar with less than \SI{1}{\percent} difference between them, see figure \ref{fig:prinz_criteria_results} panel (a)(iv). It also fails at $\tau=130$, however the relative values for the selected and true value are similar (less than \SI{1}{\percent} difference), while for $g>3$ the value of the ICL increases rapidly, see panel (e)(iv). The cross-validated log likelihood also correctly predicts four states, however 
+
+In all other cases the number of hidden states is over-estimated. This is inline with previous simulation studies of these criteria [][][]. The BIC performs best out of the other criteria, only over-estimating the number of states by $1$ for $\tau=65, 130$. 
+
 \begin{figure}
     \centering
-    \mycaption{Hidden state selection criteria for HMMs with $\tau=5, 8, 37, 94, 484$, rows (a) - (e). The best performing number of hidden states is indicated by an arrow. Column (i) shows the cross-validated log-likelihood ($-\operatorname{CVLL}$) multiplied by $-4$ to make it comparable to the other criteria: the first factor of $2$ is to account for the cross-validation procedure, the second factor of $-2$ to scale similarly to the AIC and BIC. Column (ii) shows the Akaike Information Criterion, AIC. The log-likelihood term is shown in blue and the degrees of freedom penalty ($2d$) is shown in orange. Column (iii) shows the Bayesian Information Criterion. The penalty term $d\cdot\log{N}$ is shown in green.  Column (iv) shows the Integrated Classification Likelihood Criterion, ICL. The classification entropy penalty term $2\cdot H$ is shown in red. Missing values indicate the failure of the HMM to converge a solution with a given accuracy.}
+    \mycaption{Hidden state selection criteria for HMMs with $\tau=5, 8, 15, 65, 130$, rows (a) - (e). The best performing number of hidden states is indicated by an arrow. Column (i) shows the cross-validated log-likelihood ($\operatorname{CVLL}$). Column (ii) shows the AIC. The log-likelihood term is shown in blue and the degrees of freedom penalty ($2d$) is shown in orange. Column (iii) shows the BIC. The penalty term $d\cdot\log{N}$ is shown in green.  Column (iv) shows ICL. The classification entropy penalty term $2\cdot H$ is shown in red. Missing values indicate the failure of the HMM to converge. All values have been scaled so the minimum value in each panel is $1$.}
     \includegraphics[width=0.75\textwidth]{chapters/hmm_selection/figures/prinz_h_state_selection.png}
     \label{fig:prinz_criteria_results}
 \end{figure}
 
-The hidden state selection criteria for HMMs of the Prinz potential are shown in figure \ref{fig:prinz_criteria_results}. Each row, (a) - (e), corresponds to a different value of the Markov lag time $\tau=5, 8, 37, 94, 484$. Each column, (i) - (iv), corresponds to the different model selection criteria, CVLL, AIC, BIC, and ICL. The minimum value of each criteria for each model is highlighted with an arrow indicating the selected number of hidden states. The selection criteria for each model are discussed for each value of $\tau$ below. For each $\tau$ the selected models will be 
+The relative values of the selection criteria are shown in figure \ref{fig:prinz_criteria_results}. Each row, (a) - (e), corresponds to a different value of the Markov lag time $\tau=5, 8, 15, 65, 130$. Each column, (i) - (iv), corresponds to the different model selection criteria, CVLL, AIC, BIC, and ICL. The minimum value of each criteria for each model is highlighted with an arrow indicating the estimated number of hidden states, $\hat{g}$. The values are scaled so the value at the selected number of states is equal to $1$.  The coloured bars show the contributions of the different parts of each score. The blue bars shows the log-likelihood terms of equations \ref{eqn:aic}, \ref{eqn:bic} and \ref{eqn:icl} i.e.  $-2\times LL$. In the case of CVLL, the blue bars are the  cross-validated equivalent. The various penalty terms are shown in orange ($2d$ the AIC penalty), green ($d\log{N}$, the BIC penalty) and red ($2H(\mathbf{M})$, the classification entropy).  
 
+The cross-validated log-likelihood, CVLL, (and the log-likelihood),  is invariant to the number of hidden states for large $\tau$ but increase markedly for small $\tau$.  Small values of $\tau$ enables resolution of the fast relaxation processes (within a potential well for example) and for these to be captured in the HMM transition matrix. So even though the number of states is high from the point of view of clustering the state space into distinct metastable states, the high number of states is still able to capture the 
 
-% The selected number of hidden states is highlighted with a green disc. No one selection criterion selects the true number of hidden states  for all five values of $\tau$. However, the $\operatorname{ICL}$ criterion, row (h), selects the true number for four models; the $\operatorname{BIC}$, row (f), selects two out of five; the $-\operatorname{CVLL}$ selects one out of five, while the $\operatorname{AIC}$ fails to select any of the true models. All criteria, where they failed to select the true number of states, the selected number of hidden states is over estimated. Also shown in figure \ref{fig:prinz_criteria_results} are the components of the criteria which explain their behaviour. As their 
+For large $\tau$ these fast relaxation processes cannot be captured and so estimation using large numbers of states results in noisy estimates of the parameters. 
 
-\subsubsection{Hidden state selection for $\tau=5$}
-With $\tau = 5$ the Prinz potential has seven resolvable relaxation processes. The top three form a dominant set, with $t_4 \gg t_5$, whose sign structure partition the $x$ coordinate into four metastable states corresponding to the four potential wells. Can we see four hidden states selected using the various selection criteria and validation tests? 
+In the case of log-likelihood, increase in log-likelihood is perfectly monotonic and the AIC selected models with $g < 10$ is due to the over-fitting penalty $2d$.
+
+the trend of favouring  we would expect this trend to continue for increasing $g$ as the number of hidden states fits to spurious 
+
 
 Points to note: 
 \begin{enumerate}
@@ -175,7 +232,6 @@ Points to note:
     \item However, the likelihood criteria overestimate the number of hidden states. The closest is the ICL with $g=5$. The CK tests for $g=5, 9, 10$ are shown in figures \ref{fig:prinz_ck_test_5_5} - \ref{fig:prinz_ck_test_5_10}. They are re-assuringly rubbish. 
     \item Contra the Noe HMM paper \cite{noeProjectedHiddenMarkov2013a}, increasing the number of hidden states above the `actual' number i.e. $g = 5, 6, 7, 8, 9$, doesn't affect the timescale estimates of the `true' timescales, see figure \ref{fig:prinz_its_tau_5}.
     \item it's puzzling that the likelihood increases for increasing $g$, even the cross-validated value. The likely reason has to do with that the hidden states for $g = 9$ (for instance) overlap a lot. See the lhs panes in figure \ref{fig:prinz_emission_dens_tau_5}.  
-    
 \end{enumerate}
 
 
@@ -207,8 +263,6 @@ Points to note:
 \subsection{AADH}
 
 \section{Conclusions}
-
-\section{Appendix}
 
 
 % \begin{figure}
