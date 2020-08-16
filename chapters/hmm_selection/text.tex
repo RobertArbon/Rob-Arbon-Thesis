@@ -135,7 +135,8 @@ where $d$ is the number of degrees of freedom of the model. For a reversible hid
 
 The AIC arises from the approximation of the second term in the definition of the $D_{KL}$ (equation \ref{eqn:kl_div}), the first being independent of the model and thus irrelevant. The derivation starts by approximating the true distribution $p^{*}(\{s_t\})$ with the empirical distribution, giving rise to the $\log{L\left(\{s_t\}|\hat{\theta}\right)}$ term.  This will naturally over-fit to the data and the  $d$ term is a bias correction term to account for this.  $d$ is only equal to the degrees of freedom of the model under the assumption that the true model is under consideration. The $-2$ is there to make an equivalence with Mallows $C_p$ \cite{friedman2001elements}. The selected model is the one which has the smallest AIC or in other words, the model which has the smallest KL divergence relative to the true data generating process. 
 
-\subsubsection{The cross-validated log-likelihood, CVLL}. Maximizing the the cross-validated log-likelihood also minimizes the KL-divergence \cite{celeuxSelectingHiddenMarkov2008}. The CVLL is calculated in the following way: 
+\subsubsection{The cross-validated log-likelihood, CVLL}. 
+Maximizing the the cross-validated log-likelihood also minimizes the KL-divergence \cite{celeuxSelectingHiddenMarkov2008}. The CVLL is calculated in the following way: 
 \begin{enumerate}
     \item The observed trajectories are split into $N$ training $\{s_t\}^{i}$ and test $\{s_t\}^{-i}$, $i = 1, ..., N$ sets using 50:50 shuffle-split, as described in chapter \ref{chap:msm} section \ref{sec:methods}. 
     \item For each $i$, fit a HMM using the training data $\{s_t\}^{i}$. 
@@ -145,12 +146,11 @@ The AIC arises from the approximation of the second term in the definition of th
         \operatorname{CVLL} = \frac{1}{N}\sum_{i}^{N}L\left(\theta \middle |\{s\}^{-i}\right)
     \end{equation}
 \end{enumerate}
+There are two points of failure in this procedure. First, the HMM may fail to converge on a given fold. Second, the forward part of the BW algorithm may fail to give a finite estimate of the log-likelihood. If either of these failures occurred, the CVLL value for that number of hidden states was considered invalid.  
 
 In order to make the values of the CVLL comparable to the other criteria the CVLL was multiplied by: $2$ to account for the parameters being estimated on half of the data (and the log-likelihood scales linearly with the number of observations), and then $-2$ to account for the same factor in the definition of AIC, BIC and ICL. Thus the \emph{minimum} of the CVLL determines the selected model.  
 
-
 \subsubsection{Bayesian information criterion, BIC}. 
-
 The BIC is defined as: 
 \begin{equation}\label{eqn:bic}
     \operatorname{BIC} = -2\left(\log{\left(L\left(\{s_t\}\middle|\theta\right)\right)} - \frac{1}{2}d\log{\left(N_{obs}\right)}\right)
@@ -203,7 +203,9 @@ For each value of $\tau$, nine different maximum likelihood Markov models were e
 \end{table}
 
 The selected number of hidden states using each criterion are shown in table \ref{tab:prinz_criteria_results}.  The ICL performs best by correctly identifying the number of hidden states in three out of the five different cases. 
-It fails at $\tau=5$ where the estimated implied timescales (figure \ref{fig:prinz}, panel (d)) show the model is not quite Markovian. The selected value of $5$ is close to the true value of $4$  and the relative values of the ICL for $g=4 - 7$ are also quite similar with less than \SI{1}{\percent} difference between them, see figure \ref{fig:prinz_criteria_results} panel (a)(iv). It also fails at $\tau=130$, however the relative values for the selected and true value are similar (less than \SI{1}{\percent} difference), while for $g>3$ the value of the ICL increases rapidly, see panel (e)(iv). The cross-validated log likelihood also correctly predicts four states, however 
+It fails at $\tau=5$ where the estimated implied timescales (figure \ref{fig:prinz}, panel (d)) show the model is not quite Markovian. The selected value of $5$ is close to the true value of $4$  and the relative values of the ICL for $g=4 - 7$ are also quite similar with less than \SI{1}{\percent} difference between them, see figure \ref{fig:prinz_criteria_results} panel (a)(iv). It also fails at $\tau=130$, however the relative values for the selected and true value are similar (less than \SI{1}{\percent} difference), while for $g>3$ the value of the ICL increases rapidly, see panel (e)(iv). 
+
+The cross-validated log likelihood also correctly predicts four states for $\tau = 5, 8, 15$, however this was due failure of the cross-validation to produce a finite answer for the test value of the log likelihood on some of the cross-validation folds. This causes problems with interpretation as is it is not clear whether failure is due to the  inefficiency of the CV procedure or whether a that number of hidden states really has zero out-of-sample likelihood. The former is more likely given that models estimated on \SI{100}{\percent} of the data do converge and given interpretable answers as will be demonstrated in the discussion below. Considering this problem and the computational intensity of estimating the CVLL compared to the other criteria (requiring 10 converged HMMs), the CVLL will not be considered further. 
 
 In all other cases the number of hidden states is over-estimated. This is inline with previous simulation studies of these criteria [][][]. The BIC performs best out of the other criteria, only over-estimating the number of states by $1$ for $\tau=65, 130$. 
 
@@ -216,14 +218,23 @@ In all other cases the number of hidden states is over-estimated. This is inline
 
 The relative values of the selection criteria are shown in figure \ref{fig:prinz_criteria_results}. Each row, (a) - (e), corresponds to a different value of the Markov lag time $\tau=5, 8, 15, 65, 130$. Each column, (i) - (iv), corresponds to the different model selection criteria, CVLL, AIC, BIC, and ICL. The minimum value of each criteria for each model is highlighted with an arrow indicating the estimated number of hidden states, $\hat{g}$. The values are scaled so the value at the selected number of states is equal to $1$.  The coloured bars show the contributions of the different parts of each score. The blue bars shows the log-likelihood terms of equations \ref{eqn:aic}, \ref{eqn:bic} and \ref{eqn:icl} i.e.  $-2\times LL$. In the case of CVLL, the blue bars are the  cross-validated equivalent. The various penalty terms are shown in orange ($2d$ the AIC penalty), green ($d\log{N}$, the BIC penalty) and red ($2H(\mathbf{M})$, the classification entropy).  
 
-The cross-validated log-likelihood, CVLL, (and the log-likelihood),  is invariant to the number of hidden states for large $\tau$ but increase markedly for small $\tau$.  Small values of $\tau$ enables resolution of the fast relaxation processes (within a potential well for example) and for these to be captured in the HMM transition matrix. So even though the number of states is high from the point of view of clustering the state space into distinct metastable states, the high number of states is still able to capture the 
+The log-likelihood (the blue bars in columns (ii)-(iv)) monotonically increases with increasing $g$ for all values of $\tau$. This is most pronounced for low values of $\tau$ (compare panel (a)(ii) to (e)(ii)), and demonstrates both over-fitting and the HMMs ability to capture the fast relaxation processes of the Prinz dynamics. Consider the $g=10$ model selected by the likelihood for $\tau=8$, figure \ref{fig:prinz_tau8_g10}. This figure shows the sign structure of the exact relaxation processes (panels (a) - (c)) and those estimated from the HMM (panels (d) - (f)).  The HMM captures the sign structure of the dominant second and fifth relaxation process, panels (d) and (e), as they have associated timescales larger than $\tau$, $t_{2}, t_{5} > \tau$ and are thus resolvable. The 10th estimated relaxation process (panel (f)) is clearly spurious - the estimated timescale $\hat{t}_{10} = 4.0$ is less than the lag time, $\tau$. For larger values of $\tau$ and $\tau= 130$ in particular (figure \ref{fig:prinz_criteria_results} panel (e)(ii)), the likelihood remains constant. This is because there is only one resolvable true relaxation process  and increasing hidden states just over-fit to spurious relaxation processes. What is perhaps surprising is that even the cross-validated likelihood, panel (e)(i), is smallest for $g=2$. This anomaly has not been investigated. 
 
-For large $\tau$ these fast relaxation processes cannot be captured and so estimation using large numbers of states results in noisy estimates of the parameters. 
+\begin{figure}
+    \centering
+    \mycaption{Comparison of a HMM with $\tau=8$ and $10$ hidden states with the dynamics of the Prinz potential. Panel (a) shows the sign structure of the exact 2nd right eigenvector ($\mathrm{sgn}[\Psi_2(x)]$, shaded area) in the observed state basis. The Prinz potential ($V(x)$, blue solid line) is shown for reference. The exact associated timescales are labelled, $t_{2}$. Panel (b) and (c) are similar but for 5th and 10th right eigenvector. Panel (d) shows the sign structure of the hidden state relaxation processes, projected into the observed state basis. The coloured lines are $E_{i, x}\cdot \tilde{\Psi}_2(i)$, i.e. the emission distributions each hidden state $i$ multiplied by the components of the 2nd right eigenvector. The  eigenvector projected into the observed state basis is $q_{2}(x) = \sum_{i} E_{i, x} \cdot \tilde{\Psi}_2(i)$. The shaded area is $\mathrm{sgn}[q_{2}(x)]$. The estimated timescales are labelled $\hat{t}_{2}$. Panels (e) and (f) are similar but for the 5th and 10th right eigenvector.}
+    \includegraphics[width=0.8\textwidth]{chapters/hmm_selection/figures/hmm_tau_8_g_10.png}
+    \label{fig:prinz_tau8_g10}
+\end{figure}
 
-In the case of log-likelihood, increase in log-likelihood is perfectly monotonic and the AIC selected models with $g < 10$ is due to the over-fitting penalty $2d$.
+Although the AIC, BIC and ICL are derived from different starting points, they all take the form of the likelihood plus a penalty term, $b$:
+\begin{equation}
+    -2LL(\hat{\theta}; \{s\}) + b
+\end{equation}
+The AIC over-estimates the number of hidden states for each value of $\tau$. The penalty term, $b=2d$, increases proportional to $g^{2}$ but only affects the selected $g$ for $\tau=15, 65, 130$ (figure \ref{fig:prinz_criteria_results} panels (c), (d) and (e)(ii)). The BIC also over-estimates the number of hidden states but by fewer as the penalty term $b=\log{N}d$, while also proportional to $g^{2}$, has a much larger proportionality constant. 
 
-the trend of favouring  we would expect this trend to continue for increasing $g$ as the number of hidden states fits to spurious 
 
+The ICL correctly estimates the number of states for $\tau = 8, 15,  65$. The penalty term $b=d\log{N}+2H(\mathbf{M})$ rises directly with $g$ and also indirectly the overlap of emission distributions increases the classification entropy. This entropy term is what causes the success of the ICL. 
 
 Points to note: 
 \begin{enumerate}
@@ -234,13 +245,6 @@ Points to note:
     \item it's puzzling that the likelihood increases for increasing $g$, even the cross-validated value. The likely reason has to do with that the hidden states for $g = 9$ (for instance) overlap a lot. See the lhs panes in figure \ref{fig:prinz_emission_dens_tau_5}.  
 \end{enumerate}
 
-
-\begin{figure}
-    \centering
-    \caption{The emission matrices for HMMs with g = $2, 3, 4, 5 9, 10$ hidden states}
-    \includegraphics{chapters/hmm_selection/figures/prinz_emitted_densities_tau_5.png}
-    \label{fig:prinz_emission_dens_tau_5}
-\end{figure}
 
 
 
@@ -292,57 +296,57 @@ Points to note:
 %         \includegraphics[width=0.4\textwidth]{chapters/hmm_selection/figures/ck_test_5_3.png}}
 % \end{figure}
 
-\begin{figure}
-    \centering
-    \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=2$}
-    \includegraphics{chapters/hmm_selection/figures/ck_test_5_2.png}
+% \begin{figure}
+%     \centering
+%     \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=2$}
+%     \includegraphics{chapters/hmm_selection/figures/ck_test_5_2.png}
     
-    \label{fig:prinz_ck_test_5_2}
-\end{figure}
+%     \label{fig:prinz_ck_test_5_2}
+% \end{figure}
 
 
-\begin{figure}
-    \centering
-    \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=3$}
-    \includegraphics{chapters/hmm_selection/figures/ck_test_5_3.png}
+% \begin{figure}
+%     \centering
+%     \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=3$}
+%     \includegraphics{chapters/hmm_selection/figures/ck_test_5_3.png}
     
-    \label{fig:prinz_ck_test_5_3}
-\end{figure}
+%     \label{fig:prinz_ck_test_5_3}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=4$}
-    \includegraphics{chapters/hmm_selection/figures/ck_test_5_4.png}
+% \begin{figure}
+%     \centering
+%     \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=4$}
+%     \includegraphics{chapters/hmm_selection/figures/ck_test_5_4.png}
     
-    \label{fig:prinz_ck_test_5_4}
-\end{figure}
+%     \label{fig:prinz_ck_test_5_4}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=5$}
-    \includegraphics{chapters/hmm_selection/figures/ck_test_5_5.png}
+% \begin{figure}
+%     \centering
+%     \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=5$}
+%     \includegraphics{chapters/hmm_selection/figures/ck_test_5_5.png}
     
-    \label{fig:prinz_ck_test_5_5}
-\end{figure}
+%     \label{fig:prinz_ck_test_5_5}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=9$}
-    \includegraphics{chapters/hmm_selection/figures/ck_test_5_9.png}
+% \begin{figure}
+%     \centering
+%     \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=9$}
+%     \includegraphics{chapters/hmm_selection/figures/ck_test_5_9.png}
     
-    \label{fig:prinz_ck_test_5_9}
-\end{figure}
+%     \label{fig:prinz_ck_test_5_9}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=10$}
-    \includegraphics{chapters/hmm_selection/figures/ck_test_5_10.png}
-    \label{fig:prinz_ck_test_5_10}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \mycaption{CK test for Prinz Potential with $\tau=5$ and $g=10$}
+%     \includegraphics{chapters/hmm_selection/figures/ck_test_5_10.png}
+%     \label{fig:prinz_ck_test_5_10}
+% \end{figure}
 
-\begin{figure}
-    \centering
-    \mycaption{implied timescales for $g = 2, 3, 4, 5, 9, 10$}
-    \includegraphics{chapters/hmm_selection/figures/its_tau_5.png}
-    \label{fig:prinz_its_tau_5}
-\end{figure}
+% \begin{figure}
+%     \centering
+%     \mycaption{implied timescales for $g = 2, 3, 4, 5, 9, 10$}
+%     \includegraphics{chapters/hmm_selection/figures/its_tau_5.png}
+%     \label{fig:prinz_its_tau_5}
+% \end{figure}
