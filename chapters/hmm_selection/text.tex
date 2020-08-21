@@ -98,42 +98,42 @@ The likelihood of  a hidden Markov model is given by \cite{noeProjectedHiddenMar
 \end{split}
 \end{equation}
 
-
 Here $\{s_t\}$ are the observed state trajectories and $\{h_t\}$ are the (unknown) hidden state trajectories. This quantity will be simplified to $L(\theta)$. likelihood is maximized by the Baum Welch algorithm [][] and the corresponding value will be denoted $L(\hat{\theta})$ where $\hat{\theta}$ are the maximum likelihood estimates of the HMM parameters. It is usual to work with the log likelihood and this will be denoted $LL(\hat{\theta})$. 
 
-The optimal values of the CVLL and the AIC both minimize the \emph{Kullback-Leibler} divergence, $D_{KL}(p||p^*)$ - a measure of the difference of one probability distribution, here the modelled distribution,  $p(\{s_t\} | \hat{\theta})$  and a reference distribution, $p^{*}(\{s_t\})$: 
+The optimal values of the CVLL and the AIC both minimize the \emph{Kullback-Leibler} divergence, $D_{KL}(p||q)$ - a measure of the difference of one probability distribution, here the modelled distribution,  $p(\{s_t\} | \hat{\theta})$  and a reference or true distribution, $q(\{s_t\})$: 
 
 \begin{equation}\label{eqn:kl_div}
 \begin{split}
-    D_{KL}(p||p^*) & = \int p^{*}(\{s_t\}) \log{\left(\frac{ p^{*}(\{s_t\}) }{p(\{s_t\} | \hat{\theta})}  \right)} d(\{s_t\}) \\ 
-    & = \int p^{*}(\{s_t\}) \log{\left(p^{*}(\{s_t\})\right)}d(\{s_t\}) - \int p^{*}(\{s_t\})\log{\left(p(\{s_t\} | \hat{\theta})\right)} d(\{s_t\})
+    D_{KL}(p||q) & = \int q(\{s_t\}) \log{\left(\frac{ q(\{s_t\}) }{p(\{s_t\} | \hat{\theta})}  \right)} d(\{s_t\}) \\ 
+    & = \int q(\{s_t\}) \log{\left(q(\{s_t\})\right)}d(\{s_t\}) - \int q(\{s_t\})\log{\left(p(\{s_t\} | \hat{\theta})\right)} d(\{s_t\})
 \end{split}
 \end{equation}
 
-The optimal values of the BIC and ICL maximize the types of integrated likelihood. Minimizing the BIC is equivalent to choosing the model with the largest Bayes factor or the model with the largest posterior probability, given the data. The likelihood used is the observed likelihood (equation \ref{eqn:obs_lik_full}) but integrated over the parameters $\tilde{\mathbf{T}}$ and $\mathbf{E}$: 
+The BIC is an approximation to the log of the observed likelihood, which is the integral of the likelihood over the parameters $\tilde{\mathbf{T}}$ and $\mathbf{E}$: 
 
 \begin{equation}\label{eqn:obs_lik_int}
         p(\{s_t\}) = \int p\left(\{s_{t}\}\middle |\theta \right)p(\theta) \mathrm{d}\theta
 \end{equation}
 
-In the case of the ICL, the likelihood is the complete data likelihood: 
+Here $p(\theta)$ is the prior distribution over the HMM parameters (the transition and emission matrix elements).  The Integrated likelihood selects the model with the greatest evidence for the observed states, i.e. the model with the highest posterior probability, given the observed states only. It naturally penalises more complex models [][], in this case models with larger numbers of hidden states. It has been used to evaluate the quality of coarse graining schemes []. 
+
+The ICL is an approximation to the complete data likelihood: 
 \begin{equation}\label{eqn:class_lik_int}
     p(\{(s_t, h_t)\} = \int p\left(\{(s_{t}, h_{t})\}\middle |\theta \right)p(\theta) \mathrm{d}\theta
 \end{equation}
 
-Although the hidden states are not observed, the hidden states for each MD frame is  taken to be the state with the largest posterior probability, given the observed state i.e. $\arg\max_{i}p(h=i|s=j)$.  
+The Integrated complete likelihood selects the model with the greatest evidence for the observed states and the hidden states. Although the hidden states are not observed, the hidden states are  taken to be the state with the largest posterior probability, given the observed state i.e. $\arg\max_{i}p(h=i|s=j)$.  
 
 
 \subsubsection{The Akaike Information Criterion, AIC}. 
 
-The AIC is defined as:
+The AIC approximates the second term in equation \ref{eqn:kl_div} as:
 \begin{equation}\label{eqn:aic}
     \operatorname{AIC} = -2\left(\log{L\left(\{s_t\}|\hat{\theta}\right)} - d\right)
 \end{equation}
 where $d$ is the number of degrees of freedom of the model. For a reversible hidden Markov model with $g$ hidden states and $n$ observed states  $d = \sfrac{1}{2}g(g-1) + (g-1) + g(n-1)$ \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
 
-
-The AIC arises from the approximation of the second term in the definition of the $D_{KL}$ (equation \ref{eqn:kl_div}), the first being independent of the model and thus irrelevant. The derivation starts by approximating the true distribution $p^{*}(\{s_t\})$ with the empirical distribution, giving rise to the $\log{L\left(\{s_t\}|\hat{\theta}\right)}$ term.  This will naturally over-fit to the data and the  $d$ term is a bias correction term to account for this.  $d$ is only equal to the degrees of freedom of the model under the assumption that the true model is under consideration. The $-2$ is there to make an equivalence with Mallows $C_p$ \cite{friedman2001elements}. The selected model is the one which has the smallest AIC or in other words, the model which has the smallest KL divergence relative to the true data generating process. 
+The derivation starts by approximating the true distribution $q(\{s_t\})$ with the empirical distribution, giving rise to the $\log{L\left(\{s_t\}|\hat{\theta}\right)}$ term.  This will naturally over-fit to the data and the  $d$ term is a bias correction term to account for this.  $d$ is only equal to the degrees of freedom of the model under the assumption that the true model is under consideration in the model selection procedure.  The $-2$ is there to make an equivalence with Mallows $C_p$ \cite{friedman2001elements}. The selected model is the one which has the smallest AIC or in other words, the model which has the smallest KL divergence relative to the true data generating process. 
 
 \subsubsection{The cross-validated log-likelihood, CVLL}. 
 Maximizing the the cross-validated log-likelihood also minimizes the KL-divergence \cite{celeuxSelectingHiddenMarkov2008}. The CVLL is calculated in the following way: 
@@ -150,12 +150,16 @@ There are two points of failure in this procedure. First, the HMM may fail to co
 
 In order to make the values of the CVLL comparable to the other criteria the CVLL was multiplied by: $2$ to account for the parameters being estimated on half of the data (and the log-likelihood scales linearly with the number of observations), and then $-2$ to account for the same factor in the definition of AIC, BIC and ICL. Thus the \emph{minimum} of the CVLL determines the selected model.  
 
-\subsubsection{Bayesian information criterion, BIC}. 
-The BIC is defined as: 
+\subsubsection{Bayesian information criterion, BIC}. \label{sec:bic}
+The BIC approximates the log of equation \ref{eqn:obs_lik_int} as:
 \begin{equation}\label{eqn:bic}
     \operatorname{BIC} = -2\left(\log{\left(L\left(\{s_t\}\middle|\theta\right)\right)} - \frac{1}{2}d\log{\left(N_{obs}\right)}\right)
 \end{equation}
-where $d$ is the degrees of freedom and $N_{obs}$ is the number of observations.  The difference in BIC between two models, $BIC_{1}-BIC_{2}$ is an approximation to the log of the Bayes factor, the selected model is then the one with the smallest BIC. The number of observations is equal to the number of pairs of frames separated by the lag time and so decreases with $\tau$. If there are $q$ independent MD trajectories, of $t_{max}$ frames each, then the number of observations is $N_{obs} = q(t_{max}-\tau)$. The derivation of the BIC approximates the log of the observed likelihood,  $\log{\left(p(\{s_t\}\right)}$, (see equation \ref{eqn:obs_lik_int}) under the assumption that the prior distribution of the parameters $p(\theta)$ is relatively non-informative. There are several drawbacks to the use of the BIC in assessing the number of components in mixture models. First like the AIC, the BIC is also only valid under the assumption that the true model is in the models under consideration. Second,  use of the BIC for assessing mixture models  is not theoretically justified, however simulation studies have shown it to be useful [].  
+where $d$ is the degrees of freedom and $N_{obs}$ is the number of observations.  The difference in BIC between two models, $BIC_{1}-BIC_{2}$ is an approximation to the log of the Bayes factor, the selected model is then the one with the smallest BIC. The number of observations is equal to the number of pairs of frames separated by the lag time and so decreases with $\tau$. If there are $q$ independent MD trajectories, of $t_{max}$ frames each, then the number of observations is $N_{obs} = q(t_{max}-\tau)$. 
+
+The BIC approximation to the integrated likelihood holds as long as regularity conditions\footnote{restrictions placed on the behaviour of the likelihood function so that inference is possible} [] hold on the likelihood functions [schwarz] and that the prior is peaked near the maximum likelihood estimates of the parameters [rafferty and kass].  The former assumption does not hold for finite mixture models in general [peel] but there is support for using the BIC [Raftery and Fraley].
+
+% The derivation of the BIC approximates the log of the observed likelihood,  $\log{\left(p(\{s_t\}\right)}$, (see equation \ref{eqn:obs_lik_int}) under the assumption that the prior distribution of the parameters $p(\theta)$ is relatively non-informative. There are several drawbacks to the use of the BIC in assessing the number of components in mixture models. First like the AIC, the BIC is also only valid under the assumption that the true model is in the models under consideration. Second,  use of the BIC for assessing mixture models  is not theoretically justified [], however simulation studies have shown it to be useful [].  
 
 \subsubsection{Integrated classification likelihood criterion, ICL}. 
 The integrated classification likelihood criterion is derived in a  similar fashion to the BIC, but the starting point is the classification likelihood, equation \ref{eqn:class_lik_int}. The final approximation to $\log{(p(\{(s_t, h_t)\})}$ becomes: 
@@ -163,24 +167,56 @@ The integrated classification likelihood criterion is derived in a  similar fash
 \begin{equation}\label{eqn:icl}
 \begin{split}
         \operatorname{ICL} &= -2\left(\log{\left(L\left(\{(s_t, h_{t})\}\middle|\theta\right)\right)} - H\left(\mathbf{M}\right) - \frac{1}{2}d\log{\left(N_{obs}\right)}\right)     \\
-        & = \operatorname{BIC} + 2H\left(\mathbf{M}\right)
+        & = \operatorname{BIC} + 2\mathrm{Ent}
 \end{split}
 \end{equation}
 
-The $H\left(\mathbf{M}\right)$ is classification entropy, it is  the information entropy for assignment of each observation to a hidden state, summed over all the observations: 
+The $\mathrm{Ent}$ is classification entropy, it is the information entropy for assignment of each observation to a hidden state, summed over all the observations: 
 \begin{equation}
-    H(\mathbf{M}) = -\sum_{t}^{t_{max}} \sum_{j}^{g} M_{s_{t}, j}\log{\left(M_{s_{t}, j}\right)}
+    \mathrm{Ent} = -\sum_{t}^{t_{max}} \sum_{j}^{g} M_{s_{t}, j}\log{\left(M_{s_{t}, j}\right)}
 \end{equation}
 
-The elements of the membership matrix  $M_{i,j}$ are the probability of being in a hidden state $j$ given an observed state $i$, $P(h=j|s=i)$. The inner sum is the entropy of single observation which quantifies the uncertainty with which the model assigns the given observed state to a hidden state. For example in a two hidden state system the classification entropy for a single observed state $i$ will be $p(h=1|s_t=i)\log{p(h=1|s_t=i)} + p(h=2|s_t=i)\log{p(h=2|s_t=i)}$. The ICL inherits the drawbacks and assumptions of the BIC but has been shown to be practically useful for selecting the number of components in mixture models. 
+The elements of the membership matrix  $M_{i,j}$ are the probability of being in a hidden state $j$ given an observed state $i$, $P(h=j|s=i)$. The inner sum is the entropy of single observation which quantifies the uncertainty with which the model assigns the given observed state to a hidden state. For example in a two hidden state system the classification entropy for a single observed state $i$ will be $p(h=1|s_t=i)\log{p(h=1|s_t=i)} + p(h=2|s_t=i)\log{p(h=2|s_t=i)}$. 
 
+
+% The ICL inherits the drawbacks and assumptions of the BIC but has been shown to be practically useful for selecting the number of components in mixture models. 
+
+\subsection{Criteria calculation details}
+There are a number of practical details in calculating the information criteria which need to be addressed. 
+
+The number of observations, $N_{obs}$, needed for the BIC and ICL, was calculated as: 
+\begin{equation}
+    N_{obs} = q\cdot(t_{max} - \tau)
+\end{equation}
+where $q$ is the number of trajectories, $t_{max}$ is the length of each trajectory and $\tau$ is the lag time in units of the trajectory time step. The total number of frames is $N_{frames} = q\cdot t_{max}$
+
+The state space of the HMMs was restricted to a reversibly connected set of  hidden states. This meant that for some stipulated values of $g$ the final model had $g^{\prime}<g$ hidden states. As this sub-setting was performed \emph{after} estimation, the degrees of freedom was still calculated using $g$. 
+
+The classification entropy can be calculated two different ways, which should in principle give the same result but in practice diverged by up to a factor of three in the cases tested. 
+
+In the first method, the hidden state probabilities calculated in the final iteration forward-backward algorithm were used: 
+\begin{enumerate}
+    \item For each observed state in a trajectory, $s_t$, the conditional probability $\gamma_{i}(t)=P\left(h_{t}=i \mid s_t, \theta\right)$ is calculated in the `update' part of the forward-backward algorithm. This is stored in the PyEMMA HMM estimation object for every frame of the trajectories. 
+    \item The entropy was calculated at each frame of the trajectory,  $H(t)=-\sum_{i}\gamma_{i}$ and then summed over the $t_{max}$ frames of a trajectory and then over the $q$ trajectories: $\mathrm{Ent} = \sum^{q} \sum_{t}^{t_{max}} H(t)$
+    \item $\mathrm{Ent}$ was scaled by a factor of $N_{obs}/N_{frames}$ to account for the fact that an observation is a pair of states $s_{t}, s_{t+\tau}$.
+\end{enumerate}
+
+In the second method the entropy used the membership matrix which is itself calculated from the emission matrix, $\mathbf{E}$, and the stationary distributions of the hidden $\tilde{\pi}$ and observed $\pi$ states: 
+\begin{equation}
+    M_{ji} = E_{ij}\frac{\tilde{\pi}_{i}}{\pi_{j}}
+\end{equation}
+where $i$ labels the $g$ hidden states and $j$ the $n$ observed states. The entropy was calculated using $\mathbf{M}$ as: 
+\begin{equation}
+    \mathrm{Ent} = N_{obs}\sum^{n}_{j}\sum^{g}_{i} M_{ji}\log{\left(M_{ji}\right)}
+\end{equation}
+
+The first method was deemed more accurate as the the hidden state probabilities were taken straight from the estimated model without further calculation. However, in the case of AADH the sub-setting of the state space meant re-scaling of the $\gamma_{i}(t)$ would necessary, negating the advantage of the first method, and so the second method was used. 
 
 \subsection{Model selection}
 
-The model selection criteria, CVLL, AIC, BIC and ICL, will be used to select the optimum number of hidden states in a maximum likelihood HMM, using the discrete trajectories sampled from the Prinz potential. Five different values of the Markov lag time will be used, they are $\tau=5, 8, 15, 65, 130$. These values of $\tau$ were chosen because they resolve, respectively $7, 5, 3, 2, 1$ implied timescales in the full MSM state space. As the top three of these timescales are dominant, they resolve $4, 4, 4, 3, 2$ hidden states and so provide an easy way of comparing the performance of the indicators over different numbers of true hidden states\cite{noeProjectedHiddenMarkov2013a}. The implied timescales for HMMs using the `true' number of states is shown in figure \ref{fig:prinz}, panel (b). The vertical black lines are located at the chosen values of $\tau$.
+The model selection criteria, CVLL, AIC, BIC and ICL, will be used to select the optimum number of hidden states in a maximum likelihood HMM, using the discrete trajectories sampled from the Prinz potential. Five different values of the Markov lag time will be used, they are $\tau=5, 8, 15, 65, 130$. These values of $\tau$ were chosen because they resolve, respectively $7, 5, 3, 2, 1$ implied timescales in the full MSM state space. As the top three of these timescales are dominant, they resolve $4, 4, 4, 3, 2$ hidden states and so provide an easy way of comparing the performance of the indicators over different numbers of true hidden states\cite{noeProjectedHiddenMarkov2013a}. The implied timescales for HMMs using the `true' number of states is shown in figure \ref{fig:prinz}, panel (b). The vertical black lines are located at the chosen values of $\tau$. For each value of $\tau$, nine different maximum likelihood Markov models were estimated with $2 - 10$ hidden states. 
 
-For each value of $\tau$, nine different maximum likelihood Markov models were estimated with $2 - 10$ hidden states. Up to four different models were selected by the four selection criteria and these were compared to the model with the true number of hidden states by means of the Chapman-Kolmogorov test using Bayesian estimation to determine the uncertainty in the parameter estimates. However, the CK test was only performed if a Bayesian model could be converged. The convergence criterion was set to $|\hat{R}-1|<0.1$ using Gelman-Rubin R-hat statistic on two independent MCMC chains. The same methodology was applied to the four different discretisations and values of $\tau$ tabulated in table \ref{tab:aadh_final_msm_specs}. 
-
+For AADH the information criteria were calculated for HMMs with $g = 2 - 20$ hidden states for each of the four different discretization specifications listed in table \ref{tab:aadh_final_msm_specs}.  The HMM with the smallest ICL was selected and estimated using a Bayesian hidden Markov model with two chains of  $1000$ burn-in steps and $1000$ sampling steps. The convergence of the transition matrix elements was checked using the Gelman-Rubin R-hat statistic. 
 
 \section{Results and discussion}\label{sec:hmm_results}
 \subsection{Prinz Potential}
@@ -231,19 +267,39 @@ Although the AIC, BIC and ICL are derived from different starting points, they a
 \begin{equation}
     -2LL(\hat{\theta}; \{s\}) + b
 \end{equation}
-The AIC over-estimates the number of hidden states for each value of $\tau$. The penalty term, $b=2d$, increases proportional to $g^{2}$ but only affects the selected $g$ for $\tau=15, 65, 130$ (figure \ref{fig:prinz_criteria_results} panels (c), (d) and (e)(ii)). The BIC also over-estimates the number of hidden states but by fewer as the penalty term $b=\log{N}d$, while also proportional to $g^{2}$, has a much larger proportionality constant. 
+The $b$ term in each case penalises the complexity of each model. The nature and scaling of the penalty is different for each criteria. 
+
+The penalty term,$b=2d$, is there to correct the approximation of the KL divergence with the log-likelihood.  It increases proportional to $g^{2}$ but only affects the selected $g$ for $\tau=15, 65, 130$ (figure \ref{fig:prinz_criteria_results} panels (c), (d) and (e)(ii)). Although the AIC is used to estimate the order of finite mixture models, its tendency to over-estimate orders of finite mixtures is well documented [] []. 
+
+The origin of the BIC penalty term, $b=d\log{N}$ is to correct the approximation of the integrated likelihood with the maximum likelihood estimate. The BIC over-estimates the number of hidden states, albeit by a smaller number for each $\tau$, despite the penalty term growing faster with $g$ than the AIC. This could be due to the drawbacks of the integrated likelihood in general, or of its approximation with the BIC. If the latter, then of the two assumptions behind the BIC, described in section \label{sec:bic} the essentially non-informative prior is potentially the most problematic.  The elements of the both the transition matrix and the emission matrix are constrained to be a stochastic matrix (potentially with detailed balance) and to be a probability distribution respectively. 
+
+\begin{figure}
+    \centering
+    \mycaption{The classification entropy of HMMs. Panels (a)-(c) show the emission distributions of HMMs with $\tau=8$ and $g = 2, 4, 10$ respectively. Each coloured line represents a different hidden state. Panels (d) - (f) show the classification entropy across $x$, weighted by the stationary distribution on the observed states: $\pi(x)\sum_{i}E_{i, x}\log{E_{i, x}}$. The label shows the average entropy per observations $Ent/N_{obs} = \sum_{x}\pi(x)H(x)$.}
+    \includegraphics[width=0.8\textwidth]{chapters/hmm_selection/figures/prinz_entropy.png}
+    \label{fig:prinz_ent}
+\end{figure}
+
+The ICL correctly estimates the number of states for $\tau = 8, 15,  65$. The penalty term $b=d\log{N}+2\mathrm{Ent}$ corrects the approximation to the integrated complete data likelihood by the maximum likelihood estimate. This penalty term rises directly with $g$ and also indirectly the overlap of emission distributions increases the classification entropy. This is demonstrated in figure \ref{fig:prinz_ent}. Panel (a) shows the emission distribution for a two state HMM. These two distributions only overlap around the high barrier at $x=0$. Panel (d) shows the entropy at each value of $x$, weighted by the stationary distribution over the observed states, $\pi(x)$. The entropy is zero almost everywhere as each value of $x$ can be assigned unambiguously to a hidden state. The exception is around $x=0$ where the entropy reaches its highest possible value $\pi(0)\log{0.5}$, however, the average classification entropy per observation, $\sum_{x}\pi\sum_{i}E_{i, x}\log{E_{i, x}}$ is low. As the number of hidden states increases, panels (b) and (c), the weighted entropy becomes larger because the hidden states overlap in regions which are visited more often (panel (e)) and because more than two states overlap significantly (panel (f)). Comparing columns (iii) and (iv) in figure \ref{fig:prinz_criteria_results}, it is the entropy term which causes the success of the ICL. 
+
+Minimizing the entropy penalty alone is similar to maximizing the crispness/scaling condition  in robust PCCA (equation 4.19 in \cite{deuflhardRobustPerronCluster2005b}) in that it maximizes the number of  observed states that are unambiguously assigned to one hidden state.  However, the minimum entropy solution will lump the observed states into two hidden states separated by the slowest relaxation process. The two state solution for small $\tau$ doesn't capture the potential intra-state dynamics. So the ICL then balances this with the maximizing the integrated observed likelihood (the BIC term) which will increase the number of hidden states to more accurately model both the distribution of observed states and, albeit indirectly, the transition matrix. 
+
+The integrated completed data likelihood is a natural criterion for the purpose of coarse graining  models of conformational dynamics. The purpose of coarse graining is to provide an interpretable model of dynamics which naturally means balancing simplicity and accuracy. Part of the simplicity of a coarse grained model is being able to interpret given structures as belonging to a particular metastable state. Considering the integrated classification likelihood naturally penalises less interpretable solutions by considering the models' evidence for both the observed states and the classification into hidden states [biernacki]. 
+
+Despite the natural interpretation of the ICL, it fails in the simple model for both $\tau=5$ and $130$, selecting one more hidden state than the true number.In the case of $\tau=5$  scores for $3\le g \le 8$ are within \SI{1}{\percent} of each other, the ICL has not narrowed space of potential models appreciably. However, in the case of $\tau =130$, scores for $g\ge 4$ are more than \SI{4}{\percent} different to $g=2, 3$ narrowing the model search space to just $g=2, 3$. Further model criticism using implied timescale plots and the convergence of the a Bayesian HMM can be used to discriminate between these two models. Understanding the causes of the breakdown in the ICL suffer from the same issues as BIC approximation and further work is needed to understand the cause of the discrepancy between the true and selected number of hidden states. 
 
 
-The ICL correctly estimates the number of states for $\tau = 8, 15,  65$. The penalty term $b=d\log{N}+2H(\mathbf{M})$ rises directly with $g$ and also indirectly the overlap of emission distributions increases the classification entropy. This entropy term is what causes the success of the ICL. 
+\section{AADH}
 
-Points to note: 
-\begin{enumerate}
-    \item The Chapman-Kolmogorov tests do not differentiate between $g = 2, 3, 4$ states up to $10\tau$ I.e. $T(\tau)^10 = T(10\tau)$ for $g = 2, 3, 4$ hidden states. See figures \ref{fig:prinz_ck_test_5_2} to \ref{fig:prinz_ck_test_5_4}. There's only four states for $\tau < 64$ (the third relaxation process has a lifetime of $64$ time steps. 
-    \item There is a cross-validated log likelihood difference between $g = 2 - 4$, see figure \ref{fig:prinz_criteria_results} panel (a)(i) (and for that matter, the non-cross-validated log-likelihood (a)(ii) blue bars) which favours $4$ vs $3,2$. 
-    \item However, the likelihood criteria overestimate the number of hidden states. The closest is the ICL with $g=5$. The CK tests for $g=5, 9, 10$ are shown in figures \ref{fig:prinz_ck_test_5_5} - \ref{fig:prinz_ck_test_5_10}. They are re-assuringly rubbish. 
-    \item Contra the Noe HMM paper \cite{noeProjectedHiddenMarkov2013a}, increasing the number of hidden states above the `actual' number i.e. $g = 5, 6, 7, 8, 9$, doesn't affect the timescale estimates of the `true' timescales, see figure \ref{fig:prinz_its_tau_5}.
-    \item it's puzzling that the likelihood increases for increasing $g$, even the cross-validated value. The likely reason has to do with that the hidden states for $g = 9$ (for instance) overlap a lot. See the lhs panes in figure \ref{fig:prinz_emission_dens_tau_5}.  
-\end{enumerate}
+
+% Points to note: 
+% \begin{enumerate}
+%     \item The Chapman-Kolmogorov tests do not differentiate between $g = 2, 3, 4$ states up to $10\tau$ I.e. $T(\tau)^10 = T(10\tau)$ for $g = 2, 3, 4$ hidden states. See figures \ref{fig:prinz_ck_test_5_2} to \ref{fig:prinz_ck_test_5_4}. There's only four states for $\tau < 64$ (the third relaxation process has a lifetime of $64$ time steps. 
+%     \item There is a cross-validated log likelihood difference between $g = 2 - 4$, see figure \ref{fig:prinz_criteria_results} panel (a)(i) (and for that matter, the non-cross-validated log-likelihood (a)(ii) blue bars) which favours $4$ vs $3,2$. 
+%     \item However, the likelihood criteria overestimate the number of hidden states. The closest is the ICL with $g=5$. The CK tests for $g=5, 9, 10$ are shown in figures \ref{fig:prinz_ck_test_5_5} - \ref{fig:prinz_ck_test_5_10}. They are re-assuringly rubbish. 
+%     \item Contra the Noe HMM paper \cite{noeProjectedHiddenMarkov2013a}, increasing the number of hidden states above the `actual' number i.e. $g = 5, 6, 7, 8, 9$, doesn't affect the timescale estimates of the `true' timescales, see figure \ref{fig:prinz_its_tau_5}.
+%     \item it's puzzling that the likelihood increases for increasing $g$, even the cross-validated value. The likely reason has to do with that the hidden states for $g = 9$ (for instance) overlap a lot. See the lhs panes in figure \ref{fig:prinz_emission_dens_tau_5}.  
+% \end{enumerate}
 
 
 
