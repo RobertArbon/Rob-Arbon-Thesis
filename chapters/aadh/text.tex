@@ -177,6 +177,255 @@ The number of dominant processes was determined by inspection of the relative ga
 
 An alternative analysis was performed using a value of the TICA lag time set to $\tau=\SI{10}{\nano\second}$ with \SI{95}{\percent} of the variance retained meaning $m=8$ components were retained. The same number of cluster centres, $n=316$ was used. The implied timescale plots are shown in figure \ref{fig:its_d_sens}, these results do not change the Markov lag time suggestion of \SI{2}{\nano\second}. The ratio of implied timescales for an MSM with $\tau(\textrm{MSM})=\SI{2}{\nano\second}$ is shown in figure \ref{fig:ts_ratios_d_sens}. These suggest a single dominant relaxation process, i.e., $k=2$. The higher value of $k=4$ is retained however on the basis that including extra, potentially fast timescales processes in the definition of $\operatorname{VAMP-2}$ will not significantly affect the optimisation results. The issue of whether this is an appropriate value will be further investigated in the sensitivity analyses of chapter \ref{chap:msm} and in chapter \ref{chap:hmm} where the issue of the number of metastable states implied by a MSM will be addressed quantitatively. 
 
+{\huge This has been copied `as-is' from chapter \ref{chap:msm}}
+\section{MSM Optimisation}\label{subsec:aadh}
+
+Having explored the use of response surfaces and Bayesian optimisation in the well known alanine dipeptide system with a two-dimensional hyper-parameter space. These techniques were applied to the unknown case of the active site of AADH. 
+
+[TM: give summary of what's coming next]
+
+\subsection{Response surface}\label{subsubsec:aadh_rsm}
+
+\begin{figure}[p]
+    \centering
+    \mycaption{The $\operatorname{VAMP-2}$ scores of the hyperparameter trials for MSMs of AADH. The test response, $f^{test}=f\left(\chi, \tau, m, n; \mathbf{X}^{test}\right)$, is shown in blue, for (a) the $\phi, \psi, \chi$ torsions, (c) all distances between heavy atoms, (e) alpha-Carbon contact distances, (g) heavy atom contact distances, (i) root mean square deviation of heavy atoms. The difference between $f^{train}$ and $f^{test}$ is shown in orange for (b) the the $\phi, \psi, \chi$ torsions and so on. The horizontal axis is the rank of the trial according to the test score. Each trial was scored with $20$ iterations of 50:50 shuffle split cross-validation. The error bars represent the 25th and 75th quantiles of the cross-validation folds. The features are ordered according to the mean of the their test scores.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_train_test_results.png}
+    \label{fig:aad_train_test}
+\end{figure}
+
+The mean MSM response for the randomly sampled hyper-parameter trials are shown in  figure \ref{fig:aad_train_test} with the test response shown in blue and the difference between the training and test response shown in orange.  The panels correspond to the value $\chi$ and are ordered according to their average of the test responses. The horizontal axis is the rank of the trial determined by their test response. There is clear range of response values in the range $2 < \operatorname{VAMP-2} < 4$ with the $(\phi, \psi, \chi)$ torsions  (panel (a)) and the interatomic distances feature ( $\left|\mathbf{r}_{1}-\mathbf{r}_{2}\right|$) (panel (c)) both performing the best out of the five features. 
+
+In contrast to the case of alanine dipeptide, all features show a marked degree of over-fitting $\Delta f$. However, within each feature there are combinations of the remaining hyper-parameters for which $\Delta f=0$ implying that it is possible to create a consistent picture of relaxation processes which generalize well for each feature. The response of the $(\phi, \psi, \chi)$ feature  approaches the maximum response of $VAMP-2 = 4$ for the highest ranked trials, indicating the possibility of the three slow relaxation processes. 
+
+\begin{figure}
+    \centering
+    \mycaption{[TM: label with Pearson R for each panel?] Goodness of fit for the response surface of AADH conditional on each feature. The horizontal axis ($y$) are the observed trial values and the vertical axis is the mean response ($f(\mathbf{x})$). The error bars are $\pm 2\sigma$ where $\sigma$ is the standard deviation of the response surface including the noise term $\sigma_n$.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_fit_d.png}
+    
+    \label{fig:aadh_rsm_fit}
+\end{figure}
+
+The response surface as a function of the feature, $\chi$, TICA lag time, $\tau$, number of TICA components retains $m$, and the number of cluster centres, $n$ was estimated with a GP. The RMSD feature was left out of the response surface because the $\tau$ and $m$ hyper-parameters do not apply, creating a \emph{conditional} search space [] which  poses problems GP although there are attempts to mitigate this []. While this is a problem in general for this method, the poor performance of RMSD as a feature both here and in alanine dipeptide mean that this will not affect finding the optimum hyper-parameters. 
+
+[TM: how are kernel and input warping chosen?] Model selection on the kernel and input warping revealed an exponential kernel (equation \ref{eqn:kern_exp}) and a linear input transformation for $\tau, m$ and $n$ were most appropriate, with an MSLL of $-0.01298$ and a SMSE of $0.3087$ (see table \ref{tab:aadh_rsm_metrics_all_data} for the other models' selection metrics). A more intuitive assessment of the fit of the can be found in figure  \ref{fig:aadh_rsm_fit} which shows the observed and predicted values for each feature. There is clearly a good fit for all the features except for the $(\phi, \psi, \chi)$ torsions where the predicted values are slightly under/over estimated for the highest/lowest values with this feature. This creates the possibility of a false bimodal response surface which must be checked when determining the optimal hyper-parameters.  The relatively poor fit on this feature is likely due to the fully multiplicative nature of the kernel. More flexible kernels (as discussed in e.g. \cite{duvenaud2011additive}) which model lower order interactions may be able to overcome this problem. 
+
+\begin{figure}
+    \centering
+    \mycaption{The relevance of the hyper-parameters of AADH. The distribution of the parameters of the response surface were estimated using MCMC. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the the other hyper-parameters are shown in orange, labelled `Other'.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/AADH_relevance_d.png}
+    \label{fig:aadh_relevance}
+\end{figure}
+
+\begin{table}
+    \centering
+    \mycaption{Median and $\SI{95}{\percent}$ credible intervals for the kernel hyper-parameters of the AADH response surface estimated using MCMC. The length-scale parameters in equation \ref{eqn:kernel_form} are re-written here as relevances.}
+    \begin{tabular}{|l|r|l|}
+    \hline
+                             Hyper-parameter &  Median &     (95\% C.I.) \\
+    \hline\hline
+                    $R_{(\phi, \psi, \chi)}$ &   0.073 &  (0.021-0.248) \\
+     $R_{|\mathbf{r_{1}} - \mathbf{r_{2}}|}$ &   0.032 &  (0.012-0.098) \\
+                 $R_{C_{\alpha}-C_{\alpha}}$ &   0.025 &  (0.009-0.084) \\
+                                   $R_{X-X}$ &   0.030 &  (0.012-0.083) \\
+                                  $R_{\tau}$ &   0.246 &  (0.126-0.474) \\
+                                     $R_{m}$ &   0.044 &  (0.022-0.095) \\
+                                     $R_{n}$ &   0.009 &  (0.005-0.018) \\
+                                      $\eta$ &   1.540 &  (1.117-2.154) \\
+                                  $\sigma_n$ &   0.011 &  (0.001-0.035) \\
+    \hline
+    \end{tabular}
+    \label{tab:aadh_rel}
+\end{table}
+
+The multidimensional nature of the response surface poses problems for visualisation and for understanding the interaction between the hyper-parameters in determining the response. However, calculating the hyper-parameter relevance can help by suggesting the displayed granularity of the inputs. Figure \ref{fig:aadh_relevance} shows the posterior distribution of relevance for the features (blue) and the remaining hyper-parameters (orange). The median and $\SI{95}{\percent}$ credible intervals are tabulated in table \ref{tab:aadh_rel}. 
+
+Figure \ref{fig:aadh_rsm} shows  a projection of the response surface, $f(\mathbf{x};\mathcal{D}_{361})$, informed by the relevance. $\tau$ and $m$ are the two highest relevance hyper-parameters ($R_{\tau} = 0.246 (0.126-0.474)$, $R_{m} = 0.044 (0.022-0.095)$) so the response surface is shown as a 2D heat map with $\tau$ on the vertical and $m$ on the horizontal axis. Only odd values of $m$ are shown given the slightly lower relevance of this feature. The number of cluster features is, like the case of alanine dipeptide, the lowest relevance hyper-parameter ($R_{n} = 0.009 (0.005-0.018)$ and so heat maps for only two value of $n$ are shown: the value at the maximum of the response surface ($n=207$ although the value displayed is rounded to $210$) and $n=1000$. With only four features, it is  simple to show the response surface for each of them. With a larger number of features, displaying the high relevance features and \emph{only one} of the low relevance features would be sufficient. This is clearly borne out with this surface - the two lower relevance features, the contact distances, are very similar and including both in the visualisation is redundant. However, as all features have absolutely low relevance ($R<1$) then their response surfaces are expected to be similar. The maximum of the response surface is shown highlighted in white, occurs at $\mathbf{x}=\left(\chi=(\phi, \psi, \chi), \tau = \SI{12.5}{\nano\second}, m=1, n=207\right)$ with a value of $\mu=3.54 3\pm 0.396$. The features of this response surface will be discussed in the context of sensitivity analysis in later sections. 
+
+\begin{figure}[p]
+    \centering
+    \mycaption{The response surface of AADH using the unoptimised hyper-parameter trial data set. For each feature two heat maps are shown for $n=210, 1000$ with $\tau$ on the vertical axis and $m$ on the horizontal axis: for the dihedrals feature panel (a) shows the heat map for $n=210$  and panel (b) shows the heat map for $n=1000$ and similarly for the remaining features. The white star denotes the approximate location of the maximum of the surface, the true maximum occurs at $\tau=\SI{12.5}{\nano\second}, m=1, n=207$  The value of the response surface denoted by the color (lighter implies higher values) and with the text annotations. }
+    \includegraphics[width=0.7\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d.png}
+    \label{fig:aadh_rsm}
+\end{figure}
+
+\begin{table}
+    \centering
+    \mycaption{Optimum MSM hyper-parameters for AADH pre- and post-Bayesian optimisation (BO). Each column represents a Bayesian optimisation experiment, seeded with $N_{seed}$ randomly sampled hyper-parameter trials. Five iterations of optimisation were run with $N_{seed}=100$ (labelled $\# 1, 2$ etc.) and a single iteration optimising the response surface using all the trial data ($N_{seed}=361$). Each row is a variable or outcome with values associated with the optimum value of $\mu$ before and after the BO.}
+    \begin{tabular}{|ll|lllll|l|}
+    \hline
+    &$N_{seed}$ & 100 & & & & &361\\
+    &\#&1&2&3&4&5&1\\
+    \hline\hline
+    $N_{total}$&Pre&100&100&100&100&100&361\\
+    &Post&150&150&150&150&150&410\\
+    \hline
+    $\mu$&Pre&3.487&3.355&3.599&3.473&3.478&3.543\\
+    &Post&3.500&3.558&3.545&3.581&3.569&3.558\\
+    \hline
+    $\sigma$&Pre&0.152&0.135&0.306&0.234&0.126&0.198\\
+    &Post&0.202&0.117&0.101&0.084&0.072&0.091\\
+    \hline
+    $\chi$&Pre&$(\phi,\psi,\chi)$&$|\mathbf{r_{i}}-\mathbf{r_{j}}|$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$|\mathbf{r_{i}}-\mathbf{r_{j}}|$&$(\phi,\psi,\chi)$\\
+    &Post&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$&$(\phi,\psi,\chi)$\\
+    \hline
+    $\tau$&Pre&51.0&57.8&12.5&12.5&18.0&12.5\\
+    &Post&1.0&4.0&3.0&1.0&1.0&10.0\\
+    \hline
+    $m$&Pre&1&3&1&1&1&1\\
+    &Post&2&1&2&1&1&2\\
+    \hline
+    $n$&Pre&396&234&207&207&79&207\\
+    &Post&10&180&10&230&540&310\\
+    \hline
+    \end{tabular}
+    \label{tab:aadh_opt_results}
+\end{table}
+
+In order to test the convergence of the maximum of $f(\mathbf{x}; \mathcal{D}_{361})$, $50$ steps of Bayesian optimisation was performed. The values of the response and associated hyper-parameters pre- and post-optimisation (i.e. $f(\mathbf{x}; \mathcal{D}_{361})$ and $f(\mathbf{x}; \mathcal{D}_{410})$) are tabulated in table \ref{tab:aadh_opt_results}. The optimisation resulted in a small improvement in the response from $\mu=3.543 \pm 0.396 \rightarrow 3.558 \pm 0.182$ (a $\SI{0.4}{\percent}$ improvement) with no change in the optimum feature ($(\phi, \psi, \chi)$ dihedrals) and only small changes in the other hyper-parameters.  
+
+In order to see whether this maximum could be reached with a fewer number of trials, five response surfaces fit on random subsets of the trial data with $100$ observations, $f^{i}(\mathbf{x};\mathcal{D}_{100}), i = 1 - 5$, were optimized with $50$ steps of Bayesian optimisation. The kernel and input warping for $f^{i}(\mathbf{x};\mathcal{D}_{100})$ were determined for each $i$ separately. The model selection metrics for each combination of kernel and input warping are tabulated in tables \ref{tab:aadh_rsm_metrics_iter_1} - \ref{tab:aadh_rsm_metrics_iter_5}. The results of the optimisation trials are shown in table \ref{tab:aadh_opt_results} and the incumbent trajectories are shown in are shown in figure \ref{fig:aadh_opt_traj_d}. Also shown in figure \ref{fig:aadh_opt_traj_d} are the maximum of the response surface $f(\mathbf{x};\mathcal{D}_{361})$ shown as orange lines, and the maximum of $f(\mathbf{x};\mathcal{D}_{410})$ shown as blue lines. 
+
+\begin{figure}[p]
+    \centering
+    \mycaption{The Bayesian optimisation trajectories for AADH. Each column shows the trajectories of the incumbent $\mu\pm 2\sigma$ (panels (a) - (e)), and the accompanying value of: $\chi$ (panels (f) - (j)), $m$ (panels (k) - (o)), $\tau$ (panels (p) - (t)) and $n$ (panels (u) - (y)). The location of the final value of the trajectory is highlighted with a black star. For reference the corresponding values determined from the response surface using all the hyper-parameter trials are shown as solid horizontal lines: the response surface before optimisation are shown in orange and after Bayesian optimisation in blue.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_opt_traj_act_s_d.png}
+    
+    \label{fig:aadh_opt_traj_d}
+\end{figure}
+
+ It is clear from  table \ref{tab:aadh_opt_results} that after Bayesian optimisation each subset had maxima indistinguishable from the maxima of $f(\mathbf{x};\mathcal{D}_{461})$: each had the same optimal feature ($(\phi, \psi, \chi)$ dihedrals), slightly smaller values of $\tau$ ($1 - \SI{4}{\nano\second}$ cf. $\SI{10}{\nano\second}$), similar values of $m$ ($1 - 2$ cf. $2$) but with a range of different values of $n$ ($10 - 540$ cf. $310$). The extent to which these differences to make a difference the final MSM and its interpretation will be discussed in section \ref{subsubsec:sensitivity_analysis} in the context of several sensitivity analyses. 
+ 
+It is also clear that Bayesian optimisation only had a small effect on the value of the incumbent and on the optimum hyper-parameters.  The value of incumbent throughout the procedure (figure \ref{fig:aadh_opt_traj_d} panels (a) - (e)) remain relatively flat. The largest increase came from iteration $4$, with $\Delta \mu 0.108$ and there was even a slight decrease in iteration $3$ with $\Delta \mu = -0.054$. The optimisation procedure also had negligible effects on the value of $\chi$, $m$ and $n$. It did however explore large values of  $\tau$ before settling on its final optimum value in most of the iterations.
+
+The maxima and optimum hyper-parameters of the optimized response surfaces $f^{i}(\mathbf{x};\mathcal{D}_{150})$ are almost indistinguishable from $f(\mathbf{x};\mathcal{D}_{461})$. However the optimisation procedure did not strongly affect the optima of $f^{i}(\mathbf{x};\mathcal{D}_{100})$ compared to $f^{i}(\mathbf{x};\mathcal{D}_{150})$. This suggests that the Bayesian optimisation procedure could be seeded with much fewer trials if a GP model of the response surface could be estimated reliably. 
+
+\subsection{Sensitivity analysis}\label{subsubsec:sensitivity_analysis}
+
+\begin{figure}
+    \centering
+    \mycaption{Implied timescales of the MSM of AADH with optimized hyper-parameters, estimated using MCMC with 500 posterior draws. Panel (a) shows the implied timescales for $0.1 < \tau(\mathrm{MSM})< \SI{5}{\nano\second}$ and panel (b) for $1 < \tau(\mathrm{MSM}) <\SI{50}{\nano\second}$. The solid lines are the mean of the posteriors, the coloured shaded areas are the  $\SI{95}{\percent}$ credible intervals. The grey shaded area is the region for which the implied timescales are smaller than $\tau(\mathrm{MSM})$.}\label{fig:aadh_its}
+    \includegraphics[width=0.9\linewidth]{chapters/msm_optimization/figures/aadh_implied_timescales.png}
+\end{figure}
+
+So far the response surface for AADH has been modelled and optimised with a combination of random hyper-parameter sampling and Bayesian optimisation under two assumptions about the model specification: that $\tau(\mathrm{MSM}) = \SI{2}{\nano\second}$ and $k=4$, the number of eigenvalues in the VAMP-2 score, are reasonable assumptions about the lag time and number of slow relaxation processes. As these were established on the basis of the reference MSM it is important to to test these assumptions are still reasonable with the final optimized MSM. 
+
+To test the suitability of $\tau(\mathrm{MSM})$ the eigenvalue spectra of a series of MSMs fit with the optimum hyper-parameters (with $N_{total}=410$, table \ref{tab:aadh_opt_results}) but different lag times are shown in figure \ref{fig:aadh_its}. Panel (a) shows shows lags of  $\SI{0.1}{\nano\second} < \tau(\mathrm{MSM}) < \SI{5}{\nano\second}$ which clearly shows there is a slight increase in the top two implied timescales ($t_{2}$ and $t_{3}$\footnote{I'm using the convention that $t_{1} = \infty$, whose associated eigenvector is the stationary distribution}), suggesting that $\tau^{MSM}$ may be too small. Looking at the implied timescales on a longer timescale $1 < \tau^{MSM} < \SI{50}{\nano\second}$ (panel (b)) shows that there is a small plateau in $t_{2}$ and $t_{3}$  around  $\SIrange{15}{20}{\nano\second}$. It is therefore not possible on this evidence alone to say definitively whether $\tau(\mathrm{MSM})$ should be $2$ or $\SI{20}{\nano\second}$ or whether it makes a difference to non-quantitative aspects of the final model.  
+
+At $\tau = \SI{2}{\nano\second}$ there is no clear separation of timescales between the first four relaxation processes (taking into account the uncertainty in $t_{2}$ and $t_{3}$), however there is a gap between $t_{5}$ and $t_{6}$ suggesting $k=5$ would be more appropriate. This means the fourth relaxation process ($t_{5}$, shown in red in figure \ref{fig:aadh_its}) has not been factored into the response. In principle this means that there may be different hyper-parameters which maximize $\operatorname{VAMP}-2(k=5)$,  given the similarity in $t_{4}$ and $t_{5}$ this may not be very plausible or significant if true. At $\tau = \SI{20}{\nano\second}$ there is a clear separation between $t_{2}$ and $t_{3}$ suggesting $k=2$ is appropriate. In this case we have included potentially too many fast processes. While changing the value of $k$ will certainly change the value of the optimal hyper-parameters, given the mixed evidence in the eigenvalue spectrum there is no reason to reject this optimized MSM. The associated question of how many metastable states and dominant relaxation processes actually matter for explaining the observed data will be investigated further in chapter \ref{chap:hmm}. 
+
+Knowledge of the response surface and of the eigenvalue spectrum suggests sensitivity analyses to understand the validity and robustness of the optimum MSM.  The goal of sensitivity analyses is to have faith that reasonable changes in model choices and hyper-parameters do not materially affect inferences from the model. Typically we are concerned with inferring relaxation timescales ($t_{i}$), the character of the relaxation process ($\Psi_{i}$) and the lumping of the microstates into metastable states. The VAMP-2 score has served as a proxy for the quality of the inferences required from the model but this is not sufficient  for a number of reasons.  First, as discussed above it will be sensitive to both the MSM lag time and the number of eigenfunctions used in the definition. Second, as figure \ref{fig:ala1_evcompare} has demonstrated, VAMP-2 is not sensitive to the discretisation error. This is also evident in the fact that in both iteration $1$ and $3$ (table \ref{tab:aadh_opt_results}) the optimal value of $n=10$ with only a very small difference in response at these values $\mu = 3.500$ and   $\mu=3.545$ cf. $\mu=3.558$). Third, the phenomenon of the Rashomon effect \cite{breiman2001} in statistical modelling, where  multiple \emph{different} statistical models result in the performance metric, could be at play here.
+
+The standard validation check of MSMs, the Chapman-Kolmogorov test (equation \ref{eqn:ck_test}), relies on coarse graining transition matrix, which will be discussed in detail in chapter \ref{chap:hmm}. The current discussion will center on the eigenvalue spectrum and qualitative aspects of the free energy surface and eigenfunctions. For the optimal MSM, these are all shown in figure \ref{fig:aadh_msm_best}: panels (a) - (c) show the normalised eigenvectors of the first three relaxation processes ($\Psi_{2} - \Psi_{3}$) in the space of the first two TICA components. A coarse grained color map has been applied to make the sign structure, rather than the absolute value of eigenvector, more apparent: $|\Psi_{2}| < 1e^{-2}$ are coloured white, $\Psi_{2}> 0$ red,  and $\Psi_{2} < 0$ blue. Panel (d) shows the implied timescales for the first $10$ relaxation processes (coloured according to whether they were included in the $\operatorname{VAMP-2}$ score), and panel (e) shows the free energy surface in the space of the first two TICA components. 
+
+\begin{figure}
+    \centering
+    \mycaption{The final, optimised response surface of AADH fit using the $361$ randomly sampled hyper-parameter trials and the $50$ trials selected in the Bayesian optimisation procedure. For each feature a single heat map are shown for $n=310$, with $\tau$ on the vertical axis and $m$ on the horizontal axis. All values of $m$ in the range $1\le m \le 10$ are shown. The white star denotes the approximate location of the maximum of the surface, the true maximum occurs at $\tau=\SI{10}{\nano\second}, m=2, n=310$. The value of the response surface denoted by the color (lighter implied higher values) and with the text annotations. }
+    \includegraphics[width=0.6\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d_opt.png.png}
+    \label{fig:aadh_rsm_opt}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \mycaption{[TM: label axes] MSM of AADH with optimum hyper-parameters: $\chi= (\phi, \psi, \chi)$ torsions, $\tau=\SI{10}{\nano\second}$, $m=2$ and $n=310$. Panels (a), (b) and (c) show the non-trivial eigenvectors used in the VAMP-2 score, the horizontal and vertical axes are the first two TICA components. Panel (d) are the first ten implied timescales, colored according to whether they were used in the VAMP-2 score. The error bars are the $\SI{95}{\percent}$ credible intervals.  Panel (e) is the free energy with the same axes as panels (a) - (c). The MSM was estimated using MCMC with 1000 samples of the posterior.}
+    \includegraphics[width=0.7\textwidth]{chapters/msm_optimization/figures/aadh_msm_best.png}
+    \label{fig:aadh_msm_best}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \mycaption{Sensitivity 1: MSM of AADH with the same hyper-parameters as the base case  but with $\tau(\mathrm{MSM})=\SI{20}{\nano\second}$. See caption of figure \ref{fig:aadh_msm_best} for details. }
+    \includegraphics[width=0.7\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_1.png}
+    \label{fig:aadh_msm_sens_1}
+\end{figure}
+
+Figure \ref{fig:aadh_msm_best} will serve as a base-case for a number of sensitivity analyses which are informed by the optimised response surface (figure \ref{fig:aadh_rsm_opt}) and eigenvalue spectrum (figure \ref{fig:aadh_its}).
+
+Sensitivity 1 changed the MSM lag time from $\SI{2}{\nano\second}$ to $\SI{20}{\nano\second}$ and is shown in figure \ref{fig:aadh_msm_sens_1}. As expected the absolute values of the implied timescales have increased, as has the relative separation between $t_{2}$/$t_{3}$. The values of relaxation timescales are summarised in table \ref{tab:sens_ts}. The sign structure of the first and third relaxation process remains the same, but for the second and third relaxation process this has changed.  We can conclude that the first, definitely slow, relaxation process is robust with respect to it's sign structure. The second relaxation process which may or may not be dominant, changes its character as a function of the MSM lag time and so  $\tau(\mathrm{MSM}) = \SI{20}{\nano\second}$ will need to be included in the coarse graining analysis in chapter \ref{chap:hmm}. 
+
+\begin{figure}
+    \centering
+    \caption{Sensitivity 2: MSM of AADH with the best hyper-parameters of with the interatomic distances feature ($\tau = \SI{1}{\nano\second}, m=2, n=110$) and $\tau(\mathrm{MSM}) \SI{2}{\nano\second}$. See caption of figure \ref{fig:aadh_msm_best} for details.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_2.png}
+    \label{fig:aadh_msm_sens_2}
+\end{figure}
+
+
+Sensitivity 2 changed the hyper-parameters to the best performing set with the interatomic distances feature ($\tau = \SI{1}{\nano\second}, m=2, n=110$) and is shown in figure \ref{fig:aadh_msm_sens_2}.  This was justified because of the similarity in response values (incumbent: $\mu=3.56 \pm 0.18$, sensitivity 2: $\mu=3.44 \pm 0.35$). There is a clear similarity between sensitivity 2 and the base case in both the free energy surface and the first relaxation processes' timescale ($t_{2} = \SI{2.7}{\micro\second}$ cf.$t_{2} = \SI{2.2}{\micro\second}$ in the base case) and sign structure.  There is also a greater separation in timescales between $t_{2}$ and $t_{3}$ ($t_{2}/t_{3} \simeq 6$) than the base case ($t_{2}/t_{3} \simeq 2$). Taken together these two observations suggest that the interatomic distances resolve the first relaxation processes similarly but not the second relaxation process. 
+
+
+\begin{figure}
+    \centering
+    \caption{Sensitivity 3: MSM of AADH with the same hyper-parameters of the MSM as the base case but a long TICA lag time $\tau = \SI{85}{\nano\second}$.  See caption of figure \ref{fig:aadh_msm_best} for details.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_3.png}
+    \label{fig:aadh_msm_sens_3}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \mycaption{Comparison of the first two TICA eigenvectors between base case, $\tau=\SI{10}{\nano\second}$ (blue) and sensitivity three $\tau=\SI{85}{\nano\second}$ (orange). The individual elements correspond to the weights associated with each of the $116$ dihedral features. Only the absolute values are shown. The elements were ordered according to the absolute value of the elements in the base case for each TICA component. The normalized overlap between the base case ($\mathbf{v}_{1}$) and sensitivity three ($\mathbf{v}_{2}$) is calculated as $\mathbf{v}_{1}\cdot\mathbf{v}_{2}/|\mathbf{v}_{1}||\mathbf{v}_{2}|$.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_3_tica.png}
+    \label{fig:aadh_msm_sens_3_tica}
+\end{figure}
+
+Sensitivity 3, changed the value of $\tau$ to $\SI{85}{\nano\second}$ compared to the base case and is shown in figure \ref{fig:aadh_msm_sens_3}.   This value of $\tau$ was chosen because the response value at this point had the smallest  overlap with the incumbent (incumbent: $\mu=3.56 \pm 0.18$, sensitivity 3: $\mu=3.30 \pm 0.24$).  Here there is a distinct difference in the absolute values of the timescales and the free energy surface compared to the base case. To further delineate the difference between the two TICA representations, figure \ref{fig:aadh_msm_sens_3_tica} shows the difference between the first two TICA components. The  TICA components of the base case are shown in blue with the magnitude of the individual elements (corresponding to the $116$ dihedral features) ordered in decreasing value. The corresponding elements for this sensitivity are shown in orange with the sign flipped. The normalized overlap between the two TICA components of the base case and this sensitivity are $0.63$ and $0.56$  for the first and second TICA components respectively. This is due to the different weights attached to each dihedral feature. It is highly likely therefor that this represents a qualitatively and quantitatively different model. Where this change come in the response surface and and what the corresponding values of the response are will determine whether this an example of the Roshomon effect. 
+
+\begin{table}
+    \centering
+    \mycaption{Mean implied timescales and $\SI{95}{\percent}$ credible intervals (in nanoseconds) of the relaxation processes 2 - 10 for the base case and three sensitivities.}
+
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+     &             Base Case &            Sensitivity 1 &         Sensitivity 2 &      Sensitivity 3 \\
+    Process &                       &                          &                       &                    \\
+    \hline\hline
+    2       &  2,117 (1,033, 5,214) &  25,843 (15,913, 41,797) &  2,694 (1,352, 4,606) &   152 ( 138,  169) \\
+    3       &     988 ( 479, 1,669) &     2,748 (1,510, 5,458) &      408 ( 312,  716) &    67 (  64,   71) \\
+    4       &      231 ( 195,  276) &      1,101 ( 553, 2,256) &      304 ( 234,  397) &    36 (  31,   43) \\
+    5       &      138 ( 129,  149) &         563 ( 497,  668) &      155 (  79,  252) &    20 (  19,   23) \\
+    6       &       54 (  43,   73) &         482 ( 412,  566) &       80 (  52,  115) &    18 (  17,   20) \\
+    7       &       38 (  33,   43) &         418 ( 327,  463) &       30 (  26,   38) &    12 (  11,   13) \\
+    8       &       23 (  21,   26) &         228 ( 205,  249) &       25 (  22,   29) &     9 (   8,   10) \\
+    9       &       21 (  18,   23) &         137 ( 115,  163) &       17 (  15,   18) &     7 (   7,    8) \\
+    10      &       16 (  15,   19) &         105 (  99,  110) &       12 (  11,   15) &     7 (   6,    7) \\
+    \hline
+    \end{tabular}
+    \label{tab:sens_ts}
+\end{table}
+
+{\huge This has been copied `as-is' from chapter \ref{chap:hmm}}
+\section{HMMs}
+\subsubsection{AADH}
+The data for the AADH system comprise the MSMs and associated discrete trajectories of the base case and three sensitivities described in chapter \ref{chap:msm} section \ref{subsubsec:sensitivity_analysis}. The model specifications are tabulated here in table \ref{tab:aadh_final_msm_specs}. 
+
+\begin{table}
+    \centering
+    \mycaption{Markov lag time and MSM hyper-parameters. These MSMs and the associated discrete trajectories form the data for the HMM coarse graining.}
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        Parameter & Base case & Sensitivity 1 & Sensitivity 2 & Sensitivity 3 \\
+        \hline\hline
+        Markov lag time, $\tau(\textrm{MSM})$ & \SI{2}{\nano\second} &  \SI{20}{\nano\second}& \SI{2}{\nano\second}& \SI{2}{\nano\second} \\
+        Feature, $\chi$ & $(\phi, \psi, \chi)$ & $(\phi, \psi, \chi)$ & $|\mathbf{r}_{1}-\mathbf{r}_2|$ & $(\phi, \psi, \chi)$ \\
+        TICA lag time, $\tau$ & \SI{10}{\nano\second} & \SI{10}{\nano\second}&\SI{1}{\nano\second} &\SI{85}{\nano\second} \\
+        TICA components, $m$ & $2$ & $2$ & $2$ & $2$ \\
+        Cluster centres, $n$ & $310$ & $310$ & $110$ & $310$ \\
+        \hline
+    \end{tabular}
+    \label{tab:aadh_final_msm_specs}
+\end{table}
+
+
+
+The state space of the HMMs was restricted to a reversibly connected set of  hidden states. This meant that for some stipulated values of $g$ the final model had $g^{\prime}<g$ hidden states. As this sub-setting was performed \emph{after} estimation, the degrees of freedom was still calculated using $g$. 
+
+However, in the case of AADH the sub-setting of the state space meant re-scaling of the $\gamma_{i}(t)$ would necessary, negating the advantage of the first method, and so the second method was used. 
+
+For AADH the information criteria were calculated for HMMs with $g = 2 - 20$ hidden states for each of the four different discretization specifications listed in table \ref{tab:aadh_final_msm_specs}.  The HMM with the smallest ICL was selected and estimated using a Bayesian hidden Markov model with two chains of  $1000$ burn-in steps and $1000$ sampling steps. The convergence of the transition matrix elements was checked using the Gelman-Rubin R-hat statistic. 
+
+\section{Conformational landscape of AADH}
+
+
 \section{Conclusions}
 AADH is an important system for studying the effects of enzyme dynamics on catalysis due to the large kinetic isotope effect. Previous computational and experimental work determined the mechanism and estimated the free energy barriers using tryptamine as a substrate. The role of dynamics in explaining the temperature independent KIE in AADH is still unresolved. `Active dynamics` on the picosecond timescale have been suggested as facilitating tunneling, while  `passive dynamics', i.e. conformational dynamics, coupled with extensions of transition state theory, have also been suggested as explaining the behaviour of AADH's rate constant. To investigate the role of conformational dynamics in AADH, \SI{10}{\micro\second} of molecular dynamics simulations of the previously studied Schiff base intermediate were produced. A Markov lag time of $\tau=\SI{2}{\nano\second}$ and the number of dominant eigenvalues, $k=4$, were determined from an exploratory Markov state model. 
 
