@@ -29,15 +29,34 @@ If you can make sure core concepts are well explained and highlighted in the tex
 
 \emph{Nomenclature/Maths typesetting}
 I think the main confusions for me were the nomenclature of variables. Even when you redefine the nomenclature, there are many differe phi, psi and ks and xs and other. I am a fan of specific examples from time to time in the text after something is definite of what the variables are in terms of your MD data for example, or what exact optimisation variable you are referring to, even if repetitive makes it easier for the reader (and this is still a Chemistry PhD I suppose). This may be a ‘spelling thing’, but there is a lot of vectors/matrices that should be bold missing. 
-Lastly, I would strongly encourage the use of a table of commonly used symbols (That way I can always do a quick peak at it, if I forgot a variable again), this can be either done at the start of each chapter where necessary or for the whole thesis (though I feel chapter might be easier). 
 
-Sorry one spelling comment: Please pick one: hyper-parameter/hyperparameter. 
+\section{Adrian comments}
 
-\emph{Figures}
-I think all figures are excellent and clear in what they show! I really like the sensitive analysis at the end. Even if it is just qualitative it illustrates that similarly scoring hyper parameters are actually resolving similar processes. 
-
+Chapter 5: 
+This is appropriately detailed and well presented. Well done. 
 
 
+Table 5.1 is useful
+
+I agree with Toni’s comment that it would be good to explain more explicitly what was involved in ’shuffling’ the trajectories. 
+
+There are some minor typographical errors, e.g. 
+
+"optimizing the hyper-parameters of an MSMs” in the conclusions
+
+Missing spaces after commas in various places. 
+
+Conclusions: where you state "something described in the MSM literature”, cite some relevant references. 
+
+It will be important to discuss the relevance of your findings for future MSM investigations - summarise the implications and make some clear recommendations for how others should approach simulations and MSM construction in future. Also: do your findings reveal anything about other MSM studies in the recent literature? Important to set the work in context. This may come in Chapter 6?
+
+There are of course lots of MSM examples. This is one I’ve recently been involved in: 
+https://pubs.acs.org/doi/10.1021/jacs.8b09378 
+
+This could be discussed in chapter 5, and/or in the final conclusions chapter. 
+Remember that the final conclusions chapter is important. That should not simply reiterate the conclusions of each chapter, but also summarise the conclusions and implications overall. 
+
+Also you should, in that final chapter, makes specific suggestions for future work. 
 
 \section{Introduction}
 
@@ -240,6 +259,12 @@ The response of each trial was measured by building an MSM with a lag time of $\
     \end{tabular}
     \label{tab:trial_specs}
 \end{table}
+
+\begin{algorithm}\label{alg:shuffle_split}
+Insert Shuffle split algo here. 
+\caption{50:50 shuffle split cross-validation}
+\end{algorithm}
+
 
 To ensure the  measured response was generalisable \cite{friedman2001elements}, $20$ iterations of 50:50 shuffle split cross validation were used \cite{husicOptimizedParameterSelection2016}. For each trial this entailed fitting a model using \SI{50}{\percent} of the available data (the training data) with the following pipeline:
 
