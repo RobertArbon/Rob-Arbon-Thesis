@@ -10,131 +10,203 @@
     \item Explain striding for Bayes
 \end{enumerate}
 
+
+
 \section{Introduction}
-In this chapter I will set out the theory of modelling biomolecular dynamics using molecular dynamics data the theory of Markov processes. This theory will be used throughout the thesis. In addition I will set out briefly the theory of Gaussian Processes regression and Bayesian optimization which will be used in chapter \ref{chap:msm} on Markov state model (MSM) optimization. 
+This chapter sets out the theory of Markov state models (MSMs) and hidden Markov models to describe the dynamics of biomolecular systems. Table \ref{tab:theory_nomenclature} summarises the  nomenclature used in this chapter. 
 
-\section{Markov State Models}
-We consider an N atom biomolecular system and represent all the continuous spatial and momentum coordinates as a function of continuous time, the trajectory, with $x(t)$. The probability that this trajectory will start at some given point in phase space, $x$, and then transition at a time $\tau$ later to a small region, $dy$ around the point $y$ is given by: 
+\begin{table}
+    \centering
+    \begin{tabular}{c|c}
+        N & Number of atoms \\
+        $\mathbf{x}/\mathbf{y}(t)$ & vector of $3N$ atomic coordinates as a function of time \\
+        
+        
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:theory_nomenclature}
+\end{table}
 
-\subsection{Markovian dynamics}
-\begin{equation}
-p(\mathbf{x}, \mathbf{y} ; \tau)=\mathbf{P}[\mathbf{x}(t+\tau) \in \mathbf{y}+d \mathbf{y} | \mathbf{x}(t)=\mathbf{x}]
+
+\section{Markov processes}
+
+Markov state models are now used routinely to quantitatively describe the conformational kinetics and thermodynamics of biomolecular systems using data collected from molecular dynamics (simulations) [] []. A single system is described by a vector of phase space (momentum and position) coordinates as a function of time, $\mathbf{x}(t)$, and ensemble of such systems can be described by a probability density over the same coordinates as a function of time, $p(\mathbf{x}; t)$. Modelling the system as a Markov process assumes that there exists a period of time, $\tau$, over which the evolution of the system from a point $\mathbf{x}(t)$ to a new point $\mathbf{y}(t+\tau)$ is dependent only on $\mathbf{x}(t)$, i.e. the joint probability density $p(\mathbf{x}, \mathbf{y} ; \tau)$ is conditional \emph{only} on $\mathbf{x}$:
+
+\begin{equation}\label{eqn:markov_assumption}
+p(\mathbf{x}, \mathbf{y} ; \tau)=\mathbb{P}[\mathbf{x}(t+\tau) \in \mathbf{y}+d \mathbf{y} | \mathbf{x}(t)=\mathbf{x}]
 \end{equation}
 
-This transition probability is independent of the trajectory before the time t and so it is said to be Markovian. If the system is ergodic, i.e. all parts of the phase space are connected, and stationary, i.e. transition probabilities are independent of time, then there exists a unique equilibrium probability distribution, the stationary distribution, $\mu(x)$. This represents the probability of finding the system in the part of phase $x dx$ when the system is in equilibrium. If the system is reversible then detailed balance also fulfilled: 
-
-\begin{equation}
-\mu(\mathbf{x}) p(\mathbf{x}, \mathbf{y} ; \tau)=\mu(\mathbf{y}) p(\mathbf{y}, \mathbf{x} ; \tau)
+In addition to the Markov property, equation \ref{eqn:markov_assumption}, three other assumptions are made when dealing with systems in thermodynamic equilibrium. First, the system is \emph{reversible} and so obeys detailed balance: 
+\begin{equation}\label{eqn:detailed_balance}
+\mu(\mathbf{x}) p(\mathbf{x}, \mathbf{y} ; \tau)=\mu(\mathbf{y}) p(\mathbf{y}, \mathbf{x} ; \tau), 
 \end{equation}
+in other words, the absolute probability of observing a transition from $\mathbf{x}$ to $\mathbf{y}$ (also known as the flux, $F(\mathbf{x}, \mathbf{y})$) is the same as that from $\mathbf{y}$ to $\mathbf{x}$. Second, there are no regions of phase space disconnected from one another, i.e. that the system is \emph{ergodic}. In this case there is a unique stationary distribution,  $\mu(\mathbf{x})$. Third, that the conditional probabilities in equation \ref{eqn:markov_assumption} are independent of time, i.e., the system is \emph{stationary}. 
 
-We will proceed assuming that any process or trajectory is ergodic, stationary and reversible, unless otherwise stated. In order to calculate expectations of observables we will need to think of ensembles of trajectories evolving in time. In this case it makes more sense to talk about the probability of observing a trajectory at a point in phase space $p(x;t)$ and its normalized dual quantity, $u(x;t)$: 
-
-\begin{equation}
-p(\mathbf{x} ; t)=\mu(\mathbf{x}) u(\mathbf{x} ; t)
+The dynamics of the system under these assumptions is given by the \emph{transfer operator}, $\mathcal{T}(\tau)$, which propagates functions of the probability density: 
+\begin{equation}\label{eqn:vector_norm}
+    q(\mathbf{x} ; t) = p(\mathbf{x} ; t)/\mu(\mathbf{x}),
 \end{equation}
-
-A full description of the dynamics of the system is en $\mathcal{T}(\tau)$ This operates to evolve $u(\mathbf{x} ; t)$ to $u(\mathbf{x} ; t+\tau)$
-
-\begin{equation}
-u(\mathbf{y} ; t+\tau)=\mathcal{T}(\tau) \cdot u(\mathbf{y} ; t)=\frac{1}{\mu(\mathbf{y})} \int d \mathbf{x} p(\mathbf{x}, \mathbf{y} ; \tau) \mu(\mathbf{x}) u(\mathbf{x} ; t)
-\end{equation}
-
-All the dynamical information of the system is contained within $\mathcal{T},$ its eigenvectors, $\psi_{i}(\mathbf{x})$ and eigenvalues $\lambda_{i} .$ The eigenvalues all satisfy $\left|\lambda_{i}\right| \leq 1,$ with the largest, $\lambda_{1}=1$ corresponding to the unit eigenvector, $\psi_{1}(x)=1 .$ In the unnormalized picture, with eigenvectors denoted by $\phi_{i}(\mathbf{x}),$ this corresponds to the stationary distribution:
-
-\begin{equation}
-\phi_{1}(\mathbf{x})=\mu(\mathbf{x}) \psi_{1}(\mathbf{x})=\mu(\mathbf{x})
-\end{equation}
-
-We will take the other eigenvectors to be ordered according to their eigenvalues. The remaining eigenvectors correspond to relaxation processes which take any initial distribution, $u(\mathbf{x} ; t=0),$ towards the equilibrium distribution on a timescale related to its eigenvalue.
-
-\subsection{Metastable states}
-
-The definition of metastable states can be seen by decomposing $u(\mathbf{x} ; t)$ as a linear combination of the eigenvectors:
-
-\begin{equation}
-u(\mathbf{x} ; t+k \tau)=\mathbf{1}+\sum_{i=2}^{\infty} e^{-k \tau / t_{i}}\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x})
-\end{equation}
-
-where $k=1,2,3 \ldots . t_{i}=-\frac{\tau}{\ln \lambda_{i}}$ are the implied timescales for the relaxation process represented by $\psi_{i}(\mathbf{x}) .$ The bracket quantity is given by:
-
-\begin{equation}
-\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle=\int d \mathbf{x} \mu(\mathbf{x}) u(\mathbf{x} ; t) \psi_{i}(\mathbf{x})
-\end{equation}
-
-Each term in the sum in equation xx will decay exponentially as $k \rightarrow \infty,$ (i.e. at long times) leaving just the first term, $1,$ or the $\mu(\mathbf{x})$ in the unnormalized picture.
-
-For situations where there is a value, $m,$ such that $\lambda_{m} \gg \lambda_{m+1}$ then we can truncate equation 3.1 and have an approximate description of the dynamics, with a truncation error $E$ :
-
+forward in time by the following: 
 \begin{equation}
 \begin{split}
-u(\mathbf{x},  t+k \tau) &=\mathbf{1}+\sum_{i=2}^{m} e^{-k \tau / t_{i}}\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x})+E \\
-& \simeq \mathbf{1}+\sum_{i=2}^{m} e^{-k \tau / t_{i}}\left\langle u(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x})
+   q(\mathbf{y} ; t+\tau) &= \mathcal{T}(\tau) \cdot q(\mathbf{y} ; t) \\
+   &=\frac{1}{\mu(\mathbf{y})} \int d \mathbf{x} p(\mathbf{x}, \mathbf{y} ; \tau) \mu(\mathbf{x}) q(\mathbf{x} ; t). 
 \end{split}
 \end{equation}
 
+All the kinetic and thermodynamic information of the system is contained within $\mathcal{T}$, its eigenfunctions, $\psi_{i}(\mathbf{x})$, and eigenvalues $\lambda_{i}$. The eigenvalues lie within the interval $-1 < \lambda_i \le 1$ and the eigenvector/eigenvalue pairs shall be assumed to be ordered in decreasing value of $\lambda$. The first eigenvector, with $\lambda_{1}=1$, is equal to $\psi_{1}(\mathbf{x})=\mathbf{1}$. This corresponds to the stationary distribution $\mu(\mathbf{x})$ by virtue of the definition of $q(\mathbf{x}$, equation \ref{eqn:vector_norm}. 
 
-These $m-1$ eigenvectors are known as the dominant eigenvectors. This coarse-grained description becomes more accurate in the limit long time limit i.e. $k \tau \gg t_{m}$
-The sign structure of the dominant eigenvectors can be used to infer the location of metastable states within the phase space. To demonstrate how, we will use the 1 D four well potential which is shown in Figure $1 .$ Panel (b) shows the potential and panel (c) shows the normalized eigenvectors, $\psi_{i}(x) .$ The slowest relaxation process, $\psi_{2}(x),$ changes sign at $x=$ 0 clearly defining the boundary between the two sets of states separated by the highest potential barrier. Perron Cluster Cluster Analysis uses the two remaining dominant eigenvectors to partition the phase space (the $x$ axis) into four metastable states. This is shown in Figure $2 .$ The coloured lines in panel (b) show the probability that each point on the x axis belongs to one of four different metastable states. This is a fuzzy clustering of the $x$ axis.
+The remaining eigenfunctions, $\psi_{2,3,4...}$, correspond to the relaxation processes which take the system from any initial distribution, $q(\mathbf{x} ; t=0)$ towards the stationary distribution on a timescale related to its corresponding eigenvalue. This can be seen by writing the time evolution of $u(\mathbf{x};t)$ as:
 
-Prinz potential explainer here
+\begin{equation}\label{eqn:eig_decomp}
+q(\mathbf{x} ; t+k \tau)=\mathbf{1}+\sum_{i=2}^{\infty} e^{-k \tau / t_{i}}\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x}),
+\end{equation}
 
-
-\subsection{Estimating the transition matrix}
-The data for estimating the transition matrix is usually molecular dynamics trajectories, consisting of potentially all atomic positions at discrete time points, $k=1,2,3, \dots k^{\prime}$ in some units). This data necessitates estimating the transfer operator in a discrete form, known as the transition matrix, T. This requires partitioning state space into $n$ discrete sets $S_{i}, i=1 \ldots n$ To do this we define membership functions, $s_{i}(\mathbf{x}),$ which map points in phase space to the probability of membership of each partition. The simplest such function are crisp step functions, where the trajectory is either in $\left(s_{i}(\mathbf{x})=1\right)$ or not in $s_{i}(\mathbf{x})=0$ ) of a set:
-
+where $k=1,2,3 \ldots$ is a time index, and $t_{i}=-\sfrac{\tau}{\ln{|\lambda_{i}|}}$ are the implied timescales for the relaxation process represented by $\psi_{i}(\mathbf{x})$. The bracketed quantity is the overlap between $q(\mathbf{x})$ and the eigenfunctions:
 
 \begin{equation}
-s_{i}(\mathbf{x})=\left\{\begin{array}{ll}
+\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu}=\int d \mathbf{x} \mu(\mathbf{x}) q(\mathbf{x} ; t) \psi_{i}(\mathbf{x})
+\end{equation}
+
+Each term in equation \ref{eqn:eig_decomp} will decay exponentially in the long time limit as $k \rightarrow \infty$, leaving just the first eigenvector, $\psi_{1}(\mathbf{x})=\mathbf{1}$, the stationary distribution. If the first $r$ eigenvalues are close to $1$ and are separated from the remaining values by a gap such that $\lambda_{r} \gg \lambda_{r+1}$, then its possible to truncate equation \ref{eqn:eig_decomp} without serious loss of accuracy to:
+
+\begin{equation}
+q(\mathbf{x},  t+k \tau)  \simeq \mathbf{1}+\sum_{i=2}^{r} e^{-k \tau / t_{i}}\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x}).
+\end{equation}
+
+These $r$ eigenfunctions/eigenvalues are known as the \emph{dominant} eigenfunctions and they correspond to the slow relaxation processes of the system. The truncation amounts to describing just the slow kinetic processes of the system while ignoring the fast processes. This separation of timescales implies the existence of regions of phase space, partitioned by the dominant eigenfunctions, known as \emph{metastable} states. 
+
+% This coarse-grained description becomes more accurate in the limit long time limit i.e. $k \tau \gg t_{m}$
+% The sign structure of the dominant eigenvectors can be used to infer the location of metastable states within the phase space. To demonstrate how, we will use the 1 D four well potential which is shown in Figure $1 .$ Panel (b) shows the potential and panel (c) shows the normalized eigenvectors, $\psi_{i}(x) .$ The slowest relaxation process, $\psi_{2}(x),$ changes sign at $x=$ 0 clearly defining the boundary between the two sets of states separated by the highest potential barrier. Perron Cluster Cluster Analysis uses the two remaining dominant eigenvectors to partition the phase space (the $x$ axis) into four metastable states. This is shown in Figure $2 .$ The coloured lines in panel (b) show the probability that each point on the x axis belongs to one of four different metastable states. This is a fuzzy clustering of the $x$ axis.
+
+% Prinz potential explainer here
+
+\section{Markov state models}
+
+Markov state models (MSMs) are discrete models of Markovian dynamics. The continuous quantities described above all have discrete analogues which will be described in detail in this section: 
+
+\begin{itemize}
+    \item The system is described by a set of $n$ discrete states labelled $1, \ldots, n$. Instead of the continuous vector $\mathbf{x}(t)$, each trajectory is denoted by a vector of integers $\mathbf{s}$. Each point in phase space is mapped to one of these states. 
+    \item The system can be described by a probability mass vector, $\mathbf{p}(t)$  instead of a probability density function $p(\mathbf{x};t)$. The $i$th component of $\mathbf{p}(t)$ is the probability of the system being in  state $s_{i}$ at time $t$.
+    \item The stationary distribution, $\bm{\pi}$, is defined using the continuous stationary distribution $\mu(\mathbf{x})$ and the definition of the discrete states: 
+        \begin{equation}
+            \pi_{i}=\int_{\mathbf{x} \in s_{i}} \mathrm{d}\mathbf{x}\mu(\mathbf{x})
+        \end{equation}
+    \item By analogy with equation \ref{eqn:vector_norm}, the system can also be described by $\mathbf{q}$ where $q_{i} = p_{i}/\pi_{i}$.
+    \item The time evolution of $\mathbf{q}(t)$ and $\mathbf{p}(t)$ is determined by a the \emph{transition matrix}, $\mathbf{T}(\tau)$:
+        \begin{align}
+            \mathbf{q}(t+\tau) &= \mathbf{T}(\tau) \cdot \mathbf{q}(t) \\
+            \mathbf{p}^{T}(t+\tau) & = \mathbf{p}^{T}(t)\cdot \mathbf{T}(\tau)
+        \end{align}
+    \item The eigenfunctions $\psi(\mathbf{x})$ are now the right eigenvectors of $\mathbf{T}(\tau)$, $\mathbf{v}$, with the same interpretation. The left eigenvectors, $\mathbf{u}$, are related to the right eigenvectors by: $u_{i} = v_{i}\cdot \pi_{i}$.  
+ \end{itemize}
+
+Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with coordinates saved every $\Delta t$ seconds. Typically any bulk water molecules are ignored as are the momentum coordinates of all the atoms. If  each trajectory has $n_{\mathrm{f}}$ frames (coordinate snapshots) and $n_{\mathrm{a}}$ important atoms then trajectory is represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{n_{\mathrm{f}} \times 3n_{\mathrm{a}}}$. 
+
+The data then undergo a series of processing steps on the way to creating an MSM, these are: 
+
+\begin{enumerate}
+    \item \textbf{Create features:} A set of continuous features, $\chi_{i}, i \in \{1,\dots, n_{c} \}$ is created or chosen to represent the dynamics of the system:
+    \begin{equation*}
+        \mathbf{X}  \rightarrow \bm{\chi},\quad \bm{\chi} \in \mathbb{R}^{n_{f} \times n_{c}}
+    \end{equation*}
+    For example the feature might be the backbone dihedral angles of a peptide, or the contact distances between residues. 
+    \item \textbf{Dimensionality reduction:} The number of features is reduced still further by transforming $\bm{\chi}$ into a small number, $m$, of collective variables. 
+    \begin{equation*}
+        \bm{\chi}  \rightarrow \bm{\chi}^{\prime},\quad \bm{\chi}^{\prime} \in \mathbb{R}^{n_{f} \times m}
+    \end{equation*}
+    This work will exclusively use time-lagged independent component analysis, TICA as a method of dimensionality reduction.  
+    \item \textbf{Discretization:} Each of the MD frames is assigned to one of $n$ different discrete states using a clustering algorithm such as k-means clustering: 
+    \begin{equation*}
+        \bm{\chi}^{\prime} \rightarrow \mathbf{s},\quad \mathbf{s} \in \mathbb{Z}_{+}^{n_{f} \times 1}
+    \end{equation*}
+    \item \textbf{MSM estimation}: The transition matrix, $\mathbf{T}$, is estimated by counting transitions between discrete states separated by a time $\tau$. 
+    \item \textbf{Coarse graining:} The MSM is then coarse-grained by lumping the $n$ microstates into $g$ macrostates states. This work will exclusively feature hidden Markov models (HMMs) as a method for doing this. 
+\end{enumerate}
+
+\subsection{Create features}
+The choice of continuous feature $\chi$ may be determined (or strongly suggested) by the question being asked and/or from prior knowledge of the system. However, since the introduction of variational scoring rules such as the GMRQ [] and VAMP [], they are typically chosen using cross-validation. This is discussed in depth in chapter \ref{chap:msm}. 
+
+\subsection{Dimensionality reduction with TICA}
+
+Dimensionality reduction using TICA was introduced for improving MSM construction in [] and []. It is the result of variationally optimising a set of basis functions, $\chi_{i}$, to estimate the eigenfunctions, $\psi_{i}$, of the transfer operator. A detailed derivation is given in [] but can be summarised as follows. A trial function, $f$, is expanded in the basis $\chi_{i}$: 
+\begin{equation}\label{eqn:trial_func}
+    f(\mathbf{x}) = \sum_{i}a_{i}\chi_{i}(\mathbf{x})
+\end{equation}
+The variational principle for operators with bounded eigenvalues (such as the transfer operator) states that any approximate eigenfunction will have eigenvalues smaller than the true eigenvalues. So choosing the coefficients $a_{i}$ to maximize the eigenvalues from using equation \ref{eqn:trial_func} will be the closest approximation to the true eigenfunctions that can be achieved with linear combinations of basis functions. Using the method of Lagrange multipliers to maximize the eigenvalues using equation \ref{eqn:trial_func} results in the following generalized eigenvalue equation: \begin{equation}\label{eqn:general_ev_equation}
+    \mathbf{C}\mathbf{a} = \lambda \mathbf{S}\mathbf{a}
+\end{equation}
+Solving this equation requires estimating the matrix elements of $\mathbf{C}$ and $\mathbf{S}$. The elements of $\mathbf{C}$ are the time-lagged correlation functions ($\mathbf{cor}$) between $\chi_{i}$ and $\chi_{j}$
+\begin{equation}
+    \begin{split}
+        C_{ij} =& \operatorname{cor}\left(\chi_{i}, \chi_{j}, \tau\right)\\
+        =& \int_{X} \int_{X} \chi_{i}(\mathbf{z}) \mathbb{P}\left(\mathbf{x}(t+\tau)=\mathbf{z} \mid \mathbf{x}(t)=\mathbf{y}\right) \\
+        & \times \chi_{j}(\mathbf{y}) \mathbb{P}\left(\mathbf{x}(t)=\mathbf{y}\right) \mathrm{d} \mathbf{y} \mathrm{d}\mathbf{z},        
+    \end{split}
+\end{equation}
+which can be estimated from the MD trajectories. The matrix $\mathbf{S}$ is the overlap matrix whose elements are the scalar product between the basis functions, weighted by the stationary distribution: 
+\begin{align}
+    S_{ij} &= \int \chi_{i}(\mathbf{x})\chi_{j}(\mathbf{x})\mu(\mathbf{x})^{-1} \mathrm{d}\mathbf{x}
+\end{align}
+Having solved for the TICA eigenvectors, keep the first $m$ columns of $\mathbf{a}$ and use this to transform feature matrix $\bm{\chi}$: 
+\begin{equation}
+    \bm{\chi}^{\prime} = \bm{\chi}\cdot[\mathbf{a}_{1}, \mathbf{a}_{2}, \cdots,  \mathbf{a}_{m}]
+\end{equation}
+
+\subsection{Discretization}
+Discretization is performed on the $m$ dimensional feature matrix $\bm{\chi}$ using a clustering algorithm such as k-means or Ward clustering []. Each region of feature space, $S_{i}$, is assigned uniquely to the microstate $i$ through the associated indicator function, $s^{i}(\mathbf{x})$:
+\begin{equation}
+s^{i}(\mathbf{x})=\left\{\begin{array}{ll}
 1, & \mathbf{x} \in S_{i} \\
 0, & \mathbf{x} \notin S_{i}
 \end{array}\right.
 \end{equation}
+To avoid introducing too many symbols, $s^{i}(\mathbf{x})$ denotes the indicator functions, while $\mathbf{s}$ is the MD trajectory in the indicator function basis. The individual components of $\mathbf{s}$ will be denoted $s_{t}$ where $t$ is a time index. To highlight the time series nature of $\mathbf{s}$ it will sometimes denoted $\{s_{1}, s_{2}, \ldots \}$. 
 
-The MD data is an $k^{\prime} \times 3 N$ matrix, $\mathbf{x}(k),$ which is transformed into a sparse $k^{\prime} \times n$ matrix, $\mathbf{s}(k),$ which contains exactly one 1 on each row, whose position indicates which discrete state the system is in, i.e. $s_{k j}=s_{j}(\mathbf{x}(k)) .$ A more compact dense representation is the index form: $\mathbf{y}(k)=\left\{j: s_{k j}=1\right\},$ i.e. a vector of length $k^{\prime}$ whose elements are a number $1-n$ indicating which state the system is in.
- 
- For each discrete state $i$ its local stationary probability, $\pi_{i}$ is:
+\subsection{MSM estimation}
+MSM estimation is analogous to TICA estimation but with the indicator basis functions $s^{i}$ replacing the continuous basis functions $\chi_{i}$ in equation \ref{eqn:trial_func}. The result of the optimisation of coefficients $a_{i}$ results in the same generalized eigenvalue expression, equation \ref{eqn:general_ev_equation}. Solving this equation is simplified by the fact that the indicator functions are orthogonal and so $S_{ij} = 0$ if $i \neq j$ and $S_{ii} = \pi_{i}$, the discrete stationary distribution. Equation \ref{eqn:general_ev_equation} can be re-arranged to give: 
+\begin{align}
+ \mathbf{C a}=\lambda \bm{\Pi} \mathbf{a} \\
+\mathbf{T a}=\lambda \mathbf{a}   
+\end{align}
+where $\bm{\Pi} = \mathrm{diag}\{pi_{1}, \ldots, \pi_{n}\}$ and $\mathbf{T}$, the transition matrix is $\mathbf{T} = \bm{\Pi}^{-1}\mathbf{C}$. In other words: 
+\begin{equation}\label{eqn:tran_mat_def}
+    T_{ij}(\tau) =\frac{\mathrm{cor}(s_{i}, s_{j}, \tau)}{\pi_{i}}
+\end{equation}
+The MSM estimation procedure consists of estimating the transition matrix elements which such that they respect the assumptions of i) reversibility and detailed balance, and ii) that the ergodicity i.e. that each state is connected to all other states. Two methods exist for estimating $T_{ij}$: maximum likelihood estimation, MLE, and Bayesian estimation. This work will make use of both: MLE will be used for model selection while Bayesian optimisation will be used when error estimates are required.  Detailed explanations of both  techniques can be found in [] but certain concepts need highlighting here: i) maximum likelihood estimation, ii) count matrices and ergodicity, iii) Bayesian estimation. 
+
+\subsubsection{Maximum likelihood estimation}
+Parameter estimation through maximum likelihood estimation proceeds by first modelling  the probability of observing the data $\{s_{1}, s_{2}, s_{3}, \ldots \}$ given \emph{fixed parameters}, $T_{ij}$. For a MSM  with  $\tau=1$ (in units of the trajectory time step, $\Delta t$) this is: 
+\begin{equation}\label{eqn:msm_traj_like}
+    \mathbb{P}(\mathbf{s}|\mathbf{T}) \propto \Pi_{t=1}^{n_{f}} T_{s_{t}, s_{t+1}}
+\end{equation}
+The likelihood, $\mathcal{L}(\mathbf{T}|\mathbf{s})$, is equal $\mathbb{P}(\mathbf{s}|\mathbf{T})$ but treats the the \emph{data as fixed} and the \emph{parameters as varying}\footnote{The integral of the likelihood over the parameter space can be greater $1$ hence it is not a probability}. The parameters which maximize $\mathcal{L}$ give a model with the best fit to the observed data. Equation \ref{eqn:msm_traj_like} can be re-written in terms of the count matrix, $c_{ij}$ (not the correlation matrix $C_{ij}$), which counts all the observed transitions between states $s_i$ and $s_j$: 
+\begin{align}
+    \mathcal{L}(\mathbf{T}|\mathbf{s}) & = \mathbb{P}(\mathbf{s}|\mathbf{T}) \\
+    & \propto \Pi_{t=1}^{n_{f}} T_{s_{t}, s_{t+1}} \\ 
+    & \propto \Pi_{i}\Pi_{j}T_{i, j}^{c_{ij}}. \label{eqn:msm_count_like}
+    & = \mathbb{P}(\mathbf{c}|\mathbf{T})
+\end{align}
+
+\subsubsection{Count matrix}
+As discussed in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} the method for calculating the count matrix is important for estimating errors when  $\tau > 1\cdot \Delta t$. This is typically the case in molecular dynamics simulations as molecular motions are correlated at short times and MD frames can be recorded with almost arbitrary resolution.  The two extreme methods for counting are the \emph{sliding window} which over estimates the matrix elements and \emph{sample count} method which underestimates the matrix elements \cite{noeStatisticalInefficiencyMarkov}. \emph{Sliding window} counts all pairs of frames separated by $\tau$: $(s_1, s_{1+\tau}), (s_2, s_{2+\tau})$ etc. For example, a trajectory of $100$ frames with $\tau=2$ has $\sum_{i,j}c_{i,j}=98$. In this case, the confidence intervals generated will be too narrow due pairs of states separated by less than $\tau$ being correlated with each other and hence not independent. The \emph{sample count} method uses the only the states separated by $\tau$: $(s_1, s_{1+\tau}), (s_{1+\tau}, s_{1+2\tau})$ etc. continuing the example $\sum_{i,j}c_{i,j}=49$, a factor of $2$ different to the sliding window method. This leads to the confidence intervals being over-estimated. A third method, \emph{effective counting}, uses the sliding window method but scales each row of the count matrix by a different factor to account for correlation between the observations \cite{noeStatisticalInefficiencyMarkov}. Continuing the example, if the observations have low correlation, then the effective count matrix will be close the sliding window estimate; if the observations are highly correlated the count matrix will be closer to the sample count method. This method has been shown to give more accurate confidence intervals \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
+
+The count matrix, and therefore the method for counting,  will determine whether or not the states are ergodic. Two states, $i$ and $j$, are strongly connected if $c_{ij}, c_{ji}>0$ and the full set of states are said to be ergodic if they are strongly connected\cite{schererPyEMMASoftwarePackage2015a}. In all estimation procedures used in this work, if the full set of state are not strongly connected, then a subset of states are used such that all states within the subset are strongly connected.
+
+\subsubsection{Bayesian estimation}
+Bayesian estimation \cite{gelmanBayesianDataAnalysis2014} uses not just the likelihood, $\mathbb{P}(\mathbf{c}|\mathbf{T})$, but the prior probability of the parameters themselves, $\mathbb{P}(\mathbf{T})$, to estimate the posterior probability of the parameters given the data, $\mathbb{P}(\mathbf{T}|\mathbf{c})$, through Bayes' rule: 
 \begin{equation}
-\pi_{i}=\int_{\mathrm{x} \in \delta_{s}} d x \mu(\mathrm{x})
+    \mathbb{P}(\mathbf{T}|\mathbf{c}) \propto \mathbb{P}(\mathbf{c}|\mathbf{T})\mathbb{P}(\mathbf{T})
 \end{equation}
-
-With these definitions we can write the transition matrix in terms of the correlation function between states:
+Rather than point estimates of the posterior, samples are drawn from the whole posterior distribution for each parameter, $T_{ij}$, using Markov chain Monte Carlo\cite{gelmanBayesianDataAnalysis2014}. These samples can then be used to estimate the distribution, and hence error, of any quantity determined by the transition matrix, e.g., eigenvalues or implied timescales. The details of the sampling procedures used for estimation of MSM in this work can be found in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}, however two points should be highlighted here. First, the count matrix used are estimated using the effective count method. Second, the prior distribution for the transition matrix elements are defined over reversible a reversible matrix $\mathbf{X}$ where $X_{ij}\propto T_{ij}\pi_{i}$ and is given by: 
 \begin{equation}
-\begin{split}
-T_{i j}(\tau) &= \frac{\left\langle s_{i},\left.T(\tau) \cdot s_{i}\right\rangle_{\mu}\right.}{\left\langle s_{i} s_{i}\right\rangle_{\mu}} \\
-& =\frac{c_{i j}^{c o n r}(\tau)}{\pi_{i}}
-\end{split}
+    \mathbb{P}(\mathbf{X}) \propto \Pi_{i \ge j}x_{ij}^{-1}. 
 \end{equation}
+With this prior, the posterior transition matrix elements have the same connectivity structure as the count matrix. i.e. if $c_{ij}=0$ then for any posterior sample $T_{ij}=0$. 
 
 
-Which in matrix form becomes: 
-\begin{equation}\label{eqn:tran_def}
-\mathbf{T}(\tau)=\mathbf{\Pi}^{-1} \mathbf{C}(\tau)
-\end{equation}
 
-The action of this operator on the state vector (equivalent to equation $2-4$ ) becomes:
-\begin{equation}
-\mathbf{T}(\tau) \cdot \mathbf{u}(t)=\lambda \mathbf{u}(t+\tau)
-\end{equation}
- 
- Both $c_{i}^{\text {corr}}(\tau)$ and $\pi_{i}$ are efficiently calculated from a single discrete trajectory and the results of multiple trajectories are easily combined making the process of estimating $T_{i j}(\tau)$ parallelisable. The left and right eigenvectors of the transition matrix have the same interpretation as $\phi_{i}(\mathbf{x})$ and $\psi_{i}(\mathbf{x})$ respectively and from now on I shall use these symbols in the discrete picture (equation $4-3$ ) as well as in the continuous picture (equation $2-4$ ).
 
-The transition matrix element, $T_{i j}$ has the interpretation of the probability of the system transitioning from state $i$ to state $j$ conditional on being in state $i .$ This is the same as the transfer operator, equation $2-4 .$ In practice a transition matrix estimated from a set of trajectories may not obey detailed balance (equation $2-2$ ), even if
-the underlying dynamics does. In order to correct for this an iterative algorithm constrains $T_{i j}$ to obey detailed balance, see [ref].
-To determine the metastable states and their kinetics we first inspect the eigenvalues to find a value of $m$ such that equation $3-3$ holds approximately. We then use PCCA to assign a probability for each of the $n$ discrete states $\left(s_{i}\right)$ to be a member of each of the $m$ metastable states $\left(z_{j}\right)$. This is summarised in the $n \times m$ membership matrix, $\mathbf{M}$:
-
-\[
-M_{i j}=\mathrm{P}(z=j | s=i)
-\]
-
-The membership matrix for a four well potential (calculated using PCCA) is shown in Figure 2 ). All kinetic and thermodynamic observables for metastable states (e.g. timescales) can be calculated from the transition matrix, T and the membership matrix, $\mathbf{M}$
-The method for identifying and quantifying metastable states using Markov state models for an $N$ atom system can be summmarised as:
-. Sample the dynamics of the system and record the $3 \mathrm{N}$ cartesian coordinates for a total of $k^{\prime}$ 'timesteps, ensuring $k^{\prime}$ is large enough that all the relevant regions of phase spaccarradequately sampled The resulting trajectory wil be a $k^{\prime} \times 3 N$ matrix, $x^{2}$
-2. Define astofn membership fincicions, $s$ which transform x imto a $k^{\prime} \times 1$ discratet trajectory $y(t)$
-3. Estimate the $n \times n$ transition matirix Twing equation 4.3 for apre-specificad lag time $\tau$.
-4. Inspect the cigenvalues $\lambda_{i}$ to determine the $m$ dominant cigenvectors.
-5. Use PCCA to estimate the membership matrix.$\mathbf{M}$.
-
-This procedure leaves the choice of three parameters up to researcher: the lag time $\tau$, the discretization functions $s_{i}$ and the number of metastable states $m$.
 
 \subsection{Model specification}
 \subsubsection{Choice of $\tau$}
@@ -145,7 +217,7 @@ As a compromise, $\tau$ is usually chosen by inspection of the data through the 
 
 \subsubsection{Choice of $s_i$}
 The choice of the discretization function comes down to two consecutive choices: a) a choice of continuous feature(s) of the system and b) the clustering algorithm usod to partition the continious feature into discrete states. The intermediate stage of projection onto $p$ chemically significant features we will denote as $\chi_{j}, j=1 \ldots p,$ so the process is summarised as:
-The choice of continuous feature may be determined (or strongly suggested) by the question being asked and/or from prior knowledge of the system. For example, for describing protein folding the backbone dihedrals angles d reaction coordinates and using these has been useful in revealing folding pathways. However, the clustering algorithm, including the number of cluster centres, still needs to be selected in some objective way. The kev to slecting $s$ objectively was the framing of the estimation of Markov state models as variational optimization of the transfer operator. The transfer operator is seelf-adioint that the the be be and sonation and that a that truation trainge and that that the eigenvalues. If we consider the chisp, indicatorfinacion basis,s, forthe tramficroppratatorand find the linear combinations of basisfüction which maximize the eigenvalues then we arrive atequation for the definition of the transition matrix.
+For example, for describing protein folding the backbone dihedrals angles d reaction coordinates and using these has been useful in revealing folding pathways. However, the clustering algorithm, including the number of cluster centres, still needs to be selected in some objective way. The kev to slecting $s$ objectively was the framing of the estimation of Markov state models as variational optimization of the transfer operator. The transfer operator is seelf-adioint that the the be be and sonation and that a that truation trainge and that that the eigenvalues. If we consider the chisp, indicatorfinacion basis,s, forthe tramficroppratatorand find the linear combinations of basisfüction which maximize the eigenvalues then we arrive atequation for the definition of the transition matrix.
 
 We can also maximize the eigenvalues in the continuous basis, $\chi_{j}$ and we get:
 $\mathbf{T}(\mathbf{r})=\mathbf{s}^{-1} \mathbf{c}(\mathbf{\tau})$
