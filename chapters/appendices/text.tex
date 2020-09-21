@@ -308,7 +308,7 @@
 
 \chapter{Metastable state selection for hidden Markov models}\label{app:hmm}
 
-\section{Prinz potential}
+\section{Prinz potential}\label{sec:app_hmm_prinz}
  The Prinz potential is given by: 
 \begin{equation}\label{eqn:prinz_pot}
        V(x) = 4\left(x^8 + 0.8 \exp{\left(-80 x^2\right)} + 0.2 \exp{\left(-80 (x-0.5)^2\right)} + 0.5\exp{\left(-40 (x+0.5)^2\right)}\right).
@@ -361,9 +361,9 @@ with $D = 1000$, and $R\sim \mathcal{N}(0, 1)$, $\mathrm{Cov}\left[R(t), R(t^{\p
 
 \begin{figure}
     \centering
-    \mycaption{a;lkdjf;aklds}
+    \mycaption{\textbf{Conformational change in loop residues 92-108 of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the C$\alpha$ between the crystal structure and seed trajectory. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues 92-108 are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown) The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The $22$ tail residues, unresolved by the crystal structure, are missing from the N-terminus. }
     \label{fig:chain_d_loop}
-    \includegraphics[height=0.9\textheight]{rmsd_seg_d.png}
+    \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
 \end{figure}
 
 \section{MSM optimisation}

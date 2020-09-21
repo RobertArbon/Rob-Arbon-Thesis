@@ -269,7 +269,23 @@ There are a number of other ways of clustering the transition matrix which dicta
 
 The other popular method for clustering the microstates is by estimating a hidden Markov model (HMM). $m$ can be selected using information criteria, bootstrapping and cross-validation and others. We will explore these more fully in chapter 3 .
 
-\section{Hidden Markov Models}
+\section{Hidden Markov Models}\label{sec:theory_hmm}
+
+Needs much expansion!
+
+Formula for striding interval $\Delta t_{\mathrm{s}}$ to decorrelate trajectories for Bayesian estimation. This is needed because the hidden states are not observed directly, so we can't adjust the count matrix as in the MSM case. Instead the trajectories are strided according to: 
+\begin{equation}\label{eqn:hmm_striding}
+    \Delta t_{\mathrm{s}} = \min{\left(\tau(\mathbf{MSM}), 2\cdot t_{g+1}\right)}
+\end{equation}
+$t_{g+1}$ slowest implied timescale (as measured by an MSM) which is then neglected in the HMM. i.e. if there are 5 hidden states in our required HMM these will hopefully correspond to the first 5 timescales (including $t_{1}=\infty$) in the full MSM basis. The 6th implied timescale measures in the MSM basis will the slowest relaxation timescale but which is nevertheless considered too fast to be included in the HMM. This timescale shouldn't be greater than $\tau$. 
+
+\begin{algorithm}\label{alg:baum_welch}
+Forward
+Backward
+Update
+\caption{Baum Welch algorithm}
+\end{algorithm}
+
 
 Hidden Markov models were proposed as an altermative to Markov models/PCCA clustering method described so far. A Hidden Markov process consists of a Markov process of $m$ discrete states which are not observed, described by a transition matrix, $\widehat{T}(\tau)$ (he $\tau$ indiction we are talking about thin unobserved process). Whille the system is in one of these hidden states the system 'emits' an observed state according to a multinomial emission distribution (continuous emission distributions to describe protein dynamics have been used see for example $[\text { refl), described here by the } n \times m \text { emission matrix } \mathbf{E}$ :
 \begin{equation}
@@ -291,6 +307,8 @@ Use membership functions $s_{i}$ to discretize $\mathbf{x}(k) \rightarrow \mathb
 5. Use $\mathbf{T}^{0}(\tau) \& \mathbf{E}^{0}$ as a starting point for the Baum-Welch expectation maximisation algorithm to estimate final $\widetilde{\mathbf{T}}(\tau)$ and $\mathbf{E}$
 The benefit of the HMM approach is that the discrete trajectories $s(k)$ are not required to be Markovian, nor does the discretization function $s_{i}$ need to be optimal (in
 e sense of maximising the VAMP scores), in order to estimate the implied timescales as discussed in [ref].
+
+
 
 \subsubsection{Model validation}\label{sec:model_validation}
 
