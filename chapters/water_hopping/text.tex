@@ -4,7 +4,7 @@
 % Description: Introduction chapter where the biology goes.
 %
 \let\textcircled=\pgftextcircled
-\chapter{Water diffusion}
+\chapter{Cavity dynamics of water in a sucrose matrix}
 \label{chap:water}
 
 
@@ -118,6 +118,45 @@ Thus, the trend in viscosity data (figure \ref{fig:wat_diff_coef_corr}) can be r
 In conclusion, we have shown that the diffusion constant of water in viscous aerosol particles departs increasingly from the SE equation as the size of the saccharide molecule forming the matrix increases. Atomistic simulations suggest that larger molecules will pack less efficiently, facilitating a mechanism of activated hopping through the porous network: at high saccharide fraction, a water molecule executes discrete jumps between cavities at a rate governed by the collective motion of the saccharide matrix. These observations also are consistent with the slower diffusion of molecules larger than water, whose motion more closely resembles that described by Stokes flow.24
 
 \subsection{Supplementary information}
+\subsubsection{Markov state modelling}
+The goal of the Markov state modelling was to identify regions of the MD simulations in local equilibrium,to identify cavities,and calculate their associated hopping and relaxation timescales. Eight MD simulations were partitioned into \SI{1}{\nano\second} time slices and the position of the water center of mass was clustered into $100$ discrete states using the k-means clustering algorithm. The k-means clustering and all subsequent calculations were performed using the open source software, PyEMMA30
+
+The discrete trajectories were screened to see whether they were in local equilibrium with the following procedure:
+\begin{enumerate}
+    \item A Markov state model (MSM) with a lag time ( $\tau$ ) of 10ps was constructed for each time slice. The lag time was chosen so as to reveal details of potential metastability $^{31} .$ To determine the value of $\tau,$ we carried out a sensitivity analysis, varying $\tau$ until we observed convergence in the eigenvalues. See figure S10 panel (b \& f).
+    \item This MSM was coarse grained into a $k$ -state Hidden Markov Model (HMM) if the largest gap in successive implied timescales of the MSM $\left(t_{k} / t_{k+1}\right)$ was greater than 1.5. 
+    \item If the HMM had:
+    \begin{enumerate}
+        \item an absorbing state (a 1 on the diagonal of the transition matrix);
+        \item an metastable state, $i,$ with stationary distribution $\left(\pi_{i}\right)$ probability approximately zero $\left(\pi_{i}< 10^{-8}\right)$
+        \item negative eigenvalues; 
+    \end{enumerate}
+    it was classified as not being in local equilibrium.The conditions (a – c) are indicative of not being in equilibrium because of the enforcement of the detailed balance conditions when estimating the HMM transition matrix32
+    \item The time-slices identified as being in local equilibrium were used to construct a Bayesian HMM in order to estimate errors of the hopping timescales. 
+\end{enumerate}
+
+Out of the $8000$ time slices analysed $947$ (\SI{11.8}{\percent}) were positively identified as being in local equilibrium. Figure S10 demonstrate this classification algorithm for two time slices of trajectory 3. The first time slice (\SIrange{0}{1}{\nano\second}, panels (a) to (d)) was classified as not being in local equilibrium, the second time slice (\SIrange{22}{23}{\nano\second}, panels (e) - (h)) was classified as being in local equilibrium.
+
+\begin{figure}
+    \centering
+    \caption{\textbf{Position-position autocorrelation function of a single sucrose molecule within the simulation}. The plot shows very little motion in the region \SIrange{0.1}{1000}{\pico\second}.This plot suggests that it is reasonable cluster the data (to determine cavities, as in figure \ref{fig:wat_hopping_mech}) in increments of \SI{1}{\nano\second}. It is also reasonable to initialise frozen sucrose simulations after intervals of \SI{1}{\nano\second} (figure \ref{fig:wat_sucrose_matrix}, panels (b) - (d))}
+    \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/Fig_S8.png}
+    \label{fig:wat_pos_pos_auto}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \mycaption{\textbf{Histogram of barrier heights for eight trajectories}. Barrier heights were calculated in \SI{1}{\nano\second} intervals. Free energies are calculated by converting the hopping timescales $(t)$ of the hidden Markov models to free energies $(\Delta G)$ using $\Delta G=R T \ln \left(k_{b} T \cdot t / h\right)$}
+    \includegraphics{chapters/water_hopping/figures/Fig_S10.png}
+    \label{fig:wat_free_energy_dist}
+\end{figure}
+
+\begin{figure}[p]
+    \centering
+    \caption{\textbf{Classification of two time slices from trajectory 3}: \SIrange{0}{1}{\nano\second} (panels (a) - (d), non-equilibrium time slice) and \SIrange{22}{23}{\nano\second} (panels (e) - (h), local equilibrium time slice). Panel (a) and (e) show the $x$, $y$, and $z$ coordinates of the center of mass of the water molecule. Panel (b) and (f) show the sensitivity analysis to determine the lag time $\tau$: the implied timescales, ($t$ vertical axis) vs the MSM lag, ($\tau$ horizontal axis). The black vertical line is place at \SI{10}{\pico\second} is the minimum time at which the implied timescales show convergence. Panels (c) and (g) show the stationary distribution. In panel (c) state $1$ has negligible probability classifying this time slice as not being in equilibrium. Panels (d) and (h) show the attempted assignment of the discrete trajectory into metastable states. The non-equilibrium time slice in panel (d) shows the large portion of unclassified states.}
+    \includegraphics{chapters/water_hopping/figures/Fig_S11.png}
+    \label{fig:wat_msm_classification}
+\end{figure}
 
 \section{Commentary}
 

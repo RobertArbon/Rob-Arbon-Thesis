@@ -70,7 +70,7 @@ where $k=1,2,3 \ldots$ is a time index, and $t_{i}=-\sfrac{\tau}{\ln{|\lambda_{i
 
 Each term in equation \ref{eqn:eig_decomp} will decay exponentially in the long time limit as $k \rightarrow \infty$, leaving just the first eigenvector, $\psi_{1}(\mathbf{x})=\mathbf{1}$, the stationary distribution. If the first $r$ eigenvalues are close to $1$ and are separated from the remaining values by a gap such that $\lambda_{r} \gg \lambda_{r+1}$, then its possible to truncate equation \ref{eqn:eig_decomp} without serious loss of accuracy to:
 
-\begin{equation}
+\begin{equation}\label{eqn:eig_decomp_to_r}
 q(\mathbf{x},  t+k \tau)  \simeq \mathbf{1}+\sum_{i=2}^{r} e^{-k \tau / t_{i}}\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x}).
 \end{equation}
 
@@ -198,25 +198,94 @@ Bayesian estimation \cite{gelmanBayesianDataAnalysis2014} uses not just the like
 \begin{equation}
     \mathbb{P}(\mathbf{T}|\mathbf{c}) \propto \mathbb{P}(\mathbf{c}|\mathbf{T})\mathbb{P}(\mathbf{T})
 \end{equation}
-Rather than point estimates of the posterior, samples are drawn from the whole posterior distribution for each parameter, $T_{ij}$, using Markov chain Monte Carlo\cite{gelmanBayesianDataAnalysis2014}. These samples can then be used to estimate the distribution, and hence error, of any quantity determined by the transition matrix, e.g., eigenvalues or implied timescales. The details of the sampling procedures used for estimation of MSM in this work can be found in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}, however two points should be highlighted here. First, the count matrix used are estimated using the effective count method. Second, the prior distribution for the transition matrix elements are defined over reversible a reversible matrix $\mathbf{X}$ where $X_{ij}\propto T_{ij}\pi_{i}$ and is given by: 
+Rather than point estimates of the posterior, samples are drawn from the whole posterior distribution for each parameter, $T_{ij}$, using Markov chain Monte Carlo\cite{gelmanBayesianDataAnalysis2014}. These samples can then be used to estimate the distribution, and hence error, of any quantity determined by the transition matrix, e.g., eigenvalues or implied timescales. The details of the sampling procedures used for estimation of MSM in this work can be found in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}, however two points should be highlighted here. First, the count matrix used are estimated using the effective count method. Second, the prior distribution for the transition matrix elements are defined over a reversible matrix $\mathbf{X}$, where $X_{ij}\propto T_{ij}\pi_{i}$, and is given by: 
 \begin{equation}
     \mathbb{P}(\mathbf{X}) \propto \Pi_{i \ge j}x_{ij}^{-1}. 
 \end{equation}
 With this prior, the posterior transition matrix elements have the same connectivity structure as the count matrix. i.e. if $c_{ij}=0$ then for any posterior sample $T_{ij}=0$. 
 
+To test the convergence of the sampling procedure to find stable values of the parameters, four independent sampling chains were produced and  the rank-normalized $\hat{R}$ statistic \cite{vehtariRanknormalizationFoldingLocalization2020}:
+\begin{equation}
+    \hat{R} = \frac{\hat{V}}{W}, 
+\end{equation}
+was calculated. Here $\hat{V}$ is the pooled variance of the four chains after rank normalization (i.e., sampled values are ranked and then the rank converted to a standard normal distributed variable) and $W$ is the within chain variance. Following the recommendations in \cite{vehtariRanknormalizationFoldingLocalization2020} the threshold value for convergence is $\hat{R} < 1.01$. 
+
+\subsection{Choice of $\tau$}
+The lag time, $\tau(\mathbf{MSM})$ is not a hyperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For large values of $\tau(\mathbf{MSM})$ the truncation of the dynamics to the dynamics of just the metastable states becomes more accurate. However, there may be processes of interest with timescales, $t_{i}<\tau(\mathrm{MSM})$ which will not be captured.
+
+As a compromise, $\tau$ is chosen by inspection of the data through the following procedure. Starting from a given discrete trajectory, $\{s_{t}\}$ estimate the largest implied timescale, $t_{2}$, for a range of different values of $\tau(\mathrm{MSM})$. Choose the smallest $\tau$ such that $\frac{d t_{2}}{d \tau} \simeq 0$ [reference]. 
+
+\subsection{Choice of hyperparameters}
+The hyperparameters of the the MSM are the modelling choices which transform the raw MD data into the discrete states $s^{i}$ used in MSM estimation. This work will consider only the following parameters: 
+\begin{enumerate}
+    \item $\chi$ the continuous feature, 
+    \item $\tau$ the TICA lag time, 
+    \item $m$ the number of retained TICA components, 
+    \item $n$ the number of cluster centers. 
+\end{enumerate}
+Other hyperparameters of the MSM fitting process will be kept fixed, these are: 
+\begin{enumerate}
+    \item The TICA eigenvectors will be scaled by their eigenvalues (``kinetic mapping'') so that euclidean distances in the TICA space will correspond to kinetic distances \cite{noeKineticDistanceKinetic2015}.
+    \item the k-means algorithm will be used to cluster the TICA transformed trajectories. 
+\end{enumerate}
+Kinetic mapping is recommended for TICA dimensionality reduction \cite{noeKineticDistanceKinetic2015}, however, its utility in improving model performance is data set dependent \cite{husicOptimizedParameterSelection2016}.  Both k-means and Ward clustering have been shown to give good performance in MSMs \cite{husicWardClusteringImproves2017a}. Fixing both of these hyperparameters reflects an arbitrary decision to keep the number of hyperparameters to a minimum.
+
+The hyperparameters are used to map the raw MD trajectories to the discrete MSM basis functions $s^{i}$. The variational principle, used previously to optimize the coefficients in the basis function expansion, equation \ref{eqn:trial_func}, can also be used to optimize the basis functions themselves \cite{schererVariationalSelectionFeatures2019}\cite{husicOptimizedParameterSelection2016}. In order to do this objective functions known as the VAMP (variational approach to Markov processes) scores \cite{wuVariationalApproachLearning2019} were derived which reach their upper limit when the resulting eigenfunctions become the exact eigenfunctions of the transfer operator. The VAMP scores were derived for both stationary and non-stationary, reversible and irreversible Markov processes and they generalize previous work on variationally optimising basis functions by \cite{mcgibbonVariationalCrossvalidationSlow2015} using the generalized matrix Rayleigh coefficient, GMRQ. The VAMP scores are a family of scores, parameterized by and integer $q$\cite{wuVariationalApproachLearning2019}: 
+\begin{equation}\label{eqn:def_vampr}
+\operatorname{VAMP}(q)=\sum_{i=1}^{r}\left(\lambda_{i}\right)^{q}, 
+\end{equation} 
+where $r$ is the number of dominant eigenvalues, $\lambda$, of the transition matrix (i.e. the $r$ in equation \ref{eqn:eig_decomp_to_r}). The GMRQ corresponds to $q=1$ and has been used to optimize parameters for MSMs of protein folding \cite{husicOptimizedParameterSelection2016}. This work will follow \cite{schererVariationalSelectionFeatures2019} which used the VAMP  score with $q=2$ (VAMP-2). 
+
+In order to use the VAMP-2 score the following steps can be used:  \cite{schererVariationalSelectionFeatures2019}:
+\begin{enumerate}
+    \item select a set of hyperparameters to create a MSM basis, $s^{i}$, 
+    \item estimate an MSM transition matrix, 
+    \item calculate a VAMP-2 score, 
+    \item repeat steps (1) - (3) a number of times until the VAMP-2 score converges. 
+\end{enumerate}
+However, using equation \ref{eqn:def_vampr}, will tend to produce complex basis functions that fit to noisy fluctuations in the data, rather than the `true' relaxation processes \cite{mcgibbonVariationalCrossvalidationSlow2015}\cite{wuVariationalApproachLearning2019}\cite{schererVariationalSelectionFeatures2019}, a process known as over-fitting \cite{friedman2001elements}.
+
+Two popular techniques for mitigating over-fitting are the bootstrap [] and cross-validation (CV) \cite{friedman2001elements}. K-fold CV is popular for MSMs \cite{schererVariationalSelectionFeatures2019}\cite{mcgibbonVariationalCrossvalidationSlow2015} although many methods exist \cite{arlotSurveyCrossvalidationProcedures2009}. The general form of CV is to 
+
+This work will use 50:50 shuffle split CV, which has been used previously in  \cite{chenDynamicConformationalLandscape2019}\cite{husicOptimizedParameterSelection2016}, and is described in algorithm \ref{alg:shuffle_split}. 
+
+\begin{algorithm}\label{alg:shuffle_split}
+\SetKwInput{Par}{Parameter}
+\KwData{N independent trajectories: $\mathcal{D}=[\mathbf{s}_{1}, \mathbf{s}_{2}, \ldots, \mathbf{s}_{N}]$}
+\KwData{hyperparameter set: $\theta$}
+\KwData{scoring function: $CV(\theta; \mathcal{D})$}
+\Par{number of iterations: $J$}
+\KwResult{Cross-validated score: $\operatorname{MCV}(\theta)$}
+\BlankLine
+\For{$i\leftarrow 1$ \KwTo $J$}{
+    split trajectories, $\mathcal{D}$, into two disjoint sets, $\mathcal{D}^{\mathrm{train}}$ and  $\mathcal{D}^{\mathrm{test}}$
+    estimate model at using $\mathcal{D}^{\mathrm{train}}$ and $\theta$
+
+}
+\caption{50:50 shuffle split cross-validation}
+\end{algorithm}
+
+Cross-validation for the GMRQ was derived by \cite{mcgibbonVariationalCrossvalidationSlow2015} and for the VAMP scores by \cite{wuVariationalApproachLearning2019}. 
+
+To ensure the  measured response was generalisable \cite{friedman2001elements}, $20$ iterations of 50:50 shuffle split cross validation were used \cite{husicOptimizedParameterSelection2016}. For each trial this entailed fitting a model using \SI{50}{\percent} of the available data (the training data) with the following pipeline:
+
+\begin{enumerate}
+    \item \label{lst:modfititem1} The Cartesian coordinates were projected onto the required feature, $\chi$. 
+    \item \label{lst:modfititem2} For features (1) - (4) in AADH, TICA was applied with a lag time $\tau$ and the first $m$ independent  components were retained. 
+    \item \label{lst:modfititem3} k-means clustering \cite{friedman2001elements} was used to cluster the the frames in the TICA space into $n$ microstates.
+    \item \label{lst:modfititem4} A reversible, maximum likelihood Markov state model was estimated using these discrete trajectories. 
+\end{enumerate}
+
+The model was then scored on the remaining \SI{50}{\percent} (the test data) using the same pipeline without re-estimating the various model parameters (the expression for calculating the cross validated $\operatorname{VAMP}$ scores is described in \cite{mcgibbonVariationalCrossvalidationSlow2015} and \cite{wuVariationalApproachLearning2019}). This was repeated $20$ times, shuffling the trajectories in between each iteration [TM: Explain this].  The final trial response was calculated as the mean of the scores on the test data. All MSM fitting and MD trajectory analysis was performed in Python 3.7 using the packages PyEMMA \cite{schererPyEMMASoftwarePackage2015a}, MDTraj \cite{mcgibbonMDTrajModernOpen2015}, NumPy \cite{waltNumPyArrayStructure2011}, Pandas \cite{mckinneyPandasFoundationalPython2011}, Matplotlib \cite{hunterMatplotlib2DGraphics2007},  Seaborn \cite{michaelwaskomMwaskomSeabornV02020} and the Jupyter Project \cite{kluyverJupyterNotebooksPublishing2016} [TM: add version numbers].
 
 
 
 
-\subsection{Model specification}
-\subsubsection{Choice of $\tau$}
- The lag time is not a hvperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For
-Iarge values of $\tau,$ the truncation of the dynamics to the dynamics of the metastable states becomes more accurate. However, there may be processes of interest with timescales, $t_{i}<\tau$ which will not be captured.
 
-As a compromise, $\tau$ is usually chosen by inspection of the data through the following procedure. Starting from a given discrete trajectory, $s(t)$ estimate the largest implied timescale, $t_{2}$, for a range of different values of $\tau$. Choose the smallest $\tau$ such that $\frac{d t_{2}}{d \tau} \simeq 0$. 
 
-\subsubsection{Choice of $s_i$}
-The choice of the discretization function comes down to two consecutive choices: a) a choice of continuous feature(s) of the system and b) the clustering algorithm usod to partition the continious feature into discrete states. The intermediate stage of projection onto $p$ chemically significant features we will denote as $\chi_{j}, j=1 \ldots p,$ so the process is summarised as:
+
+
+The choice of the discretization function comes down to two consecutive choices: a) a choice of continuous feature(s) of the system, $\chi$, and b) the clustering algorithm used to cluster the continuous feature into discrete states $s^{i}$. The intermediate stage of projection onto $p$ chemically significant features we will denote as $\chi_{j}, j=1 \ldots p,$ so the process is summarised as:
 For example, for describing protein folding the backbone dihedrals angles d reaction coordinates and using these has been useful in revealing folding pathways. However, the clustering algorithm, including the number of cluster centres, still needs to be selected in some objective way. The kev to slecting $s$ objectively was the framing of the estimation of Markov state models as variational optimization of the transfer operator. The transfer operator is seelf-adioint that the the be be and sonation and that a that truation trainge and that that the eigenvalues. If we consider the chisp, indicatorfinacion basis,s, forthe tramficroppratatorand find the linear combinations of basisfüction which maximize the eigenvalues then we arrive atequation for the definition of the transition matrix.
 
 We can also maximize the eigenvalues in the continuous basis, $\chi_{j}$ and we get:
