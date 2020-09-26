@@ -7,7 +7,142 @@
 \chapter{Introduction}
 \label{chap:intro}
 
-\initial{T}his thesis is about metastable states of complex systems. 
+This thesis describes the use of Markov models to describe the conformational and configurational dynamics of two systems and different ends of the complexity scale: water moving through an organic matrix and the conformational landscape of aromatic amine dehdyrogenase (AADH). 
+
+\textbf{From art to science:} 
+MSMs are master equations (ME review [6])
+Model is n x n matrix, spans the conformational space, conditional probabilities as elements. 
+State populations are give thermodynamics, off-diagonal elements give kinetics. 
+If we assume thermodynamic equilibrium then eigendecomposition is useful [description of eigenvectors]
+the n states should capture the dyanmics. 
+
+Memoryless transition networks come from Zwanzig [1] then Van Kampen [2] key MSM papers [7-9]. 
+
+creating meaningful states is difficult [33,34] Karpen did dihedrals [10] de Groot [20] did PCA and k-medioids.
+
+can stitch together different trajectories: McCammon [11] now Folding@home [35], Luty [12] suggested stitching together different trajs for ligand binding. 
+
+Hardware devs: FoldingAtHome, BlueGened [39-41], GPUGRID [43,44]
+
+ITS plots [9] CKtest [46]
+
+Different features different dynamics [45]
+
+Errors are (1) state decomposition and (2) finite sampling [47]
+
+Global descriptors worse than internal degrees of freedom [49]
+
+Sarich [73, 92]: discretization error decreases and partitioning become finer and the lag time increases. 
+
+Djurdjevac [93]: upper bounds for error between MSM and trajectories decreases with lag time. 
+
+TICA\c variance explained [115]:
+This MSM score was termed the GMRQ, which stands for
+generalized matrix Rayleigh quotient, the form of the approx-imator (also referred to as the Rayleigh trace).124
+The GMRQ on the validation set will be poor if the model was overfit on the
+training set but better if the model identifies the underlying
+dynamics common to both sets. In 2016, Noé and Clementi115 demonstrated that kinetic variance in a data set can be explained area.
+by summing the squared tICA eigenvalues. Since the variational principle derived in Noé and Nüske95 holds for any strictly nonincreasing weights applied to the scored eigenvalues,96 the kinetic variance can also be used to score models, or to deter- mine how many tICs are needed to explain a given amount of kinetic variance in the data.
+
+\textbf{Simple MSM}
+Analysis of three water molecules \cite{schulzCollectiveHydrogenbondRearrangement2018} to understand the collective hydrogen bond rearrangement, uses both Euler angles and spherical coordinates for dofs. 
+
+\textbf{Biomolecular MSMs}
+protein conformations
+protein folding
+drug design
+RNA
+DNA
+
+Drug docking \cite{amaroEnsembleDockingDrug2018}
+Drug design \cite{gervasioBiomolecularSimulationsStructureBased2019}
+
+MSMs are a core part of the bimolecular simulation tool box\cite{hugginsBiomolecularSimulationsDynamics2019}. 
+
+Tutorial \cite{wangConstructingMarkovState2018c}
+Review \cite{noeMarkovModelsMolecular2019b}, review \cite{husicMarkovStateModels2018}
+
+Nucleosome sliding \cite{brandaniDNASlidingNucleosomes2018}
+
+
+MSMs form part of the drug design process. \cite{gervasioBiomolecularSimulationsStructureBased2019}
+
+Cyclophillin A, used as part of accelerated MD: \cite{juarez-jimenezDynamicDesignManipulation2020b} and determined switching process is faster than though \cite{wapeesittipanAllostericEffectsCyclophilin2019}
+
+Enzymes:
+Cytochrom p450 - ligand finds AS in via one pathway \cite{ahalawatMappingSubstrateRecognition2018a}
+p450 regio selectivity \cite{dodaniDiscoveryRegioselectivitySwitch2016a}
+
+Describe the conformational landscape and experimentally verified SETD8 \cite{chenDynamicConformationalLandscape2019a}
+Rtro-Aldolase: \cite{romero-riveraRoleConformationalDynamics2017}
+
+Loop motions: \cite{LoopMotionTriosephosphate}
+Intrinsically discorded proteins \cite{schorAnalyticalMethodsStructural2016a}
+
+Self assembly of subsequence of beta amyloid peptide which aggregate into amyloid fibrils. Features invariant to indexing \cite{senguptaAutomatedMarkovState2019}. 
+
+
+
+
+
+
+\textbf{Coarse graining and HMMs}
+
+
+\textbf{Hyperparameter search}
+Feature selection: \cite{schererVariationalSelectionFeatures2019}
+
+
+\cite{bergstraHyperoptPythonLibrary2013} Hyperopt - Bayesian optimisation using TPEs (has conditional variables). 
+\cite{mcgibbonOspreyHyperparameterOptimization2016a} Osprey
+\cite{hutterSequentialModelbasedOptimization2011} SMAC
+
+Spearmint: \cite{DBLP:conf/uai/GelbartSA14}\cite{snoekAbstractBayesianOptimization2013}\cite{snoekInputWarpingBayesian2014a}\cite{NIPS2013_5086}\cite{NIPS2012_4522}
+
+BayesOpt: \cite{martinez-cantinBayesOptBayesianOptimization2014}
+
+GPyOpt: \cite{gpyopt2016}
+
+DragonFly: \cite{JMLR:v21:18-223}
+
+Auptimiser: \cite{liuAuptimizerExtensibleOpenSource2019}
+Ecabc: \cite{Sharma2019}
+
+Particle swarm: \cite{lorenzo2017particle}
+
+Optunity: \cite{claesenEasyHyperparameterSearch2014}
+
+\cite{pmlr-v32-hutter14} use random forest and ANOVA to assess parameter importance. 
+\cite{gramacyVariableSelectionSensitivity2013} using tree models to optimize and explore relevance of options for compiling and optmizing computer code. 
+
+\cite{falknerBOHBRobustEfficient2018a} goes beyond BO and random bandit. 
+
+\cite{di2018genetic} genetic algorithm for hyperparameter search. 
+
+SMBO: \cite{hutterSequentialModelbasedOptimization2011}
+
+Practical Bayesian optimisation of machine learning algorithms \cite{NIPS2012_4522} (GPs only)
+
+Algorithms for hyper-parameters optimisation \cite{bergstraAlgorithmsHyperParameterOptimizationa} (GP and TPE)
+
+Making a science out of hyperparameter search \cite{bergstraMakingScienceModel2013}. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
