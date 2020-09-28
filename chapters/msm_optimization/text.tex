@@ -100,9 +100,9 @@ Also you should, in that final chapter, makes specific suggestions for future wo
         $(x, y, z)$ & peptide feature: Cartesian coordinates \\
         $C_{\alpha}-C_{\alpha}$ & peptide feature: the alpha carbon contact distances \\
         $X-X$ & peptide feature: the heavy atom contact distances \\
-    \hline
+     \hline
      \end{tabularx}
-    \label{tab:my_label}
+    \label{tab:msm_symbols}
 \end{table}
 
 In chapter \ref{chap:theory} the theory of modelling biomolecular dynamics as a Markov process using a Markov state model (MSM) was laid out. Central to the method is defining  a series of mappings, $s_i, i=1, ..., n$, of atomic coordinates to $n$ discrete microstates. These mappings transform the molecular dynamics trajectories into one-dimensional Markov chains from which the MSM transition matrix can be estimated. These mapping can be thought of as data processing pipeline split into three parts: 
@@ -124,7 +124,7 @@ Finding the `best' set of hyperparameters, $\mathbf{x}$, for a given model is a 
 
 Gaussian processes (GPs) have been used as a response function for Bayesian optimisation[ref] and have many useful properties. First, many common acquisition functions are simple functions of the parameters of the fitted GP model [ref]. Second, they do not assume specific mappings between predictor and response (e.g. linear, quadratic etc.). Rather, they specify the structure of the covariance between values of the response as a function of predictors through a kernel function $k(\mathbf{x}, \mathbf{x}^{\prime})$ [ref]. This allows easy fitting of arbitrarily shaped response functions.  With recent work [ref] in approximate estimation methods they are also able to handle large data sets. In addition to their usefulness in Bayesian optimisation, the estimated parameters of the GP models of the response surface are interpretable and provide insight into the relevance of hyperparameters and how they interact.  For example, in [Bergstra] they were able to show that the learning rate was consistently the most important hyperparameter for determining accuracy of neural networks for classifying digits. 
 
-This chapter combines the methods of response surfaces, Gaussian processes and Bayesian optimisation in order to address the fundamental question of how to estimate the most robust Markov state model given a limited amount of simulation data. In particular it builds on the work of chapter \ref{chap:aadh} to produce a MSM of the active site of AADH and is structured as follows. Section \ref{sec:methods} describes Gaussian processes  and Bayesian optimisation  and how they are used to estimate and optimise and understand the response surfaces of MSM (or indeed any statistical model). Section \ref{subsec:ala1} describes fitting a GP to model the MSM-hyper-parameter response surface of alanine dipeptide, a common test system for  molecular kinetics methods. In addition Bayesian optimisation will be used to optimise the hyper-parameter of the MSM.  The lessons learned in understanding and optimising  alanine dipeptide is applied to AADH in section \ref{subsec:aadh} while section \ref{sec:msm_opt_conc} concludes. 
+This chapter combines the methods of response surfaces, Gaussian processes and Bayesian optimisation in order to address the fundamental question of how to estimate the most robust Markov state model given a limited amount of simulation data. In particular it builds on the work of chapter \ref{chap:aadh} to produce a MSM of the active site of AADH and is structured as follows. Section \ref{sec:methods} describes Gaussian processes  and Bayesian optimisation  and how they are used to estimate and optimise and understand the response surfaces of MSM (or indeed any statistical model). Section \ref{sec:ala_rsm} describes fitting a GP to model the MSM-hyper-parameter response surface of alanine dipeptide, a common test system for  molecular kinetics methods. In addition Bayesian optimisation will be used to optimise the hyper-parameter of the MSM, and section \ref{sec:msm_opt_conc} concludes. 
 
 
 
@@ -219,29 +219,29 @@ The response of each trial was measured by building an MSM with a lag time of $\
     \label{tab:ala2searchspace}
 \end{table}
 
-\begin{table}
-    \mycaption{The hyperparameter search space for AADH. TICA was applied to every feature except RMSD. Torsional angles, $\theta$, were given $(\sin(\theta),\cos(\theta)$ representations. The Cartesian coordinates were first aligned to a single, randomly chosen, trajectory frame so that feature (5) did not include spurious rotational or translational motion. The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
-    \centering
-    \begin{tabularx}{0.9\textwidth}{ |>{\raggedright\arraybackslash}l|l|>{\raggedright\arraybackslash}X|c| >{\raggedright\arraybackslash}X | } 
-    \hline
-    \textbf{Hyper-parameter} & \textbf{Type} & \textbf{Range} & \textbf{Dim.} &\textbf{Details} \\
-     \hline\hline
-    Feature, $\chi$ & Categorical & (1) $(\phi, \psi, \chi)$ & $\num{116}$  & \\
-    & & (2) $|\mathbf{r}_{1}-\mathbf{r}_{2}|$  & $\num{ 2346}$& Heavy atoms inter-atomic distances \\
-    & & (3) $C_{\alpha}-C_{\alpha}$ & $\num{15}$ & alpha-Carbon contacts\\ 
-    & & (4) $X-X$  & $\num{15}$ & Heavy atoms contacts\\ 
-    & & (5) RMSD & $\num{1}$ &  Heavy atoms only\\ 
-    \hline
-    TICA lag time, $\tau$ & Integer &\SIlist[list-final-separator = { ... }]{1;1.1;100}{ns} &  & \\
-    \hline
-    TICA components, $m$& Integer &\numlist[list-final-separator = { ... }]{1;2;20} & & \\
-    \hline
-    Cluster centres, $n$ & Integer & \numlist[list-final-separator = { ... }]{10;11;1000}& &  Clustered using k-means clustering  \\
+% \begin{table}
+%     \mycaption{The hyperparameter search space for AADH. TICA was applied to every feature except RMSD. Torsional angles, $\theta$, were given $(\sin(\theta),\cos(\theta)$ representations. The Cartesian coordinates were first aligned to a single, randomly chosen, trajectory frame so that feature (5) did not include spurious rotational or translational motion. The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
+%     \centering
+%     \begin{tabularx}{0.9\textwidth}{ |>{\raggedright\arraybackslash}l|l|>{\raggedright\arraybackslash}X|c| >{\raggedright\arraybackslash}X | } 
+%     \hline
+%     \textbf{Hyper-parameter} & \textbf{Type} & \textbf{Range} & \textbf{Dim.} &\textbf{Details} \\
+%      \hline\hline
+%     Feature, $\chi$ & Categorical & (1) $(\phi, \psi, \chi)$ & $\num{116}$  & \\
+%     & & (2) $|\mathbf{r}_{1}-\mathbf{r}_{2}|$  & $\num{ 2346}$& Heavy atoms inter-atomic distances \\
+%     & & (3) $C_{\alpha}-C_{\alpha}$ & $\num{15}$ & alpha-Carbon contacts\\ 
+%     & & (4) $X-X$  & $\num{15}$ & Heavy atoms contacts\\ 
+%     & & (5) RMSD & $\num{1}$ &  Heavy atoms only\\ 
+%     \hline
+%     TICA lag time, $\tau$ & Integer &\SIlist[list-final-separator = { ... }]{1;1.1;100}{ns} &  & \\
+%     \hline
+%     TICA components, $m$& Integer &\numlist[list-final-separator = { ... }]{1;2;20} & & \\
+%     \hline
+%     Cluster centres, $n$ & Integer & \numlist[list-final-separator = { ... }]{10;11;1000}& &  Clustered using k-means clustering  \\
     
-     \hline
-    \end{tabularx}
-    \label{tab:aadh_searchspace}
-\end{table}
+%      \hline
+%     \end{tabularx}
+%     \label{tab:aadh_searchspace}
+% \end{table}
 
 \begin{table}
     \centering
@@ -438,7 +438,7 @@ Although not explicitly discussed in the theoretical literature, software packag
 \subsection{MSM Optimisation}
 Bayesian optimisation was used to determine whether the maximum of the response surface estimated from the trial data set could be improved and whether this maximum could be reached with smaller trial data set.
 
-An exploratory optimisation procedure was first performed on the alanine dipeptide system to demonstrate its effectiveness and to determine how many randomly sampled seed trials are needed to initalise the BO procedure, $N_{seed}$. $p=10$ steps of the BO algorithm was performed on five random subsets of the alanine dipeptide trial data set with $N_{seed}=30, 50$ trials (stratified over the features $\chi$), corresponding to $15, 25$ trials per predictor. As discussed further in section \ref{subsec:ala1}, $25$ trials per predictor was found to result in satisfactory improvement in the incumbent.  
+An exploratory optimisation procedure was first performed on the alanine dipeptide system to demonstrate its effectiveness and to determine how many randomly sampled seed trials are needed to initalise the BO procedure, $N_{seed}$. $p=10$ steps of the BO algorithm was performed on five random subsets of the alanine dipeptide trial data set with $N_{seed}=30, 50$ trials (stratified over the features $\chi$), corresponding to $15, 25$ trials per predictor. As discussed further in section \ref{sec:ala_opt}, $25$ trials per predictor was found to result in satisfactory improvement in the incumbent.  
 
 For AADH two optimisation experiments were performed:
 \begin{enumerate}
@@ -450,7 +450,7 @@ In both cases the combination of input warping and kernel-type  were determined 
 
 \section{Results and discussion}
 % \subsection{Alanine Dipeptide}\label{subsec:ala1}
-\subsection{Response surface}\label{subsubsec:ala_rsm}
+\subsection{Response surface}\label{sec:ala_rsm}
 
 \begin{figure}[p]
     \centering
@@ -548,7 +548,7 @@ The relevance of the different features determines the amount of information sha
 If either $R_{\chi_1}$ or $R_{\chi_2}$ is large then $k_1 \cdot k_2 \simeq 0$ and there will no correlation between $n$ on feature $\chi_1$ and $n^{\prime}$ on feature $\chi_2$. If both $R_{\chi_1}$ and $R_{\chi_2}$ are small then $k_1 \cdot k_2 \simeq 1$ and covariance between $n$ on feature $\chi_1$ and $n^{\prime}$ on $\chi_2$ will be similar to the covariance between $n$ and $n^{\prime}$ on the same feature.  The features for alanine dipeptide are all relatively low relevance (i.e. less than $1$) which is a reflection of the  consistently flat response to changes in $n$ discussed above. Even between  two largest relevance features $(\phi, \psi)$ and $(x,y,z)$, the covariance between $n$ and $n^{\prime}$ on these two features is only altered by  $k_{1}\cdot k_{2} = 0.91\cdot0.92 \simeq 0.83$. 
 
 
-\subsection{Optimization}\label{subsubsec:ala_opt}
+\subsection{Optimization}\label{sec:ala_opt}
 
 \begin{figure}[p]
     \centering
@@ -598,7 +598,7 @@ Bayesian optimisation was used to determine whether this maximum could be achiev
 
 With $N_{seed}=30$ the incumbent trajectories of iteration 2, 3, \& 5 decreased , while for all iterations seeded with $50$ seed trials \ref{fig:ala_opt_traj} the incumbent trajectories remained constant or increased. In both cases the optimal values of $\chi$ were consistently oscillating between $(\phi, \psi)$ and $(x, y, z)$ while the optimal value of $n$ did not converge to a single value across the iterations. A value of  $N_{seed} = 50$ or $25$ observations per predictor were therefore deemed tentatively appropriate. 
 
-There are a number of observations of the optimisation trajectories which reflect on the alanine dipeptide response surface described in section \ref{subsubsec:ala_rsm} and the usefulness of Bayesian optimisation for this system. First, the incumbent trajectories clearly show that Bayesian optimisation does not increase the value of the incumbent by a significant amount. This is a reflection of the simple nature of the response surface and the irrelevance of the number of cluster centres. Second, the response surface (in the search space domain tested) is bimodal with peaks at $\chi=(\phi, \psi)$ torsions and $(x, y, z)$ coordinates. This is reflected in the clear lack of substantive difference between the final values of $\mu$ listed in table \ref{tab:ala1_best_params}.  Third, the almost complete irrelevance of $n$ as a hyper-parameter is clearly shown in panels (f) to (j) in which $n \simeq 1000, 500 \& 100$ are arrived at with no clear difference in the value of the incumbent. Fourth, it is possible that with more optimisation steps it could be possible to arrive at the maximum of the response surface with less seed trial observations. While this is a possibility, the fact that Bayesian optimisation is an inherently serial algorithm (parallel variants which sample the acquisition function rather than optimise do exist []), while random sampling is embarrassingly parallel, it was considered more wall-time efficient (if not CPU-time efficient) to err on the side of more random seed trial data and less optimisation steps. 
+There are a number of observations of the optimisation trajectories which reflect on the alanine dipeptide response surface described in section \ref{sec:ala_rsm} and the usefulness of Bayesian optimisation for this system. First, the incumbent trajectories clearly show that Bayesian optimisation does not increase the value of the incumbent by a significant amount. This is a reflection of the simple nature of the response surface and the irrelevance of the number of cluster centres. Second, the response surface (in the search space domain tested) is bimodal with peaks at $\chi=(\phi, \psi)$ torsions and $(x, y, z)$ coordinates. This is reflected in the clear lack of substantive difference between the final values of $\mu$ listed in table \ref{tab:ala1_best_params}.  Third, the almost complete irrelevance of $n$ as a hyper-parameter is clearly shown in panels (f) to (j) in which $n \simeq 1000, 500 \& 100$ are arrived at with no clear difference in the value of the incumbent. Fourth, it is possible that with more optimisation steps it could be possible to arrive at the maximum of the response surface with less seed trial observations. While this is a possibility, the fact that Bayesian optimisation is an inherently serial algorithm (parallel variants which sample the acquisition function rather than optimise do exist []), while random sampling is embarrassingly parallel, it was considered more wall-time efficient (if not CPU-time efficient) to err on the side of more random seed trial data and less optimisation steps. 
 
 
 

@@ -7,7 +7,19 @@
 \chapter{Introduction}
 \label{chap:intro}
 
-This thesis describes the use of Markov models to describe the conformational and configurational dynamics of two systems and different ends of the complexity scale: water moving through an organic matrix and the conformational landscape of aromatic amine dehdyrogenase (AADH). 
+This thesis describes the use of Markov models to describe the slow conformational and configurational dynamics of two systems and different ends of the complexity scale: water diffusing through an organic matrix and the conformational landscape of aromatic amine dehdyrogenase (AADH). In particular this thesis describes contributions to methods of optimising and selecting the parameters Markov models. MMs provide a framework for describing the important dynamical processes of metastable states of molecules from molecular dynamics (MD) simulations. The central idea [zwanzig] is that over a sufficiently long period of time transitions rates between regions of phase space are independent on their path history. If phase space is partitioned into $n$ discrete states then the dynamics of the system can be described by an $n\times n$ transition matrix $\mathbf{T}$. Each element of $\mathbf{T}$ describes the conditional probability of the system jumping between states. It is usually the case that the interesting kinetics is not between the $n$ individual discrete states but instead between sets of states separated by a common kinetic barriers. These metastable states and their kinetics and structural characteristics are the main goal of a MM analysis. Markov modelling is the process of transforming the configurational snapshots from molecular dynamics (MD) simulations to an estimate of $\mathbf{T}$ and the implied metastable states of the system.  It is a  topic of continued interest \cite{husicMarkovStateModels2018}\cite{noeMarkovModelsMolecular2019b}\cite{wangConstructingMarkovState2018c} for both method development and applications.  
+
+Applications of MMs are concentrated on biomolecular systems and form an intrinsic part of the bimolecular simulation tool-box\cite{hugginsBiomolecularSimulationsDynamics2019}. Applications include modelling both protein folding pathways [] as well as intrinsically discorded proteins \cite{schorAnalyticalMethodsStructural2016a}. In enzymes MMs have been used to elucidate, for example, ligand docking pathways \cite{ahalawatMappingSubstrateRecognition2018a} and regioselectivity mechanisms in cytochrome p450  \cite{dodaniDiscoveryRegioselectivitySwitch2016a}, the conformational heterogeneity in the important cancer target SETD8 \cite{chenDynamicConformationalLandscape2019a}, loop dynamics in  triosephosphate isomerase \cite{LoopMotionTriosephosphate}, allosteric effects in \cite{wapeesittipanAllostericEffectsCyclophilin2019}. Other applications include self-assembly of  \cite{senguptaAutomatedMarkovState2019} and dimer formation \cite{leahyCoarseMasterEquations2016} of amyloid peptides; identifying important conformations in drug targets to improve drug docking free energy calculations  \cite{amaroEnsembleDockingDrug2018} and rational drug design \cite{gervasioBiomolecularSimulationsStructureBased2019}. There has been comparatively little use of MSMs on smaller systems (whose kinetics tend to be derived from quantum mechanical and thermodynamic data \cite{glowackiMESMEROpenSourceMaster2012}, rather than statistically estimated from MD data), however, one recent example used MSMs to determine hydrogen bond rearrangement in liquid water \cite{schulzCollectiveHydrogenbondRearrangement2018}. 
+
+MMs are a varied collection of techniques covering a range of different simulation conditions and dynamical models. Discrete Markov state models (MSMs) are used for modelling the fine grained dynamics of proteins in thermodynamic equilibrium [prinz].  Observable Operator models (OOMs) and Hidden Markov models (HMMs) were developed as methods of coarse graining an MSM from a model with potentially thousands of states to a handful of metastable states [][], while retaining quantitative accuracy.   TICA [] and associated techniques [][] are useful for creating approximate collective variables as features, which both increases the accuracy and precision of an MSM. A crucial step in the development of MMs was the realisation that estimating MSMs and TICA could be cast as variational optimisation problem (the variational approach to conformational dynamics, VAC []). This in turn led to methods for scoring different discretization schemes used to represent the same dynamics, the generalized matrix Rayleigh coefficient, GMRQ []. The theory of stationary MSMs was broadened to encompass simulations of systems out of thermal equilibrium, with Koopman models []. The theory of MSMs and Koopman models was unified into one conceptual framework known as the variational approach to Markov processes (VAMP)[]. This increase the scope of MMs and presented a range of model scoring metrics (VAMP scores). Recently deep learning techniques such as feed forward neural networks (FNN) and variational autoencoders (VAEs) have used the VAMP framework to replace the modelling pipeline of MMs with a single flexible model [][]. For a review of the history of MMs, the latest techniques and their applications see \cite{husicMarkovStateModels2018} and \cite{noeMarkovModelsMolecular2019b}. 
+
+Central to the MM process is the mapping from regions of phase space to $n$ discrete states. The discretisation scheme is important for accurately describing the kinetics and thermodynamics \cite{shallowayMacrostatesClassicalStochastic1996}. For large biomolecules the process is complicated by the large number of relevant degrees of freedom \cite{shallowayMacrostatesClassicalStochastic1996} and the ``rough'' [zwanzig] potential energy surface. However, simple and yet relevant systems, do exist beyond the toy models in, for example [prinz], [bacallado] and [pmm]. Chapter \ref{chap:water} demonstrates one such system: a single water molecule diffusing through a sucrose matrix as may be found in organic aerosol particles [cavitydyn]. As will be seen, the small regions of phase space around points in the 3D space of center-of-mass water coordinates serve as an adequate basis for estimating an MSM. 
+
+While 
+
+
+
+
 
 \textbf{From art to science:} 
 MSMs are master equations (ME review [6])
@@ -47,39 +59,7 @@ by summing the squared tICA eigenvalues. Since the variational principle derived
 \textbf{Simple MSM}
 Analysis of three water molecules \cite{schulzCollectiveHydrogenbondRearrangement2018} to understand the collective hydrogen bond rearrangement, uses both Euler angles and spherical coordinates for dofs. 
 
-\textbf{Biomolecular MSMs}
-protein conformations
-protein folding
-drug design
-RNA
-DNA
 
-Drug docking \cite{amaroEnsembleDockingDrug2018}
-Drug design \cite{gervasioBiomolecularSimulationsStructureBased2019}
-
-MSMs are a core part of the bimolecular simulation tool box\cite{hugginsBiomolecularSimulationsDynamics2019}. 
-
-Tutorial \cite{wangConstructingMarkovState2018c}
-Review \cite{noeMarkovModelsMolecular2019b}, review \cite{husicMarkovStateModels2018}
-
-Nucleosome sliding \cite{brandaniDNASlidingNucleosomes2018}
-
-
-MSMs form part of the drug design process. \cite{gervasioBiomolecularSimulationsStructureBased2019}
-
-Cyclophillin A, used as part of accelerated MD: \cite{juarez-jimenezDynamicDesignManipulation2020b} and determined switching process is faster than though \cite{wapeesittipanAllostericEffectsCyclophilin2019}
-
-Enzymes:
-Cytochrom p450 - ligand finds AS in via one pathway \cite{ahalawatMappingSubstrateRecognition2018a}
-p450 regio selectivity \cite{dodaniDiscoveryRegioselectivitySwitch2016a}
-
-Describe the conformational landscape and experimentally verified SETD8 \cite{chenDynamicConformationalLandscape2019a}
-Rtro-Aldolase: \cite{romero-riveraRoleConformationalDynamics2017}
-
-Loop motions: \cite{LoopMotionTriosephosphate}
-Intrinsically discorded proteins \cite{schorAnalyticalMethodsStructural2016a}
-
-Self assembly of subsequence of beta amyloid peptide which aggregate into amyloid fibrils. Features invariant to indexing \cite{senguptaAutomatedMarkovState2019}. 
 
 
 

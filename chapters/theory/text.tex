@@ -3,29 +3,56 @@
 \chapter{Theory}
 \label{chap:theory}
 
-\section{TODO}
-\begin{enumerate}
-    \item Add Bayesian estimation with priors
-    \item explain disconnected sets
-    \item Explain striding for Bayes
-\end{enumerate}
-
-
-
 \section{Introduction}
 This chapter sets out the theory of Markov state models (MSMs) and hidden Markov models to describe the dynamics of biomolecular systems. Table \ref{tab:theory_nomenclature} summarises the  nomenclature used in this chapter. 
 
 \begin{table}
     \centering
-    \begin{tabular}{c|c}
-        N & Number of atoms \\
-        $\mathbf{x}/\mathbf{y}(t)$ & vector of $3N$ atomic coordinates as a function of time \\
-        
-        
-    \end{tabular}
-    \caption{Caption}
-    \label{tab:theory_nomenclature}
+    \mycaption{Table of symbols used throughout this chapter. }
+    \begin{tabularx}{0.9\textwidth}{ |l| >{\raggedright\arraybackslash}X | } 
+        \hline
+        \textbf{Symbol}  &  \textbf{Definition} \\
+        \hline\hline
+        $N_{\mathrm{A}}$ & Number of atoms. \\
+        $N_{\mathrm{T}}$ & Number of trajectory snapshots or observations. \\
+        $N_{\mathrm{C}}$ & Number of important continuous features, e.g., for a dipeptide, $N_{\mathrm{C}}=2$ - a $\phi, \psi$ dihedral angle.  \\
+        $t$ & Time index or variable. \\
+        $\mathbf{x}/\mathbf{y}(t)$ & Point in phase space as function of time. \\
+        $\tau$ & Markov lag-time. \\
+        $p(\mathbf{x}, \mathbf{y}; \tau)$ & Probability of observing trajectory at the point $\mathbf{x}$ and then at $\mathbf{y}$ a time $\tau$ later. \\
+        $p(\mathbf{x}; t)$ & Probability distribution over phase space at time $t$, used to describe time evolution of a thermodynamic ensemble. \\
+        $\mu(\mathbf{x})$ & Stationary distribution of system in thermodynamic equilibrium.  \\ 
+        $\mathcal{T}(\tau)$ & Transfer operator. Determines the time evolution of a continuous Markov process. \\
+        $q(\mathbf{x}; t)$ & Alternative descriptor of the time evolution of a thermodynamic ensemble. Acted on by the transfer operator. $q(\mathbf{x}) = \sfrac{p(\mathbf{x})}{\mu(\mathbf{x})}$. \\
+        $(\psi_{i}(\mathbf{x}), \lambda_{i})$ & Eigenvalues and eigenfunctions of the transfer operator.  \\
+        $r$ & The number of dominant eigenvalues: $\lambda_{2,\ldots, r}\simeq 1$ and $\sfrac{\lambda_{r}}{\lambda_{r+1}} \gg 1$. \\
+        $n$ & Number of discrete states used to describe phase space.\\
+        $s^{i}\quad i = 1, \ldots, n$ & Indicator functions used to discretize phase space into $n$ states.  \\
+        $\mathbf{s} = \{s_{1}, \ldots, s_{N_{T}}\} $ & Trajectory in phase space projected into the discrete basis defined by $s^{i}$. \\
+        $\mathbf{T}$ & Transition matrix. Determines the time evolution of a Markov model. The discrete analogue of the transfer operator. \\
+        $\bm{\pi}$ & The stationary distribution of the discrete Markov model. \\
+        $\mathbf{p}(t)$ & Probability mass over discretized phase space at time $t$, used to describe the time evolution of a Markov state model. The discrete analogue of $p(\mathbf{x}; t)$. \\
+        $\mathbf{q}(t)$ & Alternate descriptor of the time evolution of a Markov model. Discrete analogue of $q(\mathbf{x};t)$. \\
+        $\mathbf{v}$ & Right eigenvectors of $\mathbf{T}$. Discrete analogue of $\psi_{i}(\mathbf{x})$. \\
+        $\mathbf{u}$ & Left eigenvectors of $\mathbf{T}$. $u_{i} = v_{i}\cdot\pi_{i}$ \\
+        $\mathbf{X}$ & Data matrix. Snapshots of trajectory through phase space, i.e. output from MD trajectory. $\mathbf{X}\in \mathbb{R}^{N_{T}\times N_{A}}$.\\
+        $\bm{\chi}$ & Feature matrix. Transformation of $\mathbf{X}$ into important features of system, e.g., backbone dihedral angles of a peptide. $\bm{\chi} \in \mathbb{R}^{N_{\mathrm{T}}\times N_{\mathrm{C}}}$. \\
+        $\chi^{\prime}$ & TICA transformed feature matrix. \\
+        $\mathbf{C}$ & Correlation matrix between states. $C_{i,j} = \mathrm{cor}(i, j)$  \\
+        $\mathbf{c}$ & Count matrix for discrete states, i.e., number of times transition between each pair of states is observed. Proportional to the correlation matrix: $c_{i,j} \propto C_{i,j}$. \\
+        $\mathbf{S}$ & Overlap matrix between  either continuous or discrete states. In the discrete basis, $\mathbf{S} = \diag{\bm{\pi}}$. \\
+        $g$ & Number of hidden states in an HMM. \\
+        $\mathbf{h} = \{h_t\}$ & Trajectory of hidden states. \\
+        $\widetilde{\mathbf{T}}$ & Hidden state transition matrix of HMM. \\
+        $\widetilde{\bm{\pi}}$ & Hidden state stationary distribution of HMM. \\
+        $\mathbf{M}$ & Membership matrix of HMM. $M_{j,i} = \mathbb{P}(h_t=i|s_t=j)$. \\
+        $\mathbf{E}$ & Emission matrix of HMM. $E_{i, j}= \mathbb{P}(s_t=j|h_t=i)$. \\
+     \hline
+     \end{tabularx}
+    \label{tab:theory_symbols}
 \end{table}
+
+
 
 
 \section{Markov processes}
@@ -101,24 +128,24 @@ Markov state models (MSMs) are discrete models of Markovian dynamics. The contin
     \item The eigenfunctions $\psi(\mathbf{x})$ are now the right eigenvectors of $\mathbf{T}(\tau)$, $\mathbf{v}$, with the same interpretation. The left eigenvectors, $\mathbf{u}$, are related to the right eigenvectors by: $u_{i} = v_{i}\cdot \pi_{i}$.  
  \end{itemize}
 
-Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with coordinates saved every $\Delta t$ seconds. Typically any bulk water molecules are ignored as are the momentum coordinates of all the atoms. If  each trajectory has $n_{\mathrm{f}}$ frames (coordinate snapshots) and $n_{\mathrm{a}}$ important atoms then trajectory is represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{n_{\mathrm{f}} \times 3n_{\mathrm{a}}}$. 
+Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with coordinates saved every $\Delta t$ seconds. Typically any bulk water molecules are ignored as are the momentum coordinates of all the atoms. If  each trajectory has $N_{\mathrm{T}}$ frames (coordinate snapshots) and $N_{\mathrm{A}}$ important atoms then trajectory is represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{N_{\mathrm{T}} \times 3N_{\mathrm{A}}}$. 
 
 The data then undergo a series of processing steps on the way to creating an MSM, these are: 
 
 \begin{enumerate}
-    \item \textbf{Create features:} A set of continuous features, $\chi_{i}, i \in \{1,\dots, n_{c} \}$ is created or chosen to represent the dynamics of the system:
+    \item \textbf{Create features:} A set of continuous features, $\chi_{i}, i \in \{1,\dots, N_{C} \}$ is created or chosen to represent the dynamics of the system:
     \begin{equation*}
-        \mathbf{X}  \rightarrow \bm{\chi},\quad \bm{\chi} \in \mathbb{R}^{n_{f} \times n_{c}}
+        \mathbf{X}  \rightarrow \bm{\chi},\quad \bm{\chi} \in \mathbb{R}^{N_{T} \times N_{C}}
     \end{equation*}
     For example the feature might be the backbone dihedral angles of a peptide, or the contact distances between residues. 
     \item \textbf{Dimensionality reduction:} The number of features is reduced still further by transforming $\bm{\chi}$ into a small number, $m$, of collective variables. 
     \begin{equation*}
-        \bm{\chi}  \rightarrow \bm{\chi}^{\prime},\quad \bm{\chi}^{\prime} \in \mathbb{R}^{n_{f} \times m}
+        \bm{\chi}  \rightarrow \bm{\chi}^{\prime},\quad \bm{\chi}^{\prime} \in \mathbb{R}^{N_{T} \times m}
     \end{equation*}
     This work will exclusively use time-lagged independent component analysis, TICA as a method of dimensionality reduction.  
     \item \textbf{Discretization:} Each of the MD frames is assigned to one of $n$ different discrete states using a clustering algorithm such as k-means clustering: 
     \begin{equation*}
-        \bm{\chi}^{\prime} \rightarrow \mathbf{s},\quad \mathbf{s} \in \mathbb{Z}_{+}^{n_{f} \times 1}
+        \bm{\chi}^{\prime} \rightarrow \mathbf{s},\quad \mathbf{s} \in \mathbb{Z}_{+}^{N_{T} \times 1}
     \end{equation*}
     \item \textbf{MSM estimation}: The transition matrix, $\mathbf{T}$, is estimated by counting transitions between discrete states separated by a time $\tau$. 
     \item \textbf{Coarse graining:} The MSM is then coarse-grained by lumping the $n$ microstates into $g$ macrostates states. This work will exclusively feature hidden Markov models (HMMs) as a method for doing this. 
@@ -131,12 +158,12 @@ The choice of continuous feature $\chi$ may be determined (or strongly suggested
 
 Dimensionality reduction using TICA was introduced for improving MSM construction in [] and []. It is the result of variationally optimising a set of basis functions, $\chi_{i}$, to estimate the eigenfunctions, $\psi_{i}$, of the transfer operator. A detailed derivation is given in [] but can be summarised as follows. A trial function, $f$, is expanded in the basis $\chi_{i}$: 
 \begin{equation}\label{eqn:trial_func}
-    f(\mathbf{x}) = \sum_{i}a_{i}\chi_{i}(\mathbf{x})
+    f(\mathbf{x}) = \sum^{N_{C}}_{i}a_{i}\chi_{i}(\mathbf{x})
 \end{equation}
 The variational principle for operators with bounded eigenvalues (such as the transfer operator) states that any approximate eigenfunction will have eigenvalues smaller than the true eigenvalues. So choosing the coefficients $a_{i}$ to maximize the eigenvalues from using equation \ref{eqn:trial_func} will be the closest approximation to the true eigenfunctions that can be achieved with linear combinations of basis functions. Using the method of Lagrange multipliers to maximize the eigenvalues using equation \ref{eqn:trial_func} results in the following generalized eigenvalue equation: \begin{equation}\label{eqn:general_ev_equation}
     \mathbf{C}\mathbf{a} = \lambda \mathbf{S}\mathbf{a}
 \end{equation}
-Solving this equation requires estimating the matrix elements of $\mathbf{C}$ and $\mathbf{S}$. The elements of $\mathbf{C}$ are the time-lagged correlation functions ($\mathbf{cor}$) between $\chi_{i}$ and $\chi_{j}$
+Solving this equation requires estimating the matrix elements of $\mathbf{C}$ and $\mathbf{S}$. The elements of $\mathbf{C}$ are the time-lagged correlation functions ($\mathrm{cor}$) between $\chi_{i}$ and $\chi_{j}$
 \begin{equation}
     \begin{split}
         C_{ij} =& \operatorname{cor}\left(\chi_{i}, \chi_{j}, \tau\right)\\
@@ -165,7 +192,7 @@ To avoid introducing too many symbols, $s^{i}(\mathbf{x})$ denotes the indicator
 
 \subsection{MSM estimation}
 MSM estimation is analogous to TICA estimation but with the indicator basis functions $s^{i}$ replacing the continuous basis functions $\chi_{i}$ in equation \ref{eqn:trial_func}. The result of the optimisation of coefficients $a_{i}$ results in the same generalized eigenvalue expression, equation \ref{eqn:general_ev_equation}. Solving this equation is simplified by the fact that the indicator functions are orthogonal and so $S_{ij} = 0$ if $i \neq j$ and $S_{ii} = \pi_{i}$, the discrete stationary distribution. Equation \ref{eqn:general_ev_equation} can be re-arranged to give: 
-\begin{align}
+\begin{align}\label{eqn:tran_def}
  \mathbf{C a}=\lambda \bm{\Pi} \mathbf{a} \\
 \mathbf{T a}=\lambda \mathbf{a}   
 \end{align}
@@ -210,7 +237,7 @@ To test the convergence of the sampling procedure to find stable values of the p
 \end{equation}
 was calculated. Here $\hat{V}$ is the pooled variance of the four chains after rank normalization (i.e., sampled values are ranked and then the rank converted to a standard normal distributed variable) and $W$ is the within chain variance. Following the recommendations in \cite{vehtariRanknormalizationFoldingLocalization2020} the threshold value for convergence is $\hat{R} < 1.01$. 
 
-\subsection{Choice of $\tau$}
+\subsection{Choice of Markov lag-time}
 The lag time, $\tau(\mathbf{MSM})$ is not a hyperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For large values of $\tau(\mathbf{MSM})$ the truncation of the dynamics to the dynamics of just the metastable states becomes more accurate. However, there may be processes of interest with timescales, $t_{i}<\tau(\mathrm{MSM})$ which will not be captured.
 
 As a compromise, $\tau$ is chosen by inspection of the data by plotting the implied timescales [] as a function of $\tau(\mathrm{MSM})$.  Starting from a given discrete trajectory, $\{s_{t}\}$ estimate the largest implied timescale, $t_{2}$, for a range of different values of $\tau(\mathrm{MSM})$. Choose the smallest $\tau$ such that $\frac{d t_{2}}{d \tau} \simeq 0$. 
@@ -300,6 +327,7 @@ where the symbols retain their previous meaning and the $\left| A\right\|_{2}^{2
 % The other popular method for clustering the microstates is by estimating a hidden Markov model (HMM). $m$ can be selected using information criteria, bootstrapping and cross-validation and others. We will explore these more fully in chapter 3 .
 
 \section{Coarse graining with Hidden Markov Models}\label{sec:theory_hmm}
+\subsection{HMM definition}
 \begin{figure}
     \centering
     \caption{\textbf{Hidden Markov model}}
@@ -320,21 +348,25 @@ An example HMM is shown in figure \ref{fig:theory_hmm}. The hidden states are sh
     \mathbb{P}(h_t=i|s_j=j) &= \frac{\mathbb{P}(h_t=i)}{\mathbb{P}(s_t=j)}\mathbb{P}(s_j=j|h_t=i) \\
     M_{ji} &= \frac{\widetilde{\pi}_j}{\pi_i}E_{ij}
 \end{align}
+The eigenvalues and eigenvectors of the hidden transition matrix have a similar interpretation as the eigenvectors and eigenvalues of an MSM, i.e. they are the relaxation processes and associated timescales, respectively, in the hidden state basis. 
 
+\subsection{Coarse graining procedure}
 HMMs have been suggested as a method for modelling biomolecular dynamics by coarse graining a fitted MSM transition matrix\cite{noeProjectedHiddenMarkov2013a}. This coarse-graining is accurate under the following assumptions \cite{noeProjectedHiddenMarkov2013a}: 
 \begin{enumerate}
-    \item The underlying dynamics of the system are Markovian, i.e. they can be modelled by a transfer operator, equation \ref{eqn:}
+    \item The underlying dynamics of the system are Markovian, i.e. they can be modelled by a transfer operator, equation \ref{eqn:transfer_operator}
     \item There is a gap between the $r$th and $r+1$th  eigenvalues of the underlying transfer operator. i.e. $\frac{\lambda_{r}}{\lambda_{r+1}} \gg 1$. The first $r$ eigenfunctions and eigenvalues are the \emph{dominant} set of eigenfunctions and eigenvalues. \label{assump_two}
     \item The $r$ dominant eigenfunctions decompose the stationary distribution into $r$ sets. The probability of the system being in the boundary between these sets is negligible. \label{assump_three}
 \end{enumerate}
 The process outlined in \cite{noeProjectedHiddenMarkov2013a} for coarse graining an MSM is as follows: 
 \begin{enumerate}
-    \item \textbf{Estimate an MSM}. Using the process outline in previous sections of this chapter transform the raw MD trajectories, $\mathbf{X}$, into trajectories of discrete states, $\mathbf{s}$. Using these discrete trajectories estimate the MSM transition matrix, $\mathbf{T}$. 
-    \item \textbf{Determine number of metastable states}. The number of metastable states, $r$, is determined by looking for a gap in the eigenvalues of $\mathbf{T}$, such that  $\frac{\lambda_{r}}{\lambda_{r+1}} \gg 1$.
+    \item \textbf{Estimate an MSM}. Using the process outline in previous sections of this chapter transform the raw MD trajectories, $\mathbf{X}$, into trajectories of discrete states, $\mathbf{s}$. Using these discrete trajectories estimate the MSM transition matrix, $\mathbf{T}$ with a lag-time $\tau(\mathrm{MSM})$
+    \item \textbf{Determine number of metastable states}. The number of metastable states, $r$, is determined by looking for a gap in the eigenvalues of $\mathbf{T}$, such that  $\frac{\lambda_{r}}{\lambda_{r+1}} \gg 1$. \emph{The number of hidden states of the HMM, $g$ is set equal to the number of metastable states $r$}. 
     \item \textbf{Coarse grain the transition matrix}. In order to estimate a HMM initial sets of the parameters, the matrices, $\widetilde{\mathbf{T}}_{0}$,  $\mathbf{E}_{0}$, and $\widetilde{\bm{\pi}}_{0}$ must be estimated. This is done using PCCA+ \cite{deuflhardRobustPerronCluster2005b} which clusters $\mathbf{T}$ into $r$ metastable states. The result of PCCA+ is the membership matrix, $\mathbf{M}$, from which values of the elements of $\widetilde{\mathbf{T}}_{0}$ and $\mathbf{E}_{0}$ can be estimated. 
     \item \textbf{Estimate the HMM}. The parameters of the model are updated and optimised from their initial values by maximizing likelihood estimation using the Baum-Welch[][] algorithm. 
 \end{enumerate}
+The $g$ eigenvalues and $g-1$ relaxation processes of the HMM will be the coarse-grained equivalent to the  eigenvalues and eigenvectors measured in the MSM basis \cite{noeProjectedHiddenMarkov2013a}. 
 
+\subsection{HMM estimation}
 \begin{algorithm}\label{alg:baum_welch}
 \DontPrintSemicolon
 \SetKwInput{Par}{Parameter}
@@ -350,7 +382,7 @@ $\mathrm{C} \longleftarrow \mathtt{False}$\;
     \textbf{Forward procedure}\;
     Calculate the probability of being in hidden state $i$ at time $t$ and seeing the partial trajectory $s_1, \ldots, s_{t^{\prime}}$, given the model parameters:\;
     \begin{equation*}
-      \alpha_i(t) = \mathbb{P}(\{s_{1}, \ldots, s_{t}\}| \theta)  
+      \alpha_i(t) = \mathbb{P}(\{s_{1}, \ldots, s_{t}\}| h_t=i, \theta)  
     \end{equation*}
     \textbf{Backward procedure}\;
     Calculate the probability of seeing the partial trajectory $s_{t+1}, \ldots, s_{N_{t}}$, given being in hidden state $i$ and the model parameters, $\theta$:\;
@@ -383,47 +415,40 @@ $\mathrm{C} \longleftarrow \mathtt{False}$\;
 \caption{The Baum-Welch algorithm}
 \end{algorithm}
 
-The Baum-Welch algorithm as used for coarse-graining reversible MSMs is given in detail in \cite{noeProjectedHiddenMarkov2013a}. The algorithm is sketched in algorithm \ref{alg:baum_welch} to introduce some of the important quantities used later in this thesis. In addition to the maximum likelihood estimation of the parameters, Bayesian estimation can be used, as described in section \ref{sec:theory_bayes}. A maximum likelihood HMM is used to initialise the parameters and set some of the prior distribution function parameters \cite{choderaBayesianHiddenMarkov2011a}. The prior functions used for the $\widetilde{\mathbf{T}}$ is the same as the MSM case (equation \ref{eqn:theory_rev_prior})and $\widetilde{\bm{\pi}}$ as implemented in the open source package PyEMMA (version 2.5.7) \cite{schererPyEMMASoftwarePackage2015a}:
+The Baum-Welch algorithm as used for coarse-graining reversible MSMs is given in detail in \cite{noeProjectedHiddenMarkov2013a}. The algorithm is sketched in algorithm \ref{alg:baum_welch} to introduce some of the important quantities used later in this thesis. In particular, the `forward' part of the algorithm calculates the $\alpha_{i}(t)$ variable which is the probability of arriving at hidden state $i$ at time $t$ \emph{and} seeing the actual observed trajectory up to that point. Summing this value for $t=N_{\mathrm{T}}$ over the hidden states gives the probability of the observed trajectory given the model parameters. This is equal to the likelihood of the parameters given the observed trajectory, $\mathbb{P}(\{s_{t}\}|\theta)=\mathcal{L}(\theta|\{s_{t}\})$. 
+
+In addition to the maximum likelihood estimation of the parameters, Bayesian estimation can be used. The details of the implementation can be found in \cite{choderaBayesianHiddenMarkov2011a} and \cite{schererPyEMMASoftwarePackage2015a} and the references therein, but the broad outline for estimating a Bayesian HMM with $g$ hidden states is as follows. First, an MSM is estimated and the implied timescales, $t_{2,3, \ldots}$ saved. Second, the trajectories are sub-sampled, or strided, to account for the correlation between observed states. This is the analogue of `effective counting' for Bayesian estimation of MSMs. The striding is by a factor $\Delta t$: (the `MSM' has been dropped from $\tau$ for notational convenience):
+\begin{equation}\label{eqn:hmm_striding}
+    \Delta t = \min{\left(\tau, 2\cdot t_{g+1}\right)}. 
+\end{equation}
+i.e. if $g=5$ the HMM will  capture the first five timescales in the full MSM basis. The $6$th implied timescale measures in the MSM basis will the slowest relaxation timescale but which is nevertheless considered too fast to be included in the HMM. This means only the following transition are counted: 
+\begin{equation}
+    \left\{(s_{1}, s_{1+\tau}), (s_{1+\Delta t}, s_{1+\Delta t + \tau}) \ldots \right \}.
+\end{equation}
+Third, a maximum likelihood HMM is estimated and is used to i) determine the largest reversibly connected set of hidden states and ii) define the prior distribution of the initial distribution $\widetilde{\bm{\pi}}$. The count matrix is determined the elements  $\xi_{i,j}$ from the Baum-Welch algorithm and the largest connected set defined the same way as for the MSM case. The prior functions used for the $\widetilde{\mathbf{T}}$ is the same as the MSM case (equation \ref{eqn:theory_rev_prior})and $\widetilde{\bm{\pi}}_{0}$ as implemented in the open source package PyEMMA \cite{schererPyEMMASoftwarePackage2015a} is: 
 \begin{equation}
     \widetilde{\bm{\pi}}_{0}  \sim \prod_{i} \widetilde{\pi}_{0, i}^{a_{i}+n_{i}-1} 
 \end{equation}
-where, $n_{i}$ is the number of times 
+where $a_{i}$ are the initial distribution from the maximum likelihood model and $n_{i}$ is the count of each hidden state at for each sampling step in the MCMC algorithm. No priors for the emission distributions are used, instead the values of are determined from the other sampled quantities. Fourth, the parameters are sampled using MCMC. Convergence of the parameters is performed in the same manner as for the MSM, i.e. through sampling independent chains and calculating the $\hat{R}$ statistic. 
 
-
-
-Needs much expansion!
-
-Formula for striding interval $\Delta t_{\mathrm{s}}$ to decorrelate trajectories for Bayesian estimation. This is needed because the hidden states are not observed directly, so we can't adjust the count matrix as in the MSM case. Instead the trajectories are strided according to: 
-\begin{equation}\label{eqn:hmm_striding}
-    \Delta t_{\mathrm{s}} = \min{\left(\tau(\mathbf{MSM}), 2\cdot t_{g+1}\right)}
-\end{equation}
-$t_{g+1}$ slowest implied timescale (as measured by an MSM) which is then neglected in the HMM. i.e. if there are 5 hidden states in our required HMM these will hopefully correspond to the first 5 timescales (including $t_{1}=\infty$) in the full MSM basis. The 6th implied timescale measures in the MSM basis will the slowest relaxation timescale but which is nevertheless considered too fast to be included in the HMM. This timescale shouldn't be greater than $\tau$. 
-
-
-
-
-
-\subsubsection{Model validation}\label{sec:model_validation}
-
-Model validation is the process of checking how well the statistical model fits the data generating process. For protein dynamics we can ask ourselves: if we train a model, T, on some random sample of the protein dynamics, x, then how well does this We can assess the validity of a model either for the data in hand (in-sample, or internal validity) or for any future realisation of data (the out of sample or external validity. In the case of MSMs or HMMs we test whether the following relation holds:
-$\mathbf{T}(k \tau) \simeq \mathbf{T}^{\mathbf{k}}(\tau)$
-The lef-hand side is a transition matrix estimated with a lag time of $k r$ while the right-hand side is the matrix at time $\tau$ predicted from the matrix estimated with a lag of $\tau$. This equality will hold exactly for exact Markov process. For an $n \times n$ transition matrix, there will be $n^{2}$ comparisons to make which may become probibitivively computationally expensive. Instrad the comparison can be made for weighted combinations of microstates- the most natural combinations of microstates are the motestate and isble states This comparison is the Chappan-Kolmogorov (C-K) test
-
-The C-K test equation 7 -1 holds by comparing the two terms for weighted combinations of the microstates. If a combination of microstates, $A$, is defined by a vector of $n$ weights, $w_{A}$, then the probability of being in that set at a time $k \tau$ later can be calculated in two ways:
-LHS, equation 7 -1: using the counts of transitions from state $i$ to state $j$ in a given $k \tau, c_{i j}(k \tau)$ in the discretized trajectories:
-
+\section{Markov model validation}\label{sec:model_validation}
+Markov model validation for both MSMs and HMM is performed by checking to see if the Markov assumption: 
 \begin{equation}
-p_{\text {trajectory }}(A, A: k r)=\sum_{k A}\left[w_{A i} \frac{\sum_{j \in A} c_{i}(k \tau)}{\sum_{i}^{N} c_{i j}(k \tau)}\right.
+[\mathbf{T}(\tau)]^{k} \approx \mathbf{T}(k \tau)
 \end{equation}
-RHS, equation 7-1: using the estimated transition matrix:
+holds to within sampling error for a range of $k$. This check is called the \emph{Chapman-Kolmogorov test} (CK test) [].  The left-hand side is a transition matrix predicted at time $k\tau$ from the matrix estimated at time $\tau$. The right hand-side is the transition matrix estimated at time $\tau$. This equality will hold exactly for a discrete Markov process. For an MSM, testing equality of two $n \times n$ transition matrices requires $n^{2}$ comparisons which is both computationally intractable and result in large uncertainties \cite{prinzMarkovModelsMolecular2011}. Instead, the MSM is coarse grained, usually as a HMM. The CK test for a HMM proceeds as follows []:
+\begin{enumerate}
+    \item For each value of $k = 1, 2, 3, \ldots$ calculate $\widetilde{\mathbf{T}}(
+    k\tau)$
+    \item Propagate an initial  state vector $\mathbf{p}_{0}$, forward in time using the $k=1$ transition matrix:  
+    \begin{equation*}
+        \mathbf{p}^{\top}(k\tau)_{\mathrm{HMM}} = \mathbf{p}_{0}^{\top}\widetilde{\mathbf{T}}^{k}(\tau)
+    \end{equation*}
+    \item Calculate the same state vectors using the $\widetilde{\mathbf{T}}(
+    k\tau)$ matrices: 
+    \begin{equation*}
+        \mathbf{p}^{\top}(k\tau)_{\mathrm{Trajectory}} = \mathbf{p}_{0}^{\top}\widetilde{\mathbf{T}}(k\tau)
+    \end{equation*}
+    \item Compare the $\mathbf{p}(k\tau)_{\mathrm{HMM}}$ and $\mathbf{p}(k\tau)_{\mathrm{Trajectory}}$ for a range of values of $k$ and for different initial state vectors, $\mathbf{p}_{0}$. In \cite{schererPyEMMASoftwarePackage2015a} $\mathbf{p}_{0}$ are the HMM basis vectors. 
+\end{enumerate}
 
-\begin{equation}
-p_{\text {wsw }}(A, A, k \tau)=\sum_{\text {eft }}\left[w_{\tilde{1}}^{\top} \mathbf{k}^{\mathrm{k}}(\tau)\right]_{i}
-\end{equation}
-
-The Chapman-Kolmogorov test tests their equality:
-\begin{equation}\label{eqn:ck_test}
-p_{M S M}(A, A ; k \tau)=p_{\text {trajectory}}(A, A ; k \tau)
-\end{equation}
-
-The weights are typically the relevant columns of the membership matrix, i.e. $\left[w_{A}\right]_{i}=M_{i A}$
