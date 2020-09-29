@@ -13,64 +13,31 @@ Applications of MMs are concentrated on biomolecular systems and form an intrins
 
 MMs are a varied collection of techniques covering a range of different simulation conditions and dynamical models. Discrete Markov state models (MSMs) are used for modelling the fine grained dynamics of proteins in thermodynamic equilibrium [prinz].  Observable Operator models (OOMs) and Hidden Markov models (HMMs) were developed as methods of coarse graining an MSM from a model with potentially thousands of states to a handful of metastable states [][], while retaining quantitative accuracy.   TICA [] and associated techniques [][] are useful for creating approximate collective variables as features, which both increases the accuracy and precision of an MSM. A crucial step in the development of MMs was the realisation that estimating MSMs and TICA could be cast as variational optimisation problem (the variational approach to conformational dynamics, VAC []). This in turn led to methods for scoring different discretization schemes used to represent the same dynamics, the generalized matrix Rayleigh coefficient, GMRQ []. The theory of stationary MSMs was broadened to encompass simulations of systems out of thermal equilibrium, with Koopman models []. The theory of MSMs and Koopman models was unified into one conceptual framework known as the variational approach to Markov processes (VAMP)[]. This increase the scope of MMs and presented a range of model scoring metrics (VAMP scores). Recently deep learning techniques such as feed forward neural networks (FNN) and variational autoencoders (VAEs) have used the VAMP framework to replace the modelling pipeline of MMs with a single flexible model [][]. For a review of the history of MMs, the latest techniques and their applications see \cite{husicMarkovStateModels2018} and \cite{noeMarkovModelsMolecular2019b}. 
 
-Central to the MM process is the mapping from regions of phase space to $n$ discrete states. The discretisation scheme is important for accurately describing the kinetics and thermodynamics \cite{shallowayMacrostatesClassicalStochastic1996}. For large biomolecules the process is complicated by the large number of relevant degrees of freedom \cite{shallowayMacrostatesClassicalStochastic1996} and the ``rough'' [zwanzig] potential energy surface. However, simple and yet relevant systems, do exist beyond the toy models in, for example [prinz], [bacallado] and [pmm]. Chapter \ref{chap:water} demonstrates one such system: a single water molecule diffusing through a sucrose matrix as may be found in organic aerosol particles [cavitydyn]. As will be seen, the small regions of phase space around points in the 3D space of center-of-mass water coordinates serve as an adequate basis for estimating an MSM. 
+Central to the MM process is the mapping from regions of phase space to $n$ discrete states. The discretisation scheme is important for accurately describing the kinetics and thermodynamics \cite{shallowayMacrostatesClassicalStochastic1996}. For large biomolecules the process is complicated by the large number of relevant degrees of freedom \cite{shallowayMacrostatesClassicalStochastic1996} and the ``rough'' [zwanzig] potential energy surface. However, simple and yet relevant systems, do exist beyond the toy models in, for example [prinz], [bacallado] and [pmm]. Chapter \ref{chap:water} demonstrates one such system: a single water molecule diffusing through a sucrose matrix as may be found in, for example, organic aerosol particles [cavitydyn]. As will be seen, the small regions of phase space around points in the 3D space of center-of-mass water coordinates serve as an adequate basis for estimating an MSM. 
 
-While 
+The discretization process becomes more complicated as the number of atoms in the system increases, and, coupled with increasing computer power, the need for statistical analysis using clustering techniques in chemically significant feature spaces became apparent. As the authors of \cite{karpen1993statistical} note in 1992: 
+``It is becoming essential to develop methods which reduce the complexity of data resulting from these long simulations while retaining the relevant information."
+They then go on to cluster a pentapeptide in the space of the backbone dihedral angles to investigate the mechanism of peptide turn formation. Rather than data based clustering, \cite{mckelveyCHARMMAnalysisConformations1991} use regions of the $\phi, \psi$ plane to describe the conformational landscape of the metastasis-inhibiting laminin peptide. The importance of selecting appropriate features for MSM analysis also quickly became important.  Clustering with the root mean square deviation (RMSD) of heavy atoms as a similarity metric [wang 86] but the resulting state definitions were are not robust to noise in the observations [wang].  
 
+Principal component analysis (PCA) [] identifies linear combinations, or `principal components', of variables which explain the variance in a given set of data. The first principal component (PC1) of a PCA  is a vector which points in the direction of the greatest variance, the second PC in an orthogonal direction of the second-most variance etc. []. The PCs are eigenvectors of the covariance matrix of the data, while the eigenvalues are proportional to the amount of explained variance. Projecting the data onto the subset principal components which explain the majority of the variance, while ignoring the rest, is a way of reducing the dimension of the system to a few relevant coordinates. Using MD simulation of a $\beta$-heptapeptide the authors of \cite{degrootEssentialDynamicsReversible2001} used the first three principal components as features and clustered the trajectories to understand the folding process in terms of its hydrogen bonding network. 
 
+Markov modelling is primarily concerned with identifying the motions of the system which are the \emph{slowest} not the \emph{largest}. The principal components are not guaranteed (or usually the case [husic]) to be in the same direction as slowest movement. TICA was introduced to the biomolecular simulation community [] [] as a method of dimensionality reduction which finds linear combinations of the data which pointed in the direction of the slowest movement. TICA is a type of independent component analysis (ICA) which has its origins in the signal processing community [ica book]. However, the variational approach to conformational dynamics showed that TICA was equivalent to an MSM analysis in a continuous, rather than discrete, basis. TICA was shown to be analogous to PCA in that the eigenvalues associated with each independent component are proportional the amount of explained \emph{kinetic} variance. [Noé and Clementi115 ]. Pre-processing MD data with TICA has been shown to improve the quality of the MSMs but has brought with it, two new modelling choices, the TICA lag-time (the time period over which to measure the `slowness' of the system, and the number of independent components (IC) to use. 
 
+TICA is not only used for dimensionality reduction on atomic coordinates but of any relevant feature of the system, e.g.,  backbone dihedral angles. A typical analysis pipeline is then []: i) calculate features expected to be related to the slow movements of the system, ii) reduce the dimension with TICA, iii) discretize TICA components, iv) estimate MSM. This carries with it a number of modelling choices, such as the choice of feature, the TICA parameters, and the number of discrete states. These choices create the basis sets, which in turn determine the accuracy of the resulting MSM and so a method of assessing the quality of an MSM is needed. While the ground truth of the kinetic processes is not available, the way forward came through cross-validation and the GMRQ \cite{mcgibbonVariationalCrossvalidationSlow2015}. 
 
+The innovation in \cite{mcgibbonVariationalCrossvalidationSlow2015} was to create a model score, the GMRQ (the Rayleigh trace from quantum mechanics), which could be used to judge the quality of the model choices while accounting for the tendency of models to fit to noisy signals in the data. This was achieved through cross-validation []: a model is estimated using a portion of the data and scored on the remaining data. In addition to the GMRQ, the VAMP scores allowed related metrics to be used, such as the VAMP-2 score, which maximizes the kinetic variance. The variational metrics completed the analysis pipeline \cite{schererVariationalSelectionFeatures2019} which can be summarised as: for a fixed lag time, select reasonable choices of  hyperparameters (features, TICA parameters, number of discrete states) and calculate the cross-validated VAMP-2 score; change the hyperparameters and repeat; stop when the VAMP-2 score stops increasing. 
 
-\textbf{From art to science:} 
-MSMs are master equations (ME review [6])
-Model is n x n matrix, spans the conformational space, conditional probabilities as elements. 
-State populations are give thermodynamics, off-diagonal elements give kinetics. 
-If we assume thermodynamic equilibrium then eigendecomposition is useful [description of eigenvectors]
-the n states should capture the dyanmics. 
+Choosing the hyperparameters which maximize the VAMP score is a `black-box' optimisation problem [], so called because no gradient information on the response of the VAMP to the hyperparameters is available. This is a common problem in the machine learning community where models have many parameters and may take days to train. In this case it is not feasible to exhaustively search through combinations of parameters. A popular method for optimising large sets of hyperparameters is Bayesian optimisation (also known as sequential model based optimisation, SMBO)  \cite{hutterSequentialModelbasedOptimization2011} \cite{NIPS2012_4522}\cite{bergstraAlgorithmsHyperParameterOptimizationa} \cite{bergstraMakingScienceModel2013}. The idea behind Bayesian optimisation is  \cite{brochuTutorialBayesianOptimization2010} that there is an objective function (in the present case, the VAMP-2 value in response to hyperparameters) which is costly to optimise. So instead of optimising to model the response of the objec
+SMBO: \cite{hutterSequentialModelbasedOptimization2011}
 
-Memoryless transition networks come from Zwanzig [1] then Van Kampen [2] key MSM papers [7-9]. 
+Practical Bayesian optimisation of machine learning algorithms \cite{NIPS2012_4522} (GPs only)
 
-creating meaningful states is difficult [33,34] Karpen did dihedrals [10] de Groot [20] did PCA and k-medioids.
+Algorithms for hyper-parameters optimisation \cite{bergstraAlgorithmsHyperParameterOptimizationa} (GP and TPE)
 
-can stitch together different trajectories: McCammon [11] now Folding@home [35], Luty [12] suggested stitching together different trajs for ligand binding. 
-
-Hardware devs: FoldingAtHome, BlueGened [39-41], GPUGRID [43,44]
-
-ITS plots [9] CKtest [46]
-
-Different features different dynamics [45]
-
-Errors are (1) state decomposition and (2) finite sampling [47]
-
-Global descriptors worse than internal degrees of freedom [49]
-
-Sarich [73, 92]: discretization error decreases and partitioning become finer and the lag time increases. 
-
-Djurdjevac [93]: upper bounds for error between MSM and trajectories decreases with lag time. 
-
-TICA\c variance explained [115]:
-This MSM score was termed the GMRQ, which stands for
-generalized matrix Rayleigh quotient, the form of the approx-imator (also referred to as the Rayleigh trace).124
-The GMRQ on the validation set will be poor if the model was overfit on the
-training set but better if the model identifies the underlying
-dynamics common to both sets. In 2016, Noé and Clementi115 demonstrated that kinetic variance in a data set can be explained area.
-by summing the squared tICA eigenvalues. Since the variational principle derived in Noé and Nüske95 holds for any strictly nonincreasing weights applied to the scored eigenvalues,96 the kinetic variance can also be used to score models, or to deter- mine how many tICs are needed to explain a given amount of kinetic variance in the data.
-
-\textbf{Simple MSM}
-Analysis of three water molecules \cite{schulzCollectiveHydrogenbondRearrangement2018} to understand the collective hydrogen bond rearrangement, uses both Euler angles and spherical coordinates for dofs. 
+Making a science out of hyperparameter search \cite{bergstraMakingScienceModel2013}. 
 
 
-
-
-
-
-
-
-\textbf{Coarse graining and HMMs}
-
-
-\textbf{Hyperparameter search}
-Feature selection: \cite{schererVariationalSelectionFeatures2019}
+with a concomitant increase in the number of software packages 
 
 
 \cite{bergstraHyperoptPythonLibrary2013} Hyperopt - Bayesian optimisation using TPEs (has conditional variables). 
@@ -92,20 +59,93 @@ Particle swarm: \cite{lorenzo2017particle}
 
 Optunity: \cite{claesenEasyHyperparameterSearch2014}
 
-\cite{pmlr-v32-hutter14} use random forest and ANOVA to assess parameter importance. 
-\cite{gramacyVariableSelectionSensitivity2013} using tree models to optimize and explore relevance of options for compiling and optmizing computer code. 
 
-\cite{falknerBOHBRobustEfficient2018a} goes beyond BO and random bandit. 
 
-\cite{di2018genetic} genetic algorithm for hyperparameter search. 
+% \textbf{From art to science:} 
+% MSMs are master equations (ME review [6])
+% Model is n x n matrix, spans the conformational space, conditional probabilities as elements. 
+% State populations are give thermodynamics, off-diagonal elements give kinetics. 
+% If we assume thermodynamic equilibrium then eigendecomposition is useful [description of eigenvectors]
+% the n states should capture the dyanmics. 
 
-SMBO: \cite{hutterSequentialModelbasedOptimization2011}
+% Memoryless transition networks come from Zwanzig [1] then Van Kampen [2] key MSM papers [7-9]. 
 
-Practical Bayesian optimisation of machine learning algorithms \cite{NIPS2012_4522} (GPs only)
+% creating meaningful states is difficult [33,34] Karpen did dihedrals [10] de Groot [20] did PCA and k-medioids.
 
-Algorithms for hyper-parameters optimisation \cite{bergstraAlgorithmsHyperParameterOptimizationa} (GP and TPE)
+% can stitch together different trajectories: McCammon [11] now Folding@home [35], Luty [12] suggested stitching together different trajs for ligand binding. 
 
-Making a science out of hyperparameter search \cite{bergstraMakingScienceModel2013}. 
+% Hardware devs: FoldingAtHome, BlueGened [39-41], GPUGRID [43,44]
+
+% ITS plots [9] CKtest [46]
+
+% Different features different dynamics [45]
+
+% Errors are (1) state decomposition and (2) finite sampling [47]
+
+% Global descriptors worse than internal degrees of freedom [49]
+
+% Sarich [73, 92]: discretization error decreases and partitioning become finer and the lag time increases. 
+
+% Djurdjevac [93]: upper bounds for error between MSM and trajectories decreases with lag time. 
+
+% TICA\c variance explained [115]:
+% This MSM score was termed the GMRQ, which stands for
+% generalized matrix Rayleigh quotient, the form of the approx-imator (also referred to as the Rayleigh trace).124
+% The GMRQ on the validation set will be poor if the model was overfit on the
+% training set but better if the model identifies the underlying
+% dynamics common to both sets. In 2016, Noé and Clementi115 demonstrated that kinetic variance in a data set can be explained area.
+% by summing the squared tICA eigenvalues. Since the variational principle derived in Noé and Nüske95 holds for any strictly nonincreasing weights applied to the scored eigenvalues,96 the kinetic variance can also be used to score models, or to deter- mine how many tICs are needed to explain a given amount of kinetic variance in the data.
+
+% \textbf{Simple MSM}
+% Analysis of three water molecules \cite{schulzCollectiveHydrogenbondRearrangement2018} to understand the collective hydrogen bond rearrangement, uses both Euler angles and spherical coordinates for dofs. 
+
+
+
+
+
+
+
+
+% \textbf{Coarse graining and HMMs}
+
+
+% \textbf{Hyperparameter search}
+% Feature selection: \cite{schererVariationalSelectionFeatures2019}
+
+
+% \cite{bergstraHyperoptPythonLibrary2013} Hyperopt - Bayesian optimisation using TPEs (has conditional variables). 
+% \cite{mcgibbonOspreyHyperparameterOptimization2016a} Osprey
+% \cite{hutterSequentialModelbasedOptimization2011} SMAC
+
+% Spearmint: \cite{DBLP:conf/uai/GelbartSA14}\cite{snoekAbstractBayesianOptimization2013}\cite{snoekInputWarpingBayesian2014a}\cite{NIPS2013_5086}\cite{NIPS2012_4522}
+
+% BayesOpt: \cite{martinez-cantinBayesOptBayesianOptimization2014}
+
+% GPyOpt: \cite{gpyopt2016}
+
+% DragonFly: \cite{JMLR:v21:18-223}
+
+% Auptimiser: \cite{liuAuptimizerExtensibleOpenSource2019}
+% Ecabc: \cite{Sharma2019}
+
+% Particle swarm: \cite{lorenzo2017particle}
+
+% Optunity: \cite{claesenEasyHyperparameterSearch2014}
+
+% \cite{pmlr-v32-hutter14} use random forest and ANOVA to assess parameter importance. 
+% \cite{gramacyVariableSelectionSensitivity2013} using tree models to optimize and explore relevance of options for compiling and optmizing computer code. 
+
+% \cite{falknerBOHBRobustEfficient2018a} goes beyond BO and random bandit. 
+
+% \cite{di2018genetic} genetic algorithm for hyperparameter search. 
+
+% SMBO: \cite{hutterSequentialModelbasedOptimization2011}
+
+% Practical Bayesian optimisation of machine learning algorithms \cite{NIPS2012_4522} (GPs only)
+
+% Algorithms for hyper-parameters optimisation \cite{bergstraAlgorithmsHyperParameterOptimizationa} (GP and TPE)
+
+% Making a science out of hyperparameter search \cite{bergstraMakingScienceModel2013}. 
 
 
 
