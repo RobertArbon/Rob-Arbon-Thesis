@@ -4,43 +4,43 @@
 \label{chap:theory}
 
 \section{Introduction}
-This chapter sets out the theory of Markov state models (MSMs) and hidden Markov models to describe the dynamics of biomolecular systems. Table \ref{tab:theory_nomenclature} summarises the  nomenclature used in this chapter. 
+This chapter sets out the theory of Markov state models (MSMs) and hidden Markov models to describe the dynamics of biomolecular systems. Table \ref{tab:theory_symbols} summarises the  nomenclature used in this chapter. 
 
 \begin{table}
     \centering
-    \mycaption{Table of symbols used throughout this chapter. }
+    \mycaption{Table of important symbols used throughout this chapter. }
     \begin{tabularx}{0.9\textwidth}{ |l| >{\raggedright\arraybackslash}X | } 
         \hline
         \textbf{Symbol}  &  \textbf{Definition} \\
         \hline\hline
         $N_{\mathrm{A}}$ & Number of atoms. \\
         $N_{\mathrm{T}}$ & Number of trajectory snapshots or observations. \\
-        $N_{\mathrm{C}}$ & Number of important continuous features, e.g., for a dipeptide, $N_{\mathrm{C}}=2$ - a $\phi, \psi$ dihedral angle.  \\
+        $N_{\mathrm{C}}$ & Number of important continuous features  \\
         $t$ & Time index or variable. \\
         $\mathbf{x}/\mathbf{y}(t)$ & Point in phase space as function of time. \\
         $\tau$ & Markov lag-time. \\
-        $p(\mathbf{x}, \mathbf{y}; \tau)$ & Probability of observing trajectory at the point $\mathbf{x}$ and then at $\mathbf{y}$ a time $\tau$ later. \\
-        $p(\mathbf{x}; t)$ & Probability distribution over phase space at time $t$, used to describe time evolution of a thermodynamic ensemble. \\
+        $p(\mathbf{x}, \mathbf{y}; \tau)$ & Probability of observing $\mathbf{x}$ and then $\mathbf{y}$ a time $\tau$ later. \\
+        $p(\mathbf{x}; t)$ & Probability distribution over phase space at time $t$. \\
         $\mu(\mathbf{x})$ & Stationary distribution of system in thermodynamic equilibrium.  \\ 
-        $\mathcal{T}(\tau)$ & Transfer operator. Determines the time evolution of a continuous Markov process. \\
-        $q(\mathbf{x}; t)$ & Alternative descriptor of the time evolution of a thermodynamic ensemble. Acted on by the transfer operator. $q(\mathbf{x}) = \sfrac{p(\mathbf{x})}{\mu(\mathbf{x})}$. \\
+        $\mathcal{T}(\tau)$ & Transfer operator, equation \ref{eqn:transfer_operator}.  \\
+        $q(\mathbf{x}; t)$ & Normalized descriptor of a thermodynamic ensemble. $q(\mathbf{x}) = \sfrac{p(\mathbf{x})}{\mu(\mathbf{x})}$. \\
         $(\psi_{i}(\mathbf{x}), \lambda_{i})$ & Eigenvalues and eigenfunctions of the transfer operator.  \\
         $r$ & The number of dominant eigenvalues: $\lambda_{2,\ldots, r}\simeq 1$ and $\sfrac{\lambda_{r}}{\lambda_{r+1}} \gg 1$. \\
         $n$ & Number of discrete states used to describe phase space.\\
         $s^{i}\quad i = 1, \ldots, n$ & Indicator functions used to discretize phase space into $n$ states.  \\
-        $\mathbf{s} = \{s_{1}, \ldots, s_{N_{T}}\} $ & Trajectory in phase space projected into the discrete basis defined by $s^{i}$. \\
-        $\mathbf{T}$ & Transition matrix. Determines the time evolution of a Markov model. The discrete analogue of the transfer operator. \\
-        $\bm{\pi}$ & The stationary distribution of the discrete Markov model. \\
-        $\mathbf{p}(t)$ & Probability mass over discretized phase space at time $t$, used to describe the time evolution of a Markov state model. The discrete analogue of $p(\mathbf{x}; t)$. \\
-        $\mathbf{q}(t)$ & Alternate descriptor of the time evolution of a Markov model. Discrete analogue of $q(\mathbf{x};t)$. \\
+        $\mathbf{s} = \{s_{1}, \ldots, s_{N_{T}}\} $ & Trajectory in the basis defined by $s^{i}$. \\
+        $\mathbf{T}$ & Transition matrix. The discrete analogue of the transfer operator. \\
+        $\bm{\pi}$ & The stationary distribution of the MSM. \\
+        $\mathbf{p}(t)$ & State probability vector. Discrete analogue of $p(\mathbf{x}; t)$. \\
+        $\mathbf{q}(t)$ & Normalized state vector. Discrete analogue of $q(\mathbf{x};t)$. \\
         $\mathbf{v}$ & Right eigenvectors of $\mathbf{T}$. Discrete analogue of $\psi_{i}(\mathbf{x})$. \\
         $\mathbf{u}$ & Left eigenvectors of $\mathbf{T}$. $u_{i} = v_{i}\cdot\pi_{i}$ \\
-        $\mathbf{X}$ & Data matrix. Snapshots of trajectory through phase space, i.e. output from MD trajectory. $\mathbf{X}\in \mathbb{R}^{N_{T}\times N_{A}}$.\\
-        $\bm{\chi}$ & Feature matrix. Transformation of $\mathbf{X}$ into important features of system, e.g., backbone dihedral angles of a peptide. $\bm{\chi} \in \mathbb{R}^{N_{\mathrm{T}}\times N_{\mathrm{C}}}$. \\
-        $\chi^{\prime}$ & TICA transformed feature matrix. \\
+        $\mathbf{X}$ & Data matrix. Snapshots of trajectory through phase space. $\mathbf{X}\in \mathbb{R}^{N_{T}\times N_{A}}$.\\
+        $\bm{\chi}$ & Feature matrix. Transformation of $\mathbf{X}$ into important features of system. $\bm{\chi} \in \mathbb{R}^{N_{\mathrm{T}}\times N_{\mathrm{C}}}$. \\
+        $\bm{\chi}^{\prime}$ & TICA transformed feature matrix. \\
         $\mathbf{C}$ & Correlation matrix between states. $C_{i,j} = \mathrm{cor}(i, j)$  \\
-        $\mathbf{c}$ & Count matrix for discrete states, i.e., number of times transition between each pair of states is observed. Proportional to the correlation matrix: $c_{i,j} \propto C_{i,j}$. \\
-        $\mathbf{S}$ & Overlap matrix between  either continuous or discrete states. In the discrete basis, $\mathbf{S} = \diag{\bm{\pi}}$. \\
+        $\mathbf{c}$ & Count matrix for discrete states. $c_{i,j} \propto C_{i,j}$. \\
+        $\mathbf{S}$ & Overlap matrix between  either continuous or discrete states. In the discrete basis, $\mathbf{S} = \diag{\{\bm{\pi}\}}$. \\
         $g$ & Number of hidden states in an HMM. \\
         $\mathbf{h} = \{h_t\}$ & Trajectory of hidden states. \\
         $\widetilde{\mathbf{T}}$ & Hidden state transition matrix of HMM. \\
@@ -52,28 +52,27 @@ This chapter sets out the theory of Markov state models (MSMs) and hidden Markov
     \label{tab:theory_symbols}
 \end{table}
 
-
-
-
 \section{Markov processes}
+Markov state models are now used routinely to quantitatively describe the conformational kinetics and thermodynamics of biomolecular systems using data collected from molecular dynamics (simulations)\cite{wangConstructingMarkovState2018c}\cite{noeMarkovModelsMolecular2019b}. A general, molecular system can be described by a vector of phase space coordinates  (momentum and position) as a function of time, $\mathbf{x}(t)$. A thermodynamic ensemble of such systems can be described by a probability density over $\mathbf{x}(t)$, $p(\mathbf{x}; t)$ \cite{prinzMarkovModelsMolecular2011}. Modelling a system in thermodynamic equilibrium as a Markov process imposes a number of assumptions on $p(\mathbf{x}; t)$ \cite{prinzMarkovModelsMolecular2011}:
+\begin{enumerate}
+    \item that there exists a period of time, $\tau$, over which the evolution of the system from a point $\mathbf{x}(t)$ to a new point $\mathbf{y}(t+\tau)$ is dependent only on $\mathbf{x}(t)$, i.e. the joint probability density $p(\mathbf{x}, \mathbf{y} ; \tau)$ is conditional \emph{only} on $\mathbf{x}$:
+    \begin{equation}\label{eqn:markov_assumption}
+    p(\mathbf{x}, \mathbf{y} ; \tau)=\mathbb{P}[\mathbf{x}(t+\tau) \in \mathbf{y}+d \mathbf{y} | \mathbf{x}(t)=\mathbf{x}].
+    \end{equation}
+    \item That there are no regions of phase space disconnected from one another, i.e. that the system is \emph{ergodic}. In this case there is a unique stationary distribution,  $\mu(\mathbf{x})$. At constant temperature $\mu$ is the Boltzmann distribution. 
+    \item The system is \emph{reversible} and so obeys detailed balance: 
+    \begin{equation}\label{eqn:detailed_balance}
+    \mu(\mathbf{x}) p(\mathbf{x}, \mathbf{y} ; \tau)=\mu(\mathbf{y}) p(\mathbf{y}, \mathbf{x} ; \tau), 
+    \end{equation}
+    in other words, the absolute probability of observing a transition from $\mathbf{x}$ to $\mathbf{y}$ (also known as the flux, $F(\mathbf{x}, \mathbf{y})$) is the same as that from $\mathbf{y}$ to $\mathbf{x}$. 
 
-Markov state models are now used routinely to quantitatively describe the conformational kinetics and thermodynamics of biomolecular systems using data collected from molecular dynamics (simulations) [] []. A single system is described by a vector of phase space (momentum and position) coordinates as a function of time, $\mathbf{x}(t)$, and ensemble of such systems can be described by a probability density over the same coordinates as a function of time, $p(\mathbf{x}; t)$. Modelling the system as a Markov process assumes that there exists a period of time, $\tau$, over which the evolution of the system from a point $\mathbf{x}(t)$ to a new point $\mathbf{y}(t+\tau)$ is dependent only on $\mathbf{x}(t)$, i.e. the joint probability density $p(\mathbf{x}, \mathbf{y} ; \tau)$ is conditional \emph{only} on $\mathbf{x}$:
+\end{enumerate}
 
-\begin{equation}\label{eqn:markov_assumption}
-p(\mathbf{x}, \mathbf{y} ; \tau)=\mathbb{P}[\mathbf{x}(t+\tau) \in \mathbf{y}+d \mathbf{y} | \mathbf{x}(t)=\mathbf{x}]
-\end{equation}
-
-In addition to the Markov property, equation \ref{eqn:markov_assumption}, three other assumptions are made when dealing with systems in thermodynamic equilibrium. First, the system is \emph{reversible} and so obeys detailed balance: 
-\begin{equation}\label{eqn:detailed_balance}
-\mu(\mathbf{x}) p(\mathbf{x}, \mathbf{y} ; \tau)=\mu(\mathbf{y}) p(\mathbf{y}, \mathbf{x} ; \tau), 
-\end{equation}
-in other words, the absolute probability of observing a transition from $\mathbf{x}$ to $\mathbf{y}$ (also known as the flux, $F(\mathbf{x}, \mathbf{y})$) is the same as that from $\mathbf{y}$ to $\mathbf{x}$. Second, there are no regions of phase space disconnected from one another, i.e. that the system is \emph{ergodic}. In this case there is a unique stationary distribution,  $\mu(\mathbf{x})$. Third, that the conditional probabilities in equation \ref{eqn:markov_assumption} are independent of time, i.e., the system is \emph{stationary}. 
-
-The dynamics of the system under these assumptions is given by the \emph{transfer operator}, $\mathcal{T}(\tau)$, which propagates functions of the probability density: 
+The dynamics of a Markov process is described by the \emph{transfer operator}, $\mathcal{T}(\tau)$, which propagates $q(\mathbf{x} ; t)$, a function of the probability density given by: \cite{prinzMarkovModelsMolecular2011}
 \begin{equation}\label{eqn:vector_norm}
     q(\mathbf{x} ; t) = p(\mathbf{x} ; t)/\mu(\mathbf{x}),
 \end{equation}
-forward in time by the following: 
+forward in time by: 
 \begin{equation}\label{eqn:transfer_operator}
 \begin{split}
    q(\mathbf{y} ; t+\tau) &= \mathcal{T}(\tau) \cdot q(\mathbf{y} ; t) \\
@@ -81,225 +80,226 @@ forward in time by the following:
 \end{split}
 \end{equation}
 
-All the kinetic and thermodynamic information of the system is contained within $\mathcal{T}$, its eigenfunctions, $\psi_{i}(\mathbf{x})$, and eigenvalues $\lambda_{i}$. The eigenvalues lie within the interval $-1 < \lambda_i \le 1$ and the eigenvector/eigenvalue pairs shall be assumed to be ordered in decreasing value of $\lambda$. The first eigenvector, with $\lambda_{1}=1$, is equal to $\psi_{1}(\mathbf{x})=\mathbf{1}$. This corresponds to the stationary distribution $\mu(\mathbf{x})$ by virtue of the definition of $q(\mathbf{x}$, equation \ref{eqn:vector_norm}. 
+All the kinetic and thermodynamic information of the system is contained within $\mathcal{T}$, its eigenfunctions, $\psi_{i}(\mathbf{x})$, and eigenvalues $\lambda_{i}$, which, for reversible dynamics, all lie within the interval $-1 < \lambda_i \le 1$ \cite{schutteDirectApproachConformational1999}. The first eigenvector, with $\lambda_{1}=1$, is equal to $\psi_{1}(\mathbf{x})=\mathbf{1}$ which corresponds to the stationary distribution $\mu(\mathbf{x})$ by virtue of the definition of $q(\mathbf{x}$, equation \ref{eqn:vector_norm}. \cite{prinzMarkovModelsMolecular2011}. The remaining eigenvector/eigenvalue pairs shall be assumed to be ordered in decreasing value of $\lambda$.
 
-The remaining eigenfunctions, $\psi_{2,3,4...}$, correspond to the relaxation processes which take the system from any initial distribution, $q(\mathbf{x} ; t=0)$ towards the stationary distribution on a timescale related to its corresponding eigenvalue. This can be seen by writing the time evolution of $u(\mathbf{x};t)$ as:
-
+The remaining eigenfunctions, $\psi_{2,3,4...}$, correspond to the relaxation processes which take the system from any initial distribution, $q(\mathbf{x} ; t=0)$ towards the stationary distribution on a timescale related to its corresponding eigenvalue.\cite{prinzMarkovModelsMolecular2011} This can be seen by writing the time evolution of $u(\mathbf{x};t)$ as:
 \begin{equation}\label{eqn:eig_decomp}
 q(\mathbf{x} ; t+k \tau)=\mathbf{1}+\sum_{i=2}^{\infty} e^{-k \tau / t_{i}}\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x}),
 \end{equation}
-
-where $k=1,2,3 \ldots$ is a time index, and $t_{i}=-\sfrac{\tau}{\ln{|\lambda_{i}|}}$ are the implied timescales for the relaxation process represented by $\psi_{i}(\mathbf{x})$. The bracketed quantity is the overlap between $q(\mathbf{x})$ and the eigenfunctions:
-
+where $k=1,2,3 \ldots$ is a time index, and 
 \begin{equation}
-\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu}=\int d \mathbf{x} \mu(\mathbf{x}) q(\mathbf{x} ; t) \psi_{i}(\mathbf{x})
+t_{i}=-\sfrac{\tau}{\ln{|\lambda_{i}|}}, 
+\end{equation}
+are the \emph{implied timescales} for the relaxation process described by $\psi_{i}(\mathbf{x})$ \cite{prinzMarkovModelsMolecular2011}. The bracketed quantity is the overlap between $q(\mathbf{x})$ and the eigenfunctions:
+\begin{equation}
+\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu}=\int d \mathbf{x} \mu(\mathbf{x}) q(\mathbf{x} ; t) \psi_{i}(\mathbf{x}). 
 \end{equation}
 
-Each term in equation \ref{eqn:eig_decomp} will decay exponentially in the long time limit as $k \rightarrow \infty$, leaving just the first eigenvector, $\psi_{1}(\mathbf{x})=\mathbf{1}$, the stationary distribution. If the first $r$ eigenvalues are close to $1$ and are separated from the remaining values by a gap such that $\lambda_{r} \gg \lambda_{r+1}$, then its possible to truncate equation \ref{eqn:eig_decomp} without serious loss of accuracy to:
+Each term in equation \ref{eqn:eig_decomp} will decay exponentially, and in the long time limit, as $k \rightarrow \infty$, leave just the first eigenvector, $\psi_{1}(\mathbf{x})=\mathbf{1}$, the stationary distribution. If the first $r$ eigenvalues are $\lessapprox 1$ and are separated from the remaining values by a gap such that $\lambda_{r} \gg \lambda_{r+1}$, then its possible to truncate equation \ref{eqn:eig_decomp} without serious loss of accuracy to:
 
 \begin{equation}\label{eqn:eig_decomp_to_r}
 q(\mathbf{x},  t+k \tau)  \simeq \mathbf{1}+\sum_{i=2}^{r} e^{-k \tau / t_{i}}\left\langle q(\mathbf{x} ; t), \psi_{i}(\mathbf{x})\right\rangle_{\mu} \psi_{i}(\mathbf{x}).
 \end{equation}
 
-These $r$ eigenfunctions/eigenvalues are known as the \emph{dominant} eigenfunctions and they correspond to the slow relaxation processes of the system. The truncation amounts to describing just the slow kinetic processes of the system while ignoring the fast processes. This separation of timescales implies the existence of regions of phase space, partitioned by the dominant eigenfunctions, known as \emph{metastable} states. 
+These $r$ eigenfunctions are known as the \emph{dominant} eigenfunctions and they correspond to the slow relaxation processes of the system.\cite{prinzMarkovModelsMolecular2011} The truncation amounts to describing just the slow kinetic processes of the system while ignoring the fast processes. This separation of timescales implies the existence of regions of phase space, partitioned by the dominant eigenfunctions, known as \emph{metastable} states. \cite{prinzMarkovModelsMolecular2011} 
 
-% This coarse-grained description becomes more accurate in the limit long time limit i.e. $k \tau \gg t_{m}$
-% The sign structure of the dominant eigenvectors can be used to infer the location of metastable states within the phase space. To demonstrate how, we will use the 1 D four well potential which is shown in Figure $1 .$ Panel (b) shows the potential and panel (c) shows the normalized eigenvectors, $\psi_{i}(x) .$ The slowest relaxation process, $\psi_{2}(x),$ changes sign at $x=$ 0 clearly defining the boundary between the two sets of states separated by the highest potential barrier. Perron Cluster Cluster Analysis uses the two remaining dominant eigenvectors to partition the phase space (the $x$ axis) into four metastable states. This is shown in Figure $2 .$ The coloured lines in panel (b) show the probability that each point on the x axis belongs to one of four different metastable states. This is a fuzzy clustering of the $x$ axis.
+\section{Markov state models}\label{sec:theory_msm}
 
-% Prinz potential explainer here
-
-\section{Markov state models}
-
-Markov state models (MSMs) are discrete models of Markovian dynamics. The continuous quantities described above all have discrete analogues which will be described in detail in this section: 
+Markov state models (MSMs) are discrete models of Markovian dynamics.\cite{prinzMarkovModelsMolecular2011} The continuous quantities described above all have discrete analogues which will be described in detail in this section: 
 
 \begin{itemize}
-    \item The system is described by a set of $n$ discrete states labelled $1, \ldots, n$. Instead of the continuous vector $\mathbf{x}(t)$, each trajectory is denoted by a vector of integers $\mathbf{s}$. Each point in phase space is mapped to one of these states. 
-    \item The system can be described by a probability mass vector, $\mathbf{p}(t)$  instead of a probability density function $p(\mathbf{x};t)$. The $i$th component of $\mathbf{p}(t)$ is the probability of the system being in  state $s_{i}$ at time $t$.
-    \item The stationary distribution, $\bm{\pi}$, is defined using the continuous stationary distribution $\mu(\mathbf{x})$ and the definition of the discrete states: 
-        \begin{equation}
-            \pi_{i}=\int_{\mathbf{x} \in s_{i}} \mathrm{d}\mathbf{x}\mu(\mathbf{x})
-        \end{equation}
+    \item The system is described by a set of $n$ discrete states denoted, $i=1, \ldots, n$. Instead of the continuous vector $\mathbf{x}(t)$, each trajectory is denoted by a vector of integers $\mathbf{s}$, where each component, $s_t$, is the state at time $t$. $t$ is now a discrete quantity, an integer multiple of the time-step, $\Delta t$, used to record the coordinates in an MD trajectory: $t=k\Delta t,\ k=1, 2, \ldots$. 
+    \item The system can be described by a probability mass vector, $\mathbf{p}(t)$,  instead of a probability density function $p(\mathbf{x};t)$. The $i$th component of $\mathbf{p}(t)$ is the probability of the system being in  state $s^{i}$ at time $t$.
+    \item The stationary distribution, $\bm{\pi}$, is defined by integrating the stationary distribution, $\mu(\mathbf{x})$, over the domain of each discrete state, $s^{i}$:
+        \begin{equation*}
+            \pi_{i}=\int_{\mathbf{x} \in s^{i}} \mathrm{d}\mathbf{x}\mu(\mathbf{x})
+        \end{equation*}
     \item By analogy with equation \ref{eqn:vector_norm}, the system can also be described by $\mathbf{q}$ where $q_{i} = p_{i}/\pi_{i}$.
-    \item The time evolution of $\mathbf{q}(t)$ and $\mathbf{p}(t)$ is determined by a the \emph{transition matrix}, $\mathbf{T}(\tau)$:
-        \begin{align}
+    \item The time evolution of $\mathbf{q}(t)$ and $\mathbf{p}(t)$ is determined by the \emph{transition matrix}, $\mathbf{T}(\tau)$:
+        \begin{align*}
             \mathbf{q}(t+\tau) &= \mathbf{T}(\tau) \cdot \mathbf{q}(t) \\
-            \mathbf{p}^{T}(t+\tau) & = \mathbf{p}^{T}(t)\cdot \mathbf{T}(\tau)
-        \end{align}
-    \item The eigenfunctions $\psi(\mathbf{x})$ are now the right eigenvectors of $\mathbf{T}(\tau)$, $\mathbf{v}$, with the same interpretation. The left eigenvectors, $\mathbf{u}$, are related to the right eigenvectors by: $u_{i} = v_{i}\cdot \pi_{i}$.  
+            \mathbf{p}^{\top}(t+\tau) & = \mathbf{p}^{\top}(t)\cdot \mathbf{T}(\tau)
+        \end{align*}
+    \item The eigenfunctions, $\psi(\mathbf{x})$, are now the right eigenvectors of $\mathbf{T}(\tau)$, $\mathbf{v}$, with the same interpretation. The left eigenvectors, $\mathbf{u}$, are related to the right eigenvectors by: $v_{i} = u_{i}/\pi_{i}$.  
  \end{itemize}
 
-Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with coordinates saved every $\Delta t$ seconds. Typically any bulk water molecules are ignored as are the momentum coordinates of all the atoms. If  each trajectory has $N_{\mathrm{T}}$ frames (coordinate snapshots) and $N_{\mathrm{A}}$ important atoms then trajectory is represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{N_{\mathrm{T}} \times 3N_{\mathrm{A}}}$. 
+Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with configurations saved every $\Delta t$ seconds. This thesis will consider only canonical ensemble simulations, using both over-damped Langevin dynamics \cite{ermakComputerSimulationCharged1974}\cite{ermakEquilibriumElectrostaticEffects1974} and velocity re-scaling \cite{bussiCanonicalSamplingVelocity2007} t maintain temperature. As a consequence, the momentum coordinates will be ignored as a feature for constructing MMs. 
 
-The data then undergo a series of processing steps on the way to creating an MSM, these are: 
+If  each trajectory has $N_{\mathrm{T}}$ frames (coordinate snapshots) and $N_{\mathrm{A}}$ atoms then a trajectory can be represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{N_{\mathrm{T}} \times 3N_{\mathrm{A}}}$. The trajectories  undergo a series of processing steps on the way to creating an MSM, these are: 
 
 \begin{enumerate}
-    \item \textbf{Create features:} A set of continuous features, $\chi_{i}, i \in \{1,\dots, N_{C} \}$ is created or chosen to represent the dynamics of the system:
+    \item \textbf{Create features:} A set of continuous features, the ``essential degrees of freedom'' \cite{schutteDirectApproachConformational1999}, $\chi_{i}, i \in \{1,\dots, N_{\mathrm{C}} \}$ are chosen to capture the slow dynamics of the system:
     \begin{equation*}
         \mathbf{X}  \rightarrow \bm{\chi},\quad \bm{\chi} \in \mathbb{R}^{N_{T} \times N_{C}}
     \end{equation*}
-    For example the feature might be the backbone dihedral angles of a peptide, or the contact distances between residues. 
+    Examples of continuous features include torsion angles \cite{noeHierarchicalAnalysisConformational2007}\cite{choderaLongTimeProtein2006a}\cite{kubeCoarseGrainingMethod2007b}\cite{bucheteCoarseMasterEquations2008a}, residue contact distances \cite{stanleyKineticModulationDisordered2014}\cite{zhouDistributionReciprocalInteratomic2012}\cite{shuklaConformationalHeterogeneityCalmodulin2016},  root mean square deviation (RMSD) \cite{noe2009constructing}\cite{bowmanAtomisticFoldingSimulations2011a}, or secondary structure (SS) metrics \cite{muffKineticAnalysisMolecular2008}. Neither SS or RMSD are amenable to further dimensionality reduction (step \ref{step_dim_red}), but can be clustered (step \ref{step:cluster}) and so are included here. 
     \item \textbf{Dimensionality reduction:} The number of features is reduced still further by transforming $\bm{\chi}$ into a small number, $m$, of collective variables. 
     \begin{equation*}
-        \bm{\chi}  \rightarrow \bm{\chi}^{\prime},\quad \bm{\chi}^{\prime} \in \mathbb{R}^{N_{T} \times m}
+        \bm{\chi}  \rightarrow \bm{\chi}^{\prime},\quad \bm{\chi}^{\prime} \in \mathbb{R}^{N_{\mathrm{T}} \times m}
     \end{equation*}
-    This work will exclusively use time-lagged independent component analysis, TICA as a method of dimensionality reduction.  
-    \item \textbf{Discretization:} Each of the MD frames is assigned to one of $n$ different discrete states using a clustering algorithm such as k-means clustering: 
+    This thesis will exclusively use time-lagged independent component analysis (TICA)  as a method of dimensionality reduction. \cite{perez-hernandezIdentificationSlowMolecular2013a} \cite{schwantesImprovementsMarkovState2013}  \label{step_dim_red}
+    \item \textbf{Discretization:} Each of the MD frames is assigned to one of $n$ different discrete states using a clustering algorithm such as k-means \cite{lloydLeastSquaresQuantization1982} clustering: 
     \begin{equation*}
-        \bm{\chi}^{\prime} \rightarrow \mathbf{s},\quad \mathbf{s} \in \mathbb{Z}_{+}^{N_{T} \times 1}
-    \end{equation*}
+        \bm{\chi}^{\prime} \rightarrow \mathbf{s},\quad \mathbf{s} \in \mathbb{Z}^{N_{\mathrm{T}}}
+    \end{equation*}\label{step:cluster}
     \item \textbf{MSM estimation}: The transition matrix, $\mathbf{T}$, is estimated by counting transitions between discrete states separated by a time $\tau$. 
-    \item \textbf{Coarse graining:} The MSM is then coarse-grained by lumping the $n$ microstates into $g$ macrostates states. This work will exclusively feature hidden Markov models (HMMs) as a method for doing this. 
+    \item \textbf{coarse-graining:} The MSM is then coarse-grained by lumping the $n$ microstates into $g$ macrostates states. This thesis will exclusively feature hidden Markov models (HMMs) as a method for doing this. 
 \end{enumerate}
 
 \subsection{Create features}
-The choice of continuous feature $\chi$ may be determined (or strongly suggested) by the question being asked and/or from prior knowledge of the system. However, since the introduction of variational scoring rules such as the GMRQ [] and VAMP [], they are typically chosen using cross-validation. This is discussed in depth in chapter \ref{chap:msm}. 
+The choice of continuous feature $\chi$ may be determined or at least strongly suggested by the question being asked and/or from prior knowledge of the system. However, since the introduction of variational scoring rules such as the GMRQ \cite{mcgibbonVariationalCrossvalidationSlow2015} and VAMP \cite{wuVariationalApproachLearning2020c}, they are typically chosen using cross-validation. This is discussed in depth in chapter \ref{chap:msm}. 
 
 \subsection{Dimensionality reduction with TICA}
 
-Dimensionality reduction using TICA was introduced for improving MSM construction in [] and []. It is the result of variationally optimising a set of basis functions, $\chi_{i}$, to estimate the eigenfunctions, $\psi_{i}$, of the transfer operator. A detailed derivation is given in [] but can be summarised as follows. A trial function, $f$, is expanded in the basis $\chi_{i}$: 
+Dimensionality reduction using TICA was introduced for improving MSM construction in \cite{perez-hernandezIdentificationSlowMolecular2013a} and  \cite{schwantesImprovementsMarkovState2013}. It is the result of variationally optimising a set of basis functions, $\chi_{i}$, to estimate the eigenfunctions, $\psi_{i}$, of the transfer operator. The method can be summarised as follows. A trial function, $f$, is expanded in the basis $\chi_{i}$: 
 \begin{equation}\label{eqn:trial_func}
-    f(\mathbf{x}) = \sum^{N_{C}}_{i}a_{i}\chi_{i}(\mathbf{x})
+    f(\mathbf{x}) = \sum^{N_{\mathrm{C}}}_{i}a_{i}\chi_{i}(\mathbf{x})
 \end{equation}
-The variational principle for operators with bounded eigenvalues (such as the transfer operator) states that any approximate eigenfunction will have eigenvalues smaller than the true eigenvalues. So choosing the coefficients $a_{i}$ to maximize the eigenvalues from using equation \ref{eqn:trial_func} will be the closest approximation to the true eigenfunctions that can be achieved with linear combinations of basis functions. Using the method of Lagrange multipliers to maximize the eigenvalues using equation \ref{eqn:trial_func} results in the following generalized eigenvalue equation: \begin{equation}\label{eqn:general_ev_equation}
+The variational principle for operators with bounded eigenvalues (such as the transfer operator) states that any approximate eigenfunction will have eigenvalues less than the true eigenvalues.\cite{nuskeVariationalApproachConformational2017}\cite{noeVariationalApproachModeling2013} So choosing the coefficients $a_{i}$ to maximize the eigenvalues from using equation \ref{eqn:trial_func} will be the closest approximation to the true eigenfunctions that can be achieved with linear combinations of basis functions. Using the method of Lagrange multipliers to maximize the eigenvalues using equation \ref{eqn:trial_func} results in the following generalized eigenvalue equation: \cite{nuskeVariationalApproachConformational2017} \begin{equation}\label{eqn:general_ev_equation}
     \mathbf{C}\mathbf{a} = \lambda \mathbf{S}\mathbf{a}
 \end{equation}
-Solving this equation requires estimating the matrix elements of $\mathbf{C}$ and $\mathbf{S}$. The elements of $\mathbf{C}$ are the time-lagged correlation functions ($\mathrm{cor}$) between $\chi_{i}$ and $\chi_{j}$
+Solving this equation requires estimating the matrix elements of $\mathbf{C}$ and $\mathbf{S}$. The elements of $\mathbf{C}$ are the time-lagged correlation functions ($\mathrm{cor}$) between $\chi_{i}$ and $\chi_{j}$: \cite{nuskeVariationalApproachConformational2017}
 \begin{equation}
     \begin{split}
         C_{ij} =& \operatorname{cor}\left(\chi_{i}, \chi_{j}, \tau\right)\\
-        =& \int_{X} \int_{X} \chi_{i}(\mathbf{z}) \mathbb{P}\left(\mathbf{x}(t+\tau)=\mathbf{z} \mid \mathbf{x}(t)=\mathbf{y}\right) \\
+        =& \int \int \chi_{i}(\mathbf{z}) \mathbb{P}\left(\mathbf{x}(t+\tau)=\mathbf{z} \mid \mathbf{x}(t)=\mathbf{y}\right) \\
         & \times \chi_{j}(\mathbf{y}) \mathbb{P}\left(\mathbf{x}(t)=\mathbf{y}\right) \mathrm{d} \mathbf{y} \mathrm{d}\mathbf{z},        
     \end{split}
 \end{equation}
-which can be estimated from the MD trajectories. The matrix $\mathbf{S}$ is the overlap matrix whose elements are the scalar product between the basis functions, weighted by the stationary distribution: 
+which can be estimated from the MD trajectories. The matrix $\mathbf{S}$ is the overlap matrix whose elements are the scalar product between the basis functions, weighted by the stationary distribution: \cite{nuskeVariationalApproachMolecular2014}
 \begin{align}
     S_{ij} &= \int \chi_{i}(\mathbf{x})\chi_{j}(\mathbf{x})\mu(\mathbf{x})^{-1} \mathrm{d}\mathbf{x}
 \end{align}
-Having solved for the TICA eigenvectors, keep the first $m$ columns of $\mathbf{a}$ and use this to transform feature matrix $\bm{\chi}$: 
+Having solved for the TICA eigenvectors, keep the first $m$ columns of $\mathbf{a}$ and use this to transform feature matrix $\bm{\chi}$: \cite{perez-hernandezIdentificationSlowMolecular2013a}\cite{schwantesImprovementsMarkovState2013}
 \begin{equation}
     \bm{\chi}^{\prime} = \bm{\chi}\cdot[\mathbf{a}_{1}, \mathbf{a}_{2}, \cdots,  \mathbf{a}_{m}]
 \end{equation}
 
 \subsection{Discretization}
-Discretization is performed on the $m$ dimensional feature matrix $\bm{\chi}$ using a clustering algorithm such as k-means or Ward clustering []. Each region of feature space, $S_{i}$, is assigned uniquely to the microstate $i$ through the associated indicator function, $s^{i}(\mathbf{x})$:
+Discretization is performed on the $m$ dimensional feature matrix $\bm{\chi}$ using a clustering algorithm such as k-means or Ward clustering \cite{husicWardClusteringImproves2017a}. Each region of feature space, $S_{i}$, is assigned uniquely to the microstate $i$ through the associated indicator function, $s^{i}(\bm{\chi}^{\prime})$: \cite{prinzMarkovModelsMolecular2011}
 \begin{equation}
-s^{i}(\mathbf{x})=\left\{\begin{array}{ll}
-1, & \mathbf{x} \in S_{i} \\
-0, & \mathbf{x} \notin S_{i}
+s^{i}(\bm{\chi}^{\prime})=\left\{\begin{array}{ll}
+1, & \bm{\chi}^{\prime} \in S_{i} \\
+0, & \bm{\chi}^{\prime} \notin S_{i}
 \end{array}\right.
 \end{equation}
-To avoid introducing too many symbols, $s^{i}(\mathbf{x})$ denotes the indicator functions, while $\mathbf{s}$ is the MD trajectory in the indicator function basis. The individual components of $\mathbf{s}$ will be denoted $s_{t}$ where $t$ is a time index. To highlight the time series nature of $\mathbf{s}$ it will sometimes denoted $\{s_{1}, s_{2}, \ldots \}$. 
+To avoid introducing too many symbols, $s^{i}(\bm{\chi}^{\prime})$ denotes the indicator functions, while $\mathbf{s}$ is the MD trajectory in the indicator function basis. The individual components of $\mathbf{s}$ will be denoted $s_{t}$ where $t$ is a time index. To highlight the time series nature of $\mathbf{s}$ it will sometimes denoted $\{s_{1}, s_{2}, \ldots \}$. 
 
 \subsection{MSM estimation}
-MSM estimation is analogous to TICA estimation but with the indicator basis functions $s^{i}$ replacing the continuous basis functions $\chi_{i}$ in equation \ref{eqn:trial_func}. The result of the optimisation of coefficients $a_{i}$ results in the same generalized eigenvalue expression, equation \ref{eqn:general_ev_equation}. Solving this equation is simplified by the fact that the indicator functions are orthogonal and so $S_{ij} = 0$ if $i \neq j$ and $S_{ii} = \pi_{i}$, the discrete stationary distribution. Equation \ref{eqn:general_ev_equation} can be re-arranged to give: 
+MSM estimation is analogous to TICA estimation but with  indicator basis functions $s^{i}$ replacing the continuous basis functions $\chi_{i}$ in equation \ref{eqn:trial_func}. \cite{nuskeVariationalApproachMolecular2014} The result of the optimisation of coefficients $a_{i}$ results in the same generalized eigenvalue expression, equation \ref{eqn:general_ev_equation}. Solving this equation is simplified by the fact that the indicator functions are orthogonal and so $S_{ij} = 0$ if $i \neq j$ and $S_{ii} = \pi_{i}$. Equation \ref{eqn:general_ev_equation} becomes: \cite{nuskeVariationalApproachMolecular2014}\cite{prinzMarkovModelsMolecular2011} 
 \begin{align}\label{eqn:tran_def}
  \mathbf{C a}=\lambda \bm{\Pi} \mathbf{a} \\
 \mathbf{T a}=\lambda \mathbf{a}   
 \end{align}
-where $\bm{\Pi} = \mathrm{diag}\{pi_{1}, \ldots, \pi_{n}\}$ and $\mathbf{T}$, the transition matrix is $\mathbf{T} = \bm{\Pi}^{-1}\mathbf{C}$. In other words: 
+where $\bm{\Pi} = \mathrm{diag}\{\pi_{1}, \ldots, \pi_{n}\}$ and $\mathbf{T} = \bm{\Pi}^{-1}\mathbf{C}$. In other words: 
 \begin{equation}\label{eqn:tran_mat_def}
     T_{ij}(\tau) =\frac{\mathrm{cor}(s_{i}, s_{j}, \tau)}{\pi_{i}}
 \end{equation}
-The MSM estimation procedure consists of estimating the transition matrix elements which such that they respect the assumptions of i) reversibility and detailed balance, and ii) that the ergodicity i.e. that each state is connected to all other states. Two methods exist for estimating $T_{ij}$: maximum likelihood estimation, MLE, and Bayesian estimation. This work will make use of both: MLE will be used for model selection while Bayesian optimisation will be used when error estimates are required.  Detailed explanations of both  techniques can be found in [] but certain concepts need highlighting here: i) maximum likelihood estimation, ii) count matrices and ergodicity, iii) Bayesian estimation. 
+For systems in thermodynamic equilibrium, the transition matrix elements must be estimated such that they respect the assumptions of i) reversibility and detailed balance, and ii) that the ergodicity i.e. that each state is connected to all other states \cite{nuskeVariationalApproachMolecular2014}\cite{prinzMarkovModelsMolecular2011}. Two methods exist for estimating $T_{ij}$: maximum likelihood estimation, MLE, \cite{prinzMarkovModelsMolecular2011}\cite{bowmanProgressChallengesAutomated2009b} and Bayesian estimation \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. This work will make use of both: MLE will be used for model selection while Bayesian optimisation will be used when error estimates are required.  Detailed explanations of both  techniques can be in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} but certain concepts need highlighting here: i) maximum likelihood estimation, ii) count matrices and ergodicity, iii) Bayesian estimation. 
 
 \subsubsection{Maximum likelihood estimation}
-Parameter estimation through maximum likelihood estimation proceeds by first modelling  the probability of observing the data $\{s_{1}, s_{2}, s_{3}, \ldots \}$ given \emph{fixed parameters}, $T_{ij}$. For a MSM  with  $\tau=1$ (in units of the trajectory time step, $\Delta t$) this is: 
+Parameter estimation through maximum likelihood estimation proceeds by first modelling  the probability of observing the data $\{s_{1}, s_{2}, s_{3}, \ldots \}$ given \emph{fixed parameters}, $T_{ij}$. \cite{wasserman2013all} For a MSM  with  $\tau=1$ this is: \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} 
 \begin{equation}\label{eqn:msm_traj_like}
-    \mathbb{P}(\mathbf{s}|\mathbf{T}) \propto \Pi_{t=1}^{n_{f}} T_{s_{t}, s_{t+1}}
+    \mathbb{P}(\mathbf{s}|\mathbf{T}) \propto \Pi_{t=1}^{N_{\mathrm{T}}} T_{s_{t}, s_{t+1}}
 \end{equation}
-The likelihood, $\mathcal{L}(\mathbf{T}|\mathbf{s})$, is equal $\mathbb{P}(\mathbf{s}|\mathbf{T})$ but treats the the \emph{data as fixed} and the \emph{parameters as varying}\footnote{The integral of the likelihood over the parameter space can be greater $1$ hence it is not a probability}. The parameters which maximize $\mathcal{L}$ give a model with the best fit to the observed data. Equation \ref{eqn:msm_traj_like} can be re-written in terms of the count matrix, $c_{ij}$ (not the correlation matrix $C_{ij}$), which counts all the observed transitions between states $s_i$ and $s_j$: 
+The likelihood, $\mathcal{L}(\mathbf{T}|\mathbf{s})$, is equal $\mathbb{P}(\mathbf{s}|\mathbf{T})$ but treats the the \emph{data as fixed} and the \emph{parameters as varying}\footnote{The integral of the likelihood over the parameter space can be greater $1$ hence it is not a probability.}. \cite{wasserman2013all} The parameters which maximize $\mathcal{L}$ give a model with the best fit to the observed data. \cite{wasserman2013all} Equation \ref{eqn:msm_traj_like} can be re-written in terms of the count matrix, $c_{ij}$, which counts all the observed transitions between states $i$ and $j$: \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}
 \begin{align}
     \mathcal{L}(\mathbf{T}|\mathbf{s}) & = \mathbb{P}(\mathbf{s}|\mathbf{T}) \\
     & \propto \Pi_{t=1}^{n_{f}} T_{s_{t}, s_{t+1}} \\ 
-    & \propto \Pi_{i}\Pi_{j}T_{i, j}^{c_{ij}}. \label{eqn:msm_count_like}
-    & = \mathbb{P}(\mathbf{c}|\mathbf{T})
+    & \propto \Pi_{i}\Pi_{j}T_{i, j}^{c_{ij}} \\
+    & = \mathbb{P}(\mathbf{c}|\mathbf{T}) \label{eqn:msm_count_like}
 \end{align}
 
 \subsubsection{Count matrix}
-As discussed in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} the method for calculating the count matrix is important for estimating errors when  $\tau > 1\cdot \Delta t$. This is typically the case in molecular dynamics simulations as molecular motions are correlated at short times and MD frames can be recorded with almost arbitrary resolution.  The two extreme methods for counting are the \emph{sliding window} which over estimates the matrix elements and \emph{sample count} method which underestimates the matrix elements \cite{noeStatisticalInefficiencyMarkov}. \emph{Sliding window} counts all pairs of frames separated by $\tau$: $(s_1, s_{1+\tau}), (s_2, s_{2+\tau})$ etc. For example, a trajectory of $100$ frames with $\tau=2$ has $\sum_{i,j}c_{i,j}=98$. In this case, the confidence intervals generated will be too narrow due pairs of states separated by less than $\tau$ being correlated with each other and hence not independent. The \emph{sample count} method uses the only the states separated by $\tau$: $(s_1, s_{1+\tau}), (s_{1+\tau}, s_{1+2\tau})$ etc. continuing the example $\sum_{i,j}c_{i,j}=49$, a factor of $2$ different to the sliding window method. This leads to the confidence intervals being over-estimated. A third method, \emph{effective counting}, uses the sliding window method but scales each row of the count matrix by a different factor to account for correlation between the observations \cite{noeStatisticalInefficiencyMarkov}. Continuing the example, if the observations have low correlation, then the effective count matrix will be close the sliding window estimate; if the observations are highly correlated the count matrix will be closer to the sample count method. This method has been shown to give more accurate confidence intervals \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
+As discussed in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} the method for calculating the count matrix is important for estimating errors when  $\tau > 1\cdot \Delta t$. This is typically the case in molecular dynamics simulations as molecular motions are correlated at short times and MD frames can be recorded with almost arbitrary temporal resolution \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}.  The two extreme methods for counting are the \emph{sliding window} method which tends to over-estimate the count matrix elements,  and \emph{sample count} method which underestimates the count matrix elements. \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} \emph{Sliding window} counts all pairs of frames separated by $\tau$: $(s_1, s_{1+\tau}), (s_2, s_{2+\tau})$ etc. For example, a trajectory with $N_{\mathrm{T}}=100$ frames with $\tau=2$ has $\sum_{i,j}c_{i,j}=98$ observed transitions. In this case, the confidence intervals generated will be too narrow (i.e. optimistic) due to states separated by less than $\tau$ being correlated with each other. The \emph{sample count} method uses the only the states separated by $\tau$: $(s_1, s_{1+\tau}), (s_{1+\tau}, s_{1+2\tau})$ etc. continuing the example $\sum_{i,j}c_{i,j}=49$, a factor of $2$ different to the sliding window method. This leads to the confidence intervals being over-estimated. A third method, \emph{effective counting},uses the sliding window method but scales count matrix elements by a  factor, $I_{i,j}$, to account for correlation between the observations. \cite{noeStatisticalInefficiencyMarkov}\cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} Continuing the previous example, if the observations separated by $t<\tau$ are weakly correlated then the effective count matrix will be close the sliding window estimate and $I_{i,j} \lesssim 1$; if the observations are highly correlated the count matrix will be closer to the sample count method and $I_{i, j}<1$. This method has been shown to give more accurate confidence intervals \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
 
-The count matrix, and therefore the method for counting,  will determine whether or not the states are ergodic. Two states, $i$ and $j$, are strongly connected if $c_{ij}, c_{ji}>0$ and the full set of states are said to be ergodic if they are strongly connected\cite{schererPyEMMASoftwarePackage2015a}. In all estimation procedures used in this work, if the full set of state are not strongly connected, then a subset of states are used such that all states within the subset are strongly connected.
+The count matrix, and therefore the method for counting,  will determine whether or not the states are ergodic. Two states, $i$ and $j$, are strongly connected if $c_{ij}, c_{ji}>0$ and the full set of states are ergodic if they are strongly connected.  \cite{wilson1996introduction} In all estimation procedures used in this thesis, if the full set of state are not strongly connected, then a subset of states are used such that all states within the subset are strongly connected.
 
 \subsubsection{Bayesian estimation}\label{sec:theory_bayes}
-Bayesian estimation \cite{gelmanBayesianDataAnalysis2014} uses not just the likelihood, $\mathbb{P}(\mathbf{c}|\mathbf{T})$, but the prior probability of the parameters themselves, $\mathbb{P}(\mathbf{T})$, to estimate the posterior probability of the parameters given the data, $\mathbb{P}(\mathbf{T}|\mathbf{c})$, through Bayes' rule: 
+Bayesian estimation \cite{gelmanBayesianDataAnalysis2014} uses not just the likelihood, $\mathbb{P}(\mathbf{c}|\mathbf{T})$, but the prior probability of the parameters, $\mathbb{P}(\mathbf{T})$, to estimate the posterior probability of the parameters given the data, $\mathbb{P}(\mathbf{T}|\mathbf{c})$, using Bayes' rule: 
 \begin{equation}
-    \mathbb{P}(\mathbf{T}|\mathbf{c}) \propto \mathbb{P}(\mathbf{c}|\mathbf{T})\mathbb{P}(\mathbf{T})
+    \mathbb{P}(\mathbf{T}|\mathbf{c}) \propto \mathbb{P}(\mathbf{c}|\mathbf{T})\cdot\mathbb{P}(\mathbf{T})
 \end{equation}
-Rather than point estimates of the posterior, samples are drawn from the whole posterior distribution for each parameter, $T_{ij}$, using Markov chain Monte Carlo\cite{gelmanBayesianDataAnalysis2014}. These samples can then be used to estimate the distribution, and hence error, of any quantity determined by the transition matrix, e.g., eigenvalues or implied timescales. The details of the sampling procedures used for estimation of MSM in this work can be found in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}, however two points should be highlighted here. First, the count matrix used are estimated using the effective count method. Second, the prior distribution for the transition matrix elements are defined over a reversible matrix $\mathbf{X}$, where $X_{ij}\propto T_{ij}\pi_{i}$, and is given by: 
+Rather than point estimates of the posterior, samples are drawn from the whole posterior distribution for each parameter, $T_{ij}$, using Markov chain Monte Carlo.\cite{gelmanBayesianDataAnalysis2014} These samples can then be used to estimate the distribution, and hence error, of any quantity determined by the transition matrix, e.g., eigenvalues or implied timescales. \cite{gelmanBayesianDataAnalysis2014} The details of the sampling procedures used for estimation of MSM in this work can be found in \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} and are implemented in the Python package PyEMMA \cite{schererPyEMMASoftwarePackage2015a}, however two points should be highlighted here. First, the count matrices used are estimated using the effective count method. Second, the prior distribution for the transition matrix elements are defined over a reversible matrix $\mathbf{X}$, where $X_{ij}\propto T_{ij}\pi_{i}$, and is given by: 
 \begin{equation}\label{eqn:theory_rev_prior}
     \mathbb{P}(\mathbf{X}) \propto \Pi_{i \ge j}x_{ij}^{-1}. 
 \end{equation}
-With this prior, the posterior transition matrix elements have the same connectivity structure as the count matrix. i.e. if $c_{ij}=0$ then for any posterior sample $T_{ij}=0$. 
+This prior is consistent with detailed balance, in addition the posterior transition matrix elements have the same connectivity structure as the count matrix. i.e. if $c_{ij}=0$ then for any posterior sample $T_{i,j}=0$. 
 
-To test the convergence of the sampling procedure to find stable values of the parameters, four independent sampling chains were produced and  the rank-normalized $\hat{R}$ statistic \cite{vehtariRanknormalizationFoldingLocalization2020}:
+A method for testing the convergence of the MCMC sampling procedure is to calculate the rank-normalized $\hat{R}$ statistic using four independent sampling chains \cite{vehtariRanknormalizationFoldingLocalization2020}:
 \begin{equation}
-    \hat{R} = \frac{\hat{V}}{W}, 
+    \hat{R} = \frac{\hat{V}}{W}.
 \end{equation}
-was calculated. Here $\hat{V}$ is the pooled variance of the four chains after rank normalization (i.e., sampled values are ranked and then the rank converted to a standard normal distributed variable) and $W$ is the within chain variance. Following the recommendations in \cite{vehtariRanknormalizationFoldingLocalization2020} the threshold value for convergence is $\hat{R} < 1.01$. 
+Here $\hat{V}$ is the pooled variance of the four chains after rank normalization (i.e., sampled values are ranked and then the rank converted to a standard normal distributed variable) and $W$ is the within-chain variance. The recommended threshold value for convergence in \cite{vehtariRanknormalizationFoldingLocalization2020} is \num{1.01}, i.e if the sampling is converged then $hat{R} < 1.01$. The more stringent convergence tests in \cite{vehtariRanknormalizationFoldingLocalization2020} are not considered here due to the exploratory nature of this thesis.   
 
 \subsection{Choice of Markov lag-time}
-The lag time, $\tau(\mathbf{MSM})$ is not a hyperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For large values of $\tau(\mathbf{MSM})$ the truncation of the dynamics to the dynamics of just the metastable states becomes more accurate. However, there may be processes of interest with timescales, $t_{i}<\tau(\mathrm{MSM})$ which will not be captured.
+The lag time, $\tau$ is not a hyperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For large values of $\tau$ the truncation of the dynamics to the dynamics of just the metastable states becomes more accurate (equation \ref{eqn:eig_decomp_to_r}). \cite{prinzMarkovModelsMolecular2011} In addition, for small values of $\tau$ the correlation between the observations will mean that tte transition matrix is non-Markovian, i.e. does not obey the Chapman-Kolmogorov equation:
+\begin{equation}\label{eqn:ck_eqn}
+[\mathbf{T}(\tau)]^{k} = \mathbf{T}(k \tau)
+\end{equation}
+However, if $\tau$ is too large then there may be processes of interest with timescales, $t_{i}<\tau$ which will not be captured.  \cite{prinzMarkovModelsMolecular2011}
 
-As a compromise, $\tau$ is chosen by inspection of the data by plotting the implied timescales [] as a function of $\tau(\mathrm{MSM})$.  Starting from a given discrete trajectory, $\{s_{t}\}$ estimate the largest implied timescale, $t_{2}$, for a range of different values of $\tau(\mathrm{MSM})$. Choose the smallest $\tau$ such that $\frac{d t_{2}}{d \tau} \simeq 0$. 
+As a compromise, $\tau$ is chosen by inspection of the data by plotting the implied timescales as a function of $\tau$: \cite{prinzMarkovModelsMolecular2011}\cite{swopeDescribingProteinFolding2004a}  Starting from a given discrete trajectory, $\{s_{t}\}$ estimate the implied timescales, $t_{i}$, for a range of different values of $\tau$. Choose the smallest $\tau$ such that $\frac{d t_{i}}{d \tau} \simeq 0$, where the range of $i$ is determined by the number of number slow relaxation processes. 
 
 \subsection{Choice of hyperparameters}
-The hyperparameters of the the MSM are the modelling choices which transform the raw MD data into the discrete states $s^{i}$ used in MSM estimation. This work will consider only the following parameters: 
+The hyperparameters of the MSM are the modelling choices which transform the raw MD data into the $n$ discrete states, $s^{i}$, used in MSM estimation. This work will consider only the following hyperparameters: 
 \begin{enumerate}
-    \item $\chi$ the continuous feature, 
-    \item $\tau$ the TICA lag time, 
+    \item $\chi$ the continuous feature,
+    \item $\tau^{\prime}$ the TICA lag time, 
     \item $m$ the number of retained TICA components, 
     \item $n$ the number of cluster centers. 
 \end{enumerate}
-Other hyperparameters of the MSM fitting process will be kept fixed, these are: 
+In principle, there are a large number of modelling choices which will have an effect on the final definition the discrete states. These will described in the relevant sections later in this thesis. However, two important choices which will be kept fixed are: 
 \begin{enumerate}
-    \item The TICA eigenvectors will be scaled by their eigenvalues (``kinetic mapping'') so that euclidean distances in the TICA space will correspond to kinetic distances \cite{noeKineticDistanceKinetic2015}.
-    \item the k-means algorithm will be used to cluster the TICA transformed trajectories. 
+    \item the scaling of the TICA components. Each component will be scaled by their eigenvalues  so that euclidean distances in the TICA space will correspond to kinetic distances \cite{noeKineticDistanceKinetic2015} (the ``kinetic mapping'' option in PyEMMA \cite{schererPyEMMASoftwarePackage2015a});
+    \item the k-means \cite{lloydLeastSquaresQuantization1982} algorithm will be used to cluster the TICA transformed trajectories into the discrete states. 
 \end{enumerate}
 Kinetic mapping is recommended for TICA dimensionality reduction \cite{noeKineticDistanceKinetic2015}, however, its utility in improving model performance is data set dependent \cite{husicOptimizedParameterSelection2016}.  Both k-means and Ward clustering have been shown to give good performance in MSMs \cite{husicWardClusteringImproves2017a}. Fixing both of these hyperparameters reflects an arbitrary decision to keep the number of hyperparameters to a minimum.
 
-The hyperparameters are used to map the raw MD trajectories to the discrete MSM basis functions $s^{i}$. The variational principle, used previously to optimize the coefficients in the basis function expansion, equation \ref{eqn:trial_func}, can also be used to optimize the basis functions themselves \cite{schererVariationalSelectionFeatures2019}\cite{husicOptimizedParameterSelection2016}. In order to do this objective functions known as the VAMP (variational approach to Markov processes) scores \cite{wuVariationalApproachLearning2019} were derived which reach their upper limit when the resulting eigenfunctions become the exact eigenfunctions of the transfer operator. The VAMP scores were derived for both stationary and non-stationary, reversible and irreversible Markov processes and they generalize previous work on variationally optimising basis functions by \cite{mcgibbonVariationalCrossvalidationSlow2015} using the generalized matrix Rayleigh coefficient, GMRQ. The VAMP scores are a family of scores, parameterized by and integer $q$\cite{wuVariationalApproachLearning2019}: 
+The variational principle, used previously to optimize the coefficients in the basis function expansion, equation \ref{eqn:trial_func}, can also be used to optimize the basis functions themselves.  \cite{schererVariationalSelectionFeatures2019}\cite{husicOptimizedParameterSelection2016} In order to do this objective functions known as the VAMP (variational approach to Markov processes) scores \cite{wuVariationalApproachLearning2019} were derived which reach their upper limit when the resulting eigenfunctions become the exact eigenfunctions of the transfer operator. The VAMP scores generalize previous work on variationally optimising basis functions by \cite{mcgibbonVariationalCrossvalidationSlow2015} using the generalized matrix Rayleigh coefficient, GMRQ. The VAMP scores are a family of scores, parameterized by an integer $q$: \cite{wuVariationalApproachLearning2020c}
 \begin{equation}\label{eqn:def_vampr}
 \operatorname{VAMP}(q)=\sum_{i=1}^{r}\left(\lambda_{i}\right)^{q}, 
 \end{equation} 
-where $r$ is the number of dominant eigenvalues, $\lambda$, of the transition matrix (i.e. the $r$ in equation \ref{eqn:eig_decomp_to_r}). The GMRQ corresponds to $q=1$ and has been used to optimize parameters for MSMs of protein folding \cite{husicOptimizedParameterSelection2016}. This work will follow \cite{schererVariationalSelectionFeatures2019} which used the VAMP  score with $q=2$ (VAMP-2). 
+where $r$ is the number of dominant eigenvalues of the transition matrix i.e. the $r$ in equation \ref{eqn:eig_decomp_to_r}. The GMRQ corresponds to $q=1$ and has been used to optimize parameters for MSMs of protein folding \cite{husicOptimizedParameterSelection2016}. This work will follow \cite{schererVariationalSelectionFeatures2019} which used the VAMP  score with $q=2$ (VAMP-2), and is equivalent to maximizing the kinetic variance. \cite{wuVariationalApproachLearning2020c}
 
 In order to use the VAMP-2 score the following steps can be used:  \cite{schererVariationalSelectionFeatures2019}:
 \begin{enumerate}
     \item select a set of hyperparameters to create a MSM basis, $s^{i}$, 
-    \item estimate an MSM transition matrix, 
-    \item calculate a VAMP-2 score, 
+    \item estimate the MSM transition matrix, 
+    \item calculate the VAMP-2 score, 
     \item repeat steps (1) - (3) a number of times until the VAMP-2 score converges. 
 \end{enumerate}
-However, using equation \ref{eqn:def_vampr}, will tend to produce complex basis functions that fit to noisy fluctuations in the data, rather than the `true' relaxation processes \cite{mcgibbonVariationalCrossvalidationSlow2015}\cite{wuVariationalApproachLearning2019}\cite{schererVariationalSelectionFeatures2019}, a process known as over-fitting \cite{friedman2001elements}.
+However, using equation \ref{eqn:def_vampr}, will tend to produce overly complex basis functions that fit to noisy fluctuations in the data, rather than the `true' relaxation processes \cite{mcgibbonVariationalCrossvalidationSlow2015}\cite{wuVariationalApproachLearning2020c}\cite{schererVariationalSelectionFeatures2019}, a process known as over-fitting \cite{friedman2001elements}.
 
-Two popular techniques for mitigating over-fitting are the bootstrap [] and cross-validation (CV) \cite{friedman2001elements}. K-fold CV is popular for MSMs \cite{schererVariationalSelectionFeatures2019}\cite{mcgibbonVariationalCrossvalidationSlow2015} although many methods exist \cite{arlotSurveyCrossvalidationProcedures2009}. The idea of CV is to estimate the model parameters on a subset of the data, the training data $\mathcal{D}^{\mathrm{train}}$, and then evaluate the performance of the parameters on the remaining data $\mathcal{D}^{\mathrm{test}}$ \cite{friedman2001elements}. This work will use 50:50 shuffle split CV, which has been used previously in  \cite{chenDynamicConformationalLandscape2019}\cite{husicOptimizedParameterSelection2016}, and is described in algorithm \ref{alg:shuffle_split}. 
+Two popular techniques for mitigating over-fitting \cite{friedman2001elements} are the bootstrap \cite{efronIntroductionBootstrap1993} and cross-validation (CV) \cite{arlotSurveyCrossvalidationProcedures2009}.  The idea of CV is to estimate the model parameters on a subset of the data, the training data $\mathcal{D}^{\mathrm{train}}$, and then evaluate the performance of the parameters on the remaining data $\mathcal{D}^{\mathrm{test}}$ \cite{friedman2001elements}. K-fold CV is popular for MSMs \cite{schererVariationalSelectionFeatures2019}\cite{mcgibbonVariationalCrossvalidationSlow2015}. In this method, the model is trained on $K-1$ disjoint `folds' (a fold being \sfrac{1}{K} of the total data) while the score is evaluated on the single held out fold. The average score over the $K$ folds is used to evaluate the model. However, many different methods exist \cite{arlotSurveyCrossvalidationProcedures2009} and this work will use 50:50 shuffle split CV, which has been used previously in  \cite{chenDynamicConformationalLandscape2019}\cite{husicOptimizedParameterSelection2016}. It is equivalent to repeated 2-Fold CV with a random permutation of the data in between each evaluation and is described in algorithm \ref{alg:shuffle_split}. 
 
 \begin{algorithm}\label{alg:shuffle_split}
+\DontPrintSemicolon
 \SetKwInput{Par}{Parameter}
 \KwData{N independent trajectories: $\mathcal{D}=[\mathbf{s}_{1}, \mathbf{s}_{2}, \ldots, \mathbf{s}_{N}]$}
-\KwData{hyperparameter set: $\theta$}
-\KwData{estimator of model parameters: $P=P(\theta; \mathcal{D})$} 
-\KwData{scoring function: $CV(\theta) = CV(P|\mathcal{D})$}
+
+\KwIn{hyperparameter set: $\theta$}
+\KwIn{estimator of model parameters: $P=P(\theta; \mathcal{D})$} 
+\KwIn{scoring function: $CV(\theta) = CV(P|\mathcal{D})$}
 \Par{number of iterations: $J$}
-\KwResult{Cross-validated score: $\operatorname{MCV}(\theta)$}
 \BlankLine
 \For{$i\leftarrow 1$ \KwTo $J$}{
-    permute location of trajectories (``shuffle'') in $\mathcal{D}$: e.g., $\mathcal{D} \rightarrow [\mathbf{s}_{5}, \mathbf{s}_{17}, \ldots, \mathbf{s}_{2}]$\;
+    permute (``shuffle'') location  of trajectories  in $\mathcal{D}$: e.g., $\mathcal{D} \rightarrow [\mathbf{s}_{5}, \mathbf{s}_{17}, \ldots, \mathbf{s}_{2}]$\;
     split trajectories into two equal size, disjoint sets: $\mathcal{D} \rightarrow  \mathcal{D}^{\mathrm{train}},\quad \mathcal{D}^{\mathrm{test}}$\;
     estimate model parameters on training data: $P^{\mathrm{train}} = P(\theta,\mathcal{D}^{\mathrm{train}})$\;
     score model on test data: $CV^{\mathrm{test}}_{i} = CV_{i}(P^{\mathrm{train}}| \mathcal{D}^{\mathrm{test}})$\;
 }
-\KwResult{compute mean cross-validated score: $\operatorname{MCV}(\theta)=\frac{1}{J}\sum_{i}CV^{\mathrm{test}}(\theta)$}
+\KwResult{Cross-validated score: $\operatorname{MCV}(\theta)=\frac{1}{J}\sum_{i}CV^{\mathrm{test}}(\theta)$}
 \caption{50:50 shuffle split cross-validation}
 \end{algorithm}
-It is important to note that for CV to judge the performance of all the hyperparameters, the `estimator of model parameters' must take as its input the \emph{raw} data, \cite{friedman2001elements}. For the case of MSMs, the estimator takes the cartesian coordinates, applies TICA, clusters trajectories, and then estimates the transition matrix elements.  
+It is important to note that for CV to judge the performance of all the hyperparameters, the `estimator of model parameters' must take as its input the \emph{raw} data. \cite{friedman2001elements} For the case of MSMs, the estimator takes the cartesian coordinates, applies TICA, clusters trajectories, and then estimates the transition matrix elements.  
 
-The scoring function, $CV$, for the VAMP-2 score  \cite{wuVariationalApproachLearning2019} is given by: 
+The scoring function, $CV$, for the VAMP-2 score is given by:\cite{wuVariationalApproachLearning2020c}  
 \begin{equation}
-\operatorname{CV}\left(\mathbf{C}, \mathbf{S}, \mathbf{a} \mid \mathcal{D}_{\text {test }}\right) 
-=\left\|\left(\mathbf{a}^{\top} \mathbf{S}^{\text{test}} \mathbf{a}\right)^{-\frac{1}{2}}\left(\mathbf{a}^{\top} \mathbf{C}^{\text{test}} \mathbf{a}\right)\left(\mathbf{a}^{\top} \mathbf{S}^{\text{test}} \mathbf{a}\right)^{-\frac{1}{2}}\right\|_{2}^{2}, 
+CV\left(\mathbf{C}, \mathbf{S}, \mathbf{v} \mid \mathcal{D}_{\text {test }}\right) 
+=\left\|\left(\mathbf{v}^{\top} \mathbf{S}^{\text{test}} \mathbf{v}\right)^{-\frac{1}{2}}\left(\mathbf{v}^{\top} \mathbf{C}^{\text{test}} \mathbf{v}\right)\left(\mathbf{v}^{\top} \mathbf{S}^{\text{test}} \mathbf{v}\right)^{-\frac{1}{2}}\right\|_{2}^{2}, 
 \end{equation}
-where the symbols retain their previous meaning and the $\left| A\right\|_{2}^{2}$ is the square of the Frobenius norm \cite{wuVariationalApproachLearning2019}. The matrices $\mathbf{S}^{\text{test}}$ and $\mathbf{C}^{\text{test}}$ are the overlap and correlation matrices estimated on the test data, while $\mathbf{a}$ are the eigenvectors of the transition matrix estimated using the training data. 
+$\left\| \mathbf{A}\right\|_{2}^{2}$ is the square of the Frobenius norm of the matrix $\mathbf{A}$. \cite{wuVariationalApproachLearning2020c} The matrices $\mathbf{S}^{\text{test}}$ and $\mathbf{C}^{\text{test}}$ are the overlap and correlation matrices estimated on the test data, while $\mathbf{v}$ are the eigenvectors of the transition matrix estimated using the training data. 
 
 % To ensure the  measured response was generalisable \cite{friedman2001elements}, $20$ iterations of 50:50 shuffle split cross validation were used \cite{husicOptimizedParameterSelection2016}. For each trial this entailed fitting a model using \SI{50}{\percent} of the available data (the training data) with the following pipeline:
 
@@ -326,7 +326,7 @@ where the symbols retain their previous meaning and the $\left| A\right\|_{2}^{2
 
 % The other popular method for clustering the microstates is by estimating a hidden Markov model (HMM). $m$ can be selected using information criteria, bootstrapping and cross-validation and others. We will explore these more fully in chapter 3 .
 
-\section{Coarse graining with Hidden Markov Models}\label{sec:theory_hmm}
+\section{Coarse-graining with Hidden Markov Models}\label{sec:theory_hmm}
 \subsection{HMM definition}
 \begin{figure}
     \centering
@@ -334,60 +334,65 @@ where the symbols retain their previous meaning and the $\left| A\right\|_{2}^{2
     \includegraphics[width=0.8\textwidth]{chapters/theory/figures/hmm.png}
     \label{fig:theory_hmm}
 \end{figure}
-Hidden Markov models (HMMs) are models of a dynamic process consisting of the following elements\footnote{This treatment focuses exclusively on discrete hidden Markov processes.}\cite{rabinerTutorialHiddenMarkov1989}: 
+Hidden Markov models (HMMs) are models of a dynamic process consisting of the following elements\footnote{This treatment focuses exclusively on discrete hidden Markov processes.}: \cite{rabinerTutorialHiddenMarkov1989} 
 \begin{enumerate}
-    \item A number, $g$, of hidden states - these are not observed in the data used to train the model.  
-    \item Hidden state to hidden state transition probabilities, $\mathbb{P}(h_{t+1}|h_{t})$, where $h_{t}$ is the hidden state at time $t$. These are encoded in the hidden state transition matrix, $\widetilde{\mathbf{T}}\in \mathbb{R}^{g \times g}$. This has the same interpretation as the MSM transition matrix.  
-    \item A number, $n$ of observed states - these are the observations used to train the model. 
-    \item Probabilities of observing the observed states, given a hidden state, encoded in the `emission matrix', $\mathbf{E}$, where  $E_{ij} = \mathbb{P}(s_t=j|h_t=i)$. 
-    \item An initial distribution of states, $\widetilde{\bm{\pi}}$.
+    \item A number of hidden states, $g$. These are not observed in the data used to train the model.  
+    \item Hidden-state to hidden-state transition probabilities, $\mathbb{P}(h_{t+1}|h_{t})$, where $h_{t}$ is the hidden state at time $t$. These are encoded in the hidden state transition matrix, $\widetilde{\mathbf{T}}\in \mathbb{R}^{g \times g}$. This has the same interpretation as the MSM transition matrix, $\mathbf{T}$. In keeping with the notation of \cite{noeProjectedHiddenMarkov2013a}, the $\widetilde{}$ pertains the hidden quantities. 
+    \item A number of observed states, $n$. These are the observations used to train the model. 
+    \item Probabilities of seeing the observed states, given a hidden state. These encoded in the `emission matrix', $\mathbf{E}$, where  $E_{i,j} = \mathbb{P}(s=j|h=i)$.  
+    \item An initial distribution of hidden states, $\widetilde{\bm{\pi}}^{\prime}$.
 \end{enumerate}
 
-An example HMM is shown in figure \ref{fig:theory_hmm}. The hidden states are shown in dashed circles with the state to state transition probability (the labelled dashed arrows) encoded in $\widetilde{T}$. The stationary distribution, $\widetilde{\bm{\pi}}$,  ensures detailed balance: $0.1\times 0.09 = 0.01\times 0.9$. While in each hidden state the system emits to a observed state (solid circles) with a probability (labelled solid arrows) encoded in the emission matrix $\mathbf{E}$. Other quantities of interest are the observed state stationary distribution $\bm{\pi}$, with $\pi_{j} = \sum_{i}E_{ij}\widetilde{\pi}_{i}$, and the membership matrix, $\mathbf{M}$. The membership matrix encodes the probability of the system being in an hidden state given the observed state \cite{noeProjectedHiddenMarkov2013a}, i.e., $M_{ji}=\mathbb{P}(h_t=j|s_t=i)$. This can determined from the stationary distributions of the hidden states and observed states, the emission matrix and the laws of probability: 
+An example HMM is shown in figure \ref{fig:theory_hmm}. The hidden states are shown in dashed circles and the hidden-state to hidden-state transition probability label the dashed arrows. These are taken from the transition matrix $\widetilde{\mathbf{T}}$ shown. The stationary distribution, $\widetilde{\bm{\pi}}$, ensures detailed balance:
+\begin{align*}
+    \widetilde{T}_{1,2}\times \widetilde{\pi}_{1} & = \widetilde{T}_{2,1}\times \widetilde{\pi}_{2}\\
+    0.09\times 0.1 & = 0.9 \times 0.01
+\end{align*}
+While in each hidden state the system emits to a observed state shown as solid circles and the emission probabilities label the solid arrows. These are taken from the  emission matrix $\mathbf{E}$ shown. Other quantities of interest are the observed state distribution $\bm{\pi}$ which is related to the emission and  stationary distribution by $\pi_{j} = \sum_{i}E_{ij}\widetilde{\pi}_{i}$;  and the membership matrix, $\mathbf{M}$. The membership matrix encodes the probability of the system being in an hidden state given the observed state \cite{noeProjectedHiddenMarkov2013a}, i.e., $M_{j,i}=\mathbb{P}(h=j|s=i)$. This can determined from the stationary distributions of the hidden states and observed states, the emission matrix and the laws of probability:
 \begin{align}
-    \mathbb{P}(h_t=i|s_j=j) &= \frac{\mathbb{P}(h_t=i)}{\mathbb{P}(s_t=j)}\mathbb{P}(s_j=j|h_t=i) \\
-    M_{ji} &= \frac{\widetilde{\pi}_j}{\pi_i}E_{ij}
+    \mathbb{P}(h=i|s=j) &= \frac{\mathbb{P}(h=i)}{\mathbb{P}(s=j)}\mathbb{P}(s=j|h=i) \\
+    M_{j,i} &= \frac{\widetilde{\pi}_j}{\pi_i}E_{i,j}
 \end{align}
-The eigenvalues and eigenvectors of the hidden transition matrix have a similar interpretation as the eigenvectors and eigenvalues of an MSM, i.e. they are the relaxation processes and associated timescales, respectively, in the hidden state basis. 
+The eigenvalues and eigenvectors of the hidden transition matrix have a similar interpretation as the eigenvectors and eigenvalues of an MSM, i.e., they are the relaxation processes and associated timescales, respectively, of the hidden states. 
 
-\subsection{Coarse graining procedure}
-HMMs have been suggested as a method for modelling biomolecular dynamics by coarse graining a fitted MSM transition matrix\cite{noeProjectedHiddenMarkov2013a}. This coarse-graining is accurate under the following assumptions \cite{noeProjectedHiddenMarkov2013a}: 
+\subsection{Coarse-graining procedure}
+HMMs have been proposed as a method for modelling biomolecular dynamics by coarse-graining a MSM. \cite{noeProjectedHiddenMarkov2013a} This coarse-graining is accurate under the following assumptions: \cite{noeProjectedHiddenMarkov2013a}
 \begin{enumerate}
-    \item The underlying dynamics of the system are Markovian, i.e. they can be modelled by a transfer operator, equation \ref{eqn:transfer_operator}
-    \item There is a gap between the $r$th and $r+1$th  eigenvalues of the underlying transfer operator. i.e. $\frac{\lambda_{r}}{\lambda_{r+1}} \gg 1$. The first $r$ eigenfunctions and eigenvalues are the \emph{dominant} set of eigenfunctions and eigenvalues. \label{assump_two}
-    \item The $r$ dominant eigenfunctions decompose the stationary distribution into $r$ sets. The probability of the system being in the boundary between these sets is negligible. \label{assump_three}
+    \item The underlying dynamics of the system are Markovian, i.e. they can be modelled by a transfer operator, $\mathcal{T}(\tau)$ (equation \ref{eqn:transfer_operator}). 
+    \item There is a gap between the $r$th and $r+1$th  eigenvalues of $\mathcal{T}(\tau)$ i.e. $\frac{\lambda_{r}}{\lambda_{r+1}} \gg 1$.\label{assump_two}
+    \item The $r$ dominant eigenfunctions partition the stationary distribution into $r$ metastable states. The probability of the system being in the boundary between these sets is negligible. \label{assump_three}
 \end{enumerate}
-The process outlined in \cite{noeProjectedHiddenMarkov2013a} for coarse graining an MSM is as follows: 
+
+The process for coarse-graining an MSM is as follows (adapted from algorithm 1 in \cite{noeProjectedHiddenMarkov2013a}): 
 \begin{enumerate}
-    \item \textbf{Estimate an MSM}. Using the process outline in previous sections of this chapter transform the raw MD trajectories, $\mathbf{X}$, into trajectories of discrete states, $\mathbf{s}$. Using these discrete trajectories estimate the MSM transition matrix, $\mathbf{T}$ with a lag-time $\tau(\mathrm{MSM})$
-    \item \textbf{Determine number of metastable states}. The number of metastable states, $r$, is determined by looking for a gap in the eigenvalues of $\mathbf{T}$, such that  $\frac{\lambda_{r}}{\lambda_{r+1}} \gg 1$. \emph{The number of hidden states of the HMM, $g$ is set equal to the number of metastable states $r$}. 
-    \item \textbf{Coarse grain the transition matrix}. In order to estimate a HMM initial sets of the parameters, the matrices, $\widetilde{\mathbf{T}}_{0}$,  $\mathbf{E}_{0}$, and $\widetilde{\bm{\pi}}_{0}$ must be estimated. This is done using PCCA+ \cite{deuflhardRobustPerronCluster2005b} which clusters $\mathbf{T}$ into $r$ metastable states. The result of PCCA+ is the membership matrix, $\mathbf{M}$, from which values of the elements of $\widetilde{\mathbf{T}}_{0}$ and $\mathbf{E}_{0}$ can be estimated. 
-    \item \textbf{Estimate the HMM}. The parameters of the model are updated and optimised from their initial values by maximizing likelihood estimation using the Baum-Welch[][] algorithm. 
+    \item \textbf{Estimate an MSM}. Using the process described in section \ref{sec:theory_msm}, transform the raw MD trajectories, $\mathbf{X}_{1,2,\ldots}$, into trajectories of discrete states, $\mathbf{s}_{1, 2, \ldots}$. Using these discrete trajectories estimate the MSM transition matrix, $\mathbf{T}$ at a lag-time $\tau$. 
+    \item \textbf{Determine number of metastable states}. The number of metastable states, $r$, is determined by looking for a gap in the eigenvalues of $\mathbf{T}$, such that  $\frac{\lambda_{r}}{\lambda_{r+1}} \gg 1$. \emph{The number of hidden states of the HMM, $g$, is equal to the number of metastable states, $r$}. 
+    \item \textbf{Coarse-grain the transition matrix}. Estimate initial HMM parameters, $\widetilde{\mathbf{T}}_{0}$,  $\mathbf{E}_{0}$ and $\widetilde{\bm{\pi}}^{\prime}_{0}$, using PCCA+ \cite{deuflhardRobustPerronCluster2005b}. 
+    \item \textbf{Estimate the HMM}. Optimise the HMM parameters (maximize the likelihood) using the Baum-Welch  \cite{baumMaximizationTechniqueOccurring1970} \cite{welch2003hidden} algorithm. 
 \end{enumerate}
-The $g$ eigenvalues and $g-1$ relaxation processes of the HMM will be the coarse-grained equivalent to the  eigenvalues and eigenvectors measured in the MSM basis \cite{noeProjectedHiddenMarkov2013a}. 
+The $g$ eigenvalues and $g-1$ relaxation processes of the HMM will be the coarse-grained equivalent of the  eigenvalues and eigenvectors measured in the MSM basis \cite{noeProjectedHiddenMarkov2013a}. 
 
 \subsection{HMM estimation}
+
 \begin{algorithm}\label{alg:baum_welch}
 \DontPrintSemicolon
 \SetKwInput{Par}{Parameter}
-\KwData{Initial HMM parameters: $\theta_{0} = (\widetilde{\mathbf{T}}_{0}$,  $\mathbf{E}_{0}$, $\widetilde{\bm{\pi}}_{0})$}
+\KwData{Initial HMM parameters: $\theta_{0} = (\widetilde{\mathbf{T}}_{0}$,  $\mathbf{E}_{0}$, $\widetilde{\bm{\pi}}^{\prime}_{0})$}
 \KwData{observed state trajectory: $\{s_t\}$, $t = 1, \ldots, N_{\mathrm{T}}$}
 \Par{likelihood tolerance: $\epsilon$}
 \BlankLine
 \Begin{
-$\mathrm{ll_{0}} \longleftarrow 0$\;
-$\theta \longleftarrow \theta_{0}$\;
-$\mathrm{C} \longleftarrow \mathtt{False}$\;
-\While{$\mathrm{C}$}{
+$\mathrm{ll_{0}},\ \theta,\ \mathrm{continue}   \longleftarrow 0,\ \theta_{0},\ \mathtt{True} $\;
+\While{$\mathrm{continue}$}{
     \textbf{Forward procedure}\;
     Calculate the probability of being in hidden state $i$ at time $t$ and seeing the partial trajectory $s_1, \ldots, s_{t^{\prime}}$, given the model parameters:\;
     \begin{equation*}
       \alpha_i(t) = \mathbb{P}(\{s_{1}, \ldots, s_{t}\}| h_t=i, \theta)  
     \end{equation*}
     \textbf{Backward procedure}\;
-    Calculate the probability of seeing the partial trajectory $s_{t+1}, \ldots, s_{N_{t}}$, given being in hidden state $i$ and the model parameters, $\theta$:\;
+    Calculate the probability of seeing the partial trajectory $s_{t+1}, \ldots, s_{N_{\mathrm{T}}}$, given being in hidden state $i$ and the model parameters, $\theta$:\;
     \begin{equation*}
-     \beta_i(t) = \mathbb{P}(\{s_{t+1}, \ldots, s_{N_{T}}\}|h_{t}=i, \theta)   
+     \beta_i(t) = \mathbb{P}(\{s_{t+1}, \ldots, s_{N_{\mathrm{T}}}\}|h_{t}=i, \theta)   
     \end{equation*}
     
     \textbf{Update model parameters}\;
@@ -399,56 +404,61 @@ $\mathrm{C} \longleftarrow \mathtt{False}$\;
     \begin{equation*}
         \xi_{i,j}(t) = \mathbb{P}(h_t=i, h_{t+1} = j|\{s_t\}, \theta) = \frac{\alpha_{i}(t)T_{ij}\beta_{j}(t+1)E_{j, s_{t+1}}}{\sum_{k, l}^{g}\alpha_{k}(t)T_{kl}\beta_{l}(t+1)E_{l, s_{t+1}}}
     \end{equation*}
+    Update parameters using:
     \begin{align*}
         \widetilde{\pi}_{i}^{\prime}  &\longleftarrow \gamma_{i}(t=1) \\
-        \widetilde{T}_{i,j}^{\prime} & \longleftarrow \frac{\sum_{t=1}^{N_{T}-1} \xi_{i j}(t)}{\sum_{t=1}^{N_{T}-1} \gamma_{i}(t)} \\
-        E_{ij}^{\prime} & \longleftarrow \frac{\sum_{t=1}^{N_{T}} 1_{s_{t}=j} \gamma_{i}(t)}{\sum_{t=1}^{T} \gamma_{i}(t)} \\
-        \theta & \longleftarrow (\widetilde{\bm{\pi}}^{\prime}, \widetilde{\mathbf{T}}^{\prime}, \mathbf{E}^{\prime})
+        \widetilde{T}_{i,j} & \longleftarrow \frac{\sum_{t=1}^{N_{T}-1} \xi_{i j}(t)}{\sum_{t=1}^{N_{T}-1} \gamma_{i}(t)} \\
+        E_{ij} & \longleftarrow \frac{\sum_{t=1}^{N_{T}} 1_{s_{t}=j} \gamma_{i}(t)}{\sum_{t=1}^{T} \gamma_{i}(t)} \\
+        \theta & \longleftarrow (\widetilde{\bm{\pi}}^{\prime}, \widetilde{\mathbf{T}}, \mathbf{E})
     \end{align*}
     \textbf{Calculate log-likelihood}\;
     $\mathrm{ll}^{\prime} = \log{\left(\sum_{i}^{g}\alpha_{i}(N_{T})\right)}$\;
     \If{$\mathrm{ll}^{\prime}-\mathrm{ll} < \epsilon$}{
-        $\mathrm{C} \longleftarrow \mathtt{True}$}
+        $\mathrm{continue} \longleftarrow \mathtt{False}$}
     $\mathrm{ll} \longleftarrow \mathrm{ll}^{\prime}$\;
 }
 }
 \caption{The Baum-Welch algorithm}
 \end{algorithm}
 
-The Baum-Welch algorithm as used for coarse-graining reversible MSMs is given in detail in \cite{noeProjectedHiddenMarkov2013a}. The algorithm is sketched in algorithm \ref{alg:baum_welch} to introduce some of the important quantities used later in this thesis. In particular, the `forward' part of the algorithm calculates the $\alpha_{i}(t)$ variable which is the probability of arriving at hidden state $i$ at time $t$ \emph{and} seeing the actual observed trajectory up to that point. Summing this value for $t=N_{\mathrm{T}}$ over the hidden states gives the probability of the observed trajectory given the model parameters. This is equal to the likelihood of the parameters given the observed trajectory, $\mathbb{P}(\{s_{t}\}|\theta)=\mathcal{L}(\theta|\{s_{t}\})$. 
+The Baum-Welch algorithm as used for coarse-graining reversible MSMs is given in detail in \cite{noeProjectedHiddenMarkov2013a}. The algorithm is sketched in algorithm \ref{alg:baum_welch} to introduce some of the important quantities used later in this thesis. In particular, the `forward' part of the algorithm calculates the $\alpha_{i}(t)$ variable which is the probability of arriving at hidden state $i$ at time $t$ \emph{and} seeing the actual observed trajectory up to that point.\cite{rabinerTutorialHiddenMarkov1989} Summing this value for $t=N_{\mathrm{T}}$ over the hidden states gives the probability of the observed trajectory given the model parameters.\cite{rabinerTutorialHiddenMarkov1989} This is equal to the likelihood of the parameters given the observed trajectory, $\mathbb{P}(\{s_{t}\}|\theta)=\mathcal{L}(\theta|\{s_{t}\})$.\cite{rabinerTutorialHiddenMarkov1989} 
 
-In addition to the maximum likelihood estimation of the parameters, Bayesian estimation can be used. The details of the implementation can be found in \cite{choderaBayesianHiddenMarkov2011a} and \cite{schererPyEMMASoftwarePackage2015a} and the references therein, but the broad outline for estimating a Bayesian HMM with $g$ hidden states is as follows. First, an MSM is estimated and the implied timescales, $t_{2,3, \ldots}$ saved. Second, the trajectories are sub-sampled, or strided, to account for the correlation between observed states. This is the analogue of `effective counting' for Bayesian estimation of MSMs. The striding is by a factor $\Delta t$: (the `MSM' has been dropped from $\tau$ for notational convenience):
+In addition to the maximum likelihood estimation of the parameters, Bayesian estimation can be used. The details of the implementation used in PyEMMA version 2.7 \cite{schererPyEMMASoftwarePackage2015a} can be found in \cite{choderaBayesianHiddenMarkov2011a} and the references therein, but the broad outline for estimating a Bayesian HMM with $g$ hidden states is as follows. 
+
+First, an MSM is estimated and the implied timescales, $t_{2,3, \ldots}$, saved. Second, the trajectories are sub-sampled, or strided, to account for the correlation between observed states. The striding is by a factor $\Delta t$ given by:
 \begin{equation}\label{eqn:hmm_striding}
     \Delta t = \min{\left(\tau, 2\cdot t_{g+1}\right)}. 
 \end{equation}
-i.e. if $g=5$ the HMM will  capture the first five timescales in the full MSM basis. The $6$th implied timescale measures in the MSM basis will the slowest relaxation timescale but which is nevertheless considered too fast to be included in the HMM. This means only the following transition are counted: 
+i.e., if $g=5$ the HMM will  capture the first five timescales in the full MSM basis. The $6$th implied timescale measured in the MSM basis will the slowest relaxation timescale but which is nevertheless considered too fast to be included in the HMM. This is analogous to the expression given in \cite{noeStatisticalInefficiencyMarkov}.  This means only the following transition are counted: 
 \begin{equation}
     \left\{(s_{1}, s_{1+\tau}), (s_{1+\Delta t}, s_{1+\Delta t + \tau}) \ldots \right \}.
 \end{equation}
-Third, a maximum likelihood HMM is estimated and is used to i) determine the largest reversibly connected set of hidden states and ii) define the prior distribution of the initial distribution $\widetilde{\bm{\pi}}$. The count matrix is determined the elements  $\xi_{i,j}$ from the Baum-Welch algorithm and the largest connected set defined the same way as for the MSM case. The prior functions used for the $\widetilde{\mathbf{T}}$ is the same as the MSM case (equation \ref{eqn:theory_rev_prior})and $\widetilde{\bm{\pi}}_{0}$ as implemented in the open source package PyEMMA \cite{schererPyEMMASoftwarePackage2015a} is: 
+
+Third, a maximum likelihood HMM is estimated and is used to i) determine the largest reversibly connected set of hidden states and ii) define the prior distribution of  $\widetilde{\bm{\pi}}^{\prime}$. The count matrix of the maximum likelihood model is determined by $\xi_{i,j}$ from the Baum-Welch algorithm. The largest connected set is defined the same way as for the MSM case. 
+
+Fourth, the parameters are sampled using MCMC. The prior function for $\widetilde{\mathbf{T}}$ is given by equation \ref{eqn:theory_rev_prior} and for $\widetilde{\bm{\pi}}^{\prime}$ is given by: 
 \begin{equation}
-    \widetilde{\bm{\pi}}_{0}  \sim \prod_{i} \widetilde{\pi}_{0, i}^{a_{i}+n_{i}-1} 
+    \widetilde{\bm{\pi}}^{\prime} \sim \prod_{i} \widetilde{\pi}_{0, i}^{a_{i}+n_{i}-1},
 \end{equation}
-where $a_{i}$ are the initial distribution from the maximum likelihood model and $n_{i}$ is the count of each hidden state at for each sampling step in the MCMC algorithm. No priors for the emission distributions are used, instead the values of are determined from the other sampled quantities. Fourth, the parameters are sampled using MCMC. Convergence of the parameters is performed in the same manner as for the MSM, i.e. through sampling independent chains and calculating the $\hat{R}$ statistic. 
+where $a_{i}$ are the initial distribution from the maximum likelihood model and $n_{i}$ is the population of each hidden state at each sampling step in the MCMC algorithm. No priors for the emission distributions are used, instead the values of are determined from the other sampled quantities. Convergence of the parameters is performed in the same manner as for the MSM, i.e., through sampling independent chains and calculating the $\hat{R}$ statistic. 
 
 \section{Markov model validation}\label{sec:model_validation}
-Markov model validation for both MSMs and HMM is performed by checking to see if the Markov assumption: 
+Markov model validation for both MSMs and HMM is performed by checking to see if the Chapman-Kolmogorov equation: 
 \begin{equation}
 [\mathbf{T}(\tau)]^{k} \approx \mathbf{T}(k \tau)
 \end{equation}
-holds to within sampling error for a range of $k$. This check is called the \emph{Chapman-Kolmogorov test} (CK test) [].  The left-hand side is a transition matrix predicted at time $k\tau$ from the matrix estimated at time $\tau$. The right hand-side is the transition matrix estimated at time $\tau$. This equality will hold exactly for a discrete Markov process. For an MSM, testing equality of two $n \times n$ transition matrices requires $n^{2}$ comparisons which is both computationally intractable and result in large uncertainties \cite{prinzMarkovModelsMolecular2011}. Instead, the MSM is coarse grained, usually as a HMM. The CK test for a HMM proceeds as follows []:
+holds to within sampling error for a range of $k$. This check is called the \emph{Chapman-Kolmogorov test} (CK test) \cite{prinzMarkovModelsMolecular2011}.  The left-hand side is a transition matrix \emph{predicted at time $k\tau$} from the matrix estimated at time $\tau$. The right hand-side is the transition matrix \emph{estimated at time $k\tau$}. This equality will hold exactly for a discrete Markov process (i.e., one for which there was no error in creating the discretized states, $s^i$. \cite{prinzMarkovModelsMolecular2011} For an MSM, testing equality of two $n \times n$ transition matrices requires $n^{2}$ comparisons which is both computationally intractable and would result in large uncertainties. \cite{prinzMarkovModelsMolecular2011} Instead, the MSM is coarse-grained as a HMM and the CK test adapted as follows: \cite{prinzMarkovModelsMolecular2011}
 \begin{enumerate}
     \item For each value of $k = 1, 2, 3, \ldots$ calculate $\widetilde{\mathbf{T}}(
     k\tau)$
-    \item Propagate an initial  state vector $\mathbf{p}_{0}$, forward in time using the $k=1$ transition matrix:  
+    \item Using an initial state vector $\mathbf{p}(0)$ and $\widetilde{\mathbf{T}}(1\cdot\tau)$ predict the values of $\mathbf{p}(k\tau)$ using: 
     \begin{equation*}
-        \mathbf{p}^{\top}(k\tau)_{\mathrm{HMM}} = \mathbf{p}_{0}^{\top}\widetilde{\mathbf{T}}^{k}(\tau)
+        \mathbf{p}^{\top}(k\tau)_{\mathrm{HMM}} = \mathbf{p}(0)^{\top}[\widetilde{\mathbf{T}}]^{k}(\tau)
     \end{equation*}
-    \item Calculate the same state vectors using the $\widetilde{\mathbf{T}}(
-    k\tau)$ matrices: 
+    \item Now predict $\mathbf{p}(k\tau)$ from the same initial state using the  $\widetilde{\mathbf{T}}(k\tau)$ matrices: 
     \begin{equation*}
-        \mathbf{p}^{\top}(k\tau)_{\mathrm{Trajectory}} = \mathbf{p}_{0}^{\top}\widetilde{\mathbf{T}}(k\tau)
+        \mathbf{p}^{\top}(k\tau)_{\mathrm{Trajectory}} = \mathbf{p}(0)^{\top}\widetilde{\mathbf{T}}(k\tau)
     \end{equation*}
-    \item Compare the $\mathbf{p}(k\tau)_{\mathrm{HMM}}$ and $\mathbf{p}(k\tau)_{\mathrm{Trajectory}}$ for a range of values of $k$ and for different initial state vectors, $\mathbf{p}_{0}$. In \cite{schererPyEMMASoftwarePackage2015a} $\mathbf{p}_{0}$ are the HMM basis vectors. 
+    \item Compare the $\mathbf{p}(k\tau)_{\mathrm{HMM}}$ and $\mathbf{p}(k\tau)_{\mathrm{Trajectory}}$ for a range of values of $k$ and for different initial state vectors, $\mathbf{p}(0)$. In \cite{schererPyEMMASoftwarePackage2015a} $\mathbf{p}(0)$ are the HMM basis vectors, i.e. $\mathbf{p} = (1, 0, 0, \ldots),(0, 1, 0, \ldots)$. 
 \end{enumerate}
 
