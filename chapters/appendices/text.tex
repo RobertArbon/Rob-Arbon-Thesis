@@ -11,17 +11,17 @@ This appendix contains the supplementary information  \cite{songTransientCavityD
 
 In order to determine evaporation and condensation timescales for binary systems that are mixtures of water and organic compounds, they were subjected to a single transition step of relative humidity (RH) across different particle size and between different pair of target RH. 
 
-An individual binary solution aerosol droplet (\SIrange[range-phrase=-]{3}{10}{\micro\meter} radius) is captured at high RH/dilute saccharide concentration in a gradient-force optical trap (optical tweezers) formed by a tightly focused laser beam (wavelength \SI{532}{\nano\meter})[1,2]. After a period of conditioning at an elevated RH (typically \SIrange[range-phrase=-]{70}{80}{\percent}), the mixing ratios of humidified and dry nitrogen are altered to drive a change in RH in the trapping cell. Measurements proceed either through small downward (or upward) steps in RH of \SI{10}{\percent} or following large changes of \SI{30}{\percent} or more. The moisture content of the droplet responds accordingly, attempting to remain at a water activity equal to the surrounding RH, driving a change in particle size through the evaporation or condensation of water. 
+An individual binary solution aerosol droplet (\SIrange[range-phrase=--]{3}{10}{\micro\meter} radius) is captured at high RH/dilute saccharide concentration in a gradient-force optical trap (optical tweezers) formed by a tightly focused laser beam (wavelength \SI{532}{\nano\meter}). \cite{powerProbingMicrorheologicalProperties2014}\cite{Song2016a} After a period of conditioning at an elevated RH (typically \SIrange[range-phrase=--]{70}{80}{\percent}), the mixing ratios of humidified and dry nitrogen are altered to drive a change in RH in the trapping cell. Measurements proceed either through small downward (or upward) steps in RH of \SI{10}{\percent} or following large changes of \SI{30}{\percent} or more. The moisture content of the droplet responds accordingly, attempting to remain at a water activity equal to the surrounding RH, driving a change in particle size through the evaporation or condensation of water. 
 
-The time-dependence in the particle size and refractive index (hence composition and moisture content) are inferred (with sub-nm precision for size) from the shifts in the wavelengths of whispering gallery modes apparent on the Raman O-H stretching band of water [3–5]. 
+The time-dependence in the particle size and refractive index (hence composition and moisture content) are inferred (with sub-\si{\nano\meter} precision for size) from the shifts in the wavelengths of whispering gallery modes apparent on the Raman O-H stretching band of water. \cite{prestonAccurateEfficientDetermination2013}\cite{reidSpectroscopicStudiesSize2007}\cite{reidLaserProbingSingleaerosol2006}
 
-Figure S1 shows one example of KWW fitting for the aqueous-sucrose system. The response in particle size is inferred from the wavelength shift indicated by the red line, starting at a particle size of \SI{3650}{\nano\meter} and a wavelength of \SI{655.4}{\nano\meter} following an initial period of \SI{3}{\hour} conditioning at \SI{30}{\percent} RH. From this point, the KWW equation was applied to fit the evaporation step (RH \SIrange{30}{5}{\percent}) as shown by the blue line. The fitting of the condensation step (RH \SIrange{5}{30}{\percent}) is shown by the green line. The timescales of water transport for each process were \SI{1841}{\second} and \SI{2566}{\second}, respectively. As the fitting results demonstrate, the KWW equation is a suitable method to determine the relaxation process. 
+Figure \ref{fig:wat_s1} shows one example of KWW fitting for the aqueous-sucrose system. The response in particle size is inferred from the wavelength shift indicated by the red line, starting at a particle size of \SI{3650}{\nano\meter} and a wavelength of \SI{655.4}{\nano\meter} following an initial period of \SI{3}{\hour} conditioning at \SI{30}{\percent} RH. From this point, the KWW equation was applied to fit the evaporation step (RH \SIrange{30}{5}{\percent}) as shown by the blue line. The fitting of the condensation step (RH \SIrange{5}{30}{\percent}) is shown by the green line. The timescales of water transport for each process were \SI{1841}{\second} and \SI{2566}{\second}, respectively. As the fitting results demonstrate, the KWW equation is a suitable method to determine the relaxation process. 
 
-It has previously been shown that stretched exponential relaxation reflects the departure from a single-exponential relaxation in size as the particle becomes increasingly viscous [6],
+It has previously been shown that stretched exponential relaxation reflects the departure from a single-exponential relaxation in size as the particle becomes increasingly viscous \cite{Rickards2015},
 \begin{equation}\label{eqn:wat_si_1}
 F(t)=\frac{r(t)-r(t=\infty)}{r(t=0)-r(t=\infty)}=\exp \left[-\left(\frac{t}{\tau}\right)^{\beta}\right]
 \end{equation}
-where t is the experimental time, $\tau$ is the timescale of relaxation and $\beta$ characterizes the shape of the multi-exponential time-dependence. The response function, $F(t)$, characterizes the fractional relaxation from the initial particle radius $r$ at $t=\SI{0}{\second}$ through to the final equilibrated radius at $t=\infty$ following the change in RH.
+where $t$ is the experimental time, $\tau$ is the timescale of relaxation and $\beta$ characterizes the shape of the multi-exponential time-dependence. The response function, $F(t)$, characterizes the fractional relaxation from the initial particle radius $r$ at $t=\SI{0}{\second}$ through to the final equilibrated radius at $t=\infty$ following the change in RH.
 
 This KWW fitting process has been carried out using customized LabVIEW software.
 
@@ -32,7 +32,7 @@ This KWW fitting process has been carried out using customized LabVIEW software.
     \label{fig:wat_s1}
 \end{figure}
 
-\section{The Effect of Particle Size on Equilibration Time ($\tau$) for Six Binary Organic Systems}
+\section{The Effect of Particle Size on Equilibration Time for Six Binary Organic Systems}
 Before moving on to fit the compositional dependence of diffusion constants, we consider first the qualitative dependence on droplet size. The experiment conditions are divided into two main categories for evaporation and condensation in this study: a low viscosity transition (RH \SIrange{50}{30}{\percent} and RH \SIrange{30}{50}{\percent}) and a high viscosity transition (RH \SIrange{30}{5}{\percent} and RH \SIrange{5}{30}{\percent}). The six panels in figure \ref{fig:wat_s2} show measurements for six binary systems of aqueous-glucose, aqueous-sucrose, aqueous-trehalose, aqueous-raffinose, aqueous-maltose, and aqueous-levoglucosan. All measurements for the six binary organic mixtures clearly show different trends with respect to initial or final RH, but the characteristic timescale of water transport ($\tau$) clearly also shows a particle size dependence during evaporation or condensation.
 
 \begin{figure}
@@ -42,137 +42,158 @@ Before moving on to fit the compositional dependence of diffusion constants, we 
     \label{fig:wat_s2}
 \end{figure}
 
-In the high relative humidity region, transitions RH \SI{50}{\percent} - \SI{30}{\percent} - \SI{50}{\percent} (i.e. the evaporation step of RH \SI{50}{\percent} to \SI{30}{\percent} and condensation step of RH \SI{30}{\percent} to \SI{50}{\percent}), the droplets of maltose showed the largest value of timescale of water transport ($\tau$) over the other organic particles, see Figure xxxS3. Moreover, the characteristic timescale increases with increasing particle size for every binary organic system. For example, the characteristic timescale of raffinose is \SI{188}{\second} for \SI{3332}{\nano\meter}, \SI{265}{\second} for \SI{4110}{\nano\meter}, and \SI{313}{\second} for \SI{4924}{\nano\second}. Comparing similarly sized particles of $\sim \SI{4}{\micro\meter}$ during an evaporation step, the organic particles show $\SI{514}{\second} \pm \SI{31}{\second}$ for maltose (\SI{4114}{\nano\meter}), $\SI{250}{\second} \pm \SI{23}{\second}$ for raffinose (\SI{3967}{\nano\meter}), $\SI{157}{\second} \pm \SI{13}{\nano\second}$ for trehalose (\SI{4101}{\nano\meter}), $\SI{59}{\nano\second} \pm \SI{19}{\second}$ for sucrose (\SI{4016}{\nano\meter}), $\SI{29}{\second} \pm \SI{3}{\second}$ for glucose (\SI{3871}{\nano\meter}), and $\SI{32}{\second} \pm \SI{4}{\second}$ for levoglucosan (\SI{3746}{\nano\meter}). The ordering of the timescales for all particles sizes in the range of \SIrange[range-phrase=-]{3}{6}{\micro\meter} show the same tendency: maltose $>$ raffinose $>$ trehalose $>$ sucrose $>$ glucose $\ge$ levoglucosan, as shown in figure \ref{fig:wat_s3}. In this region, raffinose and maltose particles have experienced the glass transition at RH $\sim \SI{53}{\percent}$ and RH $\sim\SI{32}{\percent}$ in the ambient temperature.[2,7] However, trehalose, sucrose, glucose and levoglucosan do not pass through the glass transition RH until a much lower value. The molecular diffusivity of water in each organic system will be treated in the next section.
+In the high relative humidity region, transitions RH \SI{50}{\percent} - \SI{30}{\percent} - \SI{50}{\percent} (i.e. the evaporation step of RH \SI{50}{\percent} to \SI{30}{\percent} and condensation step of RH \SI{30}{\percent} to \SI{50}{\percent}), the droplets of maltose showed the largest value of timescale of water transport ($\tau$) over the other organic particles, see figure \ref{fig:wat_s3}. Moreover, the characteristic timescale increases with increasing particle size for every binary organic system. For example, the characteristic timescale of raffinose is \SI{188}{\second} for \SI{3332}{\nano\meter}, \SI{265}{\second} for \SI{4110}{\nano\meter}, and \SI{313}{\second} for \SI{4924}{\nano\second}. Comparing similarly sized particles of $\sim \SI{4}{\micro\meter}$ during an evaporation step, the organic particles show $\SI{514}{\second} \pm \SI{31}{\second}$ for maltose (\SI{4114}{\nano\meter}), $\SI{250}{\second} \pm \SI{23}{\second}$ for raffinose (\SI{3967}{\nano\meter}), $\SI{157}{\second} \pm \SI{13}{\nano\second}$ for trehalose (\SI{4101}{\nano\meter}), $\SI{59}{\nano\second} \pm \SI{19}{\second}$ for sucrose (\SI{4016}{\nano\meter}), $\SI{29}{\second} \pm \SI{3}{\second}$ for glucose (\SI{3871}{\nano\meter}), and $\SI{32}{\second} \pm \SI{4}{\second}$ for levoglucosan (\SI{3746}{\nano\meter}). The ordering of the timescales for all particles sizes in the range of \SIrange[range-phrase=--]{3}{6}{\micro\meter} show the same tendency: maltose $>$ raffinose $>$ trehalose $>$ sucrose $>$ glucose $\ge$ levoglucosan, as shown in figure \ref{fig:wat_s3}. In this region, raffinose and maltose particles have experienced the glass transition at RH $\sim \SI{53}{\percent}$ and RH $\sim\SI{32}{\percent}$ in the ambient temperature.\cite{Song2016a}\cite{Tong2011} However, trehalose, sucrose, glucose and levoglucosan do not pass through the glass transition RH until a much lower value. The molecular diffusivity of water in each organic system will be treated in the next section.
 
 \begin{figure}
     \centering
-    \caption{\textbf{Timescale of water transport ($\bm{\tau}$) for evaporation step and condensation steps}. The values are also reported numerically in Table xxxS1. The evaporation and condensation timescales are determined by KWW function, and particle size is calculated from the droplet Raman signal by the proprietary LARA software. Compositions are: (a) binary aqueous-glucose (b) binary aqueous-sucrose (c) binary aqueous-trehalose (d) binary aqueous-raffinose (e) binary aqueous-maltose (f) binary aqueous-levoglucosan}
+    \caption{\textbf{Timescale of water transport ($\bm{\tau}$) for evaporation step and condensation steps}. The values are also reported numerically in table \ref{tab:wat_s1}. The evaporation and condensation timescales are determined by KWW function, and particle size is calculated from the droplet Raman signal by the proprietary LARA software. Compositions are: (a) binary aqueous-glucose (b) binary aqueous-sucrose (c) binary aqueous-trehalose (d) binary aqueous-raffinose (e) binary aqueous-maltose (f) binary aqueous-levoglucosan}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image005.jpg}
     \label{fig:wat_s3}
 \end{figure}
 
-more text here
+For transitions at low relative humidity, notably for RH \SI{30}{\percent} to \SI{5}{\percent} and \SI{5}{\percent} to \SI{30}{\percent}, which is the high viscosity region for all compounds, the characteristic timescales of water transport of maltose particles have the longest water transport timescales in the low humidity region. Comparing similar sized particles of $\sim \SI{4}{\micro\meter}$ during an evaporation step, the organic particles showed the timescales as follows: $\SI{4062}{\second} \pm \SI{55}{\second}$ for maltose (\SI{3745}{\nano\meter}), $\SI{2035}{\second} \pm \SI{23}{\second}$ for sucrose (\SI{3809}{\nano\meter}), $\SI{1447}{\second} \pm \SI{19}{\second}$ for raffinose (\SI{3952}{\nano\meter}), $\SI{1342}{\second} \pm \SI{17}{\second}$ for trehalose (\SI{4040}{\nano\meter}), and $\SI{1009}{\second} \pm \SI{10}{second}$ for glucose (\SI{3871}{\nano\meter}). Levoglucosan cannot be measured in this RH region with particles crystallising at higher RH. The ordering of the timescales for all particles sized in the range of \SIrange[range-phrase=--]{3}{6}{\micro\meter} show the same tendency; maltose $>$ sucrose $>$ raffinose $>$ trehalose $>$ glucose, as shown in figure \ref{fig:wat_s2}. In this low RH region, raffinose (RH $\sim \SI{53}{\percent}$)\cite{Song2016a}\cite{Tong2011}, sucrose (RH $\sim \SI{23}{\percent}$)\cite{Song2016a}\cite{Tong2011}, trehalose (RH $\sim \SI{22}{\percent}$)\cite{Song2016a}\cite{chenLiteratureReviewSupplemented2000}, and maltose (RH $\sim \SI{32}{\percent}$)\cite{Song2016a}\cite{fosterGlassTransitionRelated2006} pass through the glass transition RH at ambient temperature except glucose, and glucose shows the smallest timescale for water transport. The characteristic timescale of water transport can be explained by water diffusion in the organic particles. All water transport experimental data go into Fi-PaD diffusion simulation.
+
 
 \section{Equilibration Time variation with ``Wait Time'' Effect}
- 
-more text here
+The relaxation dynamics for condensation processes are dependent on the ``wait time'' (i.e., also referred to the aging of the particle). Figure \ref{fig:wat_s4} shows the impact of ``wait time'' on the relaxation timescale of water transport in a binary water-sucrose system. In this case the relaxation timescale is the timescale for the re-condensation of water following a period of drying of varying time (the ``wait time''). Three different experimental conditions were studied. Sucrose particles that are indicated in black squares were dried for \num{5} hours at RH \SI{30}{\percent}, and then the particles were held at RH \SI{5}{\percent} for \num{6} hours. For comparison with this data set, sucrose droplets, indicated by red circles and blue triangles, were held at \num{12} and \num{24} hours at RH \SI{5}{\percent}. After \num{6}, \num{12}, and \num{24} hours at \SI{5}{\percent} RH, the RH is restored to the initial level \SI{30}{\percent} RH. Several sucrose particles across a range of particle size (\SIrange[range-phrase=--]{3}{5}{\micro\meter}) were studied at each RH transition. Figure \ref{fig:wat_s4} shows that when the particles experienced a long wait time, the relaxation timescale of water transport ($\tau$) increased during re-condensation following the increase in RH to the initial level. Depending on wait time under dry conditions, the water content varies both in magnitude and spatially before the RH is increased.\cite{Rickards2015} When increasing RH again, water vapor immediately condenses onto the particle surface, and leads to a unique level of heterogeneity which varies with the timescale over which moisture has been removed and the particle dried.\cite{Rickards2015}\cite{luTimescalesWaterTransport2014} The KWW equation was used to determine the timescales for the re-condensation step and the dependence on particle size is shown in the figure. When the particle size is larger, the timescale for re-condensation is also greater. The three trend lines in the figure, fitted by a linear equation, clearly indicate the relation between drying time, particle size and re-condensation timescale. The significance of the wait time is that when particle returned to the initial state from dry condition, the condensation time to return the particle to equilibrium with the surroundings increases as the wait time increases. 
 
 
 \begin{figure}
     \centering
-    \caption{\textbf{Timescales of water transport}. Timescale of water transport ($\tau$) for each condensation step of sucrose, RH change from \SI{30}{\percent} to \SI{5}{\percent} then back to \SI{30}{\percent} after drying. Particles of black squares experienced 6 hours drying time at RH \SI{5}{\percent}, particles of red circles experienced 12 hours drying time at RH \SI{5}{\percent}, and particles of blue triangles experienced 24 hours drying time at RH \SI{5}{\percent}. Error bars were calculated a variation of $\beta \pm \num{0.1}$. }
+    \caption{\textbf{Timescales of water transport}. Timescale of water transport ($\tau$) for each condensation step of sucrose, RH change from \SI{30}{\percent} to \SI{5}{\percent} then back to \SI{30}{\percent} after drying. Particles of black squares experienced \num{6} hours drying time at RH \SI{5}{\percent}, particles of red circles experienced \num{12} hours drying time at RH \SI{5}{\percent}, and particles of blue triangles experienced \num{24} hours drying time at RH \SI{5}{\percent}. Error bars were calculated a variation of $\beta \pm \num{0.1}$. }
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image006.jpg}
     \label{fig:wat_s4}
 \end{figure}
 
 \section{Fickian diffusion modelling (Fi-PaD model) for determining diffusivity of water in aerosol particles.}
 
-text here
+In order to determine diffusivity of water in organic mixtures, a recently developed Fi-PaD model is applied to experimental data in this work. This was achieved using the same WGMs as were selected to fit KWW functions to.
+
+O’Meara et al. developed a partial differential model, called Fi-PaD model, comparing it with two other diffusion models referred to as the ETH model and KM-GAP model (kinetic multi-layer model of gas-particle interactions in aerosol and clouds).\cite{omearaRateEquilibrationViscous2016} The Fi-PaD model is established using Fick’s second law. The Fi-PaD model uses three initial assumptions below:
+\begin{enumerate}
+    \item An aerosol particle is spherical.
+    \item A spherical particle is divided into inner concentric shells.
+    \item A surface shell immediately reaches an equilibrium state with gas phase RH.
+\end{enumerate}
+
+According to these assumptions, an aerosol particle consists of a number of concentric shells within the particle bulk in the Fi-PaD model. In this thesis, the number of shells is \num{400} and the resolution of a shell is around \SI{10}{\nano\meter} for \SI{4}{\micro\meter} radii of particle. 
+
+The Fi-PaD model is used to provide a forward simulation of the time-dependent size and response function following the step change in the gas phase RH change. \cite{omearaRateEquilibrationViscous2016}\cite{Ingram2017} A first guess for the water activity dependence of the diffusion coefficient is assumed. The diffusion coefficient of water in the mixture, $D_{w}$, is assumed to follow a Vignes form:\cite{omearaRateEquilibrationViscous2016}\cite{Ingram2017} 
+\begin{equation}\label{eqn:vignes_form}
+D_{\mathrm{w}}(x, \alpha)=D_{\mathrm{w, w}}^{x \alpha} \times D_{\mathrm{w}, \mathrm{org}}^{(1-x \alpha)}
+\end{equation}
+where $x$ is the mole fraction of water, $D_{\mathrm{w, w}}$ is the known and limiting value of the diffusion coefficient of water in pure water, $D_{\mathrm{w}, \mathrm{org}}$ is diffusion coefficient of water in pure solute at infinite dilution of water. $\alpha$ is often viewed as analogous to an activity coefficient, given by:
+\begin{equation}
+\ln \alpha=A(1-x)^{3},
+\end{equation}
+where $A$ is a temperature dependent parameter. Using Fick’s second law, the model simulates the concentration change of every shell in the particle by calculating the approximate diffusional mass flux.  
+
+All measurements are performed at room temperature ($\num{20}^{\circ}\mathrm{C}$). Thus, two fit parameters ($A$ and $D_{\mathrm{w,org}}$) are varied independently to achieve the best fit to the time-dependent size. For the example shown in figure \ref{fig:wat_f1} panel (a), the best-fit water activity dependence of the diffusion coefficient of water in the mixture is shown in figure \ref{fig:wat_f1} panel (b). 
 
 \section{Holographic optical tweezers}
-
-text here
+Holographic Optical Tweezers (HOT) are used to initiate the coalescence process between two aerosol particles and to, thereby, infer the particle viscosity at a particular gas phase RH/particle moisture content.\cite{Song2016a} In order to catch multiple droplets, the optical additional components are required and are shown in figure \ref{fig:wat_s5}. The most significant is the inclusion of a Spatial Light Modulator (Holoeye SLM LC-R 2500, twisted nematic, liquid crystal on silicon) on the right side and a high bit-rate oscilloscope (LeCroy Wavesurfer 454) with photo detector (Thorlabs DET 110) on the left side, as shown in figure \ref{fig:wat_s5}. The trapping beam is a continuous wave Nd:YVO4 laser at \SI{532}{\nano\meter} (maximum output is \SI{3}{\watt}, Opus, Laser Quantum). After the laser output, the trapping beam is a vertically polarised by a half-wave plate, and it directly passes through a telescope which adjusts beam size. The SLM is used to split the beam. A beam expansion telescope and inverted microscope objective generate the optical traps to capture aerosol particles. Using the half-wave plate, the power division between the SLM and a beam dump can be controlled. In the trapping cell, multiple droplets can be held by the split beam. During experimental measurements, particle images are recorded by camera, and Raman spectra are recorded by the spectrograph. Light scattering patterns following the initiation of coalescence event are recorded by the photo detector.
 
 \begin{figure}
     \centering
-    \caption{\textbf{A schematic representation of Holographic Optical Tweezers (HOT)}. The camera provides particle images, Raman spectrum is recorded by the spectrograph, and light scattering pattern is recorded by the photo detector.2}
+    \caption{\textbf{A schematic representation of Holographic Optical Tweezers (HOT)}. The camera provides particle images, Raman spectrum is recorded by the spectrograph, and light scattering pattern is recorded by the photo detector.\cite{Song2016a}}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image011.jpg}
     \label{fig:wat_s5}
 \end{figure}
 
 \section{Viscosity of Saccharide Solutions Aerosol Particles}
 
-text here
+Previously,the procedure for recording the viscosity of aerosols containing saccharides, alcohol, di- and tri-carboxylic acids  has been described, reporting viscosity measurements as a function of RH.\cite{powerProbingMicrorheologicalProperties2014}\cite{Song2016a}\cite{powerTransitionLiquidSolidlike2013} Briefly, pairs of aerosol particles of identical composition are captured in parallel optical traps formed using an holographic optical tweezers arrangement. The particles are conditioned at a fixed RH (in the range $<\SI{5}{\percent}$ to $>\SI{90}{\percent}$ RH) for a period of time that can extend to hours. It has been shown that this allows sufficient time for the particles to achieve a moisture content in equilibrium with the gas phase RH and a uniform homogeneous composition/viscosity.\cite{Song2016a} 
+
+Coalescence is initiated by beam-steering, merging the pair of optical traps. At low viscosity ($<\SI{10}{\pascal\second}$), the particles may merge and relax in shape on a timescale less than \SI{1}{\milli\second}, a process that is monitored by measuring the relaxation in the back-scattered light from the optical trap. At higher viscosities, direct brightfield images can be recorded and the distortion in shape followed by determining the aspect ratio of the composite particle. The time-dependent decay in the aspect ratio can extend from milliseconds to $\gg \SI{10000}{\second}$, extending the viscosity range that can be measured from \SI{1}{\pascal\second}  up to \SIrange[range-phrase=--]{e8}{e9}{\pascal\second}\cite{Song2016a}. The viscosity is then inferred from the relaxation timescale, $\tau$, assuming over-damped creeping fluid flow, the droplet radius and an estimate of the surface tension, $\sigma$:
+\begin{equation}
+\tau=\frac{\eta r}{\sigma}
+\end{equation}
+
+A comparison of the viscosity trends for saccharides from mono- to tri- structures is provided in figure \ref{fig:wat_s6}. There is a clear systematic trend toward higher viscosity as the composition progresses from a monosaccharide to a trisaccharide, depending on chemical structure, and molecular weight, with an order: glucose (\SI{180.16}{\gram\per\mole}) $<$ sucrose (\SI{342.30}{\gram\per\mol}) $<$ trehalose (\SI{342.296}{\gram\per\mol}) $<$ maltose (\SI{342.30}{\gram\per\mol}) $<$ raffinose (\SI{504.42}{\gram\per\mol}).
+
 
 \begin{figure}
     \centering
     \includegraphics{chapters/water_hopping/figures/image014.jpg}
-    \caption{\textbf{A comparison of viscosity of different systems}. Aqueous glucose (black), aqueous sucrose (red) aqueous trehalose (blue), aqueous maltose (pink), and aqueous raffinose (orange).[2] Figure is redrawn from Song et al.[2]}
+    \caption{\textbf{A comparison of viscosity of different systems}. Aqueous glucose (black), aqueous sucrose (red) aqueous trehalose (blue), aqueous maltose (pink), and aqueous raffinose (orange).\cite{Song2016a} Figure is redrawn from Song et al.\cite{powerTransitionLiquidSolidlike2013}}
     \label{fig:wat_s6}
 \end{figure}
 
 \section{Molecular dynamics}
 \subsection{Force Fields}
-Water was represented by the TIP4P/200514potential, due to its accuracy in reproducing the experimental phase and self diffusion characteristics. Sucrose was represented by a modified version of the GROMOS 54a7 force field15, with an expanded range of atom types. Both the force field and the initial pdb all-atom coordinates were acquired from the automated topology builder (ATB) database16(further details on the generation17and validation18of coordinates, partial charges and force fields by ATB has been detailed extensively in the literature).
+Water was represented by the TIP4P/2005 \cite{abascalGeneralPurposeModel2005} potential, due to its accuracy in reproducing the experimental phase and self diffusion characteristics. Sucrose was represented by a modified version of the GROMOS 54a7 force field \cite{oostenbrinkBiomolecularForceField2004}, with an expanded range of atom types. Both the force field and the initial pdb all-atom coordinates were acquired from the automated topology builder (ATB) database \cite{koziaraTestingValidationAutomated2014} (further details on the generation \cite{maldeAutomatedForceField2011} and validation \cite{schmidDefinitionTestingGROMOS2011} of coordinates, partial charges and force fields by ATB has been detailed extensively in the literature).
 
-11Initial coordinates were generated using the packmol program, which randomly places set numbers of molecules into three dimensional space, allowing tight control over the solute mole fractions in the generated simulation boxes, whilst not biasing the simulations to one area of configuration space. Constraints were inserted such that no two molecules were placed within \SI{3}{\angstrom} of each other, and the input random seed was continuously replaced using the bash \$RANDOM global variable. 
+Initial coordinates were generated using the packmol \cite{martinez2009packmol} program, which randomly places set numbers of molecules into three dimensional space, allowing tight control over the solute mole fractions in the generated simulation boxes, whilst not biasing the simulations to one area of configuration space. Constraints were inserted such that no two molecules were placed within \SI{3}{\angstrom} of each other, and the input random seed was continuously replaced using the bash \$RANDOM global variable. 
 
-The Lincs algorithm 19 was used to constrain all bonds, to an order of four in the constraint coupling matrix, with seven iterations in the final step.Electrostatic forces were calculated using the particle mesh Ewald summation20, and Van der Waals interactions were provided by the twin range cut-offs method, both of which were truncated at \SI{8}{\angstrom}. The update frequency was every 5 timesteps. The Verlet scheme21was used for neighbour searching across the periodic boundary conditions in three dimensions. Velocities were generated using a Maxwell-Boltzmann distribution at \SI{300}{\kelvin}, with the random seed continuously changed.
+The Lincs algorithm \cite{hess1997lincs} was used to constrain all bonds, to an order of four in the constraint coupling matrix, with seven iterations in the final step.Electrostatic forces were calculated using the particle mesh Ewald summation \cite{essmannSmoothParticleMesh1995}, and Van der Waals interactions were provided by the twin range cut-offs method, both of which were truncated at \SI{8}{\angstrom}. The update frequency was every \num{5} time-steps. The Verlet scheme \cite{pallFlexibleAlgorithmCalculating2013} was used for neighbour searching across the periodic boundary conditions in three dimensions. Velocities were generated using a Maxwell-Boltzmann distribution at \SI{300}{\kelvin}, with the random seed continuously changed.
 
 \subsection{Equilibration}
-Water was represented by the TIP4P/200514 potential, due to its accuracy in reproducing the experimental phase and self diffusion characteristics. Sucrose was represented by a modified version of the GROMOS 54a7 force field15, with an expanded range of atom types. Both the force field and the initial PDB all-atom coordinates were acquired from the automated topology builder (ATB) database16 (further details on the generation17and validation18of coordinates, partial charges and force fields by ATB has been detailed elsewhere in the literature)
-
-Initial coordinates were generated using the packmol program, which randomly places set numbers of molecules into three-dimensional space, allowing tight control over the solute mole fractions in the generated simulation boxes, whilst not biasing the simulations to one area of configuration space. Constraints were inserted such that no two molecules were placed within \SI{3}{\angstrom} of each other, and the input random seed was continuously replaced using the bash \$RANDOM global variable. The simulation box used in each case was a cubic unit cell of side length $\sim \SI{2.5}{\nano\meter}$, periodic in all three dimensions.
-
-The Lincs algorithm19was used to constrain all bonds, to an order of four in the constraint coupling matrix, with seven iterations in the final step. Electrostatic forces were calculated using the particle mesh Ewald summation20, and Van der Waals interactions were provided by the twin range cut-offs method, both of which were truncated at \SI{8}{\angstrom}. The update frequency was every 5 timesteps. The Verlet scheme21was used for neighbour searching across the periodic boundary conditions in three dimensions. Velocities were generated using a Maxwell-Boltzmann distribution at \SI{300}{\kelvin}, with the random seed continuously changed. 
-
-The starting coordinates produced by packmol are not suitable for MD simulations immediately. The configuration must be energy minimised using the steepest descent method to allow bonds and angles to satisfy the constraints of the topology file. The minimisation was conducted with an initial step size of \SI{0.001}{\nano\meter} until the maximum force was below \SI{50}{\kilo\joule\per\mole\per\nano\meter}. After this, approximately \SI{500}{\pico\second} of equilibration was conducted with the standard GROMACS MD integrator and thermodynamic ensemble produced as described in the main text. 
+ The starting coordinates produced by packmol \cite{martinez2009packmol} are not suitable for MD simulations immediately. The configuration must be energy minimised using the steepest descent method to allow bonds and angles to satisfy the constraints of the topology file. The minimisation was conducted with an initial step size of \SI{0.001}{\nano\meter} until the maximum force was below \SI{50}{\kilo\joule\per\mole\per\nano\meter}. After this, approximately \SI{500}{\pico\second} of equilibration was conducted with the standard GROMACS MD integrator and thermodynamic ensemble produced as described in the main text. 
 
 \subsection{Mean squared displacement data collection}
-Initial coordinates were generated from the output frame of the equilibration trajectory within the regime where the total energy was stable. During the MD integration, the system was propagated in the NpT ensemble at \SI{300}{\kelvin} and \SI{101}{\kilo\pascal}, using a velocity rescaling thermostat 22 and the Parrinello-Rahman barostat 23, respectively. Initial velocities were randomly generated to satisfy a Maxwell-Boltzmann distribution at 300 K in each case. All simulations described were conducted using GPU acceleration, with the MD package GROMACS (version 5.0.6)24, running on the Blue Crystal 3 high performance computing cluster at the University of Bristol.
+Initial coordinates were generated from the output frame of the equilibration trajectory within the regime where the total energy was stable. During the MD integration, the system was propagated in the NpT ensemble at \SI{300}{\kelvin} and \SI{101}{\kilo\pascal}, using a velocity rescaling thermostat \cite{bussiCanonicalSamplingVelocity2007} and the Parrinello-Rahman barostat \cite{parrinelloPolymorphicTransitionsSingle1981}, respectively. Initial velocities were randomly generated to satisfy a Maxwell-Boltzmann distribution at \SI{300}{\kelvin} in each case. All simulations described were conducted using GPU acceleration, with the MD package GROMACS (version 5.0.6)\cite{abrahamGROMACSHighPerformance2015}, running on the Blue Crystal 3 high performance computing cluster at the University of Bristol.
 
-Due to the extremely kinetically limited state of the aqueous-sucrose system, it is necessary to simulate dynamics for very long periods of time, relative to, for example, the timescale of molecular vibration or rotation. This maximises the probability that the initial conditions are overcome, and that the constituent molecules decorrelated from their initial conditions as the simulation proceeds. In each of the trajectories of caged water, dynamics were computed for \SI{1}{\micro\second}, and it was found that, when averaged over all nine trajectories, the mean squared displacements of the water molecules converged to a diffusive dependence on simulation time, $t$, (Figure xxx S7).
+Due to the extremely kinetically limited state of the aqueous-sucrose system, it is necessary to simulate dynamics for very long periods of time, relative to, for example, the timescale of molecular vibration or rotation. This maximises the probability that the initial conditions are overcome, and that the constituent molecules decorrelated from their initial conditions as the simulation proceeds. In each of the trajectories of caged water, dynamics were computed for \SI{1}{\micro\second}, and it was found that, when averaged over all nine trajectories, the mean squared displacements of the water molecules converged to a diffusive dependence on simulation time, $t$ (figure \ref{fig:wat_s7}).
 \begin{equation}\label{eqn:wat_msd}
-\left\langle r^{2}\right\rangle=2 D_{w, org} t
+\left\langle r^{2}\right\rangle=2 D_{\mathrm{w, org}} t
 \end{equation}
 
 The net displacement achieved by a random walk in three-dimensions will be less than the path length taken between the initial and final positions, a consequence of the fact that the translational motion of water through such a lattice is not Brownian. All nine trajectories contain segments during which the water is travelling perpendicularly, or even backwards, relative to its net displacement. It may be the case that the decorrelation of the water velocity is limited by the rearrangement of the sucrose, as well as the thermodynamic barrier that must be overcome to hop to the nearest available cavity, rather than the dynamics of a more typical solvation shell in an aqueous environment. Therefore, it is desirable to calculate the magnitude of the displacement to the current position, $\left|\left\langle r^{2}\right\rangle\right|$, at every time-step, rather than cumulatively sum the path length that takes into account every intermediate `jump’. Additionally, removal from the calculation of the centre of mass motion of the water molecule ensures that any atomically resolved vibrational motion does not contribute to the calculation of net displacement. The value stated in the manuscript and illustrated in figure \ref{fig:wat_workflow} panel (c) was calculated under these conditions. 
 
 \begin{figure}
     \centering
-    \mycaption{\textbf{Single particle mean squared displacement}. Shown are the $\left\langle r^{2}\right\rangle$ of the nine trajectories (purple), along with best fit of the mean path (red) to equation \ref{eqn:wat_msd} (yellow, including constant at t=0)}
+    \mycaption{\textbf{Single particle mean squared displacement}. Shown are the $\left\langle r^{2}\right\rangle$ of the nine trajectories (purple), along with best fit of the mean path (red) to equation \ref{eqn:wat_msd} (yellow, including constant at $t=0$)}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/Fig_S7.png}
     \label{fig:wat_s7}
 \end{figure}
 
-These MD simulations were not designed to capture diffusion against a chemical potential gradient, which is what is induced and probed during the optical tweezers measurements reported above. Instead we wished to treat the water as a tracer particle moving stochastically through the matrix, subject to a small localization uncertainty arising from motion between adjacent frames.25This is the origin of the offset at $t=0$ in the figure. The per simulation $D$ values are presented in table xxxS2. 
+These MD simulations were not designed to capture diffusion against a chemical potential gradient, which is what is induced and probed during the optical tweezers measurements reported above. Instead we wished to treat the water as a tracer particle moving stochastically through the matrix, subject to a small localization uncertainty arising from motion between adjacent frames.\cite{michaletMeanSquareDisplacement2010} This is the origin of the offset at $t=0$ in the figure. The per simulation $D$ values are presented in table \ref{tab:wat_s2}. 
 
-A literature review was conducted to investigate whether any corrections or different functional forms of mean squared displacement needed to be fit. A recent publication26by Alcazar-Cano and Delgado-Buscalioni has suggested that in systems where the diffusing ‘tracer’ particles are trapped in the manner described here, and cannot freely move through channels, it may be more appropriate to fit $\left\langle r^{2}\right\rangle$ to a subdiffusive dependence, namely, 
+A literature review was conducted to investigate whether any corrections or different functional forms of mean squared displacement needed to be fit. A recent publication \cite{alcazar-canoGeneralPhenomenologicalRelation2018} by Alcazar-Cano and Delgado-Buscalioni has suggested that in systems where the diffusing `tracer’ particles are trapped in the manner described here, and cannot freely move through channels, it may be more appropriate to fit $\left\langle r^{2}\right\rangle$ to a subdiffusive dependence, namely, 
 \begin{equation}
-\left\langle r^{2}\right\rangle \sim D_{w, org} t^{\alpha}
+\left\langle r^{2}\right\rangle \sim D_{\mathrm{w, org}} t^{\alpha}
 \end{equation}
-where $\alpha \rightarrow 0$ as the proportion of particles that are trapped approaches \SI{100}{\percent}. Similar physics was described by Zwanzig earlier, in 1988,27although it was incorporated into the mathematics by correcting $D$,rather than $t$. Specifically, Zwanzig considered a so-called `rough potential' where the particle under consideration must traverse a landscape of many nearly degenerate local minima. In that case, the observed $D$ is smaller than the effective $D$ by a factor $\epsilon$ that accounts for the `roughness' of the free energy landscape.
+where $\alpha \rightarrow 0$ as the proportion of particles that are trapped approaches \SI{100}{\percent}. Similar physics was described by Zwanzig earlier, in 1988, \cite{zwanzigDiffusionRoughPotential1988} although it was incorporated into the mathematics by correcting $D$,rather than $t$. Specifically, Zwanzig considered a so-called `rough potential' where the particle under consideration must traverse a landscape of many nearly degenerate local minima. In that case, the observed $D$ is smaller than the effective $D$ by a factor $\epsilon$ that accounts for the `roughness' of the free energy landscape.
 
 \begin{equation}
-D_{w, org}=D_{effective} \exp \left(-\frac{\epsilon}{k T}\right)^{2}
+D_{\mathrm{w, org}}=D_{\mathrm{effective}} \exp \left(-\frac{\epsilon}{k T}\right)^{2}
 \end{equation}
 
-These  phenomena  are  often  observed  in  conjunction  with stretched  exponential  relaxation  in  sugar solutions,28,29which the radius curves in figure \ref{fig:wat_workflow} panel (a) also exhibit. 
+These  phenomena  are  often  observed  in  conjunction  with stretched  exponential  relaxation  in  sugar solutions,\cite{mesteGlassTransitionFood2002}\cite{Liu2006} which the radius curves in figure \ref{fig:wat_f1} panel (a) also exhibit. 
 
 \subsection{Calculation free volume}
-Three repeat trajectories of \SI{10}{\nano\second} length were conducted for glucose and raffinose, once again generated with randomly placed and oriented molecules via packmol and containing a single water. To determine the sucrose packing efficiency, truncated trajectories \SI{10}{\nano\second} long were extracted from the microsecond trajectories and subject to the same analysis, using the GROMACS `free-volume’ program, which attempts to insert `dummy’ probe particles into the box. The free volume calculated is the total volume of the successful insertions
+Three repeat trajectories of \SI{10}{\nano\second} length were conducted for glucose and raffinose, once again generated with randomly placed and oriented molecules via packmol and containing a single water. To determine the sucrose packing efficiency, truncated trajectories \SI{10}{\nano\second} long were extracted from the microsecond trajectories and subject to the same analysis, using the GROMACS `free-volume’ program, which attempts to insert `dummy’ probe particles into the box. The free volume calculated is the total volume of the successful insertions.
+
+\section{Markov state modelling}
+
+This section of the supplementary material has been incorporated into chapter \ref{chap:water}. 
 
 \section{The comparison of diffusion coefficient of aqueous-sucrose system}
 
+For diffusivity research, sucrose is a representative organic system because many researches have used sucrose. The comparison of diffusion curve of sucrose as a function of water activity is shown in figure \ref{fig:wat_s11}. The diffusion constants of water in aqueous-sucrose system in Figure S11 are measured and simulated with inferred by different strategies using AOT with Fi-Pad model, EDB with ETH model, and isotopic exchange. These three lines show good agreement until water activity \num{0.35}. The diffusion constants of water at \num{0.2} water activity by Price et al.\cite{Price2014} and this research differ by one order of magnitude. 
+
 \begin{figure}
     \centering
-    \caption{\textbf{The diffusion curve of water in a sucrose system as a function of water activity}. The green line is from Zobrist et al.[34], the blue line from Price et al.[33], and the red line is the experimental data which is simulated by Fi-PaD model.}
+    \caption{\textbf{The diffusion curve of water in a sucrose system as a function of water activity}. The green line is from Zobrist et al.\cite{C0CP01273D}, the blue line from Price et al.\cite{Price2014}, and the red line is the experimental data which is simulated by Fi-PaD model.}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image058.png}
     \label{fig:wat_s11}
 \end{figure}
 
-
 \begin{xltabular}{\linewidth}{|Y|Y|Y|Y|Y|Y|}
-\caption{\textbf{The Characteristic timescale of water transport determined experimentally for six binary mixtures}. This table provides all data points for water transport kinetics in Figure xxxS2. Particle size is direct measurement data in AOT and fit by LARA. The characteristic timescale is fit by KWW function. Error representing a variation of $\beta \pm 0.1.$} \label{tab:wat_s1} \\
-
+\caption{\textbf{The Characteristic timescale of water transport determined experimentally for six binary mixtures}. This table provides all data points for water transport kinetics in figure \ref{fig:wat_s2}. Particle size is direct measurement data in AOT and fit by LARA. The characteristic timescale is fit by KWW function. Error representing a variation of $\beta \pm 0.1.$} \label{tab:wat_s1} \\
 \hline RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second})  & RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second}) \\ \hline 
 \endfirsthead
-
 \multicolumn{6}{c}%
 {\tablename\ \thetable{} -- continued from previous page} \\
 \hline RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second})  & RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second}) \\ \hline 
 \endhead
-
 \hline \multicolumn{6}{|r|}{{Continued on next page}} \\ \hline
 \endfoot
-
 \hline
 \endlastfoot
-
 \hline 
 \multicolumn{3}{|c|}{\textbf{Aqueous-Glucose system}} & \multicolumn{3}{c|}{\textbf{Aqueous-Maltose system}} \\
 \hline 
-% \SIrange[range-phrase=-]{}{}{\percent}
 50-30 &	3707 &	27	& 50-30	& 368 & 3721 \\
 -- & 	3692	& 27	& --& 	514	& 4114\\
 -- &  	3871	& 29	& --& 	534	& 4329 \\
@@ -304,16 +325,70 @@ Three repeat trajectories of \SI{10}{\nano\second} length were conducted for glu
     \label{tab:wat_s2}
 \end{table}
 
-% \begin{table}[]
-%     \centering
-%     \begin{tabular}{c|c}
-%       System   &  Parameterization ($D_w(a_w)$ (\si{\meter\squared\per\second}))\\
-%       Aqueous-Levoglucosan   & $\log \left(\mathrm{D}_{\mathrm{w}}\left(\mathrm{a}_{\mathrm{w}}\right)\right)=-14.091+\left(2.192 \times \mathrm{a}_{\mathrm{w}}\right)+\left(-21.269 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{2}\right)+\left(81.025 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{3}\right)+(-84.660 \times$
-% $\left.\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(28.081 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)$ \\
-%     \end{tabular}
-%     \caption{Caption}
-%     \label{tab:my_label}
-% \end{table}
+\begin{table}
+    \centering
+    \caption{\textbf{Diffusion coefficients}. The best fit diffusion coefficients of six binary systems in figure \ref{fig:wat_f1} panel (c).}
+    \begin{tabularx}{\textwidth}{|p{3cm}|X|}
+    \hline
+    System & Paramaterization ($D_w(a_w)$ (\si{\meter\squared\per\second})) \\
+    \hline\hline
+        Aqueous-Levoglucosan &  
+        \begin{minipage}[c]{\linewidth}
+        \begin{multline*}
+         \log \left(\mathrm{D}_{\mathrm{w}}\left(\mathrm{a}_{\mathrm{w}}\right)\right)=-14.091+\left(2.192 \times \mathrm{a}_{\mathrm{w}}\right)\\
+         +\left(-21.269\times\left(\mathrm{a}_{\mathrm{w}}\right)^{2}\right)+\left(81.025 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{3}\right)\\
+         +\left(-84.660 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(28.081\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
+        \end{multline*}
+        \end{minipage} \\
+        \hline
+        Aqueous-glucose &  
+        \begin{minipage}[c]{\linewidth}
+        \begin{multline*}
+         \log \left(\mathrm{D}_{\mathrm{w}}\left(\mathrm{a}_{\mathrm{w}}\right)\right)=-15.047 +\left(0.963  \times \mathrm{a}_{\mathrm{w}}\right)\\
+         +\left(-0.186 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{2}\right)+\left(34.825 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{3}\right)\\
+         +\left(-47.724 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(18.472\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
+        \end{multline*}
+        \end{minipage} \\
+        \hline
+        Aqueous-sucrose &  
+        \begin{minipage}[c]{\linewidth}
+        \begin{multline*}
+         \log \left(\mathrm{D}_{\mathrm{w}}\left(\mathrm{a}_{\mathrm{w}}\right)\right)=-15.613  +\left(1.262  \times \mathrm{a}_{\mathrm{w}}\right)\\
+         +\left(-3.476 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{2}\right)+\left(46.468 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{3}\right)\\
+         +\left(-60.030 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(22.691\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
+        \end{multline*}
+        \end{minipage} \\
+        \hline
+        Aqueous-Trehalose &  
+        \begin{minipage}[c]{\linewidth}
+        \begin{multline*}
+         \log \left(\mathrm{D}_{\mathrm{w}}\left(\mathrm{a}_{\mathrm{w}}\right)\right)=-15.503   +\left(1.061  \times \mathrm{a}_{\mathrm{w}}\right)\\
+         +\left(0.642 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{2}\right)+\left(34.712  \times\left(\mathrm{a}_{\mathrm{w}}\right)^{3}\right)\\
+         +\left(-48.590 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(18.981\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
+        \end{multline*}
+        \end{minipage} \\
+        \hline
+        Aqueous-Maltose &  
+        \begin{minipage}[c]{\linewidth}
+        \begin{multline*}
+         \log \left(\mathrm{D}_{\mathrm{w}}\left(\mathrm{a}_{\mathrm{w}}\right)\right)=-15.857   +\left(1.269  \times \mathrm{a}_{\mathrm{w}}\right)\\
+         +\left(-6.922  \times\left(\mathrm{a}_{\mathrm{w}}\right)^{2}\right)+\left(58.525  \times\left(\mathrm{a}_{\mathrm{w}}\right)^{3}\right)\\
+         +\left(-72.854 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(27.141\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)       
+        \end{multline*}
+        \end{minipage} \\
+        \hline
+        Aqueous-Raffinose &  
+        \begin{minipage}[c]{\linewidth}
+        \begin{multline*}
+         \log \left(\mathrm{D}_{\mathrm{w}}\left(\mathrm{a}_{\mathrm{w}}\right)\right)=-15.393   +\left(1.113  \times \mathrm{a}_{\mathrm{w}}\right)\\
+         +\left(2.180  \times\left(\mathrm{a}_{\mathrm{w}}\right)^{2}\right)+\left(29.194   \times\left(\mathrm{a}_{\mathrm{w}}\right)^{3}\right)\\
+         +\left(-42.838 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(17.051\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
+        \end{multline*}
+        \end{minipage} \\
+        \hline
+    \end{tabularx}
+    \label{tab:wat_s3}
+\end{table}
 
 \chapter{Markov state model optimisation}\label{app:msm}
 
