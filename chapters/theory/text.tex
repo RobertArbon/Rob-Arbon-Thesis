@@ -241,7 +241,7 @@ However, if $\tau$ is too large then there may be processes of interest with tim
 
 As a compromise, $\tau$ is chosen by inspection of the data by plotting the implied timescales as a function of $\tau$: \cite{prinzMarkovModelsMolecular2011}\cite{swopeDescribingProteinFolding2004a}  Starting from a given discrete trajectory, $\{s_{t}\}$ estimate the implied timescales, $t_{i}$, for a range of different values of $\tau$. Choose the smallest $\tau$ such that $\frac{d t_{i}}{d \tau} \simeq 0$, where the range of $i$ is determined by the number of number slow relaxation processes. 
 
-\subsection{Choice of hyperparameters}
+\subsection{Choice of hyperparameters}\label{sec:theory_choice_hyp}
 The hyperparameters of the MSM are the modelling choices which transform the raw MD data into the $n$ discrete states, $s^{i}$, used in MSM estimation. This work will consider only the following hyperparameters: 
 \begin{enumerate}
     \item $\chi$ the continuous feature,
