@@ -111,9 +111,9 @@ Bayesian optimisation is a popular model-based technique for optimising hyperpar
 
 Improvement based policies use the improvement function, $I(\mathbf{x})$, (shown in figure \ref{fig:msm_rsm_explainer} panel (b) as the blue line), which is defined as the  difference between the value of the response surface, $f(\mathbf{x})$, and incumbent, $\mu^{*}$:\cite{shahriariTakingHumanOut2016}
 \begin{equation}
-    I(\mathbf{x}):=\left(f(\mathbf{x}) - \mu^{*}\right) \mathbb{1}\left(f(\mathbf{x}) > \mu^{*}\right). 
+    I(\mathbf{x}):=\left(f(\mathbf{x}) - \mu^{*}\right) \mathbb{I}_{f(\mathbf{x}) > \mu^{*}}. 
 \end{equation}
-The incumbent\cite{brochuTutorialBayesianOptimization2010} is defined as $\mu^{*}=\max{(f(\mathbf{x}))}, \mathrm{s.t.}\ \mathbf{x} \in \mathcal{D}$, and $\mathbb{1}$ is an indicator function which ensures that $I \ge 0$. In other words, the incumbent is optimum of the response surface but restricted to values of $\mathbf{x}$ which occur in the data used to estimate the response surface. $\mu^{*}$ is shown as a dotted line in the example in figure \ref{fig:msm_rsm_explainer} panel (a). Examples of such policies include probability of improvement \cite{Kushner1963} $\alpha_{\mathrm{PI}}(\mathbf{x}) = \mathbb{P}\left[I(\mathbf{x}>0)\right]$  (orange line figure \ref{fig:msm_rsm_explainer} panel (b)) and the expected improvement \cite{mockus1978application} $\alpha_{\mathrm{EI}}(\mathbf{x}) = \mathbb{E}\left[I(\mathbf{x})\right]$ (green line in figure \ref{fig:msm_rsm_explainer} panel (b)). The probability of improvement tends to exploit known regions of the response surface and so can fail to explore sufficiently to find the global optimum \cite{jones2001taxonomy}. This is because, as can be seen from the definition, it treats all improvements the same no matter how small (although the incumbent can be altered to modify the explore/exploit trade-off).\cite{jones2001taxonomy}  The expected improvement corrects this by taking into account both the probability of improvement \emph{and} the size of improvement. The expected improvement is a popular choice \cite{feurer2019hyperparameter} and is the default option in some well-known packages such as Spearmint \cite{NIPS2012_4522} and BayesOpt \cite{martinez-cantinBayesOptBayesianOptimization2014}. 
+The incumbent\cite{brochuTutorialBayesianOptimization2010} is defined as $\mu^{*}=\max{(f(\mathbf{x}))}, \mathrm{s.t.}\ \mathbf{x} \in \mathcal{D}$, and $\mathbb{I}$ is an indicator function which ensures that $I \ge 0$. In other words, the incumbent is optimum of the response surface but restricted to values of $\mathbf{x}$ which occur in the data used to estimate the response surface. $\mu^{*}$ is shown as a dotted line in the example in figure \ref{fig:msm_rsm_explainer} panel (a). Examples of such policies include probability of improvement \cite{Kushner1963} $\alpha_{\mathrm{PI}}(\mathbf{x}) = \mathbb{P}\left[I(\mathbf{x}>0)\right]$  (orange line figure \ref{fig:msm_rsm_explainer} panel (b)) and the expected improvement \cite{mockus1978application} $\alpha_{\mathrm{EI}}(\mathbf{x}) = \mathbb{E}\left[I(\mathbf{x})\right]$ (green line in figure \ref{fig:msm_rsm_explainer} panel (b)). The probability of improvement tends to exploit known regions of the response surface and so can fail to explore sufficiently to find the global optimum \cite{jones2001taxonomy}. This is because, as can be seen from the definition, it treats all improvements the same no matter how small (although the incumbent can be altered to modify the explore/exploit trade-off).\cite{jones2001taxonomy}  The expected improvement corrects this by taking into account both the probability of improvement \emph{and} the size of improvement. The expected improvement is a popular choice \cite{feurer2019hyperparameter} and is the default option in some well-known packages such as Spearmint \cite{NIPS2012_4522} and BayesOpt \cite{martinez-cantinBayesOptBayesianOptimization2014}. 
 
 Optimistic policies, such as the upper confidence bound \cite{icml2010_129}, choose the candidate to maximize a particular quantile of the uncertainty in the response surface. They have been shown to minimize the `regret' accumulated over all iterations of the optimisation procedure.\cite{icml2010_129} The `regret' being the difference between the true maximum of the objective function and the objective function measured on the candidate hyperparameter trial \cite{berger2013statistical}. More detail on the performance of improvement and optimistic acquisition functions can be found in \cite{jones2001taxonomy} Information based policies are based on the distribution over the potential hyperparameters, $p(\mathbf{x}|\mathcal{D})$, which describe the probability of optimising the objective function and are induced by the uncertainty in the response surface.\cite{shahriariTakingHumanOut2016} Examples include entropy search \cite{hennig2012entropy}, predictive entropy search \cite{hernandez2014predictive}, and entropy search portfolio \cite{shahriariEntropySearchPortfolio2015}. 
 
@@ -160,16 +160,6 @@ All MSM fitting and MD trajectory analysis was performed in Python 3.7 using the
 
 \subsection{Gaussian process regression}\label{subsec:gp}
 
-% 
-
-% A Gaussian process (GP) is specified by a mean function, $\mu(\mathbf{x})$ and a covariance function, $k(\mathbf{x}, \mathbf{x}^{\prime})$, where $\mathbf{x} = (\chi, \tau, m, n)$ are the hyperparameters and $f=f(\mathbf{x})$ is the MSM response. These are related in the following way: \cite{rasmussenGaussianProcessesMachine2006}
-
-% \begin{equation}
-%     \begin{aligned}
-%     \mu\left(\mathbf{x}\right) &=\mathbb{E}\left[f\left(\mathbf{x}\right)\right] \\
-%     k\left(\mathbf{x}, \mathbf{x}^{\prime}\right) &=\mathbb{E}\left[(f(\mathbf{x})-\mu(\mathbf{x}))\left(f\left(\mathbf{x}^{\prime}\right)-\mu\left(\mathbf{x}^{\prime}\right)\right)\right]
-%     \end{aligned}
-% \end{equation}
 A Gaussian process is a distribution over functions \cite{rasmussenGaussianProcessesMachine2006}.  In other words, drawing a sample from a GP gives a continuous function $f(\mathbf{x})$, where $\mathbf{x}$ is a (potentially multidimensional) input. Considering this function at a set of discrete points, $\mathbf{x}_{1}, \mathbf{x}_{1},\ldots, \mathbf{x}_{N}$, will give a set of random variables, which together form a multivariate normal distribution: 
 
 \begin{equation}
@@ -185,72 +175,97 @@ k(\mathbf{x}_{N}, \mathbf{x}_{1}) & \cdots & k(\mathbf{x}_{N}, \mathbf{x}_{N}) \
 \right)
 \end{equation}\label{eqn:msm_mvn}
 
-As can be seen from equation \ref{eqn:msm_mvn} the GP is specified by the mean function, $\mu(\mathbf{x})$, and a covariance function or \emph{kernel} $k(\mathbf{x}, \mathbf{x}^{\prime})$. This can be written succinctly as $\mathbf{f} \sim \mathcal{N}(\bm{\mu}, \mathbf{K})$. \cite{rasmussenGaussianProcessesMachine2006} If the GP ($f$) cannot be observed directly but is instead subject to some random additive noise then the observed quantity $y$ is related to $f$ by $y = f(\mathbf{x}) + \epsilon$, alternatively $\mathbf{y} \sim \mathcal{N}(\mathbf{f}, \sigma^{2}\mathbf{I})$, where $\mathbf{I}$ is the identity matrix and $\sigma^{2}$ is the variance of the noise. \cite{rasmussenGaussianProcessesMachine2006} The observed response of an MSM can be equated with $y$ with the noise term due the randomness in the cross-validation procedure used to estimate the score. 
+As can be seen from equation \ref{eqn:msm_mvn} the GP is specified by the mean function, $\mu(\mathbf{x})$, and a covariance function or \emph{kernel} $k(\mathbf{x}, \mathbf{x}^{\prime})$. This can be written succinctly as $\mathbf{f} \sim \mathcal{N}(\bm{\mu}, \mathbf{K})$. \cite{rasmussenGaussianProcessesMachine2006} If the GP cannot be observed directly but is instead subject to some random additive noise then the observed quantity $y$ is related to $f$ by $y = f(\mathbf{x}) + \epsilon$. This can also be written as $\mathbf{y} \sim \mathcal{N}(\mathbf{f}, \sigma_{n}^{2}\mathbf{I})$, where $\mathbf{I}$ is the identity matrix and $\sigma_{n}^{2}$ is the variance of the noise. \cite{rasmussenGaussianProcessesMachine2006} 
 
-So far a GP is just a distribution of functions, $p(\mathbf{f})$, independent of data. In order to make draws from this distribution the mean function and kernel must be specified. To center this discussion consider the Gaussian kernel: 
+So far a GP is just a distribution over functions, $p(\mathbf{f})$, independent of observed data. In order to make draws from this distribution the mean function and kernel must be specified. To center this discussion consider the Gaussian kernel: 
 \begin{equation}
     k(\mathbf{x}, \mathbf{x}^{\prime}) = \exp{\left(-\frac{\left|\mathbf{x}-\mathbf{x}^{\prime}\right|^{2}}{l^{2}}\right)}
 \end{equation}\label{eqn:msm_rbf}
-This states that values of the GP will be highly correlated between values of $\mathbf{x}$ that are `similar' and less so when they are separated. The value of $l$ is the characteristic length-scale of the GP and determines how close values of $\mathbf{x}$ must be to be considered `similar'.\cite{rasmussenGaussianProcessesMachine2006} In other words, it determines how rapidly the function changes for changes in $\mathbf{x}$. An example GP prior might be $\mu(\mathbf{x})=0$ for all $\mathbf{x}$ and $k(\mathbf{x}, \mathbf{x}^{\prime})$ given by equation \ref{eqn:msm_rbf} with $l=2$.  
+This states that values of the GP will be highly correlated between values of $\mathbf{x}$ that are `similar' and less correlated when they are separated. The value of $l$ is the characteristic length-scale of the GP and determines how close values of $\mathbf{x}$ must be to be considered `similar'.\cite{rasmussenGaussianProcessesMachine2006} In other words, it determines how rapidly the $y$ changes for changes in $\mathbf{x}$. An example GP prior might be defined by $\mu(\mathbf{x})=0$ for all $\mathbf{x}$ and $k(\mathbf{x}, \mathbf{x}^{\prime})$ given by equation \ref{eqn:msm_rbf} with $l=2$.  
 
-To incorporate the training data, in this case the observed hyperparameter trials $\mathcal{D}=\left\{(\mathbf{x}_{i}, y_{i})\right\} = (\mathbf{y}, \mathbf{X})$, Bayes' rule is used: \cite{rasmussenGaussianProcessesMachine2006}
+To incorporate training data $\mathcal{D}=\left\{(\mathbf{x}_{i}, y_{i})\right\} = (\mathbf{y}, \mathbf{X})$, Bayes' rule is used: \cite{rasmussenGaussianProcessesMachine2006}
 \begin{equation}\label{eqn:ya_boy_bayes}
     p(\mathbf{f}|\mathbf{y}, \mathbf{X})  = \frac{p(\mathbf{y}|\mathbf{f}, \mathbf{X})p(\mathbf{f})}{p(\mathbf{y}|\mathbf{x})}. 
 \end{equation}
-The posterior distribution $p(\mathbf{f}|\mathbf{y}, \mathbf{X})$ is the distribution of functions \emph{given the training data}.\cite{gelmanBayesianDataAnalysis2014} Draws from this distribution will now (hopefully) resemble the data. The posterior takes into account the training data  through the likelihood function $p(\mathbf{y}|\mathbf{f}, \mathbf{X}) = \mathcal{N}(\mathbf{f}, \sigma^{2}\mathbf{I})$ which is the probability of observing $\mathbf{y}$ given a specific function $\mathbf{f}$ and the predictors $\mathbf{X}$. \cite{gelmanBayesianDataAnalysis2014} For GPs the posterior distribution is also a GP, with mean and covariance functions related to the prior mean and covariance functions and the training data.\cite{rasmussenGaussianProcessesMachine2006} Let $\bar{f}_{*}$ be the mean of the posterior GP at some arbitrary point $\mathbf{x}_{*}$ (which may or may not have been in the training data), and let $\mathbb{V}\left[f\right]$ be the covariance between value of the GP at this point and all other points in the training data then: \cite{rasmussenGaussianProcessesMachine2006} 
+The posterior distribution $p(\mathbf{f}|\mathbf{y}, \mathbf{X})$ is the distribution over functions \emph{given the training data}.\cite{gelmanBayesianDataAnalysis2014} Draws from this distribution will now (hopefully) resemble the data. The posterior takes into account the training data  through the likelihood function $p(\mathbf{y}|\mathbf{f}, \mathbf{X}) = \mathcal{N}(\mathbf{f}, \sigma_{n}^{2}\mathbf{I})$ which is the probability of observing $\mathbf{y}$ given a specific function $\mathbf{f}$ and the predictors $\mathbf{X}$. \cite{gelmanBayesianDataAnalysis2014} 
+
+For GPs the posterior distribution is also a GP, with mean and covariance functions related to the prior mean and covariance kernels and the training data.\cite{rasmussenGaussianProcessesMachine2006} Let $\bar{f}_{*}$ be the mean of the posterior GP at some arbitrary point $\mathbf{x}_{*}$ (which may or may not be in the training data), and let $\mathbb{V}\left[f\right]$ be the covariance between value of the GP at this point and all other points in the training data, then: \cite{rasmussenGaussianProcessesMachine2006} 
 \begin{equation}\label{eqn:gp_pred_dist}
 \begin{aligned}
-\bar{f}_{*} &=\mathbf{k}_{*}^{\top}\left(\mathbf{K}+\sigma^{2} \mathbf{I}\right)^{-1} \mathbf{y} \\
-\mathbb{V}\left[f_{*}\right] &=k\left(\mathbf{x}_{*}, \mathbf{x}_{*}\right)-\mathbf{k}_{*}^{\top}\left(\mathbf{K}+\sigma^{2} \mathbf{I}\right)^{-1} \mathbf{k}_{*}.
+\bar{f}_{*} &=\mathbf{k}_{*}^{\top}\left(\mathbf{K}+\sigma_{n}^{2} \mathbf{I}\right)^{-1} \mathbf{y} \\
+\mathbb{V}\left[f_{*}\right] &=k\left(\mathbf{x}_{*}, \mathbf{x}_{*}\right)-\mathbf{k}_{*}^{\top}\left(\mathbf{K}+\sigma_{n}^{2} \mathbf{I}\right)^{-1} \mathbf{k}_{*}.
 \end{aligned}
 \end{equation}
-Here $\mathbf{k}_{*}$ is a vector of covariances between $\mathbf{x}_{*}$ and the training observations, $\mathbf{X}$. As the point $\mathbf{x}_{*}$ is arbitrary, these equations define the posterior GP over the entire domain of $f$. 
+Here $\mathbf{k}_{*}$ is a vector of covariances between $\mathbf{x}_{*}$ and the training observations, $\mathbf{X}$. As the point $\mathbf{x}_{*}$ is arbitrary, these equations define the posterior GP over the entire domain. 
 
-Equations \ref{gp_pred_dist} only determine how the posterior GP should be defined in terms of the training data and the hyperparameters\footnote{not to be confused with the hyperparameters of the MSM which are the predictors of the GP} of the GP prior, i.e., $l$ in equation \ref{eqn:msm_rbf}.  In general kernels may be complicated with many hyperparameters and so deciding what the particular values of $l$ may be prone to error. Instead they may also be estimated from the data  by maximizing the \emph{log marginal likelihood}:\cite{rasmussenGaussianProcessesMachine2006}
+Equations \ref{eqn:gp_pred_dist} only determine how the posterior GP should be defined in terms of the training data and the hyperparameters\footnote{not to be confused with the hyperparameters of the MSM which are the predictors of the GP.} of the kernel function, e.g., $l$ in equation \ref{eqn:msm_rbf}.  They do not specify how to choose these values, instead kernel hyperparameters can be estimated from the data via Bayesian estimation or by maximizing the \emph{log marginal likelihood}:\cite{rasmussenGaussianProcessesMachine2006}
 
 \begin{equation}\label{eqn:marg_llike}
-\log p(\mathbf{y} | \mathbf{X})=-\frac{1}{2} \mathbf{y}^{\top}\left(\mathbf{K}+\sigma^{2} \mathbf{I}\right)^{-1} \mathbf{y}-\frac{1}{2} \log \left|\mathbf{K}+\sigma^{2} \mathbf{I}\right|-\frac{N}{2} \log 2 \pi
+\log{\left( p(\mathbf{y} | \mathbf{X})\right)}=-\frac{1}{2} \mathbf{y}^{\top}\left(\mathbf{K}+\sigma^{2} \mathbf{I}\right)^{-1} \mathbf{y}-\frac{1}{2} \log \left|\mathbf{K}+\sigma^{2} \mathbf{I}\right|-\frac{N}{2} \log 2 \pi
 \end{equation}
 
-The values of the kernel hyperparameters estimated this way are known as Maximum a posteriori (MAP) estimates.\cite{rasmussenGaussianProcessesMachine2006} When estimates of the variability of $l$ are required Bayesian estimation can be used.\cite{gelmanBayesianDataAnalysis2014} i.e., a prior is placed over $l$ and Markov Chain Monte Carlo (MCMC) used to sample the posterior distribution of $l$. The same considerations for Bayesian MSMs in section \ref{sec:theory_bayes} apply in this case. In fact, priors can also be place over $l$ when maximizing \ref{eqn:marg_llike} as well.\cite{rasmussenGaussianProcessesMachine2006}
+The values of the kernel hyperparameters estimated this way are known as Maximum a posteriori (MAP) estimates.\cite{rasmussenGaussianProcessesMachine2006} When estimates of their variability are required Bayesian estimation can be used.\cite{gelmanBayesianDataAnalysis2014} i.e., a prior is placed over $l$ and Markov Chain Monte Carlo (MCMC) used to sample the posterior distribution of $l$. The same considerations for Bayesian MSMs in section \ref{sec:theory_bayes} apply in this case. Priors can also be place over $l$ when maximizing the log marginal likelihood.\cite{rasmussenGaussianProcessesMachine2006}
 
-The process of fitting a GP to data can be summarised as follows. Specify i) a prior mean function, ii) a functional form of covariance kernel $k(\mathbf{x}, \mathbf{x}^{\prime})$, e.g. equation \ref{eqn:msm_rbf}, iii) priors over the covariance hyperparameters, $l$, and then iv) collect training data $\mathcal{D}$. Using these four components maximize the marginal likelihood, equation \ref{eqn:marg_llike}, to determine the optimal values of $l$, and use equations \ref{eqn:gp_pred_dist} to specify the GP for any value of $\mathbf{x}$. 
+The process of fitting a GP to data can be summarised as follows:
+\begin{enumerate}
+    \item collect training data $\mathcal{D}$, 
+    \item specify a prior mean function, 
+    \item  specify a functional form of covariance kernel $k(\mathbf{x}, \mathbf{x}^{\prime})$, e.g. equation \ref{eqn:msm_rbf}, 
+    \item specify priors over the kernel hyperparameters, 
+    \item fit the GP by maximizing the log marginal likelihood, equation \ref{eqn:marg_llike} or use Bayesian estimation. 
+\end{enumerate}
 
-Having fitted a GP to the training data a method for evaluating that fit is needed. For models fit by maximizing the marginal likelihood the predictive value of the GP can be measured through the standardized mean square error (SMSE) and the mean standardized log loss (MSLL).\cite{rasmussenGaussianProcessesMachine2006} These play the same r\hat{o}le as, for example, the $R^2$ or deviance play in generalized linear models.\cite{nelder1972generalized} The SMSE is defined by:\cite{rasmussenGaussianProcessesMachine2006} 
+Having fit a GP to the training data a method for evaluating the fit is needed. This will allow different covariance kernels or input warpings (transformations of the predictors) to be compared. The kernels and warpings will allow flexibility in modelling different types of functions. For models fit by maximizing the marginal likelihood the predictive value of the GP can be measured through the standardized mean square error (SMSE) and the mean standardized log loss (MSLL).\cite{rasmussenGaussianProcessesMachine2006} These play the same r\^ole as, for example, the $R^2$ or deviance play in generalized linear models.\cite{nelder1972generalized} The SMSE is defined by:\cite{rasmussenGaussianProcessesMachine2006} 
 \begin{equation}\label{eqn:smse}
-SMSE =\left(\frac{1}{N}\right) \sum_{i=1}^{N} \frac{\left(f(x)-y_{i}\right)^{2}}{\sigma_{obs}^{2}},
+\mathrm{SMSE} =\left(\frac{1}{N}\right) \sum_{i=1}^{N} \frac{\left(f(x)-y_{i}\right)^{2}}{\sigma_{obs}^{2}},
 \end{equation}
 and the mean standardized log loss (MSLL) by:\cite{rasmussenGaussianProcessesMachine2006}
 \begin{equation}\label{eqn:msll}
-MSLL=\left(\frac{1}{N}\right) \sum_{i=1}^{N}\left[\left(\frac{1}{2} \log \left(2 \pi \sigma_{i}\right)+\frac{\left(f(x)-y_{i}\right)^{2}}{\sigma_{i}^{2}}\right)-\left(\frac{1}{2} \log \left(2 \pi \sigma_{obs}\right)+\frac{\left(\bar{y}-y_{i}\right)^{2}}{\sigma_{obs}^{2}}\right)\right].
+\mathrm{MSLL}=\left(\frac{1}{N}\right) \sum_{i=1}^{N}\left[\left(\frac{1}{2} \log \left(2 \pi \sigma_{i}^{2}\right)+\frac{\left(f(x)-y_{i}\right)^{2}}{2\sigma_{i}^{2}}\right)-\left(\frac{1}{2} \log \left(2 \pi \sigma_{obs}^{2}\right)+\frac{\left(\bar{y}-y_{i}\right)^{2}}{2\sigma_{obs}^{2}}\right)\right].
 \end{equation}  
 
-Here $\sigma_{obs}^{2}$ is the observed variance of the training data response, $\mathbb{E}\left[(y_{i}-\bar{y})^{2}\right]$, and $\sigma_{i}^{2}$ refers to the GP predicted variance at the observation $i$ (including the noise term). The standardization puts the log loss and mean square error on the same scale as the observations. So a $SMSE < 1$ indicates the predictions have smaller mean square error than replacing all the predictions with the mean of the observations. Similarly, $MSLL<0$ indicates the predictions have a larger log predictive density than replacing all of the predictions with a single Gaussian with mean and variance equal to the mean and variance of the observations.   
+\begin{figure}
+    \centering
+    \mycaption{\textbf{Mean standardized log-loss (MSLL) and standardized mean square error (SMSE)}. Panels (a) - (c) show three different GPs fit to the same data after 3, 6, 9 steps respectively of marginal likelihood maximization. The MSLL and SMSE is for each GP is labelled. The blue line and shaded blue area are the mean and uncertainty of the GP, the black crosses are the observations, and the dashed and dotted lines are the mean and uncertainty of the null model (i.e. mean and uncertainty of $y_{i}$).}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/gp_metric_explainer.png}
+    \label{fig:msm_gp_metric_explainer}
+\end{figure}
+
+Here $\sigma_{obs}^{2}$ is the observed variance of the training data response, $\mathbb{E}\left[(y_{i}-\bar{y})^{2}\right]$, and $\sigma_{i}^{2}$ refers to the GP predicted variance at the observation $i$ including the noise term (i.e. $\mathbb{V}\left[f_{*}\right]+\sigma_{n}^{2}$, from equation \ref{eqn:gp_pred_dist}).  The `standardization' in each case is to allow both metrics to compare the fitted GP to a null model which simply predicts the mean and variance of the observed $y_{i}$ at each value of $\mathbf{x}_{i}$ i.e.:\cite{rasmussenGaussianProcessesMachine2006}
+\begin{equation}\label{eqn:gp_null}
+\begin{aligned}
+\bar{f}^{\mathrm{Null}}_{*} &= \mathbb{E}\left[y_{i}\right] \\
+\mathbb{V}^{\mathrm{Null}}\left[f_{*}\right] &= \mathbb{V}\left[y_{i}\right].
+\end{aligned}
+\end{equation}
+
+The SMSE and MSLL are demonstrated in figure \ref{fig:msm_gp_metric_explainer}. Panels (a), (b) and (c) show a GP fit to the same data as figure \ref{fig:msm_rsm_explainer} after 3, 6, and 9 iterations of marginal likelihood maximization. The null model is denoted by the dashed and dotted lines, while mean and the uncertainty in the fitted GP are denoted by the blue line and shaded blue area respectively.  In panel (a) the fitted GP is clearly worse than predicting the mean of the observations, so  $\mathrm{SMSE} > 1$ and  $\mathrm{MSLL} > 0$. In panel (b) the GP fits the data well so $\mathrm{SMSE} < 1$ but the variance of the GP is still much larger than the variance of the observations so $\mathrm{MSLL} > 0$. In panel (c) the GP fits the observations almost exactly so $\mathrm{SMSE} \simeq 0$, and the variance of the GP at each observed $\mathbf{x}_{i}$ is smaller than variance of the observations so $\mathrm{MSLL} < 0$. 
+
+In this thesis, the MSLL and SMSE were estimated using K-fold cross-validation \cite{friedman2001elements} to avoid choosing a kernel or input warping which may over-fit to a particular data set. The K-fold cross-validation procedure is as follows\cite{friedman2001elements}: first split the hyperparameter trial data set, $\mathcal{D},$ into a $K$ equally sized, disjoint, sets or `folds'. Second, fit the GP using $K-1$ folds and then calculate the SMSE and MSLL on the remaining $1$ fold. Third, repeat this process $K$ times training the GP and calculating the SMSE and MSLL with a different fold held out each time. The cross-validated MSLL and SMSE is the weighted mean of the SMSE and MSLL on each fold. 
 
 \subsection{Response surface modelling}\label{subsec:rsm}
-The response surface of both systems was modelled using Gaussian process (GP) regression model with the $\operatorname{VAMP-2}$ score measured on the test data as a response ($y$) and the MSM hyperparameters as predictors ($\mathbf{x})$. A variety of combinations of predictor pre-processing and covariance structures were tried and the best combinations for each response surface determined using the SMSE and MSLL. 
+The VAMP-2 response of the MSM with respect to its hyperparameters, $\mathbf{x} = (\chi, n)$, was modelled a GP with additive noise. A variety of combinations of input warping (e.g., log-transformation of $\mathbf{x}$) and covariance kernels, $k(\mathbf{x}, \mathbf{x}^{\prime})$,  were tried and the best combinations for each response surface determined using the cross-validated SMSE and MSLL. 
 
-To reduce the computational effort required to fit the GPR models, a sparse approximation to the full covariance of the GP, called the Fully Independent Training Conditional (FITC)\cite{quinonero-candelaUnifyingViewSparse2005}, was used. In this approximation a number of observations must be designated as inducing points. This number was set to $\SI{10}{\percent}$ of the total number of observations and their location determined by k-means clustering. This fraction was chosen by fitting a GPR with the number of inducing points ranging from $\SI{10}{\percent}$ to $\SI{100}{\percent}$ of the total observations. The quartiles of the posterior for each variable of the model were found to be independent of the number of inducing points in this range.  
+To reduce the computational effort required to fit each GP model, a sparse approximation to the full covariance matrix of the GP, called the fully independent training conditional (FITC) was used.\cite{quinonero-candelaUnifyingViewSparse2005} In this approximation a number of observations must be designated as `inducing points'. Larger numbers of inducing points increases the accuracy of the approximation at the expense or increased computational effort. The number of inducing points was set to $\SI{10}{\percent}$ of the total number of observations and their location determined by k-means clustering as suggested in the probabilistic programming package PyMC3 (version 3.5).\cite{salvatierProbabilisticProgrammingPython2016} This fraction was chosen by fitting a single GP model with the number of inducing points ranging from \SI{10}{\percent} to \SI{100}{\percent} of the total observations. The quartiles of the posterior for each variable of the model were found to be independent of the number of inducing points in this range.  
 
-In order to fit a GP model a number of modelling choices need to specified, these are: 
+As described in the previous section, in order to fit a GP model a number of modelling choices need to specified, these are: 
 \begin{enumerate}
     \item the prior of the mean function, $\mu(\mathbf{x})$;
     \item the kernel function, $k(\mathbf{x}, \mathbf{x}^{\prime})$;
     \item the prior distributions of kernel hyperparameters;
-    \item the transformations of the predictors.
+    \item the warpings of the predictors.
 \end{enumerate}
 
-The prior of mean function  was set to zero everywhere: $\mu(\mathbf{x})=\mathbf{0}$. The kernel function was restricted to stationary kernels, i.e. where $k(\mathbf{x}, \mathbf{x}^{\prime}) = k(|\mathbf{x} - \mathbf{x}^{\prime}|)$, with the form: 
+The prior of mean function  was set to zero everywhere: $\mu(\mathbf{x})=\mathbf{0}$. The kernel function was restricted to stationary kernels, i.e., those where $k(\mathbf{x}, \mathbf{x}^{\prime}) = k(|\mathbf{x} - \mathbf{x}^{\prime}|)$, of the form: 
 
 \begin{equation}\label{eqn:kernel_form}
-    k(|\mathbf{x}-\mathbf{x}^{\prime}|; \theta) = 
-    \eta^{2}\prod_i k_{M}(|x_{i}-x_{i}^{\prime}|; \nu, l_i)
-    +\sigma_{n}^{2}\delta_{\mathbf{x}, \mathbf{x}^{\prime}}
+    k\left(\left|\mathbf{x}-\mathbf{x}^{\prime}\right|; \theta\right) = 
+    \eta^{2}\prod_i k_{M}\left(\left|x_{i}-x_{i}^{\prime}\right|; \nu, l_i\right)
+    +\sigma_{n}^{2}\delta_{\mathbf{x}, \mathbf{x}^{\prime}}. 
 \end{equation}
+The $\eta$ terms controls the total variation in the response function, the larger the value of $\eta$ the more the response is able vary over the whole predictor space. The $\sigma_{n}^{2}$ term is the noise term which allows the GP to account for variation in the response due to the cross validation procedure for calculating VAMP-2.  The index, $i$, runs over each component of $\mathbf{x}$ so that $x_{i}$ refers to a single hyperparameter, e.g., $n$. So the total kernel is the product of kernels over each hyperparameter.  The $M$ in $k_{M}$ denotes a Mat\'ern kernel parameterized by $\nu$ - this will be discussed further below. $l_{i}$ is the characteristic length-scale of $k_{M}$. Both $\eta$ and the $l_{i}$'s are estimated from the data and are the kernel hyperparameters, collectively denoted by $\theta$. This form of kernel was used by \cite{bergstrajamesbergstraRandomSearchHyperParameter2012} in their work on random search and the relevance of hyperparameters discussed in the introduction. The multiplicative form of this kernel means that VAMP-2 responses are correlated only when the values of the predictors are simultaneously similar, where similarity is controlled by $l_{i}$.    
 
-The index of the product runs over the predictors of the GP with separate kernel functions ($k_{M}$) over each predictor, however, for a given model, the value of $\nu$ for each predictor was the same. The values of $x$ of each product term refers to a single component of $\mathbf{x}$ and so the bold font has been dropped. The multiplicative form of this kernel means that the response is correlated when the values of the predictors are simultaneously similar, with the degree of similarity required set by the length-scale parameters $l_{i}$.  The $\eta$ terms controls the total variation in the response function, the larger the value of $\eta$ the more the response is able vary over the whole predictor space. The $\sigma_{n}^{2}$ term is the noise term (the variance of the response with identical predictor values) which allows the GP to account for variation in the response due to the cross validation procedure and the finite amount of MD data used to fit the MSM. 
-
-The kernels over the individual predictors, $k_{M}(\cdot; \nu, l)$, were kernels in the Mat\'{e}rn class with values of $\nu=\sfrac{1}{2},\sfrac{3}{2},\sfrac{5}{2},\infty$. These are alternatively known as an exponential,Mat\'{e}rn 3-2, Mat\'{e}rn 5-2 and  Gaussian (Radial Basis Function, RBF) kernels respectively and are defined as follows: 
+The kernels over the individual predictors, $k_{M}(x; \nu, l)$, were kernels in the Mat\'{e}rn class with values of $\nu=\sfrac{1}{2},\sfrac{3}{2},\sfrac{5}{2},\infty$. These are alternatively known as an exponential, Mat\'{e}rn 3-2, Mat\'{e}rn 5-2 and  Gaussian (Radial Basis Function, RBF) kernels respectively and are defined as follows: 
 
 \begin{align}
 k_{\text{Exp}}\left(x, x^{\prime}; \sfrac{1}{2}\right) &=\exp (-r) \label{eqn:kern_exp}\\
@@ -258,34 +273,76 @@ k_{\text{M-\sfrac{3}{2}}}\left(x, x^{\prime}; \sfrac{3}{2}\right) &= \exp (-\sqr
 k_{\text{M-\sfrac{5}{2}}}\left(x, x^{\prime}; \sfrac{5}{2}\right) &= \exp (-\sqrt{5} r)\left(1+\sqrt{5} r+\frac{5}{3} r^{2}\right) \label{eqn:kern_m52}\\
 k_{\text{RBF}}\left(x, x^{\prime}; \infty\right) &= \exp \left(-\frac{1}{2} r^{2}\right) \label{eqn:kern_gauss}
 \end{align}
-
 where $r = |x-x^{\prime}|/l$. These kernels were chosen based on their common usage \cite{shahriariTakingHumanOut2016} and  range from `rough' exponential kernel, where correlation in the response drops off rapidly with changes in the predictors, to smooth processes with the Gaussian kernel. See chapter 5 of \cite{rasmussenGaussianProcessesMachine2006} for a full description of the Mat\'{e}rn kernels and their properties.  
 
 \begin{figure}
     \centering
-    \mycaption{[TM: explain (c) more] Prior functions used specification of the GP models of the response surface for both alanine dipeptide and AADH. The variance parameters, $\eta$, $\sigma_n$ use the half-Cauchy with $\beta=2$, panel (a). The length-scale parameters $l_{i}$ use the Gamma distribution with $\alpha=1, \beta=0.05$, panel (b). 10 draws from a Gaussian process using an RBF kernel with kernel hyperparameters $l$ and $\eta$ drawn from these prior distributions is shown in panel (c).}
+    \mycaption{\textbf{Kernel hyperparameter priors and representative GPs}. Panel (a) shows the prior used for the variance parameters, $\eta$, $\sigma_n$: the half-Cauchy with $\beta=2$. Panel (b) shows the prior used for the length-scale parameters $l_{i}$: the Gamma distribution with $\alpha=1, \beta=0.05$.  Panel (c) shows 10 draws from a Gaussian process with an RBF kernel (equation \ref{eqn:kern_gauss}) with values of $l$ drawn from the distribution in panel (b) and values of $\eta$ drawn from distribution in panel (a).}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/prior_functions.png}
     \label{fig:priors}
 \end{figure}
 
-When modelling the response surface for visualisation and Bayesian optimisation, Maximum a posteriori (MAP) estimates  of the kernel hyperparameters, $\theta = (\eta, \sigma_{n}, l_{1}, l_{2}, ...)$, with weakly informative priors were used. The prior distributions for the variance terms, $\eta$ and $\sigma_{n}$, were $\mathrm{half-Cauchy}(\beta=2)$ and the priors for the length-scale parameters, $l_{i}$, were $\mathrm{Gamma}(\alpha=1, \beta=0.05)$, these distributions are shown in Figure \ref{fig:priors} panels (a) and (b) respectively.  Examples of a 1D Gaussian process with a Gaussian covariance kernel with $\eta$ and $l$ drawn from these priors are shown Figure \ref{fig:priors} panel (c).  
+The GP hyperparameters estimated from the data are the mean function, $\mu(\mathbf{x})$ and the kernel hyperparameters, $\theta = (\eta, \sigma_{n}, l_{1}, l_{2}, ...)$. These were estimated differently depending on the application. When the GP was used for visualisation (e.g. figure \ref{fig:ala1_response}) or for Bayesian optimisation (section \ref{sec:ala_opt}) the hyperparameters were estimated by maximizing the log marginal likelihood. When error estimates of the GP hyperparameters were needed for discussing the relevance (section \ref{subsubsec:ala_relevance}) Bayesian estimation was used. In both cases  weakly informative priors were used. The prior distributions for the variance terms, $\eta$ and $\sigma_{n}$, were $\mathrm{half-Cauchy}(\beta=2)$ and the priors for the length-scale parameters, $l_{i}$, were $\mathrm{Gamma}(\alpha=1, \beta=0.05)$. These distributions are shown in figure \ref{fig:priors} panels (a) and (b) respectively.  To get a sense of the effect of these priors on a GP, 10 draws from a 1D Gaussian process with an RBF kernel are shown in  \ref{fig:priors} panel (c). The values of the $\eta$ and $l$ hyperparameters in this GP are drawn the distributions in panels (a) and (b) respectively.  
 
-The r\^ole of weakly informative priors is to exclude unrealistic or disallowed values of the parameters without imposing strong prior beliefs on the outcome. The half-Cauchy distribution  was used for $\eta$ and $\sigma_n$  based on its recommended use in other settings (\cite{polsonHalfCauchyPriorGlobal2012}). It was  only necessary for the scale of this distribution to give significant density in the range $0-5$ as the $\operatorname{VAMP-2}(k)$ score will lie in the range $[1,5]$ for alanine dipeptide and $[1, 4]$ for AADH which limits the possible values of $\eta$ and $\sigma_{n}$. The prior for $l$ was justified on the basis that, after scaling the predictors to lie in $[0, 1]$, values of $l \gg 1$ imply a flat response, meaning significant density for $l \gg 1$ isn't necessary. 
+The r\^ole of weakly informative priors is to exclude unrealistic or disallowed values of the parameters without imposing strong prior beliefs on the true values.\cite{gelmanBayesianDataAnalysis2014} The half-Cauchy distribution  was used for $\eta$ and $\sigma_n$  based on its recommended use in other settings \cite{polsonHalfCauchyPriorGlobal2012}. It was only necessary for the scale of this distribution to give significant density in the range $0-5$ as the VAMP-2 score will lie in the range $[1,5]$ for alanine dipeptide thus limiting the possible values of $\eta$ and $\sigma_{n}$. The prior for $l$ was justified on the basis that, after scaling the predictors to lie in $[0, 1]$, values of $l \gg 1$ imply a flat response, meaning significant density for $l \gg 1$ isn't necessary. 
 
-All predictors were scaled to lie in the range $[0, 1]$ to aid interpretation of the kernel length-scale parameters, $l$. Before scaling the integer predictors ($\tau$, $m$ and $n$) two input warpings, $T(\cdot)$, were considered: the identity $I(\cdot)$, and a logarithmic transformation, $\log(\cdot)$.  Input warpings are used \cite{snoekInputWarpingBayesian2014a} to mitigate the problems of modelling non-stationary functions using stationary GP models [TM: explain]. The categorical predictor, $\chi$, was dummy coded \cite{dalyDummyCodingVs2016} to give a $d$ dimensional vector of $1$s and $0$s. For example, the input vector, $\mathbf{x}$, for the first feature would be $\mathbf{x} = (1, 0, 0, 0, 0)$, for the second feature would be $\mathbf{x} = (0, 1, 0, 0, 0)$ and so on [TM: not clear]. 
+\begin{figure}
+    \centering
+    \caption{\textbf{Input warping}. Panel (a) shows a non-stationary function $y$ as a function of a predictor $x$. The characteristic length-scale decreases as $x$ increases. Panel (b) shows a warping function which transforms $x$ to $x^\mathrm{W}$. Applying this warping results in the new function in panel (c) which is approximately stationary.}
+    \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/warping_explainer.png}
+    \label{fig:msm_warping_explainer}
+\end{figure}
 
-In order to find the best GPR model for a given response surface, every combination of kernel function and  predictor warping was estimated using the MAP estimates for the kernel hyperparameters and evaluated using the MSLL and SMSE metrics. This meant that for the response surface of alanine dipeptide eight different models were estimated (four different kernels and two warpings for $n$). For the response surface of AADH, with three integer predictors, $32$ different models were estimated (four different kernels and $2\times2\times2=8$ different predictor warpings). For each model both metrics were calculated used 10-fold cross validation and any model with $MSLL > 0$ or $SMSE > 1$ was discarded. The remaining models were ranked separately according to MSLL and SMSE ($R_{MSLL}$, $R_{SMSE}$) and the ranks combined according to $\sqrt{R_{MSLL}^2 + R_{SMSE}^2}$. This ranking method was used to ensure a balance between the two selection metrics compared to, say, the mean of the two ranks.  
+All predictors were scaled to lie in the range $[0, 1]$ to make the kernel length-scale parameters, $l$, comparable across different hyperparameters. For the hyperparameter $n$, prior to scaling two input warpings, $T(x)$, were considered: the identity $I(x)$, and a logarithmic transformation, $\log(x)$.  Input warping is used to mitigate the problems of modelling non-stationary functions using stationary GP kernels. \cite{snoekInputWarpingBayesian2014a} Assuming stationarity i.e., that the GP characteristic length-scale  does not vary with the input $\mathbf{x}$, simplifies both estimation and interpretation of the GP \cite{snoekInputWarpingBayesian2014a}. Thus, warping predictors to make the stationarity assumption more plausible is important, especially when it comes to discussing hyperparameter relevance in section \ref{sec:meth_rel}. A dramatic example of input warping is shown in figure \ref{fig:msm_warping_explainer}. Panel (a) shows a non-stationary function - the characteristic length-scale decreases with increasing $x$. In other words, the kernel function, $k(x, x^{\prime})$ could not be written as a function of $|x-x^{\prime}|$. Panel (b) shows a warping function which transforms $x$ to $x^{\mathrm{w}}$. Panel (c) applies this warping and the resultant function is more plausibly stationary. 
 
-All GPR modelling was performed with the Python package PyMC3 \cite{salvatierProbabilisticProgrammingPython2016} with some visualisation performed using package GPy \cite{gpy2014}. 
+The categorical predictor, $\chi$, was dummy coded \cite{dalyDummyCodingVs2016} to give a 5 dimensional vector of $1$s and $0$s.  A example of the transformations of two hyperparameters, $\chi$ and $n$, in preparation for modelling with a GP are shown in figure \ref{fig:msm_eg_transform}. 
 
-\subsection{Hyper-parameter relevance}\label{subsec:meth_rel}
-The characteristic length-scales in equation \ref{eqn:kernel_form}, $l$, each correspond to a different predictor, or level of categorical predictor. They determine the covariance of the response between points with different values of that predictor. For example, with $l=1$ in an exponential kernel then inputs separated by $|x-x^{\prime}|= 1$ will on average have a covariance of $\exp^{-0.1}\simeq 0.9$. This means for large values of $l$ the response with respect to changes in $x$ will be flat, or in other words, $x$ is irrelevant to determining the response. This prompts the definition of \emph{relevance}, $R = \sfrac{1}{l}$: when $R$ is large, the small changes in $x$ result in larger changes in the response, meaning it is relevant to determining the response. Hereafter the kernel functions (equations \ref{eqn:kern_exp} - \ref{eqn:kern_m52}) will be parameterized interchangeably with $R$ and $l$ as convenient.  
+\begin{figure}
+    \centering
+    \mycaption{\textbf{Example predictor transformation}. The left hand table shows the raw values of the hyperparameters, $\chi$ and $n$, as a data matrix. The right hand table shows same values after dummy coding $\chi$ and scaling $n$ to lie in the range $[0, 1]$. No warping was applied. The dummy coding and scaling is performed with reference to the hyperparameter search space in table \ref{tab:ala2searchspace}.}
+    \begin{tabular}{|c|c|}
+    \hline
+      $\chi$    &  $n$ \\
+      \hline
+    $(\phi, \psi)$    &  10 \\
+    $(x, y, z)$ & 500 \\
+    $\psi$  & 1000 \\
+    \hline
+    \end{tabular}
+    $\longrightarrow $
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+      $\chi_{1}$ &$\chi_{2}$ &$\chi_{3}$ &$\chi_{4}$ &$\chi_{5}$ &  $n^{\mathrm{s}}$ \\
+      \hline
+    1 & 0 & 0 & 0 & 0  &  \num{0.00} \\
+    0 & 1 & 0 & 0 & 0  &  \num{0.49} \\
+    0 & 0 & 0 & 1 & 0  &  \num{1.00} \\
+    \hline
+    \end{tabular} 
+    \label{fig:msm_eg_transform}
+\end{figure}
 
-The relevance of the MSM hyperparameters is important for understanding and visualising the response surface and so to calculate the uncertainty in $R$ a fully Bayesian approach was used. After model selection using the maximum marginal likelihood models described in section \ref{subsec:rsm}, the GP model hyperparameters were re-estimated by sampling the posterior distribution using Markov Chain Monte Carlo. A No U-Turn sampling algorithm, using two independent chains with $500$ tuning steps and $1000$ sampling steps. Convergence was checked using the R-hat statistic \cite{gelmanBayesianDataAnalysis2014}. 
+In order to select the best combination of kernel functions and predictor warping each possible combination was used to estimate a GP which was then evaluated using the cross-validated MSLL and SMSE. So, for the response surface of alanine dipeptide eight different models were estimated: four different types of kernel (equations \ref{eqn:kern_exp} - \ref{eqn:kern_gauss}) were used in equation \ref{eqn:kernel_form} and two predictor warpings for $n$. For each model both metrics were calculated using 10-fold cross validation. Any model with MSLL$ > 0$ or SMSE$ > 1$ was discarded. The remaining models were ranked separately according to MSLL and SMSE ($R_{\mathrm{MSLL}}$, $R_{\mathrm{SMSE}}$) and the ranks combined according to $\sqrt{R_{\mathrm{MSLL}}^2 + R_{\mathrm{SMSE}}^2}$. This ranking method was used to ensure a balance between the two selection metrics compared to, say, the mean of the two ranks.  
 
+All GPR modelling was performed with the Python package PyMC3 (verion 3.5) \cite{salvatierProbabilisticProgrammingPython2016} with some visualisation performed using package GPy (version 1.5) \cite{gpy2014}. 
+
+\subsection{Hyperparameter relevance}\label{subsec:meth_rel}
+The characteristic length-scales in equation \ref{eqn:kernel_form}, $l$, each correspond to a different predictor, or level of categorical predictor. They determine the covariance of the response between points with different values of that predictor. For example, for an exponential kernel with $l=1$ then inputs separated by $|x-x^{\prime}|= 1$ will on average have a covariance of $\exp^{-0.1}\simeq 0.9$. This means for large values of $l$ the response with respect to changes in $x$ will be flat, or in other words, $x$ is irrelevant to determining the response. This prompts the definition of \emph{relevance}, $R = \sfrac{1}{l}$:\cite{bernardo1998regression}\cite{bergstrajamesbergstraRandomSearchHyperParameter2012} when $R$ is large, the small changes in $x$ result in larger changes in the response, meaning it is relevant to determining the response. Hereafter the kernel functions (equations \ref{eqn:kern_exp} - \ref{eqn:kern_m52}) will be parameterized interchangeably with $R$ and $l$ where convenient.  
+
+The relevance of the MSM hyperparameters is important for understanding and visualising the response surface and so to calculate the uncertainty in $R$ a fully Bayesian approach was used. After model selection using the maximum marginal likelihood models described in section \ref{subsec:rsm}, the GP model hyperparameters were re-estimated by sampling the posterior distribution using Markov Chain Monte Carlo. A No U-Turn sampling algorithm, using two independent chains with $500$ tuning steps and $1000$ sampling steps. Convergence was checked using the R-hat statistic \cite{vehtariRanknormalizationFoldingLocalization2020}. 
 
 \subsection{Bayesian Optimization}\label{subsec:bayes_opt}
-Bayesian optimization is a method for optimizing ``black-box'' objective functions - those which can be sampled but are otherwise unknown \cite{shahriariTakingHumanOut2016}. The response of an MSM to its hyperparameters is a black-box objective function because it is not possible to determine the response without first fitting the MSM. Bayesian optimisation is a type of sequential model based \cite{hutterSequentialModelbasedOptimization2011} optimisation technique. These techniques entail first sampling the response of the objective function over a search space to create a trial data set. A statistical model called the \emph{surrogate function}, which serves as a proxy for the objective function, is built using the sampled responses. An utility function, known as the \emph{acquisition function}, determines the anticipated utility of a set of inputs in optimizing the objective function, based on the predictions and uncertainty in the surrogate function.  The objective function is then sampled using the set of inputs which maximize the acquisition function. This new trial is added to trial data set and process repeated. This algorithm (with modifications discussed below) is summarised in algorithm \ref{alg:bayes_opt}. 
+
+The response surface of an MSM can be optimised using Bayesian optimisation. As discussed in the introduction to this chapter Bayesian optimisation requires two ingredients: i) a response function which models the response of the MSM to its hyperparameters, and ii) an acquisition function. The response function was chosen using the methods outlined in the previous section. The acquisition function used is the expected improvement, $\mathbb{E}\left[I\right]$ where the improvement, $I$, is defined as:\cite{shahriariTakingHumanOut2016}
+\begin{equation}
+    I(\mathbf{x}, \mu^{*}):=(f(\mathbf{x}) - \mu^{*}) \mathbb{I}_{f(\mathbf{x}) > \mu^{*}}.
+\end{equation}
+Taking the expectation of this for a Gaussian process gives:\cite{shahriariTakingHumanOut2016} 
+\begin{align}\label{eqn:msm_ei_def}
+        \alpha_{EI}(\mathbf{x}) := &  \mathbb{E}\left[I(\mathbf{x}, f(\mathbf{x}), \mu^{*})\right] \\
+         =  &(\mu(\mathbf{x}) - \mu^{*})\Phi\left( \frac{ \mu(\mathbf{x}) - \mu^{*} }{\sigma(\mathbf{x})} \right ) + \sigma(\mathbf{x})\phi\left( \frac{ \mu(\mathbf{x}) - \mu^{*} }{\sigma(\mathbf{x}) } \right )
+\end{align}
+Here $\Phi, \phi$ are the normal cumulative and probability distribution functions respectively, and $\sigma(\mathbf{x})^{2}$ is the variance of the GP at the point $\mathbf{x}$. It is possible to take the expectation over both the distribution of $f$ and of the GP hyperparameters $\theta$. This has been suggested and shown to be effective.\cite{NIPS2012_4522} However, this was not done in this work because the extra computational cost involved. The maximum of the acquisition function was determined by calculating its value over a finely spaced grid of values over the hyperparameter search space and selecting the maximum. 
 
 \begin{algorithm}\label{alg:bayes_opt}
 \KwData{Trial data: $\mathcal{D}_{N} = \{(y_{1}, \mathbf{x}_{1}), ...,(y_{N}, \mathbf{x}_{N}) \}$}
@@ -303,22 +360,12 @@ Bayesian optimization is a method for optimizing ``black-box'' objective functio
 \caption{Bayesian Optimisation.}
 \end{algorithm}
 
-In principle, any function capable of predicting a response along with its uncertainty can be used in Bayesian optimisation, examples include random forests [] and Tree Parzen estimator models []. However Gaussian process models are commonly used [][][], especially for hyperparameter optimisation problems\cite{bergstraAlgorithmsHyperParameterOptimizationa}\cite{martinez-cantinBayesOptBayesianOptimization2014}, due to their flexibility in modelling non-linearities; their natural incorporation of uncertainty due to data sparsity; the resulting analytical expressions for acquisition functions, and the fact that they are closed under sampling \cite{NIPS2012_4522}\cite{brochuTutorialBayesianOptimization2010} (this last fact essentially asserts that updating a GP with additional observations the model remains a GP). 
+The Bayesian optimisation algorithm is summarised in algorithm \ref{alg:bayes_opt}.
 
 
-This work uses the the expected improvement, $\mathbb{E}[I]$ where the improvement, $I$, is defined :  
-\begin{equation}
-    I(\mathbf{x}, f, \mu^{*}):=(f(\mathbf{x}) - \mu^{*}) \mathbb{I}(f(\mathbf{x}) > \mu^{*})
-\end{equation}
 
-Here the $\mathbb{I}$ is an indicator function which prevents the improvement from being negative and the incumbent is defined as the maximum of the response surface \emph{at the trial values}. The expected improvement is the expectation of $I$, averaged over the distribution of $f(\mathbf{x})$ which can be calculated analytically for maximum marginal likelihood GPs as: 
 
-\begin{align}
-        \alpha_{EI}(\mathbf{x}) := &  \mathbb{E}\left[I(\mathbf{x}, f(\mathbf{x}), \mu^{*})\right] \\
-         =  &(\mu(\mathbf{x}) - \mu^{*})\Phi\left( \frac{ \mu(\mathbf{x}) - \mu^{*} }{\sigma(\mathbf{x})} \right ) + \sigma(\mathbf{x})\phi\left( \frac{ \mu(\mathbf{x}) - \mu^{*} }{\sigma(\mathbf{x} } \right )
-\end{align}
 
-Here $\Phi, \phi$ are the normal cumulative and probability distribution functions respectively, and $\sigma(\mathbf{x})$ is the variance of the GP at the point $\mathbf{x}$. It is possible to take the expectation over both the distribution of $f$ and of the GP hyperparameters $\theta$ and this has been suggested and shown to be effective \cite{NIPS2012_4522}). However this was not done in this work because the extra computational cost involved. The candidate MSM hyperparameters were determined as those which had the highest expected improvement as calculated on a $4 \times 100 \times 20 \times 100$ ($\chi \times \tau \times m \times n$) evenly spaced grid over the search space.
 
 It was observed during these experiments that the same candidate hyperparameters were being proposed by the algorithm. This was deemed due to the granularity of the grid used in the maximisation of the acquisition function. To ensure that each candidate hyperparameter is unique, the Bayesian optimisation algorithm was modified so that only  hyperparameters sets not already in the trial data set were considered as candidates. This is reflected in the conditions on the `select candidate' step of algorithm \ref{alg:bayes_opt}.
 
@@ -573,6 +620,8 @@ Once the response surface was optimised and the best performing MSM hyperparamet
 %     \label{tab:trial_specs}
 % \end{table}
 
+
+% Bayesian optimisation is a type of sequential model based \cite{hutterSequentialModelbasedOptimization2011} optimisation technique. These techniques entail first sampling the response of the objective function over a search space to create a trial data set. A statistical model called the \emph{surrogate function}, which serves as a proxy for the objective function, is built using the sampled responses. An utility function, known as the \emph{acquisition function}, determines the anticipated utility of a set of inputs in optimizing the objective function, based on the predictions and uncertainty in the surrogate function.  The objective function is then sampled using the set of inputs which maximize the acquisition function. This new trial is added to trial data set and process repeated. 
 
 
 
