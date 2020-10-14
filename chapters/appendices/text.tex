@@ -138,7 +138,7 @@ Due to the extremely kinetically limited state of the aqueous-sucrose system, it
 \left\langle r^{2}\right\rangle=2 D_{\mathrm{w, org}} t
 \end{equation}
 
-The net displacement achieved by a random walk in three-dimensions will be less than the path length taken between the initial and final positions, a consequence of the fact that the translational motion of water through such a lattice is not Brownian. All nine trajectories contain segments during which the water is travelling perpendicularly, or even backwards, relative to its net displacement. It may be the case that the decorrelation of the water velocity is limited by the rearrangement of the sucrose, as well as the thermodynamic barrier that must be overcome to hop to the nearest available cavity, rather than the dynamics of a more typical solvation shell in an aqueous environment. Therefore, it is desirable to calculate the magnitude of the displacement to the current position, $\left|\left\langle r^{2}\right\rangle\right|$, at every time-step, rather than cumulatively sum the path length that takes into account every intermediate `jump’. Additionally, removal from the calculation of the centre of mass motion of the water molecule ensures that any atomically resolved vibrational motion does not contribute to the calculation of net displacement. The value stated in the manuscript and illustrated in figure \ref{fig:wat_workflow} panel (c) was calculated under these conditions. 
+The net displacement achieved by a random walk in three-dimensions will be less than the path length taken between the initial and final positions, a consequence of the fact that the translational motion of water through such a lattice is not Brownian. All nine trajectories contain segments during which the water is travelling perpendicularly, or even backwards, relative to its net displacement. It may be the case that the decorrelation of the water velocity is limited by the rearrangement of the sucrose, as well as the thermodynamic barrier that must be overcome to hop to the nearest available cavity, rather than the dynamics of a more typical solvation shell in an aqueous environment. Therefore, it is desirable to calculate the magnitude of the displacement to the current position, $\left|\left\langle r^{2}\right\rangle\right|$, at every time-step, rather than cumulatively sum the path length that takes into account every intermediate `jump’. Additionally, removal from the calculation of the centre of mass motion of the water molecule ensures that any atomically resolved vibrational motion does not contribute to the calculation of net displacement. The value stated in the manuscript and illustrated in figure \ref{fig:wat_f1} panel (c) was calculated under these conditions. 
 
 \begin{figure}
     \centering
@@ -392,8 +392,6 @@ For diffusivity research, sucrose is a representative organic system because man
 
 \chapter{Markov state model optimisation}\label{app:msm}
 
-\section{Alanine Dipeptide}
-
 \begin{table}[h]
  \centering
  \caption{ Model selection metrics othe response surface of Alanine Dipeptide. Standardised mean square error (SMSE) and mean standardised log loss (MSLL) for GP models of the response surface of MSMs for alanine dipeptide, using different transformations of $n$ ($T(n)$) and different kernels. Each GP model used a mean prior of zero, and all other parameters were estimated by maximizing the marginal likelihood. All values were calculated using 10-fold cross-validation.}
@@ -414,15 +412,85 @@ For diffusivity research, sucrose is a representative organic system because man
  \label{tab:ala2_fit_results}
 \end{table}
 
-% \begin{figure}
-% \centering
-% \caption{Caption}
-% \includegraphics[height=0.8\textheight]{chapters/msm_optimization/figures/ala1_opt_explainer.png}
-% \label{fig:ala1_opt_expl}
-% \end{figure}
+\chapter{Metastable state selection for hidden Markov models}\label{app:hmm}
 
-\section{AADH}
+ The Prinz potential is given by: 
+\begin{equation}\label{eqn:prinz_pot}
+ V(x) = 4\left(x^8 + 0.8 \exp{\left(-80 x^2\right)} + 0.2 \exp{\left(-80 (x-0.5)^2\right)} + 0.5\exp{\left(-40 (x+0.5)^2\right)}\right).
+\end{equation}
+Exact eigenvalues and trajectories of simulated Brownian motion were calculated using code from MSMBuilder \cite{beauchampMSMBuilder2ModelingConformational2011} version 3.9.0. The first $7$ relaxation processes are given in table \ref{tab:prinz_its_exact}. 
+\begin{table}
+ \centering
+ \mycaption{Relaxation timescales of the Prinz potential. All values are given in units of the time step $\Delta t = 0.001$}
+ \begin{tabular}{|c|c|}
+ \hline
+ Process, $i$ & $t_i$ \\
+ \hline\hline
+  2 & 844.4 \\
+  3 & 125.5 \\
+  4 & 64.3 \\
+  5 & 11.9 \\
+  6 & 10.3 \\
+  7 & 7.3 \\
+  8 & 6.7 \\
+  \hline
+ \end{tabular}
+ \label{tab:prinz_its_exact}
+\end{table}
 
+100 trajectories of Brownian dynamics were simulated by the following stochastic differential equation: 
+
+\begin{equation}\label{eqn:prinz_dynamics}
+ \frac{\mathrm{d}x_t}{\mathrm{d}t} = -\frac{\mathrm{d}V(x)}{\mathrm{d}x} + \sqrt{2D} * R(t)
+\end{equation}
+
+with $D = 1000$, and $R\sim \mathcal{N}(0, 1)$, $\mathrm{Cov}\left[R(t), R(t^{\prime})\right]=\delta_{t, t^{\prime}}$. The time-step used was $\Delta t = 0.001$. Each trajectory was initiated from a random draw of the stationary distribution and was twice the longest relaxation process timescale, i.e. $2\times 844=1688$ time-steps long. The trajectories were clustered into $n = \left\lfloor\sqrt{100\times 1688}\right\rfloor =410$ discrete states using k-means clustering \cite{friedman2001elements}. This number of states was based on the heuristic described in \cite{husicWardClusteringImproves2017a}.
+
+\chapter{AADH}\label{app:aadh}
+\section{Molecular dynamics}
+
+\begin{figure}[p]
+ \centering
+ \mycaption{LOW RESOLUTION! RMSD of the $\alpha$-Carbon atoms of AADH relative to the crystal structure. Each panel is a single trajectory, blue lines are the RMSD, black horizontal lines are the \SI{2.5}{\percent} and \SI{97.5}{\percent} quantiles (\SI{4.5}{\angstrom} and \SI{6.4}{\angstrom}, respectively) taken across all trajectories.}
+ \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/rmsd_backbone_ca.png}
+ \label{fig:rmsd_ca}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \mycaption{Secondary structure composition of trajectories $24, 27, 30, 42, 78, 87$ and $97$ as a function of time. The number of residues in each simplified secondary structure class \cite{kabschDictionaryProteinSecondary1983} are shown: `H' (green) refers to alpha helix, 3- and 5-helices; `E' (orange) refers to residues in beta-bridges or beta ladder; `C' (blue) refers to turns, bends and all irregular elements.}
+ \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/drift_trajs_dssp.png}
+ \label{fig:dssp_trajs_sens}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \mycaption{\textbf{Conformational change in loop residues 92-108 of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the C$\alpha$ between the crystal structure and seed trajectory. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues 92-108 are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown) The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The $22$ tail residues, unresolved by the crystal structure, are missing from the N-terminus. }
+ \label{fig:chain_d_loop}
+ \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
+\end{figure}
+
+\section{MSM optimisation}
+
+\subsection{Choosing Markov lag-time and dominant sub-space}
+
+\begin{figure}
+ \centering
+ \mycaption{The ratio of successive eigenvalues (panel (a)) and implied timescales (panel (b)) for a Markov state model with $\tau(\textrm{MSM})=\SI{2}{\nano\second}$, estimated using MCMC with $1000$ posterior samples. The TICA lag time was $\tau=\SI{10}{\nano\second}$, with \SI{95}{\percent} of the variance/$m=8$ components retained. The number of cluster centres was $n=316$. The blue dots and error bars are the mean and \SI{95}{\percent} credible intervals.}
+ \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/timescale_ratios_D_sens.png}
+ \label{fig:ts_ratios_d_sens}
+\end{figure}
+
+\begin{figure}
+ \centering
+ \mycaption{The implied timescales and relative VAMP-2 scores as a function of the Markov lag time $\tau(\mathrm{MSM})$. The TICA lag time was set to $\tau=\SI{10}{\nano\second}$, with \SI{95}{\percent} of the variance retained meaning $m=8$ components were retained. The number of cluster centres was set to $n=316$. Panel (a) shows the first five implied timescales for $\SI{0}{\nano\second} < \tau(\mathrm{MSM}) < \SI{5}{\nano\second}$, panel (b) shows the first five implied timescales for $\SI{0}{\nano\second} < \tau(\mathrm{MSM}) < \SI{50}{\nano\second}$. The solid lines and coloured shaded areas are the mean and \SI{95}{\percent} credible intervals respectively, estimated using MCMC with $500$ posterior samples. The grey shaded area is the region for which the implied timescales are smaller than the lag time. Panel (c) and (d) show the VAMP-2 scores, scored on the first $2-5$ eigenvalues for the same ranges. The VAMP-2 scores are indexed to $1$ at their initial value. The colour coding is consistent between the implied timescale plots and VAMP-2 plots. So that $k=2$, in blue, is the score including the first eigenvalue $\lambda = 1$ and the eigenvalue of the longest implied timescale also shown in blue in panels (a) and (b). }
+ \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/implied_timescales_D_sens.png}
+ \label{fig:its_d_sens}
+\end{figure}
+
+\subsection{Response surface}\label{app:msm_rsm}
+
+\subsubsection{GP model selection metrics}
 \begin{table}
  \centering
  \caption{Model selection metrics for the response surface of AADH using all hyperparameter trials ($N=361$, except those for $\chi=$RMSD). The Mean Standardised Log Loss (MSLL) and Standardised Mean Square Error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{MSLL}^{2}+R_{SMSE}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher. }
@@ -466,9 +534,6 @@ For diffusivity research, sucrose is a representative organic system because man
  \hline
  \end{tabularx}
 \end{table}
-
-
-
 
 \begin{table}
  \centering
@@ -692,92 +757,11 @@ For diffusivity research, sucrose is a representative organic system because man
  \end{tabularx}
 \end{table}
 
-\chapter{Metastable state selection for hidden Markov models}\label{app:hmm}
-
-\section{Prinz potential}\label{sec:app_hmm_prinz}
- The Prinz potential is given by: 
-\begin{equation}\label{eqn:prinz_pot}
- V(x) = 4\left(x^8 + 0.8 \exp{\left(-80 x^2\right)} + 0.2 \exp{\left(-80 (x-0.5)^2\right)} + 0.5\exp{\left(-40 (x+0.5)^2\right)}\right).
-\end{equation}
-Exact eigenvalues and trajectories of simulated Brownian motion were calculated using code from MSMBuilder \cite{beauchampMSMBuilder2ModelingConformational2011} version 3.9.0. The first $7$ relaxation processes are given in table \ref{tab:prinz_its_exact}. 
-\begin{table}
- \centering
- \mycaption{Relaxation timescales of the Prinz potential. All values are given in units of the time step $\Delta t = 0.001$}
- \begin{tabular}{|c|c|}
- \hline
- Process, $i$ & $t_i$ \\
- \hline\hline
-  2 & 844.4 \\
-  3 & 125.5 \\
-  4 & 64.3 \\
-  5 & 11.9 \\
-  6 & 10.3 \\
-  7 & 7.3 \\
-  8 & 6.7 \\
-  \hline
- \end{tabular}
- \label{tab:prinz_its_exact}
-\end{table}
-
-100 trajectories of Brownian dynamics were simulated by the following stochastic differential equation: 
-
-\begin{equation}\label{eqn:prinz_dynamics}
- \frac{\mathrm{d}x_t}{\mathrm{d}t} = -\frac{\mathrm{d}V(x)}{\mathrm{d}x} + \sqrt{2D} * R(t)
-\end{equation}
-
-with $D = 1000$, and $R\sim \mathcal{N}(0, 1)$, $\mathrm{Cov}\left[R(t), R(t^{\prime})\right]=\delta_{t, t^{\prime}}$. The time-step used was $\Delta t = 0.001$. Each trajectory was initiated from a random draw of the stationary distribution and was twice the longest relaxation process timescale, i.e. $2\times 844=1688$ time-steps long. The trajectories were clustered into $n = \left\lfloor\sqrt{100\times 1688}\right\rfloor =410$ discrete states using k-means clustering \cite{friedman2001elements}. This number of states was based on the heuristic described in \cite{husicWardClusteringImproves2017a}.
-
-\chapter{AADH}\label{app:aadh}
-\section{Molecular dynamics}
-
-\begin{figure}[p]
- \centering
- \mycaption{LOW RESOLUTION! RMSD of the $\alpha$-Carbon atoms of AADH relative to the crystal structure. Each panel is a single trajectory, blue lines are the RMSD, black horizontal lines are the \SI{2.5}{\percent} and \SI{97.5}{\percent} quantiles (\SI{4.5}{\angstrom} and \SI{6.4}{\angstrom}, respectively) taken across all trajectories.}
- \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/rmsd_backbone_ca.png}
- \label{fig:rmsd_ca}
-\end{figure}
-
-\begin{figure}
- \centering
- \mycaption{Secondary structure composition of trajectories $24, 27, 30, 42, 78, 87$ and $97$ as a function of time. The number of residues in each simplified secondary structure class \cite{kabschDictionaryProteinSecondary1983} are shown: `H' (green) refers to alpha helix, 3- and 5-helices; `E' (orange) refers to residues in beta-bridges or beta ladder; `C' (blue) refers to turns, bends and all irregular elements.}
- \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/drift_trajs_dssp.png}
- \label{fig:dssp_trajs_sens}
-\end{figure}
-
-\begin{figure}
- \centering
- \mycaption{\textbf{Conformational change in loop residues 92-108 of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the C$\alpha$ between the crystal structure and seed trajectory. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues 92-108 are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown) The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The $22$ tail residues, unresolved by the crystal structure, are missing from the N-terminus. }
- \label{fig:chain_d_loop}
- \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
-\end{figure}
-
-\section{MSM optimisation}
-
-\subsection{Choosing Markov lag-time and dominant sub-space}
-
-\begin{figure}
- \centering
- \mycaption{The ratio of successive eigenvalues (panel (a)) and implied timescales (panel (b)) for a Markov state model with $\tau(\textrm{MSM})=\SI{2}{\nano\second}$, estimated using MCMC with $1000$ posterior samples. The TICA lag time was $\tau=\SI{10}{\nano\second}$, with \SI{95}{\percent} of the variance/$m=8$ components retained. The number of cluster centres was $n=316$. The blue dots and error bars are the mean and \SI{95}{\percent} credible intervals.}
- \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/timescale_ratios_D_sens.png}
- \label{fig:ts_ratios_d_sens}
-\end{figure}
-
-\begin{figure}
- \centering
- \mycaption{The implied timescales and relative VAMP-2 scores as a function of the Markov lag time $\tau(\mathrm{MSM})$. The TICA lag time was set to $\tau=\SI{10}{\nano\second}$, with \SI{95}{\percent} of the variance retained meaning $m=8$ components were retained. The number of cluster centres was set to $n=316$. Panel (a) shows the first five implied timescales for $\SI{0}{\nano\second} < \tau(\mathrm{MSM}) < \SI{5}{\nano\second}$, panel (b) shows the first five implied timescales for $\SI{0}{\nano\second} < \tau(\mathrm{MSM}) < \SI{50}{\nano\second}$. The solid lines and coloured shaded areas are the mean and \SI{95}{\percent} credible intervals respectively, estimated using MCMC with $500$ posterior samples. The grey shaded area is the region for which the implied timescales are smaller than the lag time. Panel (c) and (d) show the VAMP-2 scores, scored on the first $2-5$ eigenvalues for the same ranges. The VAMP-2 scores are indexed to $1$ at their initial value. The colour coding is consistent between the implied timescale plots and VAMP-2 plots. So that $k=2$, in blue, is the score including the first eigenvalue $\lambda = 1$ and the eigenvalue of the longest implied timescale also shown in blue in panels (a) and (b). }
- \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/implied_timescales_D_sens.png}
- \label{fig:its_d_sens}
-\end{figure}
-
-\subsection{Response surface}\label{app:msm_rsm}
-
-feature description. 
-
 
 \section{Coarse graining models}
 
 \subsection{Hidden state selection}
-\begin{table}[]
+\begin{table}
  \centering
  \caption{Hidden state selection for AADH}
  \begin{tabular}{lrrrrrr}
@@ -1087,7 +1071,7 @@ feature description.
  \label{tab:sens_2_gelman_rubin}
 \end{table}
 
-\begin{table}[]
+\begin{table}
  \centering
  \mycaption{Sensitivity 2 Rate matrix}
  \label{tab:sens_2_rate_matrix}

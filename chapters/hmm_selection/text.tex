@@ -6,8 +6,9 @@
 \section{Questions for Adrian}
 \begin{enumerate}
     \item Is the material about integrated observed/complete data likelihoods clear? I've not explained it anywhere else.  
+    AJM: \emph{It is reasonably clear I’d say, yes - good to lead the reader in with a few basic pointers and context}
     \item Do you agree with TM about the conclusion regarding ICL being too pessimistic? 
-    \item  Do you understand figures 5.2 - 5.4 (in particular 5.2)?
+    AJM: \emph{Yes I agree that the conclusions on ICL are pessimistic. You can give a more rounded picture here and it is certainly useful to point out what needs to be done and tested in future follow-up world.}
 \end{enumerate}
 
 \section{Comments}
@@ -122,7 +123,7 @@ The derivation of the AIC starts by approximating the true distribution $q(s)$ w
 
 Instead of bias correction with the degrees of freedom, $d$, cross-validation can be used  \cite{celeuxSelectingHiddenMarkov2008}. The CVLL is calculated in the following way (note, this is different from the procedure in \cite{celeuxSelectingHiddenMarkov2008}): 
 \begin{enumerate}
-    \item The observed trajectories are split into $N = 10$ training $\{s_t\}^{i}$ and test $\{s_t\}^{-i}$, $i = 1, ..., N$ sets using 50:50 shuffle-split, as described in chapter \ref{chap:msm} section \ref{sec:methods}. 
+    \item The observed trajectories are split into $N = 10$ training $\{s_t\}^{i}$ and test $\{s_t\}^{-i}$, $i = 1, ..., N$ sets using 50:50 shuffle-split, as described in algorithm \ref{alg:shuffle_split} in chapter \ref{chap:theory}. 
     \item For each $i$, fit a HMM using the training data $\{s_t\}^{i}$. \label{} 
     \item Calculate the log-likelihood of the parameters using the test data,  $\log{\left(L(\hat{\theta}^{i}|\{s_t\}^{-i})\right)}$, with the forward part of the Baum-Welch algorithm (algorithm \ref{alg:baum_welch}. 
     \item The CVLL is the average over the splits: 
