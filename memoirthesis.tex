@@ -65,8 +65,9 @@
 %
 \frenchspacing
 % Font with math support: New Century Schoolbook
-\usepackage{fouriernc}
+% \usepackage{fouriernc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 %
 % UoB guidelines:
 %
@@ -84,7 +85,7 @@
 %
 % Chapter style (taken and slightly modified from Lars Madsen Memoir Chapter 
 % Styles document
-\usepackage{calc,soul,fourier}
+\usepackage{calc,soul,fourier} %
 \makeatletter 
 \newlength\dlf@normtxtw 
 \setlength\dlf@normtxtw{\textwidth} 
@@ -278,14 +279,16 @@
 
 %% BIBLIOGRAPHY STUFF
 \usepackage[sorting=none,style=numeric-comp]{biblatex}
-% \usepackage[colorlinks=true,
-% 		     allcolors=black]{hyperref}              %Creates hyperlinks in cross references
+\usepackage[colorlinks=true,
+		     allcolors=black]{hyperref}              %Creates hyperlinks in cross references
 % \bibliographystyle{plain}
 % \refstepcounter{chapter}
 \addbibresource{thesisbiblio.bib}
 %
 %
 \begin{document}
+\fontfamily{lmss}\selectfont
+
 % UoB guidlines:
 %
 % Preliminary pages
@@ -337,12 +340,12 @@
 % subdirectories.
 \mainmatter
 
-\import{chapters/introduction/}{text.tex}
-\clearemptydoublepage
-\import{chapters/theory/}{text.tex}
-\clearemptydoublepage
-\import{chapters/water_hopping/}{text.tex}
-\clearemptydoublepage
+% \import{chapters/introduction/}{text.tex}
+% \clearemptydoublepage
+% \import{chapters/theory/}{text.tex}
+% \clearemptydoublepage
+% \import{chapters/water_hopping/}{text.tex}
+% \clearemptydoublepage
 % \import{chapters/msm_optimization/}{text.tex}
 \clearemptydoublepage
 \import{chapters/hmm_selection/}{text.tex}

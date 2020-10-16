@@ -1,39 +1,6 @@
 \let\textcircled=\pgftextcircled
 \chapter{Markov State Model Optimization}\label{chap:msm}
 
-
-\section{Antonia Mey comments}
-\emph{Structure:}
-I think the main thing I would change,  is altering the structure a little bit to make it easier to follow (below a rough suggestion). 
-
-\begin{enumerate}
-    \item MSMs are great, but has too many modelling choices, here we introduce a method to alleviate this
-    \item We need MD data to create MSMs, here are the details on the MD systems
-    \item Here is how you build an MSM and based on this I have chosen a fixed MSM lag time (this may be done in a different chapter)
-    \item Now we are left with all of these other parameters how can we make sure this is the best choice of MSM?
-    \item Lets turn to ML and see if we can use GP and BO to figure out the best parameter combination
-    \item Look I came up with this amazing algorithm to do this
-    \item Let’s apply this to a) di-ala b) AADH.
-\end{enumerate}
-
-Maybe  a pictorial image of what your optimisation actually does, and how you assess it, much in the same way as you describe the steps of markov modelling would be useful (I am far too big a fan of diagrams and it would be a great TOC graphic for the paper). For example to be put into the introduction to the chapter.
-
-\emph{Core concepts}
-If you can make sure core concepts are well explained and highlighted in the text. With this I mean things such as:
-\begin{itemize}
-    \item Response surface (I didn’t quite understand)
-    \item How you make kernel choices
-    \item how you select l
-    \item Trial data 50:50 shuffle split etc. (essentially at the moment I don’t feel like I could reproduce exactly what you did to the data and how to run the optimisation. for the MSM part it seems a bit clearer, but that may just be because I have done these steps many times)
-\end{itemize}
-
-\emph{Nomenclature/Maths typesetting}
-I think the main confusions for me were the nomenclature of variables. Even when you redefine the nomenclature, there are many differe phi, psi and ks and xs and other. I am a fan of specific examples from time to time in the text after something is definite of what the variables are in terms of your MD data for example, or what exact optimisation variable you are referring to, even if repetitive makes it easier for the reader (and this is still a Chemistry PhD I suppose). This may be a ‘spelling thing’, but there is a lot of vectors/matrices that should be bold missing. 
-
-% Conclusions: where you state "something described in the MSM literature”, cite some relevant references. 
-
-It will be important to discuss the relevance of your findings for future MSM investigations - summarise the implications and make some clear recommendations for how others should approach simulations and MSM construction in future. Also: do your findings reveal anything about other MSM studies in the recent literature? Important to set the work in context. This may come in Chapter 6?
-
 \section{Introduction}
 
 \begin{table}
@@ -630,5 +597,36 @@ The main limitation of this work is that the response surface of alanine dipepti
 
 
 
+\section{Antonia Mey comments}
+% \emph{Structure:}
+% I think the main thing I would change,  is altering the structure a little bit to make it easier to follow (below a rough suggestion). 
+
+% \begin{enumerate}
+%     \item MSMs are great, but has too many modelling choices, here we introduce a method to alleviate this
+%     \item We need MD data to create MSMs, here are the details on the MD systems
+%     \item Here is how you build an MSM and based on this I have chosen a fixed MSM lag time (this may be done in a different chapter)
+%     \item Now we are left with all of these other parameters how can we make sure this is the best choice of MSM?
+%     \item Lets turn to ML and see if we can use GP and BO to figure out the best parameter combination
+%     \item Look I came up with this amazing algorithm to do this
+%     \item Let’s apply this to a) di-ala b) AADH.
+% \end{enumerate}
+
+% Maybe  a pictorial image of what your optimisation actually does, and how you assess it, much in the same way as you describe the steps of markov modelling would be useful (I am far too big a fan of diagrams and it would be a great TOC graphic for the paper). For example to be put into the introduction to the chapter.
+
+% \emph{Core concepts}
+% If you can make sure core concepts are well explained and highlighted in the text. With this I mean things such as:
+% \begin{itemize}
+%     \item Response surface (I didn’t quite understand)
+%     \item How you make kernel choices
+%     \item how you select l
+%     \item Trial data 50:50 shuffle split etc. (essentially at the moment I don’t feel like I could reproduce exactly what you did to the data and how to run the optimisation. for the MSM part it seems a bit clearer, but that may just be because I have done these steps many times)
+% \end{itemize}
+
+% \emph{Nomenclature/Maths typesetting}
+% I think the main confusions for me were the nomenclature of variables. Even when you redefine the nomenclature, there are many differe phi, psi and ks and xs and other. I am a fan of specific examples from time to time in the text after something is definite of what the variables are in terms of your MD data for example, or what exact optimisation variable you are referring to, even if repetitive makes it easier for the reader (and this is still a Chemistry PhD I suppose). This may be a ‘spelling thing’, but there is a lot of vectors/matrices that should be bold missing. 
+
+% % Conclusions: where you state "something described in the MSM literature”, cite some relevant references. 
+
+% It will be important to discuss the relevance of your findings for future MSM investigations - summarise the implications and make some clear recommendations for how others should approach simulations and MSM construction in future. Also: do your findings reveal anything about other MSM studies in the recent literature? Important to set the work in context. This may come in Chapter 6?
 
   

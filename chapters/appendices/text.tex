@@ -413,7 +413,7 @@ For diffusivity research, sucrose is a representative organic system because man
 \end{table}
 
 \chapter{Metastable state selection for hidden Markov models}\label{app:hmm}
-
+\section{Prinz potential}
  The Prinz potential is given by: 
 \begin{equation}\label{eqn:prinz_pot}
  V(x) = 4\left(x^8 + 0.8 \exp{\left(-80 x^2\right)} + 0.2 \exp{\left(-80 (x-0.5)^2\right)} + 0.5\exp{\left(-40 (x+0.5)^2\right)}\right).
@@ -445,6 +445,20 @@ Exact eigenvalues and trajectories of simulated Brownian motion were calculated 
 \end{equation}
 
 with $D = 1000$, and $R\sim \mathcal{N}(0, 1)$, $\mathrm{Cov}\left[R(t), R(t^{\prime})\right]=\delta_{t, t^{\prime}}$. The time-step used was $\Delta t = 0.001$. Each trajectory was initiated from a random draw of the stationary distribution and was twice the longest relaxation process timescale, i.e. $2\times 844=1688$ time-steps long. The trajectories were clustered into $n = \left\lfloor\sqrt{100\times 1688}\right\rfloor =410$ discrete states using k-means clustering \cite{friedman2001elements}. This number of states was based on the heuristic described in \cite{husicWardClusteringImproves2017a}.
+
+\section{Membership matrix errors}\label{sec:app_membership_errors}
+
+The conditional probabilities $\mathbb{P}(h=j|s=i)$ can be calculated via the $\gamma$ auxiliary variable from the Baum-Welch algorithm, or from the membership matrix after taking into account the largest reversibly connected subset of hidden states.  Figure \ref{fig:membership_error} shows the difference between these two methods for a HMM with $g=10$ hidden states.  The error plotted in panel (a) (blue discs) is given by:
+\begin{equation}\label{eqn:err_entropy}
+\mathrm{err}(s_{i}) = \sum_j|\widebar{\gamma}_{j}(s_{i}) - M_{i, j}|, 
+\end{equation}
+which is plotted as a function of the stationary distribution of the observed states $\pi_{s_{i}}$. The green discs are the stationary distribution of states with zero error ($\mathrm{err}<10^{-10}$). $\widebar{\gamma}$ is the value of $\gamma_{j}(s_{i})$ averaged over all the instances of a $s_{i}$ in a trajectory. Panel (b) shows the value of the error for just one hidden state (state $j=3$) with the emission distribution for comparison. 
+\begin{figure}
+    \centering
+    \mycaption[Errors in the membership matrix]{\textsc{Errors in the membership matrix}. Panel (a) shows the error from equation \ref{eqn:err_entropy} (blue discs) as a function of the observed stationary distribution, $\bm{\pi}_{\mathrm{obs}}$. The green discs show the observed states with no difference in value of $\gamma$ or $\mathbf{M}$. Panel (b) shows the error for hidden state $3$ (blue discs) overlaid on the value of $\gamma_{3}(s)$ as a function of $s$, the observed states.}
+    \includegraphics[width=0.8\textwidth]{chapters/hmm_selection/figures/entropy_error_explanation.png}
+    \label{fig:membership_error}
+\end{figure}
 
 \chapter{AADH}\label{app:aadh}
 \section{Molecular dynamics}
