@@ -17,14 +17,14 @@
     $\tilde{\bm{\pi}}$ & Stationary distribution of hidden states \\
     $\{s_{t}\}$ & Trajectory of observed states \\
     $\{h_{t}\}$ & Trajectory of hidden states \\
-    $p(\{s_t\}|M)$ & The integrated or marginal observed likelihood: the probability of observing $\{s_t\}$ given the model $M$. \\
-    $p(\{(s_t, h_t)\}|M)$ & The integrated or marginal complete-data likelihood: the probability of observing both $\{s_t\}$ and $\{h_t\}$ given the model $M$.  \\
-    $L(\tilde{\mathbf{T}}, \mathbf{E}| \{s_t\})$ & The HMM likelihood. \\
+    $\mathbb{P}(\{s_t\}|M)$ & The integrated or marginal observed likelihood: the probability of observing $\{s_t\}$ given the model $M$. \\
+    $\mathbb{P}(\{(s_t, h_t)\}|M)$ & The integrated or marginal complete-data likelihood: the probability of observing both $\{s_t\}$ and $\{h_t\}$ given the model $M$.  \\
+    $\mathcal{L}(\tilde{\mathbf{T}}, \mathbf{E}| \{s_t\})$ & The HMM likelihood. \\
     $\theta$ & The HMM parameters, $\tilde{\mathbf{T}}$ and $\mathbf{E}$\\
     $\hat{\theta}$ & Maximum likelihood estimates of $\theta$ \\
-    $\mathbf{M}$ & The membership matrix. $M_{ij}$ is the probability that a given observed state $i$ is a member of hidden state $j$. \\
+    $\mathbf{M}$ & The membership matrix. $M_{i,j}$ is the probability that a given observed state $i$ is a member of hidden state $j$. \\
     $H(s_{t}; \mathbf{M})$ & The information entropy associated with observed state $s_{t}$. \\
-    Ent. & The classification entropy - the sum of the $H(s_{t}; \mathbf{M})$ over a whole trajectory data set. \\
+    $EN(\mathbf{M})$ & The classification entropy - the sum of the $H(s_{t}; \mathbf{M})$ over a whole trajectory data set. \\
     \hline
     \end{tabularx}
     \label{tab:hmm_symbols}
