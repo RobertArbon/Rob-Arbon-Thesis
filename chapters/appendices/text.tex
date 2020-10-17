@@ -461,31 +461,39 @@ which is plotted as a function of the stationary distribution of the observed st
 \end{figure}
 
 \chapter{AADH}\label{app:aadh}
+
 \section{Molecular dynamics}
 
 \begin{figure}[p]
  \centering
- \mycaption{LOW RESOLUTION! RMSD of the $\alpha$-Carbon atoms of AADH relative to the crystal structure. Each panel is a single trajectory, blue lines are the RMSD, black horizontal lines are the \SI{2.5}{\percent} and \SI{97.5}{\percent} quantiles (\SI{4.5}{\angstrom} and \SI{6.4}{\angstrom}, respectively) taken across all trajectories.}
+ \mycaption[RMSD of the alpha-carbon atoms of AADH relative to the crystal structure]{\textsc{RMSD of the $\alpha$-carbon atoms of AADH relative to the crystal structure}. Each panel is a single trajectory, blue lines are the RMSD, horizontal lines are the \SI{2.5}{\percent} and \SI{97.5}{\percent} quantiles (\SI{4.5}{\angstrom} and \SI{6.4}{\angstrom}, respectively) taken across all trajectories.}
  \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/rmsd_backbone_ca.png}
  \label{fig:rmsd_ca}
 \end{figure}
 
 \begin{figure}
  \centering
- \mycaption{Secondary structure composition of trajectories $24, 27, 30, 42, 78, 87$ and $97$ as a function of time. The number of residues in each simplified secondary structure class \cite{kabschDictionaryProteinSecondary1983} are shown: `H' (green) refers to alpha helix, 3- and 5-helices; `E' (orange) refers to residues in beta-bridges or beta ladder; `C' (blue) refers to turns, bends and all irregular elements.}
+ \mycaption[Secondary structure composition of select trajectories]{\textsc{Secondary structure composition of trajectories $24, 27, 30, 42, 78, 87$ and $97$ as a function of time}. The number of residues in each simplified secondary structure class \cite{kabschDictionaryProteinSecondary1983} are shown: `H' (green) refers to alpha helix, 3- and 5-helices; `E' (orange) refers to residues in beta-bridges or beta ladder; `C' (blue) refers to turns, bends and all irregular elements.}
  \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/drift_trajs_dssp.png}
  \label{fig:dssp_trajs_sens}
 \end{figure}
 
 \begin{figure}
  \centering
- \mycaption{\textbf{Conformational change in loop residues 92-108 of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the C$\alpha$ between the crystal structure and seed trajectory. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues 92-108 are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown) The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The $22$ tail residues, unresolved by the crystal structure, are missing from the N-terminus. }
+ \mycaption[Conformational change in loop residues 92-108 of chain D]{\textsc{Conformational change in loop residues 92-108 of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the $\alpha$-carbon from the crystal structure. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues \numrange{92}{108} are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown). The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The \num{22} tail residues, unresolved by the crystal structure, are missing from the N-terminus.}
  \label{fig:chain_d_loop}
  \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
 \end{figure}
 
-\section{MSM optimisation}
+\begin{figure}[p]
+    \centering
+    \mycaption{Caption}
+    \includegraphics[height=0.9\textheight]{chapters/aadh/figures/sd_dev_by_residue.png}
+    \label{fig:aadh_sd_dev_by_res}
+\end{figure}
 
+
+\section{MSM optimisation}
 \subsection{Choosing Markov lag-time and dominant sub-space}
 
 \begin{figure}

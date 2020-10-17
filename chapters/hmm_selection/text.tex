@@ -183,7 +183,7 @@ A second method was available, which in principle should give the same answer bu
 \end{equation}
 where $i$ labels the $g$ hidden states and $j$ labels the $n$ observed states. The entropy was calculated using $\mathbf{M}$ as: 
 \begin{equation}\label{eqn:ent_v2}
-    \mathrm{EN} = N_{\mathrm{obs}}\sum^{n}_{j}\pi_{j}\sum^{g}_{i} M_{ji}\log{\left(M_{ji}\right)}
+    \mathrm{EN}(\mathbf{M}) = N_{\mathrm{obs}}\sum^{n}_{j}\pi_{j}\sum^{g}_{i} M_{ji}\log{\left(M_{ji}\right)}
 \end{equation}
 The reason for the difference was due to error accumulated in the values of  $\mathbf{M}$ from equation \ref{eqn:M_vs_E}. This was due to noise in the poorly sampled observed states, see section \ref{sec:app_membership_errors} and figure \ref{fig:membership_error}. However, in situations when the largest reversible connected set of hidden states is smaller than total number of hidden states, the values of $\gamma$ would need re-normalizing. In this case (in particular in chapter \ref{chap:aadh}) the second method will be more convenient. 
 

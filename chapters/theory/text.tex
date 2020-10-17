@@ -122,7 +122,7 @@ Markov state models (MSMs) are discrete models of Markovian dynamics.\cite{prinz
     \item The eigenfunctions, $\psi(\mathbf{x})$, are now the right eigenvectors of $\mathbf{T}(\tau)$, $\mathbf{v}$, with the same interpretation. The left eigenvectors, $\mathbf{u}$, are related to the right eigenvectors by: $v_{i} = u_{i}/\pi_{i}$.  
  \end{itemize}
 
-Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with configurations saved every $\Delta t$ seconds. This thesis will consider only canonical ensemble simulations, using both over-damped Langevin dynamics \cite{ermakComputerSimulationCharged1974,ermakEquilibriumElectrostaticEffects1974} and velocity re-scaling \cite{bussiCanonicalSamplingVelocity2007} t maintain temperature. As a consequence, the momentum coordinates will be ignored as a feature for constructing MMs. 
+Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with configurations saved every $\Delta t$ seconds. This thesis will consider only canonical ensemble simulations, using both over-damped Langevin dynamics \cite{ermakComputerSimulationCharged1974,ermakEquilibriumElectrostaticEffects1974} and velocity re-scaling \cite{bussiCanonicalSamplingVelocity2007} to maintain temperature. As a consequence, the momentum coordinates will be ignored as a feature for constructing MMs. 
 
 If  each trajectory has $N_{\mathrm{T}}$ frames (coordinate snapshots) and $N_{\mathrm{A}}$ atoms then a trajectory can be represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{N_{\mathrm{T}} \times 3N_{\mathrm{A}}}$. The trajectories  undergo a series of processing steps on the way to creating an MSM, these are: 
 
