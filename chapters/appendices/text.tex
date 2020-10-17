@@ -450,9 +450,9 @@ with $D = 1000$, and $R\sim \mathcal{N}(0, 1)$, $\mathrm{Cov}\left[R(t), R(t^{\p
 
 The conditional probabilities $\mathbb{P}(h=j|s=i)$ can be calculated via the $\gamma$ auxiliary variable from the Baum-Welch algorithm, or from the membership matrix after taking into account the largest reversibly connected subset of hidden states.  Figure \ref{fig:membership_error} shows the difference between these two methods for a HMM with $g=10$ hidden states.  The error plotted in panel (a) (blue discs) is given by:
 \begin{equation}\label{eqn:err_entropy}
-\mathrm{err}(s_{i}) = \sum_j|\widebar{\gamma}_{j}(s_{i}) - M_{i, j}|, 
+\mathrm{err}(s_{i}) = \sum_j|\bar{\gamma}_{j}(s_{i}) - M_{i, j}|, 
 \end{equation}
-which is plotted as a function of the stationary distribution of the observed states $\pi_{s_{i}}$. The green discs are the stationary distribution of states with zero error ($\mathrm{err}<10^{-10}$). $\widebar{\gamma}$ is the value of $\gamma_{j}(s_{i})$ averaged over all the instances of a $s_{i}$ in a trajectory. Panel (b) shows the value of the error for just one hidden state (state $j=3$) with the emission distribution for comparison. 
+which is plotted as a function of the stationary distribution of the observed states $\pi_{s_{i}}$. The green discs are the stationary distribution of states with zero error ($\mathrm{err}<10^{-10}$). $\bar{\gamma}$ is the value of $\gamma_{j}(s_{i})$ averaged over all the instances of a $s_{i}$ in a trajectory. Panel (b) shows the value of the error for just one hidden state (state $j=3$) with the emission distribution for comparison. 
 \begin{figure}
     \centering
     \mycaption[Errors in the membership matrix]{\textsc{Errors in the membership matrix}. Panel (a) shows the error from equation \ref{eqn:err_entropy} (blue discs) as a function of the observed stationary distribution, $\bm{\pi}_{\mathrm{obs}}$. The green discs show the observed states with no difference in value of $\gamma$ or $\mathbf{M}$. Panel (b) shows the error for hidden state $3$ (blue discs) overlaid on the value of $\gamma_{3}(s)$ as a function of $s$, the observed states.}
