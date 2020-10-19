@@ -27,7 +27,7 @@ This KWW fitting process has been carried out using customized LabVIEW software.
 
 \begin{figure}
     \centering
-    \mycaption[KWW fitting for the aqueous-sucrose system]{\textsc{KWW fitting for the aqueous-sucrose system}. On the binary-sucrose system, RH transition is from \SIrange{30}{5}{\percent} for the evaporation step, and \SIrange{5}{30}{\percent} for the condensation step. The black line is RH profile and the red line is one of WGMs change. The blue and green lines are fitted by KWW equation (equation \ref{eqn:wat_si_1}). The timescales of evaporation and condensation are \SI{1841}{\second} and \SI{2566}{\second}, respectively.}
+    \caption[KWW fitting for the aqueous-sucrose system]{\textsc{KWW fitting for the aqueous-sucrose system}. On the binary-sucrose system, RH transition is from \SIrange{30}{5}{\percent} for the evaporation step, and \SIrange{5}{30}{\percent} for the condensation step. The black line is RH profile and the red line is one of WGMs change. The blue and green lines are fitted by KWW equation (equation \ref{eqn:wat_si_1}). The timescales of evaporation and condensation are \SI{1841}{\second} and \SI{2566}{\second}, respectively.}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image003.jpg}
     \label{fig:wat_s1}
 \end{figure}
@@ -37,16 +37,16 @@ Before moving on to fit the compositional dependence of diffusion constants, we 
 
 \begin{figure}
     \centering
-    \mycaption[Binary mixture response functions]{\textsc{Binary mixture response functions}. Examples of the response functions for size changes of six binary mixtures particles following a step change in RH}
+    \caption[Binary mixture response functions]{\textsc{Binary mixture response functions}. Examples of the response functions for size changes of six binary mixtures particles following a step change in RH}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image004.jpg}
     \label{fig:wat_s2}
 \end{figure}
 
-In the high relative humidity region, transitions RH \SI{50}{\percent} - \SI{30}{\percent} - \SI{50}{\percent} (i.e., the evaporation step of RH \SI{50}{\percent} to \SI{30}{\percent} and condensation step of RH \SI{30}{\percent} to \SI{50}{\percent}), the droplets of maltose showed the largest value of timescale of water transport ($\tau$) over the other organic particles, see figure \ref{fig:wat_s3}. Moreover, the characteristic timescale increases with increasing particle size for every binary organic system. For example, the characteristic timescale of raffinose is \SI{188}{\second} for \SI{3332}{\nano\meter}, \SI{265}{\second} for \SI{4110}{\nano\meter}, and \SI{313}{\second} for \SI{4924}{\nano\second}. Comparing similarly sized particles of $\sim \SI{4}{\micro\meter}$ during an evaporation step, the organic particles show $\SI{514}{\second} \pm \SI{31}{\second}$ for maltose (\SI{4114}{\nano\meter}), $\SI{250}{\second} \pm \SI{23}{\second}$ for raffinose (\SI{3967}{\nano\meter}), $\SI{157}{\second} \pm \SI{13}{\nano\second}$ for trehalose (\SI{4101}{\nano\meter}), $\SI{59}{\nano\second} \pm \SI{19}{\second}$ for sucrose (\SI{4016}{\nano\meter}), $\SI{29}{\second} \pm \SI{3}{\second}$ for glucose (\SI{3871}{\nano\meter}), and $\SI{32}{\second} \pm \SI{4}{\second}$ for levoglucosan (\SI{3746}{\nano\meter}). The ordering of the timescales for all particles sizes in the range of \SIrange[range-phrase=--]{3}{6}{\micro\meter} show the same tendency: maltose $>$ raffinose $>$ trehalose $>$ sucrose $>$ glucose $\ge$ levoglucosan, as shown in figure \ref{fig:wat_s3}. In this region, raffinose and maltose particles have experienced the glass transition at RH $\sim \SI{53}{\percent}$ and RH $\sim\SI{32}{\percent}$ in the ambient temperature.\cite{Song2016a,Tong2011} However, trehalose, sucrose, glucose and levoglucosan do not pass through the glass transition RH until a much lower value. The molecular diffusivity of water in each organic system will be treated in the next section.
+In the high relative humidity region, transitions RH \SI{50}{\percent} - \SI{30}{\percent} - \SI{50}{\percent} (i.e., the evaporation step of RH \SI{50}{\percent} to \SI{30}{\percent} and condensation step of RH \SI{30}{\percent} to \SI{50}{\percent}), the droplets of maltose showed the largest value of timescale of water transport ($\tau$) over the other organic particles, see figure \ref{fig:wat_s3}. Moreover, the characteristic timescale increases with increasing particle size for every binary organic system. For example, the characteristic timescale of raffinose is \SI{188}{\second} for \SI{3332}{\nano\meter}, \SI{265}{\second} for \SI{4110}{\nano\meter}, and \SI{313}{\second} for \SI{4924}{\nano\second}. Comparing similarly sized particles of $\sim \SI{4}{\micro\meter}$ during an evaporation step, the organic particles show $\SI{514}{\second} \pm \SI{31}{\second}$ for maltose (\SI{4114}{\nano\meter}), $\SI{250}{\second} \pm \SI{23}{\second}$ for raffinose (\SI{3967}{\nano\meter}), $\SI{157}{\second} \pm \SI{13}{\nano\second}$ for trehalose (\SI{4101}{\nano\meter}), $\SI{59}{\nano\second} \pm \SI{19}{\second}$ for sucrose (\SI{4016}{\nano\meter}), $\SI{29}{\second} \pm \SI{3}{\second}$ for glucose (\SI{3871}{\nano\meter}), and $\SI{32}{\second} \pm \SI{4}{\second}$ for levoglucosan (\SI{3746}{\nano\meter}). The ordering of the timescales for all particles sizes in the range of \SIrange[range-phrase=--]{3}{6}{\micro\meter} show the same tendency: maltose $>$ raffinose $>$ trehalose $>$ sucrose $>$ glucose $\ge$ levoglucosan, as shown in figure \ref{fig:wat_s3}. In this region, raffinose and maltose particles have experienced the glass transition at RH $\sim \SI{53}{\percent}$ and RH $\sim\SI{32}{\percent}$ in the ambient temperature\cite{Song2016a,Tong2011}. However, trehalose, sucrose, glucose and levoglucosan do not pass through the glass transition RH until a much lower value. The molecular diffusivity of water in each organic system will be treated in the next section.
 
 \begin{figure}
     \centering
-    \mycaption[Timescale of water transport for evaporation step and condensation steps]{\textsc{Timescale of water transport ($\tau$) for evaporation step and condensation steps}. The values are also reported numerically in table \ref{tab:wat_s1}. The evaporation and condensation timescales are determined by KWW function, and particle size is calculated from the droplet Raman signal by the proprietary LARA software. Compositions are: (a) binary aqueous-glucose (b) binary aqueous-sucrose (c) binary aqueous-trehalose (d) binary aqueous-raffinose (e) binary aqueous-maltose (f) binary aqueous-levoglucosan}
+    \caption[Timescale of water transport for evaporation step and condensation steps]{\textsc{Timescale of water transport ($\tau$) for evaporation step and condensation steps}. The values are also reported numerically in table \ref{tab:wat_s1}. The evaporation and condensation timescales are determined by KWW function, and particle size is calculated from the droplet Raman signal by the proprietary LARA software. Compositions are: (a) binary aqueous-glucose (b) binary aqueous-sucrose (c) binary aqueous-trehalose (d) binary aqueous-raffinose (e) binary aqueous-maltose (f) binary aqueous-levoglucosan}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image005.jpg}
     \label{fig:wat_s3}
 \end{figure}
@@ -60,7 +60,7 @@ The relaxation dynamics for condensation processes are dependent on the ``wait t
 
 \begin{figure}
     \centering
-    \mycaption[Timescales of water transport]{\textsc{Timescales of water transport}. Timescale of water transport ($\tau$) for each condensation step of sucrose, RH change from \SI{30}{\percent} to \SI{5}{\percent} then back to \SI{30}{\percent} after drying. Particles of black squares experienced \num{6} hours drying time at RH \SI{5}{\percent}, particles of red circles experienced \num{12} hours drying time at RH \SI{5}{\percent}, and particles of blue triangles experienced \num{24} hours drying time at RH \SI{5}{\percent}. Error bars were calculated a variation of $\beta \pm \num{0.1}$.}
+    \caption[Timescales of water transport]{\textsc{Timescales of water transport}. Timescale of water transport ($\tau$) for each condensation step of sucrose, RH change from \SI{30}{\percent} to \SI{5}{\percent} then back to \SI{30}{\percent} after drying. Particles of black squares experienced \num{6} hours drying time at RH \SI{5}{\percent}, particles of red circles experienced \num{12} hours drying time at RH \SI{5}{\percent}, and particles of blue triangles experienced \num{24} hours drying time at RH \SI{5}{\percent}. Error bars were calculated a variation of $\beta \pm \num{0.1}$.}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image006.jpg}
     \label{fig:wat_s4}
 \end{figure}
@@ -94,7 +94,7 @@ Holographic Optical Tweezers (HOT) are used to initiate the coalescence process 
 
 \begin{figure}
     \centering
-    \mycaption[A schematic representation of Holographic Optical Tweezers (HOT)]{\textsc{A schematic representation of Holographic Optical Tweezers (HOT)}. The camera provides particle images, Raman spectrum is recorded by the spectrograph, and light scattering pattern is recorded by the photo detector\cite{Song2016a}.}
+    \caption[A schematic representation of Holographic Optical Tweezers (HOT)]{\textsc{A schematic representation of Holographic Optical Tweezers (HOT)}. The camera provides particle images, Raman spectrum is recorded by the spectrograph, and light scattering pattern is recorded by the photo detector\cite{Song2016a}.}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image011.jpg}
     \label{fig:wat_s5}
 \end{figure}
@@ -114,7 +114,7 @@ A comparison of the viscosity trends for saccharides from mono- to tri- structur
 \begin{figure}
     \centering
     \includegraphics{chapters/water_hopping/figures/image014.jpg}
-    \mycaption[A comparison of viscosity of different systems]{\textsc{A comparison of viscosity of different systems}. Aqueous glucose (black), aqueous sucrose (red) aqueous trehalose (blue), aqueous maltose (pink), and aqueous raffinose (orange)\cite{Song2016a}. Figure is redrawn from Song et. al.\cite{Song2016a}}
+    \caption[A comparison of viscosity of different systems]{\textsc{A comparison of viscosity of different systems}. Aqueous glucose (black), aqueous sucrose (red) aqueous trehalose (blue), aqueous maltose (pink), and aqueous raffinose (orange)\cite{Song2016a}. Figure is redrawn from Song et. al.\cite{Song2016a}}
     \label{fig:wat_s6}
 \end{figure}
 
@@ -122,12 +122,12 @@ A comparison of the viscosity trends for saccharides from mono- to tri- structur
 \subsection{Force Fields}
 Water was represented by the TIP4P/2005\cite{abascalGeneralPurposeModel2005} potential, due to its accuracy in reproducing the experimental phase and self diffusion characteristics. Sucrose was represented by a modified version of the GROMOS 54a7 force field\cite{oostenbrinkBiomolecularForceField2004}, with an expanded range of atom types. Both the force field and the initial pdb all-atom coordinates were acquired from the automated topology builder (ATB) database\cite{koziaraTestingValidationAutomated2014} (further details on the generation\cite{maldeAutomatedForceField2011} and validation\cite{schmidDefinitionTestingGROMOS2011} of coordinates, partial charges and force fields by ATB has been detailed extensively in the literature).
 
-Initial coordinates were generated using the packmol\cite{martinez2009packmol} program, which randomly places set numbers of molecules into three dimensional space, allowing tight control over the solute mole fractions in the generated simulation boxes, whilst not biasing the simulations to one area of configuration space. Constraints were inserted such that no two molecules were placed within \SI{3}{\angstrom} of each other, and the input random seed was continuously replaced using the bash \mathtt{\$RANDOM} global variable. 
+Initial coordinates were generated using the Packmol\cite{martinez2009packmol} program, which randomly places set numbers of molecules into three dimensional space, allowing tight control over the solute mole fractions in the generated simulation boxes, whilst not biasing the simulations to one area of configuration space. Constraints were inserted such that no two molecules were placed within \SI{3}{\angstrom} of each other, and the input random seed was continuously replaced using the bash \texttt{\$RANDOM} global variable. 
 
 The Lincs algorithm\cite{hess1997lincs} was used to constrain all bonds, to an order of four in the constraint coupling matrix, with seven iterations in the final step.Electrostatic forces were calculated using the particle mesh Ewald summation\cite{essmannSmoothParticleMesh1995}, and Van der Waals interactions were provided by the twin range cut-offs method, both of which were truncated at \SI{8}{\angstrom}. The update frequency was every \num{5} time-steps. The Verlet scheme\cite{pallFlexibleAlgorithmCalculating2013} was used for neighbour searching across the periodic boundary conditions in three dimensions. Velocities were generated using a Maxwell-Boltzmann distribution at \SI{300}{\kelvin}, with the random seed continuously changed.
 
 \subsection{Equilibration}
- The starting coordinates produced by packmol\cite{martinez2009packmol} are not suitable for MD simulations immediately. The configuration must be energy minimised using the steepest descent method to allow bonds and angles to satisfy the constraints of the topology file. The minimisation was conducted with an initial step size of \SI{0.001}{\nano\meter} until the maximum force was below \SI{50}{\kilo\joule\per\mole\per\nano\meter}. After this, approximately \SI{500}{\pico\second} of equilibration was conducted with the standard GROMACS MD integrator and thermodynamic ensemble produced as described in the main text. 
+ The starting coordinates produced by Packmol\cite{martinez2009packmol} are not suitable for MD simulations immediately. The configuration must be energy minimised using the steepest descent method to allow bonds and angles to satisfy the constraints of the topology file. The minimisation was conducted with an initial step size of \SI{0.001}{\nano\meter} until the maximum force was below \SI{50}{\kilo\joule\per\mole\per\nano\meter}. After this, approximately \SI{500}{\pico\second} of equilibration was conducted with the standard GROMACS MD integrator and thermodynamic ensemble produced as described in the main text. 
 
 \subsection{Mean squared displacement data collection}
 Initial coordinates were generated from the output frame of the equilibration trajectory within the regime where the total energy was stable. During the MD integration, the system was propagated in the NpT ensemble at \SI{300}{\kelvin} and \SI{101}{\kilo\pascal}, using a velocity rescaling thermostat\cite{bussiCanonicalSamplingVelocity2007} and the Parrinello-Rahman barostat\cite{parrinelloPolymorphicTransitionsSingle1981}, respectively. Initial velocities were randomly generated to satisfy a Maxwell-Boltzmann distribution at \SI{300}{\kelvin} in each case. All simulations described were conducted using GPU acceleration, with the MD package GROMACS (version 5.0.6)\cite{abrahamGROMACSHighPerformance2015}, running on the Blue Crystal 3 high performance computing cluster at the University of Bristol.
@@ -141,7 +141,7 @@ The net displacement achieved by a random walk in three-dimensions will be less 
 
 \begin{figure}
     \centering
-    \mycaption[Single particle mean squared displacement]{\textsc{Single particle mean squared displacement}. Shown are the $\left\langle r^{2}\right\rangle$ of the nine trajectories (purple), along with best fit of the mean path (red) to equation \ref{eqn:wat_msd} (yellow, including constant at $t=0$)}
+    \caption[Single particle mean squared displacement]{\textsc{Single particle mean squared displacement}. Shown are the $\left\langle r^{2}\right\rangle$ of the nine trajectories (purple), along with best fit of the mean path (red) to equation \ref{eqn:wat_msd} (yellow, including constant at $t=0$)}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/Fig_S7.png}
     \label{fig:wat_s7}
 \end{figure}
@@ -166,150 +166,151 @@ Three repeat trajectories of \SI{10}{\nano\second} length were conducted for glu
 \section{Markov state modelling}
 
 This section of the supplementary material has been incorporated into chapter \ref{chap:water}. 
-
 \section{The comparison of diffusion coefficient of aqueous-sucrose system}
 
 For diffusivity research, sucrose is a representative organic system because many researches have used sucrose. The comparison of diffusion curve of sucrose as a function of water activity is shown in figure \ref{fig:wat_s11}. The diffusion constants of water in aqueous-sucrose system in Figure S11 are measured and simulated with inferred by different strategies using AOT with Fi-Pad model, EDB with ETH model, and isotopic exchange. These three lines show good agreement until water activity \num{0.35}. The diffusion constants of water at \num{0.2} water activity by Price et al.\cite{Price2014} and this research differ by one order of magnitude. 
 
 \begin{figure}
     \centering
-    \mycaption[The diffusion curve of water in a sucrose system as a function of water activity]{\textsc{The diffusion curve of water in a sucrose system as a function of water activity}. The green line is from Zobrist et al.\cite{C0CP01273D}, the blue line from Price et al.\cite{Price2014}, and the red line is the experimental data which is simulated by Fi-PaD model.}
+    \caption[The diffusion curve of water in a sucrose system as a function of water activity]{\textsc{The diffusion curve of water in a sucrose system as a function of water activity}. The green line is from Zobrist et al.\cite{C0CP01273D}, the blue line from Price et al.\cite{Price2014}, and the red line is the experimental data which is simulated by Fi-PaD model.}
     \includegraphics[width=0.8\textwidth]{chapters/water_hopping/figures/image058.png}
     \label{fig:wat_s11}
 \end{figure}
 
-\begin{xltabular}{\linewidth}{|Y|Y|Y|Y|Y|Y|}
-\caption[The characteristic timescale of water transport determined experimentally for six binary mixtures]{\textsc{The characteristic timescale of water transport determined experimentally for six binary mixtures}. This table provides all data points for water transport kinetics in figure \ref{fig:wat_s2}. Particle size is direct measurement data in AOT and fit by LARA. The characteristic timescale is fit by KWW function. Error representing a variation of $\beta \pm 0.1.$} \label{tab:wat_s1} \\
-\hline RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second})  & RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second}) \\ \hline 
+\begin{xltabular}{0.9\textwidth}{YYYYYY}
+    \caption[The characteristic timescale of water transport determined experimentally for six binary mixtures]{\textsc{The characteristic timescale of water transport determined experimentally for six binary mixtures}. This table provides all data points for water transport kinetics in figure \ref{fig:wat_s2}. Particle size is direct measurement data in AOT and fit by LARA. The characteristic timescale is fit by KWW function. Error representing a variation of $\beta \pm 0.1.$} \label{tab:wat_s1} \\
+    \toprule 
+    RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second})  & RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second}) \\ 
+    \midrule
 \endfirsthead
-\multicolumn{6}{c}%
-{\tablename\ \thetable{} -- continued from previous page} \\
-\hline RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second})  & RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second}) \\ \hline 
+    \toprule
+    \multicolumn{6}{c}{\tablename\ \thetable{} -- continued from previous page} \\
+    RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second})  & RH transition (\si{\percent}) & Particle size (\si{\nano\meter}) & Character-istic timescale (\si{\second}) \\ 
+    \midrule 
 \endhead
-\hline \multicolumn{6}{|r|}{{Continued on next page}} \\ \hline
+    \midrule
+    \multicolumn{6}{r}{{Continued on next page}} \\ 
+    \bottomrule
 \endfoot
-\hline
 \endlastfoot
-\hline 
-\multicolumn{3}{|c|}{\textbf{Aqueous-Glucose system}} & \multicolumn{3}{c|}{\textbf{Aqueous-Maltose system}} \\
-\hline 
-50-30 &	3707 &	27	& 50-30	& 368 & 3721 \\
--- & 	3692	& 27	& --& 	514	& 4114\\
--- &  	3871	& 29	& --& 	534	& 4329 \\
--- &  	4861	& 33	& --& 	549 & 5131 \\
-50-20 &	3707 &	49	& 30-5 &	3664 & 	3289 \\
--- &  	3692	& 51	&-- & 	2624 & 	3446 \\
--- &  	4861	& 92	&-- & 	4062 & 	3745 \\
-30-5 &	3377 &	860 & --&		4845	& 4197 \\
---&  	4053 &	1007 & --& 		3996 & 	4355 \\
---&  	3871 & 	1009 & --& 		5755 & 	4662 \\
---&  	4412 & 	 1084 &-- & 		1641 & 	4130 \\
---&  	4988 & 	1289 & 	30-50 &  	436 & 3265 \\
---&  	5450 & 	1326 & --	& 	423	 & 3268 \\
-30-50	& 3707 & 	49 &-- & 		441 & 	4101 \\
---&  	3692 & 	51	&-- & 	597 & 	5012 \\
---&  	4861 & 	63 &-- & 		617	& 5430 \\
-20-50& 	3707 & 	95 & 5-30 & 	960	& 3446 \\
-5-30 & 	3377 & 	140	 &-- & 	1490	& 4197 \\
---& 	4412 & 	190 & --& 		1250 & 	4662 \\
---& 	5450 & 	276	&-- & 	1230 & 	4145 \\
---& --	& --	&--&	578 & 	4130 \\
-\hline
-\multicolumn{3}{|c|}{\textbf{Aqueous-Raffinose system}} & \multicolumn{3}{c|}{\textbf{Aqueous-Sucrose system}} \\
-\hline
-50-30 & 3332 & 188 & 50-10 & 3052 & 397 \\
--- & 3414 & 221 & -- & 3307 & 535 \\
--- & 3967 & 250 & -- & 4092 & 883 \\
--- & 4110 & 265 & -- & 4013 & 1019 \\
--- & 5005 & 298 & -- & 4954 & 1076\\
--- & 4924 & 313 & 50-20 & 3796 & 244\\
-50-20 & 3260 & 153 & -- & 4189 & 363\\
--- & 3332 & 254 & -- & 4783 & 540\\
--- & 3410 & 288 & -- & 4942 & 559\\
--- & 3966 & 284 & 50-30 & 3682 & 48\\
--- & 3606 & 260 & -- & 4016 & 59\\
--- & 3779 & 300 & -- & 4894 & 65\\
--- & 4105 & 320 & -- & 4923 & 60\\
--- & 5008 & 390 & -- & 5745 & 85\\
-50-10 & 3260 & 178 & 30-20 & 3068 & 668\\
--- & 3410 & 352 & -- & 3123 & 847\\
--- & 3719 & 700 & -- & 3651 & 1502\\
--- & 5008 & 1010 & -- & 4382 & 1748\\
-30-10 & 3551 & 1210 & -- & 4758 & 2274\\
--- & 5876 & 1906 & 30-10 & 3297 & 1243\\
-30-5 & 3551 & 895 & -- & 3654 & 1786\\
--- & 3735 & 995 & -- & 3655 & 1901\\
--- & 3952 & 1447 & -- & 3652 & 1924\\
--- & 4343 & 1578 & -- & 4020 & 2141\\
--- & 5895 & 2101 & -- & 4017 & 2191\\
-30-50 & 3332 & 482 & -- & 4308 & 2277\\
--- & 3414 & 495 & -- & 3891 & 2379\\
--- & 3967 & 547 & -- & 5727 & 3582\\
--- & 4110 & 738 & -- & 4824 & 4374\\
--- & 4924 & 617 & 30-5 & 3246 & 1321\\
--- & 5005 & 730 & -- & 3657 & 1804\\
-20-50 & 3262 & 432 & -- & 3809 & 2035\\
--- & 3332 & 351 & -- & 3754 & 2061\\
--- & 3414 & 440 & -- & 4987 & 3584\\
--- & 3606 & 476 & -- & 5163 & 3738\\
--- & 3967 & 399 & -- & 5266 & 3763\\
--- & 5005 & 516 & 30-50 & 3426 & 57\\
-5-30 & 3551 & 610 & -- & 3829 & 77\\
--- & 3735 & 514 & -- & 4042 & 79\\
--- & 3952 & 852 & -- & 4962 & 112\\
--- & 4343 & 646 & 5-30 & 3252 & 1776\\
--- & 5895 & 926 & -- & 3645 & 2059\\
--- & -- & -- & -- & 3563 & 2395\\
--- & -- & -- & -- & 3633 & 2566\\
--- & -- & -- & -- & 3983 & 2763\\
--- & -- & -- & -- & 4716 & 3056\\
--- & -- & -- & -- & 4912 & 3294\\
--- & -- & -- & -- & 5912 & 4112\\
-\hline
-\multicolumn{3}{|c|}{\textbf{Aqueous-Raffinose system}} & \multicolumn{3}{c|}{\textbf{Aqueous-Sucrose system}} \\
-\hline
-50-30 & 3265 & 98 & 50-30 & 3590 & 35 \\
--- & 3268 & 101 & -- & 3588 & 40 \\
--- & 4101 & 157 & -- & 3746 & 32 \\
--- & 5430 & 231 & -- & 4432 & 43 \\
--- & 5012 & 204 & -- & 4463 & 47 \\
-50-20 & 3265 & 221 & -- & 5448 & 53 \\
--- & 3268 & 194 & 30-50 & 3588 & 81 \\
--- & 4101 & 184 & -- & 3746 & 52 \\
--- & 5012 & 244 & -- & 4432 & 117 \\
--- & 5430 & 233 & -- & 4463 & 86 \\
-30-5 & 3090 & 1019 & -- & 5448 & 76 \\
--- & 3190 & 1172 & -- & -- & -- \\
--- & 3285 & 1155 & -- & -- & -- \\
--- & 3310 & 1184 & -- & -- & -- \\
--- & 4040 & 1342 & -- & -- & -- \\
--- & 4825 & 1479 & -- & -- & -- \\
--- & 5168 & 1559 & -- & -- & -- \\
--- & 5118 & 1444 & -- & -- & -- \\
-30-50 & 3265 & 436 & -- & -- & -- \\
--- & 3268 & 423 & -- & -- & -- \\
--- & 4101 & 441 & -- & -- & -- \\
--- & 5430 & 617 & -- & -- & -- \\
--- & 5012 & 597 & -- & -- & -- \\
-20-50 & 3265 & 181 & -- & -- & -- \\
-5-30 & 4040 & 726 & -- & -- & -- \\
--- & 3190 & 515 & -- & -- & -- \\
--- & 3090 & 592 & -- & -- & -- \\
--- & 5168 & 846 & -- & -- & -- \\
--- & 3853 & 589 & -- & -- & -- \\
--- & 4897 & 719 & -- & -- & -- \\
--- & 5118 & 981 & -- & -- & -- \\
--- & 3310 & 596 & -- & -- & -- \\
-\hline
+
+    \multicolumn{3}{c}{\textbf{Aqueous-Glucose system}} & \multicolumn{3}{c}{\textbf{Aqueous-Maltose system}} \\
+    
+    50-30 &	3707 &	27	& 50-30	& 368 & 3721 \\
+    -- & 	3692	& 27	& --& 	514	& 4114\\
+    -- &  	3871	& 29	& --& 	534	& 4329 \\
+    -- &  	4861	& 33	& --& 	549 & 5131 \\
+    50-20 &	3707 &	49	& 30-5 &	3664 & 	3289 \\
+    -- &  	3692	& 51	&-- & 	2624 & 	3446 \\
+    -- &  	4861	& 92	&-- & 	4062 & 	3745 \\
+    30-5 &	3377 &	860 & --&		4845	& 4197 \\
+    --&  	4053 &	1007 & --& 		3996 & 	4355 \\
+    --&  	3871 & 	1009 & --& 		5755 & 	4662 \\
+    --&  	4412 & 	 1084 &-- & 		1641 & 	4130 \\
+    --&  	4988 & 	1289 & 	30-50 &  	436 & 3265 \\
+    --&  	5450 & 	1326 & --	& 	423	 & 3268 \\
+    30-50	& 3707 & 	49 &-- & 		441 & 	4101 \\
+    --&  	3692 & 	51	&-- & 	597 & 	5012 \\
+    --&  	4861 & 	63 &-- & 		617	& 5430 \\
+    20-50& 	3707 & 	95 & 5-30 & 	960	& 3446 \\
+    5-30 & 	3377 & 	140	 &-- & 	1490	& 4197 \\
+    --& 	4412 & 	190 & --& 		1250 & 	4662 \\
+    --& 	5450 & 	276	&-- & 	1230 & 	4145 \\
+    --& --	& --	&--&	578 & 	4130 \\
+    \multicolumn{3}{c}{\textbf{Aqueous-Raffinose system}} & \multicolumn{3}{c}{\textbf{Aqueous-Sucrose system}} \\
+    50-30 & 3332 & 188 & 50-10 & 3052 & 397 \\
+    -- & 3414 & 221 & -- & 3307 & 535 \\
+    -- & 3967 & 250 & -- & 4092 & 883 \\
+    -- & 4110 & 265 & -- & 4013 & 1019 \\
+    -- & 5005 & 298 & -- & 4954 & 1076\\
+    -- & 4924 & 313 & 50-20 & 3796 & 244\\
+    50-20 & 3260 & 153 & -- & 4189 & 363\\
+    -- & 3332 & 254 & -- & 4783 & 540\\
+    -- & 3410 & 288 & -- & 4942 & 559\\
+    -- & 3966 & 284 & 50-30 & 3682 & 48\\
+    -- & 3606 & 260 & -- & 4016 & 59\\
+    -- & 3779 & 300 & -- & 4894 & 65\\
+    -- & 4105 & 320 & -- & 4923 & 60\\
+    -- & 5008 & 390 & -- & 5745 & 85\\
+    50-10 & 3260 & 178 & 30-20 & 3068 & 668\\
+    -- & 3410 & 352 & -- & 3123 & 847\\
+    -- & 3719 & 700 & -- & 3651 & 1502\\
+    -- & 5008 & 1010 & -- & 4382 & 1748\\
+    30-10 & 3551 & 1210 & -- & 4758 & 2274\\
+    -- & 5876 & 1906 & 30-10 & 3297 & 1243\\
+    30-5 & 3551 & 895 & -- & 3654 & 1786\\
+    -- & 3735 & 995 & -- & 3655 & 1901\\
+    -- & 3952 & 1447 & -- & 3652 & 1924\\
+    -- & 4343 & 1578 & -- & 4020 & 2141\\
+    -- & 5895 & 2101 & -- & 4017 & 2191\\
+    30-50 & 3332 & 482 & -- & 4308 & 2277\\
+    -- & 3414 & 495 & -- & 3891 & 2379\\
+    -- & 3967 & 547 & -- & 5727 & 3582\\
+    -- & 4110 & 738 & -- & 4824 & 4374\\
+    -- & 4924 & 617 & 30-5 & 3246 & 1321\\
+    -- & 5005 & 730 & -- & 3657 & 1804\\
+    20-50 & 3262 & 432 & -- & 3809 & 2035\\
+    -- & 3332 & 351 & -- & 3754 & 2061\\
+    -- & 3414 & 440 & -- & 4987 & 3584\\
+    -- & 3606 & 476 & -- & 5163 & 3738\\
+    -- & 3967 & 399 & -- & 5266 & 3763\\
+    -- & 5005 & 516 & 30-50 & 3426 & 57\\
+    5-30 & 3551 & 610 & -- & 3829 & 77\\
+    -- & 3735 & 514 & -- & 4042 & 79\\
+    -- & 3952 & 852 & -- & 4962 & 112\\
+    -- & 4343 & 646 & 5-30 & 3252 & 1776\\
+    -- & 5895 & 926 & -- & 3645 & 2059\\
+    -- & -- & -- & -- & 3563 & 2395\\
+    -- & -- & -- & -- & 3633 & 2566\\
+    -- & -- & -- & -- & 3983 & 2763\\
+    -- & -- & -- & -- & 4716 & 3056\\
+    -- & -- & -- & -- & 4912 & 3294\\
+    -- & -- & -- & -- & 5912 & 4112\\
+    
+    \multicolumn{3}{c}{\textbf{Aqueous-Raffinose system}} & \multicolumn{3}{c}{\textbf{Aqueous-Sucrose system}} \\
+    50-30 & 3265 & 98 & 50-30 & 3590 & 35 \\
+    -- & 3268 & 101 & -- & 3588 & 40 \\
+    -- & 4101 & 157 & -- & 3746 & 32 \\
+    -- & 5430 & 231 & -- & 4432 & 43 \\
+    -- & 5012 & 204 & -- & 4463 & 47 \\
+    50-20 & 3265 & 221 & -- & 5448 & 53 \\
+    -- & 3268 & 194 & 30-50 & 3588 & 81 \\
+    -- & 4101 & 184 & -- & 3746 & 52 \\
+    -- & 5012 & 244 & -- & 4432 & 117 \\
+    -- & 5430 & 233 & -- & 4463 & 86 \\
+    30-5 & 3090 & 1019 & -- & 5448 & 76 \\
+    -- & 3190 & 1172 & -- & -- & -- \\
+    -- & 3285 & 1155 & -- & -- & -- \\
+    -- & 3310 & 1184 & -- & -- & -- \\
+    -- & 4040 & 1342 & -- & -- & -- \\
+    -- & 4825 & 1479 & -- & -- & -- \\
+    -- & 5168 & 1559 & -- & -- & -- \\
+    -- & 5118 & 1444 & -- & -- & -- \\
+    30-50 & 3265 & 436 & -- & -- & -- \\
+    -- & 3268 & 423 & -- & -- & -- \\
+    -- & 4101 & 441 & -- & -- & -- \\
+    -- & 5430 & 617 & -- & -- & -- \\
+    -- & 5012 & 597 & -- & -- & -- \\
+    20-50 & 3265 & 181 & -- & -- & -- \\
+    5-30 & 4040 & 726 & -- & -- & -- \\
+    -- & 3190 & 515 & -- & -- & -- \\
+    -- & 3090 & 592 & -- & -- & -- \\
+    -- & 5168 & 846 & -- & -- & -- \\
+    -- & 3853 & 589 & -- & -- & -- \\
+    -- & 4897 & 719 & -- & -- & -- \\
+    -- & 5118 & 981 & -- & -- & -- \\
+    -- & 3310 & 596 & -- & -- & -- \\
+    \bottomrule
+    
 \end{xltabular}
 
 \begin{table}
     \centering
-    \mycaption[Diffusion constants from MD trajectories]{\textsc{Diffusion constants from MD trajectories}. The best fit diffusion coefficients to the nine \SI{1}{\micro\second} trajectories (purple lines in figure \ref{fig:wat_s7}) and associated uncertainties.}
-    \begin{tabular}{|l|l|l|}
-    \hline
+    \caption[Diffusion constants from MD trajectories]{\textsc{Diffusion constants from MD trajectories}. The best fit diffusion coefficients to the nine \SI{1}{\micro\second} trajectories (purple lines in figure \ref{fig:wat_s7}) and associated uncertainties.}
+    \begin{tabular}{lrr}
+    \toprule
     Trajectory no. & $D$ (\si{\meter\squared\per\second}) & Uncertainty  (\si{\meter\squared\per\second})  \\
-    \hline
+    \midrule
     1 &	6.454E-17	& 9.34E-17 \\
     2 &	4.848E-17	& 1.755E-16 \\
     3 &	6.075E-17	& 1.444E-16 \\
@@ -319,18 +320,18 @@ For diffusivity research, sucrose is a representative organic system because man
     7 &	3.541E-17	& 8.571E-17 \\
     8 &	3.829E-17	& 1.61E-17 \\
     9 &	7.269E-17	& 5.83E-17 \\
-    \hline
+    \bottomrule
     \end{tabular}
     \label{tab:wat_s2}
 \end{table}
 
 \begin{table}
     \centering
-    \mycaption[Six binary system diffusion coefficients]{\textsc{Six binary system diffusion coefficients}. The best fit diffusion coefficients of six binary systems in figure \ref{fig:wat_f1} panel (c).}
-    \begin{tabularx}{\textwidth}{|p{3cm}|X|}
-    \hline
+    \caption[Six binary system diffusion coefficients]{\textsc{Six binary system diffusion coefficients}. The best fit diffusion coefficients of six binary systems in figure \ref{fig:wat_f1} panel (c).}
+    \begin{tabularx}{\textwidth}{p{3cm}X}
+    \toprule
     System & Paramaterization ($D_w(a_w)$ (\si{\meter\squared\per\second})) \\
-    \hline\hline
+    \midrule
         Aqueous-Levoglucosan &  
         \begin{minipage}[c]{\linewidth}
         \begin{multline*}
@@ -339,7 +340,7 @@ For diffusivity research, sucrose is a representative organic system because man
          +\left(-84.660 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(28.081\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
         \end{multline*}
         \end{minipage} \\
-        \hline
+        \midrule
         Aqueous-glucose &  
         \begin{minipage}[c]{\linewidth}
         \begin{multline*}
@@ -348,7 +349,7 @@ For diffusivity research, sucrose is a representative organic system because man
          +\left(-47.724 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(18.472\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
         \end{multline*}
         \end{minipage} \\
-        \hline
+        \midrule
         Aqueous-sucrose &  
         \begin{minipage}[c]{\linewidth}
         \begin{multline*}
@@ -357,7 +358,7 @@ For diffusivity research, sucrose is a representative organic system because man
          +\left(-60.030 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(22.691\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
         \end{multline*}
         \end{minipage} \\
-        \hline
+        \midrule
         Aqueous-Trehalose &  
         \begin{minipage}[c]{\linewidth}
         \begin{multline*}
@@ -366,7 +367,7 @@ For diffusivity research, sucrose is a representative organic system because man
          +\left(-48.590 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(18.981\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
         \end{multline*}
         \end{minipage} \\
-        \hline
+        \midrule
         Aqueous-Maltose &  
         \begin{minipage}[c]{\linewidth}
         \begin{multline*}
@@ -375,7 +376,7 @@ For diffusivity research, sucrose is a representative organic system because man
          +\left(-72.854 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(27.141\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)       
         \end{multline*}
         \end{minipage} \\
-        \hline
+        \midrule
         Aqueous-Raffinose &  
         \begin{minipage}[c]{\linewidth}
         \begin{multline*}
@@ -384,7 +385,7 @@ For diffusivity research, sucrose is a representative organic system because man
          +\left(-42.838 \times\left(\mathrm{a}_{\mathrm{w}}\right)^{4}\right)+\left(17.051\times\left(\mathrm{a}_{\mathrm{w}}\right)^{5}\right)      
         \end{multline*}
         \end{minipage} \\
-        \hline
+        \bottomrule
     \end{tabularx}
     \label{tab:wat_s3}
 \end{table}
@@ -393,11 +394,11 @@ For diffusivity research, sucrose is a representative organic system because man
 
 \begin{table}[h]
  \centering
- \mycaption[Gaussian process model selection metrics of the response surface of alanine dipeptide]{\textsc{Gaussian process model selection metrics of the response surface of alanine dipeptide}. Standardised mean square error (SMSE) and mean standardised log loss (MSLL) for GP models of the response surface of MSMs for alanine dipeptide, using different transformations of $n$ ($T(n)$) and different kernels. Each GP model used a mean prior of zero, and all other parameters were estimated by maximizing the marginal likelihood. All values were calculated using 10-fold cross-validation.}
- \begin{tabular}{|l|l|c|c|c|}
- \hline
+ \caption[Gaussian process model selection metrics of the response surface of alanine dipeptide]{\textsc{Gaussian process model selection metrics of the response surface of alanine dipeptide}. Standardised mean square error (SMSE) and mean standardised log loss (MSLL) for GP models of the response surface of MSMs for alanine dipeptide, using different transformations of $n$ ($T(n)$) and different kernels. Each GP model used a mean prior of zero, and all other parameters were estimated by maximizing the marginal likelihood. All values were calculated using 10-fold cross-validation.}
+ \begin{tabular}{lllrr}
+ \toprule
  T(n) & Name & SMSE & MSLL \\
- \hline\hline
+ \midrule
  $\log{(n)}$ & Exponential & 0.0012 & -3.9963 \\
  & Mat{\'e}rn 3-2 & 0.0010 & -4.1712 \\
  & Mat{\'e}rn 5-2 & 0.0007 & -4.2369 \\
@@ -406,13 +407,15 @@ For diffusivity research, sucrose is a representative organic system because man
  & Mat{\'e}rn 3-2 & 0.0025 & -3.4218 \\
  & Mat{\'e}rn 5-2 & 0.0023 & -3.8172 \\
  & Gaussian & 0.0032 & -4.1239 \\
- \hline
+ \bottomrule
  \end{tabular}
  \label{tab:ala2_fit_results}
 \end{table}
 
 \chapter{Metastable state selection for hidden Markov models}\label{app:hmm}
+
 \section{Prinz potential}
+
  The Prinz potential is given by: 
 \begin{equation}\label{eqn:prinz_pot}
  V(x) = 4\left(x^8 + 0.8 \exp{\left(-80 x^2\right)} + 0.2 \exp{\left(-80 (x-0.5)^2\right)} + 0.5\exp{\left(-40 (x+0.5)^2\right)}\right).
@@ -420,11 +423,11 @@ For diffusivity research, sucrose is a representative organic system because man
 Exact eigenvalues and trajectories of simulated Brownian motion were calculated using code from MSMBuilder (version 3.9.0)\cite{beauchampMSMBuilder2ModelingConformational2011} . The first $7$ relaxation processes are given in table \ref{tab:prinz_its_exact}. 
 \begin{table}
  \centering
- \mycaption[Relaxation timescales of the Prinz potential]{\textsc{Relaxation timescales of the Prinz potential}. All values are given in units of the time step $\Delta t = 0.001$}
- \begin{tabular}{|c|c|}
- \hline
+ \caption[Relaxation timescales of the Prinz potential]{\textsc{Relaxation timescales of the Prinz potential}. All values are given in units of the time step $\Delta t = 0.001$}
+ \begin{tabular}{lr}
+ \toprule
  Process, $i$ & $t_i$ \\
- \hline\hline
+ \midrule
   2 & 844.4 \\
   3 & 125.5 \\
   4 & 64.3 \\
@@ -432,7 +435,7 @@ Exact eigenvalues and trajectories of simulated Brownian motion were calculated 
   6 & 10.3 \\
   7 & 7.3 \\
   8 & 6.7 \\
-  \hline
+  \bottomrule
  \end{tabular}
  \label{tab:prinz_its_exact}
 \end{table}
@@ -447,77 +450,77 @@ with $D = 1000$, and $R\sim \mathcal{N}(0, 1)$, $\mathrm{Cov}\left[R(t), R(t^{\p
 
 The conditional probabilities $\mathbb{P}(h=j|s=i)$ can be calculated via the $\gamma$ auxiliary variable from the Baum-Welch algorithm\cite{baumMaximizationTechniqueOccurring1970, welch2003hidden}, or from the membership matrix after taking into account the largest strongly connected subset of hidden states.  Figure \ref{fig:membership_error} shows the difference between these two methods for a HMM with $g=10$ hidden states.  The error plotted in panel (a) (blue discs) is given by:
 \begin{equation}\label{eqn:err_entropy}
-\mathrm{err}(s_{i}) = \sum_j|\bar{\gamma}_{j}(s_{i}) - M_{i, j}|, 
+\mathrm{err}(s_{i}) = \sum_j\bar{\gamma}_{j}(s_{i}) - M_{i, j}, 
 \end{equation}
 and is plotted as a function of the stationary distribution of the observed states $\pi_{s_{i}}$. The green discs are the stationary distribution of states with zero error ($\mathrm{err}<10^{-10}$). $\bar{\gamma}$ is the value of $\gamma_{j}(s_{i})$ averaged over all the instances of a $s_{i}$ in a trajectory. As the size of the error decreases with frequency of the observed state, it can be concluded that the difference between the two methods arises from sampling error. Panel (b) shows the value of the error for just one hidden state (state $j=3$) with the emission distribution for comparison. 
 \begin{figure}
     \centering
-    \mycaption[Errors in the membership matrix]{\textsc{Errors in the membership matrix}. Panel (a) shows the error from equation \ref{eqn:err_entropy} (blue discs) as a function of the observed stationary distribution, $\bm{\pi}_{\mathrm{obs}}$. The green discs show the observed states with no difference in value of $\gamma$ or $\mathbf{M}$. Panel (b) shows the error for hidden state $3$ (blue discs) overlaid on the value of $\gamma_{3}(s)$ as a function of $s$, the observed states.}
+    \caption[Errors in the membership matrix]{\textsc{Errors in the membership matrix}. Panel (a) shows the error from equation \ref{eqn:err_entropy} (blue discs) as a function of the observed stationary distribution, $\bm{\pi}_{\mathrm{obs}}$. The green discs show the observed states with no difference in value of $\gamma$ or $\mathbf{M}$. Panel (b) shows the error for hidden state $3$ (blue discs) overlaid on the value of $\gamma_{3}(s)$ as a function of $s$, the observed states.}
     \includegraphics[width=0.8\textwidth]{chapters/hmm_selection/figures/entropy_error_explanation.png}
     \label{fig:membership_error}
 \end{figure}
 
-\chapter{AADH}\label{app:aadh}
+\chapter{Aromatic amine dehyrogenase}\label{app:aadh}
 
-\section{Molecular dynamics}
+% \section{Molecular dynamics}
 
-\begin{figure}[p]
+\begin{figure}[ph!]
  \centering
- \mycaption[RMSD of the alpha-carbon atoms of AADH relative to the crystal structure]{\textsc{RMSD of the $\alpha$-carbon atoms of AADH relative to the crystal structure}. Each panel is a single trajectory, blue lines are the RMSD, horizontal lines are the \SI{2.5}{\percent} and \SI{97.5}{\percent} quantiles (\SI{4.5}{\angstrom} and \SI{6.4}{\angstrom}, respectively) taken across all trajectories.}
+ \caption[RMSD of the alpha-carbon atoms of AADH relative to the crystal structure]{\textsc{RMSD of the $\alpha$-carbon atoms of AADH relative to the crystal structure}. Each panel is a single trajectory, blue lines are the RMSD, horizontal lines are the \SI{2.5}{\percent} and \SI{97.5}{\percent} quantiles (\SI{4.5}{\angstrom} and \SI{6.4}{\angstrom}, respectively) taken across all trajectories.}
  \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/rmsd_backbone_ca.png}
  \label{fig:rmsd_ca}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ph!]
  \centering
- \mycaption[Secondary structure composition of select trajectories]{\textsc{Secondary structure composition of trajectories $24, 27, 30, 42, 78, 87$ and $97$ as a function of time}. The number of residues in each simplified secondary structure class \cite{kabschDictionaryProteinSecondary1983} are shown: `H' (green) refers to alpha helix, 3- and 5-helices; `E' (orange) refers to residues in beta-bridges or beta ladder; `C' (blue) refers to turns, bends and all irregular elements.}
+ \caption[Secondary structure composition of select trajectories]{\textsc{Secondary structure composition of trajectories $24, 27, 30, 42, 78, 87$ and $97$ as a function of time}. The number of residues in each simplified secondary structure class\cite{kabschDictionaryProteinSecondary1983} are shown: `H' (green) refers to alpha helix, 3- and 5-helices; `E' (orange) refers to residues in beta-bridges or beta ladder; `C' (blue) refers to turns, bends and all irregular elements.}
  \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/drift_trajs_dssp.png}
  \label{fig:dssp_trajs_sens}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[ph!]
+    \centering
+    \caption[Fluctuations in the deviation of residues of select trajectories]{\textsc{Fluctuations in the deviation of residues of trajectories $24, 27, 30, 42, 78, 87$ and $97$}. Each row corresponds to a different trajectory, each column to a different chain. \num{100} regularly spaced snapshots were taken from each trajectory and aligned to the crystal structure along with $\alpha$-carbon atoms. The standard deviation of the deviation of the $\alpha$-carbon atoms from the crystal structure, $\Delta\mathbf{r} = \mathbf{r}-\mathbf{r}_{\mathrm{crystal}}$ is plotted for each residue.}
+    \includegraphics[height=0.8\textheight]{chapters/aadh/figures/sd_dev_by_residue.png}
+    \label{fig:aadh_sd_dev_by_res}
+\end{figure}
+
+\begin{figure}[ph!]
  \centering
- \mycaption[Conformational change in loop residues 92-108 of chain D]{\textsc{Conformational change in loop residues 92-108 of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the $\alpha$-carbon from the crystal structure. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues \numrange{92}{108} are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown). The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The \num{22} tail residues, unresolved by the crystal structure, are missing from the N-terminus.}
+ \caption[Conformational change in loop residues 92-108 of chain D]{\textsc{Conformational change in loop residues \numrange[range-phrase=--]{92}{108} of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the $\alpha$-carbon from the crystal structure. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues \numrange{92}{108} are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown). The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The \num{22} tail residues, unresolved by the crystal structure, are missing from the N-terminus.}
  \label{fig:chain_d_loop}
  \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
 \end{figure}
 
-\begin{figure}[p]
-    \centering
-    \mycaption{Caption}
-    \includegraphics[height=0.9\textheight]{chapters/aadh/figures/sd_dev_by_residue.png}
-    \label{fig:aadh_sd_dev_by_res}
-\end{figure}
+% \section{MSM optimisation}
 
+% \subsection{Estimating the Markov lag-time and number of metastable states}
 
-\section{MSM optimisation}
-\subsection{Choosing Markov lag-time and dominant sub-space}
-
-\begin{figure}
+\begin{figure}[h!]
  \centering
- \mycaption{The ratio of successive eigenvalues (panel (a)) and implied timescales (panel (b)) for a Markov state model with $\tau(\textrm{MSM})=\SI{2}{\nano\second}$, estimated using MCMC with $1000$ posterior samples. The TICA lag time was $\tau=\SI{10}{\nano\second}$, with \SI{95}{\percent} of the variance/$m=8$ components retained. The number of cluster centres was $n=316$. The blue dots and error bars are the mean and \SI{95}{\percent} credible intervals.}
+ \caption[The ratio of successive eigenvalues and implied timescales of the sensitivity reference MSM]{\textsc{The ratio of successive eigenvalues and implied timescales of the sensitivity reference MSM}. Panel (a) shows the ratio of successive eigenvalues and panel (b) the implied timescales the sensitivity case of the reference MSM with: $\tau(\textrm{MSM})=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{10}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=8$ TICA components retained, and $n=316$ microstates. Parameters were estimated using MCMC with \num{1000} posterior samples, the blue dots and error bars are the mean and \SI{95}{\percent} credible intervals respectively.}
  \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/timescale_ratios_D_sens.png}
  \label{fig:ts_ratios_d_sens}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h!]
  \centering
- \mycaption{The implied timescales and relative VAMP-2 scores as a function of the Markov lag time $\tau(\mathrm{MSM})$. The TICA lag time was set to $\tau=\SI{10}{\nano\second}$, with \SI{95}{\percent} of the variance retained meaning $m=8$ components were retained. The number of cluster centres was set to $n=316$. Panel (a) shows the first five implied timescales for $\SI{0}{\nano\second} < \tau(\mathrm{MSM}) < \SI{5}{\nano\second}$, panel (b) shows the first five implied timescales for $\SI{0}{\nano\second} < \tau(\mathrm{MSM}) < \SI{50}{\nano\second}$. The solid lines and coloured shaded areas are the mean and \SI{95}{\percent} credible intervals respectively, estimated using MCMC with $500$ posterior samples. The grey shaded area is the region for which the implied timescales are smaller than the lag time. Panel (c) and (d) show the VAMP-2 scores, scored on the first $2-5$ eigenvalues for the same ranges. The VAMP-2 scores are indexed to $1$ at their initial value. The colour coding is consistent between the implied timescale plots and VAMP-2 plots. So that $k=2$, in blue, is the score including the first eigenvalue $\lambda = 1$ and the eigenvalue of the longest implied timescale also shown in blue in panels (a) and (b). }
+    \caption[The implied timescales and VAMP-2 scores of the sensitivity reference MSM]{\textsc{The implied timescales and VAMP-2 scores of the reference MSM}. Panels (a) and (b) show the implied timescales, and panels (c) and (d) shows the relative VAMP-2 scores for the reference MSM with: $\tau(\textrm{MSM})=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{10}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=10$ TICA components retained, and $n=316$ microstates. Panel (a) shows the first five implied timescales for $\tau(\mathrm{MSM})=\SIrange[range-phrase=--]{0.1}{5}{\nano\second}$, panel (b) shows the first five implied timescales for $\tau(\mathrm{MSM}) = \SIrange[range-phrase]{0.1}{50}{\nano\second}$. The solid lines and coloured shaded areas are the mean and \SI{95}{\percent} credible intervals respectively, estimated using MCMC with \num{500} posterior samples. The grey shaded area is the region for which the implied timescales are smaller than the lag time. Panel (c) and (d) show the VAMP-2 scores, scored on the first \numrange{2}{5} eigenvalues for the same ranges. The VAMP-2 scores are indexed to their value at $\tau(\mathrm{MSM})=\SI{0.1}{\nano\second}$. The colour coding is consistent between the implied timescale plots ((a) and (b)) and VAMP-2 plots ((c) and (d)). e.g. the blue line in (c) and (d) is the VAMP-2 score with two eigenvalues ($r=2$) while in (a) and (b) blue is the second implied timescale, $t_{2}$.}
  \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/implied_timescales_D_sens.png}
  \label{fig:its_d_sens}
 \end{figure}
 
-\subsection{Response surface}\label{app:msm_rsm}
+% \subsection{Response surface}\label{app:msm_rsm}
 
-\subsubsection{GP model selection metrics}
-\begin{table}
+% \subsubsection{GP model selection metrics}
+\begin{table}[h!]
  \centering
- \mycaption{Model selection metrics for the response surface of AADH using all hyperparameter trials ($N=361$, except those for $\chi=$RMSD). The Mean Standardised Log Loss (MSLL) and Standardised Mean Square Error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{MSLL}^{2}+R_{SMSE}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher. }
+ \caption[Gaussian process model selection metrics for the response surface of AADH using all randomly sampled hyperparameter trials]{\textsc{Gaussian process model selection metrics for the response surface of AADH using all randomly sampled hyperparameter trials, $\mathcal{D}_{361}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_all_data}
- \begin{tabularx}{1\textwidth}{|llllrr >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X|}
- \hline
+ \begin{tabularx}{1\textwidth}{llllrr >{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X}
+ \toprule
  $T(\tau)$ & $T(m)$ & $T(n)$ & Kernel & MSLL & SMSE & Rank (MSLL) & Rank (SMSE) & Rank (Total)\\
- \hline\hline
+ \midrule
  $I({\tau})$ & $I({m})$ & $I({n})$ & Exponential & -0.1298 & 0.3087 & 1.0 & 1.0 & 1.0 \\
    &  & $\log({n})$ & Exponential & 0.0050 & 0.2964 &  - &  - & - \\
    & $\log({m})$ & $I({n})$ & Exponential & 0.0521 & 0.3118 &  - &  - & - \\
@@ -526,42 +529,44 @@ and is plotted as a function of the stationary distribution of the observed stat
    &  & $\log({n})$ & Exponential & 0.4959 & 0.3231 &  - &  - & - \\
    & $\log({m})$ & $I({n})$ & Exponential & 0.5128 & 0.4365 &  - &  - & - \\
    &  & $\log({n})$ & Exponential & 1.0267 & 0.4201 &  - &  - & - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M32 & 1.5680 & 0.2893 &  - &  - & - \\
-   &  & $\log({n})$ & M32 & 1.9193 & 0.2960 &  - &  - & - \\
-   & $\log({m})$ & $I({n})$ & M32 & 3.1385 & 0.2775 &  - &  - & - \\
-   &  & $\log({n})$ & M32 & 2.0358 & 0.2818 &  - &  - & - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M32 & 6.9015 & 0.3203 &  - &  - & - \\
-   &  & $\log({n})$ & M32 & 7.7182 & 0.3406 &  - &  - & - \\
-   & $\log({m})$ & $I({n})$ & M32 & 7.9209 & 0.3257 &  - &  - & - \\
-   &  & $\log({n})$ & M32 & 3.0002 & 0.3472 &  - &  - & - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M52 & 3.6517 & 0.3029 &  - &  - & - \\
-   &  & $\log({n})$ & M52 & 3.8316 & 0.3090 &  - &  - & - \\
-   & $\log({m})$ & $I({n})$ & M52 & 8.6574 & 0.2991 &  - &  - & - \\
-   &  & $\log({n})$ & M52 & 3.7354 & 0.3238 &  - &  - & - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M52 & 8.9207 & 0.3679 &  - &  - & - \\
-   &  & $\log({n})$ & M52 & 11.8753 & 0.4064 &  - &  - & - \\
-   & $\log({m})$ & $I({n})$ & M52 & 12.7637 & 0.3722 &  - &  - & - \\
-   &  & $\log({n})$ & M52 & 13.6735 & 0.3475 &  - &  - & - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & RBF & inf & inf &  - &  - & - \\
-   &  & $\log({n})$ & RBF & 9.3618 & 0.3256 &  - &  - & - \\
-   & $\log({m})$ & $I({n})$ & RBF & 5.9123 & 0.3022 &  - &  - & - \\
-   &  & $\log({n})$ & RBF & inf & inf &  - &  - & - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & RBF & 17.4786 & 0.4551 &  - &  - & - \\
-   &  & $\log({n})$ & RBF & 16.7568 & 0.3556 &  - &  - & - \\
-   & $\log({m})$ & $I({n})$ & RBF & 16.7412 & 0.5026 &  - &  - & - \\
-   &  & $\log({n})$ & RBF & 24.3199 & 0.4986 &  - &  - & - \\
- \hline
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 1.5680 & 0.2893 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & 1.9193 & 0.2960 &  - &  - & - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 3.1385 & 0.2775 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & 2.0358 & 0.2818 &  - &  - & - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 6.9015 & 0.3203 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & 7.7182 & 0.3406 &  - &  - & - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 7.9209 & 0.3257 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & 3.0002 & 0.3472 &  - &  - & - \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 3.6517 & 0.3029 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 3.8316 & 0.3090 &  - &  - & - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 8.6574 & 0.2991 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 3.7354 & 0.3238 &  - &  - & - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 8.9207 & 0.3679 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 11.8753 & 0.4064 &  - &  - & - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 12.7637 & 0.3722 &  - &  - & - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 13.6735 & 0.3475 &  - &  - & - \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & inf & inf &  - &  - & - \\
+   &  & $\log({n})$ & Gaussian & 9.3618 & 0.3256 &  - &  - & - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & 5.9123 & 0.3022 &  - &  - & - \\
+   &  & $\log({n})$ & Gaussian & inf & inf &  - &  - & - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 17.4786 & 0.4551 &  - &  - & - \\
+   &  & $\log({n})$ & Gaussian & 16.7568 & 0.3556 &  - &  - & - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & 16.7412 & 0.5026 &  - &  - & - \\
+   &  & $\log({n})$ & Gaussian & 24.3199 & 0.4986 &  - &  - & - \\
+ \bottomrule
  \end{tabularx}
 \end{table}
 
-\begin{table}
+
+
+\begin{table}[h!]
  \centering
- \mycaption{Model selection metrics for the response surface of an MSM of AADH, data subset 1, $N=100$, except those for $\chi=$RMSD). The Mean Standardised Log Loss (MSLL) and Standardised Mean Square Error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{MSLL}^{2}+R_{SMSE}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher. }
+ \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 1]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 1, $\mathcal{D}^{1}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_1}
- \begin{tabularx}{1\textwidth}{|llllrr >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X|}
- \hline
+ \begin{tabularx}{1\textwidth}{llllrr >{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X}
+ \toprule
  $T(\tau)$ & $T(m)$ & $T(n)$ & Kernel & MSLL & SMSE & Rank (MSLL) & Rank (SMSE) & Rank (Total)\\
- \hline\hline
+ \midrule
  $I({\tau})$ & $I({m})$ & $I({n})$ & Exponential & -0.3928 & 0.3412 & 10.0 & 14.0 &  13.0 \\
   &  & $\log({n})$ & Exponential & -0.2456 & 0.3443 & 15.0 & 15.0 &  16.0 \\
   & $\log({m})$ & $I({n})$ & Exponential & -0.6484 & 0.3169 &  6.0 & 12.0 &  7.0 \\
@@ -570,42 +575,42 @@ and is plotted as a function of the stationary distribution of the observed stat
    &  & $\log({n})$ & Exponential & -0.2195 & 0.3450 & 16.0 & 16.0 &  17.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.3524 & 0.3084 & 13.0 &  9.0 &  10.0 \\
    &  & $\log({n})$ & Exponential & -0.3944 & 0.3379 &  9.0 & 13.0 &  11.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M32 & -0.3807 & 0.3167 & 12.0 & 11.0 &  12.0 \\
-   &  & $\log({n})$ & M32 & -0.2744 & 0.3053 & 14.0 &  7.0 &  9.0 \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.8769 & 0.2779 &  1.0 &  4.0 &  3.0 \\
-   &  & $\log({n})$ & M32 & -0.7438 & 0.2785 &  5.0 &  5.0 &  5.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M32 & 0.3415 & 0.3721 &  - &  - &  - \\
-   &  & $\log({n})$ & M32 & -0.2023 & 0.3892 & 17.0 & 18.0 &  18.0 \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.4758 & 0.3033 &  8.0 &  6.0 &  6.0 \\
-   &  & $\log({n})$ & M32 & -0.3892 & 0.3086 & 11.0 & 10.0 &  8.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M52 & 0.3362 & 0.3149 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 0.9964 & 0.2712 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.8713 & 0.2685 &  2.0 &  2.0 &  1.0 \\
-   &  & $\log({n})$ & M52 & -0.7508 & 0.2700 &  4.0 &  3.0 &  4.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M52 & 6.4201 & 0.3503 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 5.7695 & 0.3250 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M52 & 3.9718 & 0.3153 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & inf & inf &  - &  - &  - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & RBF & -0.1677 & 0.3074 & 18.0 &  8.0 &  15.0 \\
-   &  & $\log({n})$ & RBF & 1.3068 & 0.2747 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & RBF & -0.7884 & 0.2675 &  3.0 &  1.0 &  2.0 \\
-   &  & $\log({n})$ & RBF & inf & inf &  - &  - &  - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & RBF & 6.8541 & 0.3472 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 6.2984 & 0.3074 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & RBF & 4.8742 & 0.4157 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 7.6739 & 0.5531 &  - &  - &  - \\
- \hline
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.3807 & 0.3167 & 12.0 & 11.0 &  12.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.2744 & 0.3053 & 14.0 &  7.0 &  9.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.8769 & 0.2779 &  1.0 &  4.0 &  3.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.7438 & 0.2785 &  5.0 &  5.0 &  5.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 0.3415 & 0.3721 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.2023 & 0.3892 & 17.0 & 18.0 &  18.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.4758 & 0.3033 &  8.0 &  6.0 &  6.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.3892 & 0.3086 & 11.0 & 10.0 &  8.0 \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 0.3362 & 0.3149 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.9964 & 0.2712 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.8713 & 0.2685 &  2.0 &  2.0 &  1.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & -0.7508 & 0.2700 &  4.0 &  3.0 &  4.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 6.4201 & 0.3503 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 5.7695 & 0.3250 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 3.9718 & 0.3153 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & inf & inf &  - &  - &  - \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & -0.1677 & 0.3074 & 18.0 &  8.0 &  15.0 \\
+   &  & $\log({n})$ & Gaussian & 1.3068 & 0.2747 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & -0.7884 & 0.2675 &  3.0 &  1.0 &  2.0 \\
+   &  & $\log({n})$ & Gaussian & inf & inf &  - &  - &  - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 6.8541 & 0.3472 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 6.2984 & 0.3074 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & 4.8742 & 0.4157 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 7.6739 & 0.5531 &  - &  - &  - \\
+ \bottomrule
  \end{tabularx}
 \end{table}
 
-\begin{table}
+\begin{table}[h!]
  \centering
- \mycaption{Model selection metrics for the response surface of an MSM of AADH, data subset 2, $N=100$, except those for $\chi=$RMSD). The Mean Standardised Log Loss (MSLL) and Standardised Mean Square Error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{MSLL}^{2}+R_{SMSE}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher. }
+ \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 2]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 2, $\mathcal{D}^{2}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_2}
- \begin{tabularx}{1\textwidth}{|llllrr >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X|}
- \hline
+ \begin{tabularx}{1\textwidth}{llllrr >{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X}
+ \toprule
  $T(\tau)$ & $T(m)$ & $T(n)$ & Kernel & MSLL & SMSE & Rank (MSLL) & Rank (SMSE) & Rank (Total)\\
- \hline\hline
+ \midrule
  $I({\tau})$ & $I({m})$ & $I({n})$ & Exponential & -0.3293 & 0.4262 & 13.0 &  9.0 &  11.0 \\
    &  & $\log({n})$ & Exponential & -0.5222 & 0.4330 &  6.0 & 13.0 &  8.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.6612 & 0.3890 &  1.0 &  2.0 &  1.0 \\
@@ -614,43 +619,43 @@ and is plotted as a function of the stationary distribution of the observed stat
    &  & $\log({n})$ & Exponential & -0.4162 & 0.4445 &  8.0 & 14.0 &  12.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.3702 & 0.4281 & 12.0 & 10.0 &  10.0 \\
    &  & $\log({n})$ & Exponential & -0.6242 & 0.4169 &  2.0 &  4.0 &  2.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M32 & -0.5737 & 0.4218 &  4.0 &  7.0 &  5.0 \\
-   &  & $\log({n})$ & M32 & 0.1639 & 0.4432 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.5479 & 0.4282 &  5.0 & 11.0 &  7.0 \\
-   &  & $\log({n})$ & M32 & -0.4595 & 0.3844 &  7.0 &  1.0 &  4.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M32 & -0.4077 & 0.4301 &  9.0 & 12.0 &  9.0 \\
-   &  & $\log({n})$ & M32 & inf & inf &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M32 & 1.0248 & 0.4609 &  - &  - &  - \\
-   &  & $\log({n})$ & M32 & -0.3902 & 0.3942 & 10.0 &  3.0 &  6.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M52 & 1.3964 & 0.4033 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 0.3681 & 0.4475 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.1968 & 0.4237 & 14.0 &  8.0 &  13.0 \\
-   &  & $\log({n})$ & M52 & 2.3201 & 0.4400 &  - &  - &  - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M52 & 3.2132 & 0.4125 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 0.5430 & 0.4473 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M52 & 1.6455 & 0.4679 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 0.7421 & 0.4378 &  - &  - &  - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & RBF & 2.3960 & 0.4042 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 1.3825 & 0.4372 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & RBF & -0.1688 & 0.4197 & 15.0 &  6.0 &  14.0 \\
-   &  & $\log({n})$ & RBF & 3.8725 & 0.4652 &  - &  - &  - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & RBF & 4.1994 & 0.4244 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 2.3169 & 0.4305 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & RBF & 1.7600 & 0.4764 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 1.6457 & 0.4517 &  - &  - &  - \\
- \hline
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.5737 & 0.4218 &  4.0 &  7.0 &  5.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & 0.1639 & 0.4432 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.5479 & 0.4282 &  5.0 & 11.0 &  7.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.4595 & 0.3844 &  7.0 &  1.0 &  4.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.4077 & 0.4301 &  9.0 & 12.0 &  9.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & inf & inf &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 1.0248 & 0.4609 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.3902 & 0.3942 & 10.0 &  3.0 &  6.0 \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 1.3964 & 0.4033 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.3681 & 0.4475 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.1968 & 0.4237 & 14.0 &  8.0 &  13.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 2.3201 & 0.4400 &  - &  - &  - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 3.2132 & 0.4125 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.5430 & 0.4473 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 1.6455 & 0.4679 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.7421 & 0.4378 &  - &  - &  - \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 2.3960 & 0.4042 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 1.3825 & 0.4372 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & -0.1688 & 0.4197 & 15.0 &  6.0 &  14.0 \\
+   &  & $\log({n})$ & Gaussian & 3.8725 & 0.4652 &  - &  - &  - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 4.1994 & 0.4244 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 2.3169 & 0.4305 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & 1.7600 & 0.4764 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 1.6457 & 0.4517 &  - &  - &  - \\
+ \bottomrule
  \end{tabularx}
 \end{table}
 
 
-\begin{table}
+\begin{table}[h!]
  \centering
- \mycaption{Model selection metrics for the response surface of an MSM of AADH, data subset 3, $N=100$, except those for $\chi=$RMSD). The Mean Standardised Log Loss (MSLL) and Standardised Mean Square Error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{MSLL}^{2}+R_{SMSE}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher. }
+ \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 3]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 3, $\mathcal{D}^{3}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_3}
- \begin{tabularx}{1\textwidth}{|llllrr >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X|}
- \hline
+ \begin{tabularx}{1\textwidth}{llllrr >{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X}
+ \toprule
  $T(\tau)$ & $T(m)$ & $T(n)$ & Kernel & MSLL & SMSE & Rank (MSLL) & Rank (SMSE) & Rank (Total)\\
- \hline\hline
+ \midrule
  $I({\tau})$ & $I({m})$ & $I({n})$ & Exponential & -0.4461 & 0.5415 & 14.0 & 15.0 &  13.0 \\
    &  & $\log({n})$ & Exponential & -0.4350 & 0.5234 & 15.0 &  9.0 &  10.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.6123 & 0.5074 &  6.0 &  5.0 &  3.0 \\
@@ -659,43 +664,43 @@ and is plotted as a function of the stationary distribution of the observed stat
    &  & $\log({n})$ & Exponential & -0.3559 & 0.5626 & 20.0 & 21.0 &  22.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.4587 & 0.5449 & 13.0 & 17.0 &  14.0 \\
    &  & $\log({n})$ & Exponential & -0.4276 & 0.5472 & 18.0 & 18.0 &  20.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M32 & -0.6003 & 0.5234 &  7.0 &  8.0 &  4.0 \\
-   &  & $\log({n})$ & M32 & -0.6400 & 0.5376 &  5.0 & 12.0 &  8.0 \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.8017 & 0.4885 &  2.0 &  1.0 &  1.0 \\
-   &  & $\log({n})$ & M32 & -0.8921 & 0.4892 &  1.0 &  2.0 &  2.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M32 & -0.1904 & 0.5933 & 24.0 & 24.0 &  25.0 \\
-   &  & $\log({n})$ & M32 & -0.4898 & 0.5711 & 11.0 & 22.0 &  18.0 \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.4295 & 0.5379 & 17.0 & 13.0 &  15.0 \\
-   &  & $\log({n})$ & M32 & -0.6808 & 0.5350 &  4.0 & 11.0 &  6.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M52 & -0.4328 & 0.5482 & 16.0 & 19.0 &  19.0 \\
-   &  & $\log({n})$ & M52 & -0.5392 & 0.5262 &  8.0 & 10.0 &  7.0 \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.7498 & 0.5506 &  3.0 & 20.0 &  12.0 \\
-   &  & $\log({n})$ & M52 & -0.2438 & 0.5141 & 22.0 &  6.0 &  16.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M52 & 0.4797 & 0.6354 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & -0.3604 & 0.6100 & 19.0 & 26.0 &  23.0 \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.1492 & 0.5818 & 25.0 & 23.0 &  26.0 \\
-   &  & $\log({n})$ & M52 & 0.1426 & 0.5263 &  - &  - &  - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & RBF & -0.5234 & 0.5412 & 10.0 & 14.0 &  9.0 \\
-   &  & $\log({n})$ & RBF & -0.4854 & 0.5436 & 12.0 & 16.0 &  11.0 \\
-   & $\log({m})$ & $I({n})$ & RBF & inf & inf &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & -0.1291 & 0.5002 & 26.0 &  3.0 &  21.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & RBF & 1.5339 & 0.5471 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & -0.0794 & 0.6378 & 27.0 & 27.0 &  27.0 \\
-   & $\log({m})$ & $I({n})$ & RBF & -0.2000 & 0.5068 & 23.0 &  4.0 &  17.0 \\
-   &  & $\log({n})$ & RBF & 0.1399 & 0.4935 &  - &  - &  - \\
- \hline
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.6003 & 0.5234 &  7.0 &  8.0 &  4.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.6400 & 0.5376 &  5.0 & 12.0 &  8.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.8017 & 0.4885 &  2.0 &  1.0 &  1.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.8921 & 0.4892 &  1.0 &  2.0 &  2.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.1904 & 0.5933 & 24.0 & 24.0 &  25.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.4898 & 0.5711 & 11.0 & 22.0 &  18.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.4295 & 0.5379 & 17.0 & 13.0 &  15.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.6808 & 0.5350 &  4.0 & 11.0 &  6.0 \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.4328 & 0.5482 & 16.0 & 19.0 &  19.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & -0.5392 & 0.5262 &  8.0 & 10.0 &  7.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.7498 & 0.5506 &  3.0 & 20.0 &  12.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & -0.2438 & 0.5141 & 22.0 &  6.0 &  16.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 0.4797 & 0.6354 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & -0.3604 & 0.6100 & 19.0 & 26.0 &  23.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.1492 & 0.5818 & 25.0 & 23.0 &  26.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.1426 & 0.5263 &  - &  - &  - \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & -0.5234 & 0.5412 & 10.0 & 14.0 &  9.0 \\
+   &  & $\log({n})$ & Gaussian & -0.4854 & 0.5436 & 12.0 & 16.0 &  11.0 \\
+   & $\log({m})$ & $I({n})$ & Gaussian & inf & inf &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & -0.1291 & 0.5002 & 26.0 &  3.0 &  21.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 1.5339 & 0.5471 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & -0.0794 & 0.6378 & 27.0 & 27.0 &  27.0 \\
+   & $\log({m})$ & $I({n})$ & Gaussian & -0.2000 & 0.5068 & 23.0 &  4.0 &  17.0 \\
+   &  & $\log({n})$ & Gaussian & 0.1399 & 0.4935 &  - &  - &  - \\
+ \bottomrule
  \end{tabularx}
 \end{table}
 
 
-\begin{table}
+\begin{table}[h!]
  \centering
- \mycaption{Model selection metrics for the response surface of an MSM of AADH, data subset 4, $N=100$, except those for $\chi=$RMSD). The Mean Standardised Log Loss (MSLL) and Standardised Mean Square Error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{MSLL}^{2}+R_{SMSE}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher. }
+ \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 4]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 4, $\mathcal{D}^{4}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_4}
- \begin{tabularx}{1\textwidth}{|llllrr >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X|}
- \hline
+ \begin{tabularx}{1\textwidth}{llllrr >{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X}
+ \toprule
  $T(\tau)$ & $T(m)$ & $T(n)$ & Kernel & MSLL & SMSE & Rank (MSLL) & Rank (SMSE) & Rank (Total)\\
- \hline\hline
+ \midrule
  $I({\tau})$ & $I({m})$ & $I({n})$ & Exponential & -0.7560 & 0.2203 &  8.0 & 16.0 &  16.0 \\
    &  & $\log({n})$ & Exponential & -0.7875 & 0.2181 &  7.0 & 15.0 &  15.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.9947 & 0.1510 &  3.0 & 10.0 &  4.0 \\
@@ -704,42 +709,42 @@ and is plotted as a function of the stationary distribution of the observed stat
    &  & $\log({n})$ & Exponential & -0.8752 & 0.1825 &  5.0 & 13.0 &  7.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -1.0363 & 0.1442 &  1.0 &  8.0 &  2.0 \\
    &  & $\log({n})$ & Exponential & -1.0279 & 0.1327 &  2.0 &  6.0 &  1.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M32 & inf & inf &  - &  - &  - \\
-   &  & $\log({n})$ & M32 & -0.5648 & 0.1809 & 10.0 & 12.0 &  13.0 \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.4921 & 6.5461 &  - &  - &  - \\
-   &  & $\log({n})$ & M32 & -0.5509 & 0.1001 & 11.0 &  1.0 &  5.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M32 & 17.1108 & 4.4912 &  - &  - &  - \\
-   &  & $\log({n})$ & M32 & -0.2896 & 0.1322 & 13.0 &  5.0 &  8.0 \\
-   & $\log({m})$ & $I({n})$ & M32 & 0.8341 & 6.6805 &  - &  - &  - \\
-   &  & $\log({n})$ & M32 & -0.6497 & 0.1530 &  9.0 & 11.0 &  9.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M52 & 0.0998 & 0.1507 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 0.2457 & 0.1419 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.2353 & 0.1103 & 15.0 &  2.0 &  11.0 \\
-   &  & $\log({n})$ & M52 & 0.1854 & 0.0885 &  - &  - &  - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M52 & 0.1737 & 0.1471 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 0.1300 & 0.1468 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.2515 & 0.1228 & 14.0 &  4.0 &  10.0 \\
-   &  & $\log({n})$ & M52 & -0.3690 & 0.1335 & 12.0 &  7.0 &  6.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & RBF & 0.4745 & 0.1570 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 0.3424 & 0.1426 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & RBF & -0.0644 & 0.1120 & 16.0 &  3.0 &  14.0 \\
-   &  & $\log({n})$ & RBF & 0.6375 & 0.0887 &  - &  - &  - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & RBF & 0.5639 & 0.1596 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 0.9161 & 0.1642 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & RBF & 0.2483 & 0.1132 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 0.1566 & 0.1366 &  - &  - &  - \\
- \hline
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & inf & inf &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.5648 & 0.1809 & 10.0 & 12.0 &  13.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.4921 & 6.5461 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.5509 & 0.1001 & 11.0 &  1.0 &  5.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 17.1108 & 4.4912 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.2896 & 0.1322 & 13.0 &  5.0 &  8.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 0.8341 & 6.6805 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.6497 & 0.1530 &  9.0 & 11.0 &  9.0 \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 0.0998 & 0.1507 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.2457 & 0.1419 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.2353 & 0.1103 & 15.0 &  2.0 &  11.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.1854 & 0.0885 &  - &  - &  - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 0.1737 & 0.1471 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 0.1300 & 0.1468 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.2515 & 0.1228 & 14.0 &  4.0 &  10.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & -0.3690 & 0.1335 & 12.0 &  7.0 &  6.0 \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 0.4745 & 0.1570 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 0.3424 & 0.1426 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & -0.0644 & 0.1120 & 16.0 &  3.0 &  14.0 \\
+   &  & $\log({n})$ & Gaussian & 0.6375 & 0.0887 &  - &  - &  - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 0.5639 & 0.1596 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 0.9161 & 0.1642 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & 0.2483 & 0.1132 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 0.1566 & 0.1366 &  - &  - &  - \\
+ \bottomrule
  \end{tabularx}
 \end{table}
 
-\begin{table}
+\begin{table}[h!]
  \centering
- \mycaption{Model selection metrics for the response surface of an MSM of AADH, data subset 5, $N=100$, except those for $\chi=$RMSD). The Mean Standardised Log Loss (MSLL) and Standardised Mean Square Error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{MSLL}^{2}+R_{SMSE}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher. }
+ \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 5]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 5, $\mathcal{D}^{5}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_5}
- \begin{tabularx}{1\textwidth}{|llllrr >{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X|}
- \hline
+ \begin{tabularx}{1\textwidth}{llllrr >{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X>{\raggedleft\arraybackslash}X}
+ \toprule
  $T(\tau)$ & $T(m)$ & $T(n)$ & Kernel & MSLL & SMSE & Rank (MSLL) & Rank (SMSE) & Rank (Total)\\
- \hline\hline
+ \midrule
  $I({\tau})$ & $I({m})$ & $I({n})$ & Exponential & -0.4560 & 0.3075 &  4.0 & 16.0 &  11.0 \\
    &  & $\log({n})$ & Exponential & -0.3903 & 0.3240 &  8.0 & 19.0 &  18.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.2797 & 0.3010 & 13.0 & 15.0 &  15.0 \\
@@ -748,46 +753,53 @@ and is plotted as a function of the stationary distribution of the observed stat
    &  & $\log({n})$ & Exponential & -0.3533 & 0.3126 & 10.0 & 17.0 &  13.0 \\
    & $\log({m})$ & $I({n})$ & Exponential & -0.2961 & 0.2828 & 12.0 & 11.0 &  10.0 \\
    &  & $\log({n})$ & Exponential & -0.1504 & 0.2821 & 17.0 & 10.0 &  14.0 \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M32 & -0.2251 & 0.2832 & 16.0 & 12.0 &  17.0 \\
-   &  & $\log({n})$ & M32 & -0.4864 & 0.2769 &  3.0 &  9.0 &  4.0 \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.3340 & 0.2395 & 11.0 &  2.0 &  5.0 \\
-   &  & $\log({n})$ & M32 & -0.2605 & 0.2408 & 14.0 &  4.0 &  7.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M32 & 0.6857 & 0.2878 &  - &  - &  - \\
-   &  & $\log({n})$ & M32 & 0.6788 & 0.2833 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M32 & -0.0028 & 0.2589 & 19.0 &  6.0 &  16.0 \\
-   &  & $\log({n})$ & M32 & 2.5955 & 0.2787 &  - &  - &  - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & M52 & -0.0040 & 0.2865 & 18.0 & 13.0 &  19.0 \\
-   &  & $\log({n})$ & M52 & -0.3897 & 0.2747 &  9.0 &  8.0 &  6.0 \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.7173 & 0.2285 &  1.0 &  1.0 &  1.0 \\
-   &  & $\log({n})$ & M52 & -0.6388 & 0.2406 &  2.0 &  3.0 &  2.0 \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & M52 & 0.3359 & 0.2922 &  - &  - &  - \\
-   &  & $\log({n})$ & M52 & 1.9673 & 0.2817 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & M52 & -0.2367 & 0.2533 & 15.0 &  5.0 &  9.0 \\
-   &  & $\log({n})$ & M52 & 2.4714 & 0.2870 &  - &  - &  - \\
- $I({\tau})$ & $I({m})$ & $I({n})$ & RBF & 2.5656 & 0.2672 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & -0.4234 & 0.2669 &  6.0 &  7.0 &  3.0 \\
-   & $\log({m})$ & $I({n})$ & RBF & 1.0865 & 0.2423 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 0.2375 & 0.2507 &  - &  - &  - \\
- $\log({\tau})$ & $I({m})$ & $I({n})$ & RBF & 3.6181 & 0.2821 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 1.8240 & 0.2790 &  - &  - &  - \\
-   & $\log({m})$ & $I({n})$ & RBF & 0.3803 & 0.2535 &  - &  - &  - \\
-   &  & $\log({n})$ & RBF & 6.8263 & 0.2731 &  - &  - &  - \\
- \hline
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.2251 & 0.2832 & 16.0 & 12.0 &  17.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.4864 & 0.2769 &  3.0 &  9.0 &  4.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.3340 & 0.2395 & 11.0 &  2.0 &  5.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & -0.2605 & 0.2408 & 14.0 &  4.0 &  7.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & 0.6857 & 0.2878 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & 0.6788 & 0.2833 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 3-2 & -0.0028 & 0.2589 & 19.0 &  6.0 &  16.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 3-2 & 2.5955 & 0.2787 &  - &  - &  - \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.0040 & 0.2865 & 18.0 & 13.0 &  19.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & -0.3897 & 0.2747 &  9.0 &  8.0 &  6.0 \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.7173 & 0.2285 &  1.0 &  1.0 &  1.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & -0.6388 & 0.2406 &  2.0 &  3.0 &  2.0 \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & 0.3359 & 0.2922 &  - &  - &  - \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 1.9673 & 0.2817 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Mat{\'e}rn 5-2 & -0.2367 & 0.2533 & 15.0 &  5.0 &  9.0 \\
+   &  & $\log({n})$ & Mat{\'e}rn 5-2 & 2.4714 & 0.2870 &  - &  - &  - \\
+ $I({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 2.5656 & 0.2672 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & -0.4234 & 0.2669 &  6.0 &  7.0 &  3.0 \\
+   & $\log({m})$ & $I({n})$ & Gaussian & 1.0865 & 0.2423 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 0.2375 & 0.2507 &  - &  - &  - \\
+ $\log({\tau})$ & $I({m})$ & $I({n})$ & Gaussian & 3.6181 & 0.2821 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 1.8240 & 0.2790 &  - &  - &  - \\
+   & $\log({m})$ & $I({n})$ & Gaussian & 0.3803 & 0.2535 &  - &  - &  - \\
+   &  & $\log({n})$ & Gaussian & 6.8263 & 0.2731 &  - &  - &  - \\
+ \bottomrule
  \end{tabularx}
 \end{table}
 
+\clearpage
 
-\section{Coarse graining models}
-
-\subsection{Hidden state selection}
-\begin{table}
- \centering
- \mycaption{Hidden state selection for AADH}
- \begin{tabular}{lrrrrrr}
+\begin{xltabular}{\linewidth}{llrrrrr}
+ \caption[Integrated complete-data likelihood for HMMs]{\textsc{Integrated complete-data  likelihood for HMMs}. $g$ is the stipulated number of hidden states, $g^{\mathrm{s}}$ is the  largest strongly connected set of states, $d$ is the number of degrees of freedom,  $N_{\mathrm{obs}}$ is the number of observations, as given by equation \ref{eqn:hmm_nobs}, ICL and classification entropy are given by equations \ref{eqn:icl} and \ref{eqn:class_entropy}  respectively. } \\
  \toprule
-  Case & $g$ & $d$ & $N_{\mathrm{obs}}$ & $g^{\mathrm{s}}$ & Entropy & ICL \\
+   Case & $g$ & $d$ & $N_{\mathrm{obs}}$ & $g^{\mathrm{s}}$ & Entropy & ICL \\ 
  \midrule
-  Base case & 2 & 620 &  98,000 &   1 & 2.007e+00 & 1.070e+06 \\
+ \endfirsthead
+  \multicolumn{7}{c}{\tablename\ \thetable{} -- continued from previous page} \\ 
+ \toprule
+   Case & $g$ & $d$ & $N_{\mathrm{obs}}$ & $g^{\mathrm{s}}$ & Entropy & ICL \\ 
+ \midrule
+ \endhead
+ \midrule
+  \multicolumn{7}{r}{{Continued on next page}} \\ 
+ \bottomrule
+ \endfoot
+ \endlastfoot
+ Base case & 2 & 620 &  98,000 &   1 & 2.007e+00 & 1.070e+06 \\
   Base case & 3 & 932 &  98,000 &   2 & 5.263e+00 & 1.009e+06 \\
   Base case & 4 & 1,245 &  98,000 &   3 & 8.914e+02 & 9.375e+05 \\
   Base case & 5 & 1,559 &  98,000 &   3 & 2.994e+02 & 9.036e+05 \\
@@ -849,173 +861,159 @@ and is plotted as a function of the stationary distribution of the observed stat
  Sensitivity 3 & 19 & 6,060 &  98,000 &   17 & 1.385e+04 & 8.621e+05 \\
  Sensitivity 3 & 20 & 6,389 &  98,000 &   18 & 1.401e+04 & 8.655e+05 \\
  \bottomrule
- \end{tabular}
- \label{tab:aadh_h_state_selection}
-\end{table}
+\end{xltabular}\label{tab:aadh_h_state_selection}
 
-\subsection{Base Case Model}
-\begin{table}
- \centering
- \mycaption{Gelman-Rubin statistics for the hidden state transition matrix elements for the `base case' Bayesian HMM of AADH. The model was estimated with four independent MCMC chains with $4000$ posterior samples, taken after neglecting the first $1000$ samples. }
- \label{tab:aadh_base_case_rhat}
- \begin{tabular}{|r|r|r||r|r|r|}
- \hline
- $i$ & $j$ & $\hat{R}$ & $i$ & $j$ & $\hat{R}$ \\
- \hline\hline
- 1 & 1 & 1.02 & 8 & 11 & 1.01 \\
- 1 & 4 & 1.00 & 8 & 12 & 1.06 \\
- 1 & 9 & 1.00 & 8 & 13 & 1.04 \\
- 1 & 10 & 1.01 & 9 & 1 & 1.00 \\
- 1 & 13 & 1.00 & 9 & 4 & 1.10 \\
- 1 & 14 & 1.00 & 9 & 5 & 1.00 \\
- 1 & 15 & 1.03 & 9 & 7 & 1.07 \\
- 2 & 2 & 1.03 & 9 & 8 & 1.00 \\
- 2 & 3 & 1.05 & 9 & 9 & 1.10 \\
- 2 & 5 & 1.04 & 9 & 10 & 1.00 \\
- 2 & 6 & 1.00 & 9 & 12 & 1.00 \\
- 2 & 7 & 1.00 & 9 & 13 & 1.00 \\
- 2 & 8 & 1.00 & 10 & 1 & 1.01 \\
- 2 & 12 & 1.00 & 10 & 4 & 1.00 \\
- 2 & 13 & 1.00 & 10 & 8 & 1.01 \\
- 3 & 2 & 1.05 & 10 & 9 & 1.00 \\
- 3 & 3 & 1.00 & 10 & 10 & 1.04 \\
- 3 & 5 & 1.01 & 10 & 12 & 1.01 \\
- 3 & 6 & 1.00 & 10 & 13 & 1.00 \\
- 4 & 1 & 1.00 & 10 & 14 & 1.02 \\
- 4 & 4 & 1.02 & 10 & 15 & 1.06 \\
- 4 & 5 & 1.04 & 11 & 7 & 1.00 \\
- 4 & 7 & 1.00 & 11 & 8 & 1.01 \\
- 4 & 8 & 1.00 & 11 & 11 & 1.00 \\
- 4 & 9 & 1.02 & 11 & 12 & 1.02 \\
- 4 & 10 & 1.02 & 11 & 13 & 1.00 \\
- 4 & 12 & 1.00 & 12 & 2 & 1.00 \\
- 4 & 13 & 1.00 & 12 & 4 & 1.00 \\
- 4 & 14 & 1.00 & 12 & 5 & 1.00 \\
- 4 & 15 & 1.00 & 12 & 7 & 1.00 \\
- 5 & 2 & 1.01 & 12 & 8 & 1.04 \\
- 5 & 3 & 1.01 & 12 & 9 & 1.00 \\
- 5 & 4 & 1.05 & 12 & 10 & 1.01 \\
- 5 & 5 & 1.00 & 12 & 11 & 1.02 \\
- 5 & 6 & 1.01 & 12 & 12 & 1.03 \\
- 5 & 7 & 1.00 & 12 & 13 & 1.02 \\
- 5 & 8 & 1.00 & 13 & 1 & 1.00 \\
- 5 & 9 & 1.01 & 13 & 2 & 1.00 \\
- 5 & 12 & 1.00 & 13 & 4 & 1.00 \\
- 5 & 13 & 1.00 & 13 & 5 & 1.00 \\
- 6 & 2 & 1.00 & 13 & 7 & 1.01 \\
- 6 & 3 & 1.00 & 13 & 8 & 1.03 \\
- 6 & 5 & 1.03 & 13 & 9 & 1.00 \\
- 6 & 6 & 1.03 & 13 & 10 & 1.00 \\
- 7 & 2 & 1.00 & 13 & 11 & 1.00 \\
- 7 & 4 & 1.00 & 13 & 12 & 1.02 \\
- 7 & 5 & 1.00 & 13 & 13 & 1.02 \\
- 7 & 7 & 1.03 & 13 & 15 & 1.00 \\
- 7 & 8 & 1.02 & 14 & 1 & 1.00 \\
- 7 & 9 & 1.06 & 14 & 4 & 1.00 \\
- 7 & 11 & 1.00 & 14 & 10 & 1.02 \\
- 7 & 12 & 1.00 & 14 & 14 & 1.02 \\
- 7 & 13 & 1.01 & 14 & 15 & 1.02 \\
- 8 & 2 & 1.00 & 15 & 1 & 1.04 \\
- 8 & 4 & 1.00 & 15 & 4 & 1.00 \\
- 8 & 5 & 1.00 & 15 & 10 & 1.09 \\
- 8 & 7 & 1.03 & 15 & 13 & 1.00 \\
- 8 & 8 & 1.08 & 15 & 14 & 1.04 \\
- 8 & 9 & 1.00 & 15 & 15 & 1.07 \\
- 8 & 10 & 1.01 & - & - &  - \\
- \hline
- \end{tabular}
-\end{table}
 
-\begin{table}
- \centering
- \mycaption{Rate Matrix}
- \label{tab:base_case_rate_matrix}
- \begin{tabular}{|rrl||rrl||rrl|}
- \hline
- $i$ & $j$ &  $k_{ij}$ & $i$ & $j$ &  $k_{ij}$ & $i$ & $j$ &  $k_{ij}$ \\
- \hline\hline
- 1 & 2 & 0.3 (0.0, 1.3) & 3 & 12 & 0.1 (0.0, 0.2) & 7 & 9 & 0.0 (0.0, 0.0) \\
- 2 & 1 & 0.0 (0.0, 0.2) & 12 & 3 & 0.0 (0.0, 0.1) & 9 & 7 & 0.0 (0.0, 0.0) \\
- 1 & 3 & 22.2 (0.5, 83.5) & 3 & 13 & 3.1 (0.1, 12.6) & 7 & 10 & 0.5 (0.1, 1.2) \\
- 3 & 1 & 9.1 (0.8, 28.1) & 13 & 3 & 0.8 (0.0, 4.2) & 10 & 7 & 0.4 (0.1, 1.2) \\
- 1 & 4 & 0.0 (0.0, 0.0) & 3 & 14 & 0.1 (0.0, 0.4) & 7 & 11 & 10.5 (5.3, 17.8) \\
- 4 & 1 & 0.0 (0.0, 0.0) & 14 & 3 & 0.0 (0.0, 0.1) & 11 & 7 & 5.6 (2.0, 11.5) \\
- 1 & 5 & 0.0 (0.0, 0.0) & 3 & 15 & 0.0 (-0.0, 0.0) & 7 & 12 & 0.1 (0.0, 0.2) \\
- 5 & 1 & 0.0 (0.0, 0.0) & 15 & 3 & 0.0 (-0.0, 0.0) & 12 & 7 & 0.1 (0.0, 0.2) \\
- 1 & 6 & 0.0 (0.0, 0.0) & 4 & 5 & 17.1 (10.7, 25.6) & 7 & 13 & 0.4 (-0.2, 2.9) \\
- 6 & 1 & 0.0 (0.0, 0.0) & 5 & 4 & 12.1 (6.5, 19.8) & 13 & 7 & 0.3 (-0.2, 2.2) \\
- 1 & 7 & 0.0 (0.0, 0.0) & 4 & 6 & 0.1 (0.0, 0.2) & 7 & 14 & 0.4 (-0.2, 2.4) \\
- 7 & 1 & 0.0 (0.0, 0.0) & 6 & 4 & 0.3 (0.0, 0.9) & 14 & 7 & 0.3 (-0.2, 2.0) \\
- 1 & 8 & 0.0 (-0.0, 0.1) & 4 & 7 & 0.0 (-0.3, 1.0) & 7 & 15 & 0.0 (-0.0, 0.0) \\
- 8 & 1 & 0.0 (0.0, 0.0) & 7 & 4 & 0.0 (-0.3, 1.0) & 15 & 7 & 0.0 (-0.0, 0.0) \\
- 1 & 9 & 2.6 (-2.1, 22.8) & 4 & 8 & 0.0 (0.0, 0.0) & 8 & 9 & 0.0 (-0.0, 0.1) \\
- 9 & 1 & 1.5 (-1.0, 12.5) & 8 & 4 & 0.0 (0.0, 0.0) & 9 & 8 & 0.0 (-0.0, 0.1) \\
- 1 & 10 & 0.1 (0.0, 0.7) & 4 & 9 & 0.0 (0.0, 0.0) & 8 & 10 & 61.1 (22.5, 112.7) \\
- 10 & 1 & 0.0 (0.0, 0.1) & 9 & 4 & 0.0 (0.0, 0.0) & 10 & 8 & 35.6 (8.3, 78.2) \\
- 1 & 11 & 0.0 (0.0, 0.0) & 4 & 10 & 0.0 (0.0, 0.0) & 8 & 11 & 0.2 (0.0, 0.5) \\
- 11 & 1 & 0.0 (0.0, 0.0) & 10 & 4 & 0.0 (0.0, 0.0) & 11 & 8 & 0.1 (0.0, 0.2) \\
- 1 & 12 & 0.0 (0.0, 0.0) & 4 & 11 & 0.0 (0.0, 0.0) & 8 & 12 & 0.5 (-1.0, 1.7) \\
- 12 & 1 & 0.0 (0.0, 0.0) & 11 & 4 & 0.0 (0.0, 0.0) & 12 & 8 & 0.2 (-0.4, 0.8) \\
- 1 & 13 & 0.1 (0.0, 0.4) & 4 & 12 & 0.0 (0.0, 0.0) & 8 & 13 & 0.0 (-0.0, 0.0) \\
- 13 & 1 & 0.0 (0.0, 0.0) & 12 & 4 & 0.0 (0.0, 0.0) & 13 & 8 & 0.0 (-0.0, 0.0) \\
- 1 & 14 & 0.0 (0.0, 0.0) & 4 & 13 & 0.0 (0.0, 0.0) & 8 & 14 & 0.0 (0.0, 0.0) \\
- 14 & 1 & 0.0 (0.0, 0.0) & 13 & 4 & 0.0 (0.0, 0.0) & 14 & 8 & 0.0 (0.0, 0.0) \\
- 1 & 15 & 0.0 (0.0, 0.0) & 4 & 14 & 0.0 (0.0, 0.0) & 8 & 15 & 0.0 (0.0, 0.0) \\
- 15 & 1 & 0.0 (0.0, 0.0) & 14 & 4 & 0.0 (0.0, 0.0) & 15 & 8 & 0.0 (0.0, 0.0) \\
- 2 & 3 & 5.4 (0.2, 16.8) & 4 & 15 & 0.0 (0.0, 0.0) & 9 & 10 & 0.2 (0.0, 0.8) \\
- 3 & 2 & 12.0 (1.6, 32.2) & 15 & 4 & 0.0 (0.0, 0.0) & 10 & 9 & 0.0 (0.0, 0.2) \\
- 2 & 4 & 0.0 (0.0, 0.0) & 5 & 6 & 5.3 (1.5, 11.4) & 9 & 11 & 0.0 (0.0, 0.0) \\
- 4 & 2 & 0.0 (0.0, 0.0) & 6 & 5 & 25.8 (4.5, 63.3) & 11 & 9 & 0.0 (0.0, 0.0) \\
- 2 & 5 & 0.0 (0.0, 0.0) & 5 & 7 & 10.9 (5.7, 18.2) & 9 & 12 & 0.0 (0.0, 0.0) \\
- 5 & 2 & 0.0 (0.0, 0.0) & 7 & 5 & 15.0 (6.8, 27.1) & 12 & 9 & 0.0 (0.0, 0.0) \\
- 2 & 6 & 0.0 (0.0, 0.0) & 5 & 8 & 0.1 (0.0, 0.2) & 9 & 13 & 0.1 (0.0, 0.5) \\
- 6 & 2 & 0.0 (0.0, 0.0) & 8 & 5 & 0.2 (0.0, 0.5) & 13 & 9 & 0.0 (0.0, 0.1) \\
- 2 & 7 & 0.0 (0.0, 0.0) & 5 & 9 & 0.0 (0.0, 0.0) & 9 & 14 & 0.0 (0.0, 0.0) \\
- 7 & 2 & 0.0 (0.0, 0.0) & 9 & 5 & 0.0 (0.0, 0.0) & 14 & 9 & 0.0 (0.0, 0.0) \\
- 2 & 8 & 0.0 (0.0, 0.0) & 5 & 10 & 0.0 (0.0, 0.0) & 9 & 15 & 0.0 (0.0, 0.0) \\
- 8 & 2 & 0.0 (0.0, 0.0) & 10 & 5 & 0.0 (0.0, 0.0) & 15 & 9 & 0.0 (0.0, 0.0) \\
- 2 & 9 & 0.1 (0.0, 0.5) & 5 & 11 & 0.1 (0.1, 0.3) & 10 & 11 & 1.0 (-0.1, 4.5) \\
- 9 & 2 & 0.4 (0.0, 1.3) & 11 & 5 & 0.1 (0.0, 0.2) & 11 & 10 & 0.7 (-0.1, 2.9) \\
- 2 & 10 & 0.0 (0.0, 0.2) & 5 & 12 & 0.0 (0.0, 0.0) & 10 & 12 & 10.2 (2.8, 22.5) \\
- 10 & 2 & 0.0 (0.0, 0.1) & 12 & 5 & 0.0 (0.0, 0.0) & 12 & 10 & 7.1 (1.8, 16.7) \\
- 2 & 11 & 0.0 (0.0, 0.0) & 5 & 13 & 0.0 (-0.0, 0.0) & 10 & 13 & 0.0 (-0.0, 0.0) \\
- 11 & 2 & 0.0 (0.0, 0.0) & 13 & 5 & 0.0 (-0.0, 0.0) & 13 & 10 & 0.0 (-0.0, 0.0) \\
- 2 & 12 & 0.0 (0.0, 0.0) & 5 & 14 & 0.0 (-0.0, 0.0) & 10 & 14 & 0.1 (0.0, 0.2) \\
- 12 & 2 & 0.0 (0.0, 0.0) & 14 & 5 & 0.0 (-0.0, 0.0) & 14 & 10 & 0.0 (0.0, 0.2) \\
- 2 & 13 & 0.0 (0.0, 0.1) & 5 & 15 & 0.0 (0.0, 0.0) & 10 & 15 & 0.0 (0.0, 0.0) \\
- 13 & 2 & 0.0 (0.0, 0.1) & 15 & 5 & 0.0 (0.0, 0.0) & 15 & 10 & 0.0 (0.0, 0.0) \\
- 2 & 14 & 0.0 (0.0, 0.0) & 6 & 7 & 7.2 (0.1, 23.1) & 11 & 12 & 10.8 (4.8, 19.5) \\
- 14 & 2 & 0.0 (0.0, 0.0) & 7 & 6 & 2.0 (0.0, 6.2) & 12 & 11 & 11.1 (3.5, 23.6) \\
- 2 & 15 & 0.0 (0.0, 0.0) & 6 & 8 & 0.1 (-0.0, 0.2) & 11 & 13 & 8.2 (3.0, 16.1) \\
- 15 & 2 & 0.0 (0.0, 0.0) & 8 & 6 & 0.0 (-0.0, 0.1) & 13 & 11 & 9.4 (2.3, 21.5) \\
- 3 & 4 & 0.0 (0.0, 0.0) & 6 & 9 & 0.0 (0.0, 0.0) & 11 & 14 & 7.4 (1.9, 16.4) \\
- 4 & 3 & 0.0 (0.0, 0.0) & 9 & 6 & 0.0 (0.0, 0.0) & 14 & 11 & 10.5 (2.1, 25.6) \\
- 3 & 5 & 0.0 (0.0, 0.0) & 6 & 10 & 0.0 (-0.0, 0.0) & 11 & 15 & 0.1 (0.0, 0.2) \\
- 5 & 3 & 0.0 (0.0, 0.0) & 10 & 6 & 0.0 (0.0, 0.0) & 15 & 11 & 0.1 (0.0, 0.2) \\
- 3 & 6 & 0.0 (0.0, 0.0) & 6 & 11 & 2.5 (-0.1, 10.9) & 12 & 13 & 0.2 (0.1, 0.6) \\
- 6 & 3 & 0.0 (0.0, 0.0) & 11 & 6 & 0.4 (-0.0, 1.9) & 13 & 12 & 0.2 (0.1, 0.7) \\
- 3 & 7 & 0.0 (-0.0, 0.1) & 6 & 12 & 0.0 (-0.0, 0.1) & 12 & 14 & 4.3 (0.4, 12.9) \\
- 7 & 3 & 0.0 (0.0, 0.0) & 12 & 6 & 0.0 (-0.0, 0.0) & 14 & 12 & 5.8 (0.6, 16.2) \\
- 3 & 8 & 0.2 (-0.9, 4.4) & 6 & 13 & 0.0 (-0.0, 0.1) & 12 & 15 & 0.0 (0.0, 0.1) \\
- 8 & 3 & 0.1 (-0.6, 2.4) & 13 & 6 & 0.0 (-0.0, 0.0) & 15 & 12 & 0.0 (0.0, 0.1) \\
- 3 & 9 & 21.8 (6.3, 48.2) & 6 & 14 & 0.0 (-0.0, 0.1) & 13 & 14 & 24.8 (7.0, 54.6) \\
- 9 & 3 & 31.5 (6.5, 72.6) & 14 & 6 & 0.0 (-0.0, 0.0) & 14 & 13 & 30.3 (10.6, 64.7) \\
- 3 & 10 & 5.9 (0.3, 19.7) & 6 & 15 & 0.0 (0.0, 0.0) & 13 & 15 & 2.3 (-0.4, 9.4) \\
- 10 & 3 & 2.0 (0.0, 8.5) & 15 & 6 & 0.0 (0.0, 0.0) & 15 & 13 & 1.5 (-0.3, 8.6) \\
- 3 & 11 & 0.0 (0.0, 0.1) & 7 & 8 & 7.9 (3.3, 14.4) & 14 & 15 & 6.4 (0.9, 15.5) \\
- 11 & 3 & 0.0 (0.0, 0.0) & 8 & 7 & 11.6 (2.8, 27.8) & 15 & 14 & 3.8 (0.0, 15.4) \\
- \hline
- \end{tabular}
-\end{table}
+\clearpage
+\begin{xltabular}{0.9\linewidth}{llrp{0.2cm}llrp{0.2cm}llrp{0.2cm}llr}
+    \caption[Convergence statistics for the base case HMM]{\textsc{$\hat{R}$ statistics for the base case HMM}. The model was estimated with four independent MCMC chains with \num{4000} posterior samples, taken after removing \num{1000} burn-in samples. Only the non-zero transition matrix elements are shown.}\label{tab:aadh_base_case_rhat} \\
+    \toprule
+    $i$ & $j$ & $\hat{R}$ & & $i$ & $j$ & $\hat{R}$ & & $i$ & $j$ & $\hat{R}$ & & $i$ & $j$ & $\hat{R}$\\
+    \midrule
+ \endfirsthead
+    \multicolumn{12}{c}{\tablename\ \thetable{} -- continued from previous page} \\ 
+    \toprule
+    $i$ & $j$ & $\hat{R}$ & & $i$ & $j$ & $\hat{R}$ & & $i$ & $j$ & $\hat{R}$ & & $i$ & $j$ & $\hat{R}$\\ 
+    \midrule
+ \endhead
+    \midrule
+    \multicolumn{12}{r}{Continued on the next page} \\ 
+    \bottomrule
+ \endfoot
+ \endlastfoot 
+    1 & 1 & 1.02  & &  8 & 11 & 1.01 & & 5 & 2 & 1.01 & & 12 & 8 & 1.04 \\
+    1 & 4 & 1.00  & &  8 & 12 & 1.06 & & 5 & 3 & 1.01 & & 12 & 9 & 1.00 \\
+    1 & 9 & 1.00  & &  8 & 13 & 1.04 & & 5 & 4 & 1.05 & & 12 & 10 & 1.01 \\
+    1 & 10 & 1.01 &  &  9 & 1 & 1.00 & & 5 & 5 & 1.00 & & 12 & 11 & 1.02 \\
+    1 & 13 & 1.00 &  &  9 & 4 & 1.10 & & 5 & 6 & 1.01 & & 12 & 12 & 1.03 \\
+    1 & 14 & 1.00 &  &  9 & 5 & 1.00 & & 5 & 7 & 1.00 & & 12 & 13 & 1.02 \\
+    1 & 15 & 1.03 &  &  9 & 7 & 1.07 & & 5 & 8 & 1.00 & & 13 & 1 & 1.00 \\
+    2 & 2 & 1.03  & &  9 & 8 & 1.00 & & 5 & 9 & 1.01  & & 13 & 2 & 1.00 \\
+    2 & 3 & 1.05  & &  9 & 9 & 1.10 & & 5 & 12 & 1.00 & & 13 & 4 & 1.00 \\
+    2 & 5 & 1.04  & &  9 & 10 & 1.00 & & 5 & 13 & 1.00 & & 13 & 5 & 1.00 \\
+    2 & 6 & 1.00  & &  9 & 12 & 1.00 & & 6 & 2 & 1.00 &  & 13 & 7 & 1.01 \\
+    2 & 7 & 1.00  & &  9 & 13 & 1.00 & & 6 & 3 & 1.00 &  & 13 & 8 & 1.03 \\
+    2 & 8 & 1.00  & &  10 & 1 & 1.01 & & 6 & 5 & 1.03 &  & 13 & 9 & 1.00 \\
+    2 & 12 & 1.00 &  &  10 & 4 & 1.00 & & 6 & 6 & 1.03 & &  13 & 10 & 1.00 \\
+    2 & 13 & 1.00 &  &  10 & 8 & 1.01 & & 7 & 2 & 1.00 & &  13 & 11 & 1.00 \\
+    3 & 2 & 1.05  & &  10 & 9 & 1.00 & & 7 & 4 & 1.00 &  & 13 & 12 & 1.02 \\
+    3 & 3 & 1.00  & &  10 & 10 & 1.04 & & 7 & 5 & 1.00 & &  13 & 13 & 1.02 \\
+    3 & 5 & 1.01  & &  10 & 12 & 1.01 & & 7 & 7 & 1.03 & &  13 & 15 & 1.00 \\
+    3 & 6 & 1.00  & &  10 & 13 & 1.00 & & 7 & 8 & 1.02 & &  14 & 1 & 1.00 \\
+    4 & 1 & 1.00  & &  10 & 14 & 1.02 & & 7 & 9 & 1.06 & &  14 & 4 & 1.00 \\
+    4 & 4 & 1.02  & &  10 & 15 & 1.06 & & 7 & 11 & 1.00 & & 14 & 10 & 1.02 \\
+    4 & 5 & 1.04  & &  11 & 7 & 1.00 & & 7 & 12 & 1.00 & & 14 & 14 & 1.02 \\
+    4 & 7 & 1.00  & &  11 & 8 & 1.01 & & 7 & 13 & 1.01 & & 14 & 15 & 1.02 \\
+    4 & 8 & 1.00  & &  11 & 11 & 1.00 & & 8 & 2 & 1.00 & & 15 & 1 & 1.04 \\
+    4 & 9 & 1.02  & &  11 & 12 & 1.02 & & 8 & 4 & 1.00 & & 15 & 4 & 1.00 \\
+    4 & 10 & 1.02 &  &  11 & 13 & 1.00 & & 8 & 5 & 1.00 & & 15 & 10 & 1.09 \\
+    4 & 12 & 1.00 &  &  12 & 2 & 1.00 & & 8 & 7 & 1.03 & & 15 & 13 & 1.00 \\
+    4 & 13 & 1.00 &  &  12 & 4 & 1.00 & & 8 & 8 & 1.08 & & 15 & 14 & 1.04 \\
+    4 & 14 & 1.00 &  &  12 & 5 & 1.00 & & 8 & 9 & 1.00 & & 15 & 15 & 1.07 \\
+    4 & 15 & 1.00 &  &  12 & 7 & 1.00 & & 8 & 10 & 1.01 & & -- & -- &  -- \\
+    \bottomrule
+\end{xltabular}
 
-\begin{table}
+\clearpage
+\begin{xltabular}{\textwidth}{llrp{0.2cm}llrp{0.2cm}llr}
+    \caption[Rate matrix for base case HMM]{\textsc{Rate matrix for base case HMM}. The model was estimated with four independent MCMC chains with \num{4000} posterior samples, taken after removing \num{1000} burn-in samples. Values reported are the mean and \SI{95}{\percent} credible intervals.}\label{tab:base_case_rate_matrix} \\
+    \toprule 
+    $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ & & $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ & & $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ \\ 
+    \midrule
+\endfirsthead
+    \toprule 
+    \multicolumn{9}{c}{\tablename\ \thetable{} -- continued from previous page} \\ 
+    $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ &  & $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ & & $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ \\ 
+    \midrule
+\endhead
+    \midrule
+    \multicolumn{9}{r}{{Continued on next page}} \\ 
+    \bottomrule
+ \endfoot
+ \endlastfoot    
+    1 & 2 & 0.3 (0.0, 1.3) & & 3 & 12 & 0.1 (0.0, 0.2) & & 7 & 9 & 0.0 (0.0, 0.0) \\
+    2 & 1 & 0.0 (0.0, 0.2) & & 12 & 3 & 0.0 (0.0, 0.1) & & 9 & 7 & 0.0 (0.0, 0.0) \\
+    1 & 3 & 22.2 (0.5, 83.5) & & 3 & 13 & 3.1 (0.1, 12.6) & & 7 & 10 & 0.5 (0.1, 1.2) \\
+    3 & 1 & 9.1 (0.8, 28.1) & & 13 & 3 & 0.8 (0.0, 4.2) & & 10 & 7 & 0.4 (0.1, 1.2) \\
+    1 & 4 & 0.0 (0.0, 0.0) & & 3 & 14 & 0.1 (0.0, 0.4) & & 7 & 11 & 10.5 (5.3, 17.8) \\
+    4 & 1 & 0.0 (0.0, 0.0) & & 14 & 3 & 0.0 (0.0, 0.1) & & 11 & 7 & 5.6 (2.0, 11.5) \\
+    1 & 5 & 0.0 (0.0, 0.0) & & 3 & 15 & 0.0 (-0.0, 0.0) & & 7 & 12 & 0.1 (0.0, 0.2) \\
+    5 & 1 & 0.0 (0.0, 0.0) & & 15 & 3 & 0.0 (-0.0, 0.0) & & 12 & 7 & 0.1 (0.0, 0.2) \\
+    1 & 6 & 0.0 (0.0, 0.0) & & 4 & 5 & 17.1 (10.7, 25.6) & & 7 & 13 & 0.4 (-0.2, 2.9) \\
+    6 & 1 & 0.0 (0.0, 0.0) & & 5 & 4 & 12.1 (6.5, 19.8) & & 13 & 7 & 0.3 (-0.2, 2.2) \\
+    1 & 7 & 0.0 (0.0, 0.0) & & 4 & 6 & 0.1 (0.0, 0.2) & & 7 & 14 & 0.4 (-0.2, 2.4) \\
+    7 & 1 & 0.0 (0.0, 0.0) & & 6 & 4 & 0.3 (0.0, 0.9) & & 14 & 7 & 0.3 (-0.2, 2.0) \\
+    1 & 8 & 0.0 (-0.0, 0.1) & & 4 & 7 & 0.0 (-0.3, 1.0) & & 7 & 15 & 0.0 (-0.0, 0.0) \\
+    8 & 1 & 0.0 (0.0, 0.0) & & 7 & 4 & 0.0 (-0.3, 1.0) & & 15 & 7 & 0.0 (-0.0, 0.0) \\
+    1 & 9 & 2.6 (-2.1, 22.8) & & 4 & 8 & 0.0 (0.0, 0.0) & & 8 & 9 & 0.0 (-0.0, 0.1) \\
+    9 & 1 & 1.5 (-1.0, 12.5) & & 8 & 4 & 0.0 (0.0, 0.0) & & 9 & 8 & 0.0 (-0.0, 0.1) \\
+    1 & 10 & 0.1 (0.0, 0.7) & & 4 & 9 & 0.0 (0.0, 0.0) & & 8 & 10 & 61.1 (22.5, 112.7) \\
+    10 & 1 & 0.0 (0.0, 0.1) & & 9 & 4 & 0.0 (0.0, 0.0) & & 10 & 8 & 35.6 (8.3, 78.2) \\
+    1 & 11 & 0.0 (0.0, 0.0) & & 4 & 10 & 0.0 (0.0, 0.0) & & 8 & 11 & 0.2 (0.0, 0.5) \\
+    11 & 1 & 0.0 (0.0, 0.0) & & 10 & 4 & 0.0 (0.0, 0.0) & & 11 & 8 & 0.1 (0.0, 0.2) \\
+    1 & 12 & 0.0 (0.0, 0.0) & & 4 & 11 & 0.0 (0.0, 0.0) & & 8 & 12 & 0.5 (-1.0, 1.7) \\
+    12 & 1 & 0.0 (0.0, 0.0) & & 11 & 4 & 0.0 (0.0, 0.0) & & 12 & 8 & 0.2 (-0.4, 0.8) \\
+    1 & 13 & 0.1 (0.0, 0.4) & & 4 & 12 & 0.0 (0.0, 0.0) & & 8 & 13 & 0.0 (-0.0, 0.0) \\
+    13 & 1 & 0.0 (0.0, 0.0) & & 12 & 4 & 0.0 (0.0, 0.0) & & 13 & 8 & 0.0 (-0.0, 0.0) \\
+    1 & 14 & 0.0 (0.0, 0.0) & & 4 & 13 & 0.0 (0.0, 0.0) & & 8 & 14 & 0.0 (0.0, 0.0) \\
+    14 & 1 & 0.0 (0.0, 0.0) & & 13 & 4 & 0.0 (0.0, 0.0) & & 14 & 8 & 0.0 (0.0, 0.0) \\
+    1 & 15 & 0.0 (0.0, 0.0) & & 4 & 14 & 0.0 (0.0, 0.0) & & 8 & 15 & 0.0 (0.0, 0.0) \\
+    15 & 1 & 0.0 (0.0, 0.0) & & 14 & 4 & 0.0 (0.0, 0.0) & & 15 & 8 & 0.0 (0.0, 0.0) \\
+    2 & 3 & 5.4 (0.2, 16.8) & & 4 & 15 & 0.0 (0.0, 0.0) & & 9 & 10 & 0.2 (0.0, 0.8) \\
+    3 & 2 & 12.0 (1.6, 32.2) & & 15 & 4 & 0.0 (0.0, 0.0) & & 10 & 9 & 0.0 (0.0, 0.2) \\
+    2 & 4 & 0.0 (0.0, 0.0) & & 5 & 6 & 5.3 (1.5, 11.4) & & 9 & 11 & 0.0 (0.0, 0.0) \\
+    4 & 2 & 0.0 (0.0, 0.0) & & 6 & 5 & 25.8 (4.5, 63.3) & & 11 & 9 & 0.0 (0.0, 0.0) \\
+    2 & 5 & 0.0 (0.0, 0.0) & & 5 & 7 & 10.9 (5.7, 18.2) & & 9 & 12 & 0.0 (0.0, 0.0) \\
+    5 & 2 & 0.0 (0.0, 0.0) & & 7 & 5 & 15.0 (6.8, 27.1) & & 12 & 9 & 0.0 (0.0, 0.0) \\
+    2 & 6 & 0.0 (0.0, 0.0) & & 5 & 8 & 0.1 (0.0, 0.2) & & 9 & 13 & 0.1 (0.0, 0.5) \\
+    6 & 2 & 0.0 (0.0, 0.0) & & 8 & 5 & 0.2 (0.0, 0.5) & & 13 & 9 & 0.0 (0.0, 0.1) \\
+    2 & 7 & 0.0 (0.0, 0.0) & & 5 & 9 & 0.0 (0.0, 0.0) & & 9 & 14 & 0.0 (0.0, 0.0) \\
+    7 & 2 & 0.0 (0.0, 0.0) & & 9 & 5 & 0.0 (0.0, 0.0) & & 14 & 9 & 0.0 (0.0, 0.0) \\
+    2 & 8 & 0.0 (0.0, 0.0) & & 5 & 10 & 0.0 (0.0, 0.0) & & 9 & 15 & 0.0 (0.0, 0.0) \\
+    8 & 2 & 0.0 (0.0, 0.0) & & 10 & 5 & 0.0 (0.0, 0.0) & & 15 & 9 & 0.0 (0.0, 0.0) \\
+    2 & 9 & 0.1 (0.0, 0.5) & & 5 & 11 & 0.1 (0.1, 0.3) & & 10 & 11 & 1.0 (-0.1, 4.5) \\
+    9 & 2 & 0.4 (0.0, 1.3) & & 11 & 5 & 0.1 (0.0, 0.2) & & 11 & 10 & 0.7 (-0.1, 2.9) \\
+    2 & 10 & 0.0 (0.0, 0.2) & & 5 & 12 & 0.0 (0.0, 0.0) & & 10 & 12 & 10.2 (2.8, 22.5) \\
+    10 & 2 & 0.0 (0.0, 0.1) & & 12 & 5 & 0.0 (0.0, 0.0) & & 12 & 10 & 7.1 (1.8, 16.7) \\
+    2 & 11 & 0.0 (0.0, 0.0) & & 5 & 13 & 0.0 (-0.0, 0.0) & & 10 & 13 & 0.0 (-0.0, 0.0) \\
+    11 & 2 & 0.0 (0.0, 0.0) & & 13 & 5 & 0.0 (-0.0, 0.0) & & 13 & 10 & 0.0 (-0.0, 0.0) \\
+    2 & 12 & 0.0 (0.0, 0.0) & & 5 & 14 & 0.0 (-0.0, 0.0) & & 10 & 14 & 0.1 (0.0, 0.2) \\
+    12 & 2 & 0.0 (0.0, 0.0) & & 14 & 5 & 0.0 (-0.0, 0.0) & & 14 & 10 & 0.0 (0.0, 0.2) \\
+    2 & 13 & 0.0 (0.0, 0.1) & & 5 & 15 & 0.0 (0.0, 0.0) & & 10 & 15 & 0.0 (0.0, 0.0) \\
+    13 & 2 & 0.0 (0.0, 0.1) & & 15 & 5 & 0.0 (0.0, 0.0) & & 15 & 10 & 0.0 (0.0, 0.0) \\
+    2 & 14 & 0.0 (0.0, 0.0) & & 6 & 7 & 7.2 (0.1, 23.1) & & 11 & 12 & 10.8 (4.8, 19.5) \\
+    14 & 2 & 0.0 (0.0, 0.0) & & 7 & 6 & 2.0 (0.0, 6.2) & & 12 & 11 & 11.1 (3.5, 23.6) \\
+    2 & 15 & 0.0 (0.0, 0.0) & & 6 & 8 & 0.1 (-0.0, 0.2) & & 11 & 13 & 8.2 (3.0, 16.1) \\
+    15 & 2 & 0.0 (0.0, 0.0) & & 8 & 6 & 0.0 (-0.0, 0.1) & & 13 & 11 & 9.4 (2.3, 21.5) \\
+    3 & 4 & 0.0 (0.0, 0.0) & & 6 & 9 & 0.0 (0.0, 0.0) & & 11 & 14 & 7.4 (1.9, 16.4) \\
+    4 & 3 & 0.0 (0.0, 0.0) & & 9 & 6 & 0.0 (0.0, 0.0) & & 14 & 11 & 10.5 (2.1, 25.6) \\
+    3 & 5 & 0.0 (0.0, 0.0) & & 6 & 10 & 0.0 (-0.0, 0.0) & & 11 & 15 & 0.1 (0.0, 0.2) \\
+    5 & 3 & 0.0 (0.0, 0.0) & & 10 & 6 & 0.0 (0.0, 0.0) & & 15 & 11 & 0.1 (0.0, 0.2) \\
+    3 & 6 & 0.0 (0.0, 0.0) & & 6 & 11 & 2.5 (-0.1, 10.9) & & 12 & 13 & 0.2 (0.1, 0.6) \\
+    6 & 3 & 0.0 (0.0, 0.0) & & 11 & 6 & 0.4 (-0.0, 1.9) & & 13 & 12 & 0.2 (0.1, 0.7) \\
+    3 & 7 & 0.0 (-0.0, 0.1) & & 6 & 12 & 0.0 (-0.0, 0.1) & & 12 & 14 & 4.3 (0.4, 12.9) \\
+    7 & 3 & 0.0 (0.0, 0.0) & & 12 & 6 & 0.0 (-0.0, 0.0) & & 14 & 12 & 5.8 (0.6, 16.2) \\
+    3 & 8 & 0.2 (-0.9, 4.4) & & 6 & 13 & 0.0 (-0.0, 0.1) & & 12 & 15 & 0.0 (0.0, 0.1) \\
+    8 & 3 & 0.1 (-0.6, 2.4) & & 13 & 6 & 0.0 (-0.0, 0.0) & & 15 & 12 & 0.0 (0.0, 0.1) \\
+    3 & 9 & 21.8 (6.3, 48.2) & & 6 & 14 & 0.0 (-0.0, 0.1) & & 13 & 14 & 24.8 (7.0, 54.6) \\
+    9 & 3 & 31.5 (6.5, 72.6) & & 14 & 6 & 0.0 (-0.0, 0.0) & & 14 & 13 & 30.3 (10.6, 64.7) \\
+    3 & 10 & 5.9 (0.3, 19.7) & & 6 & 15 & 0.0 (0.0, 0.0) & & 13 & 15 & 2.3 (-0.4, 9.4) \\
+    10 & 3 & 2.0 (0.0, 8.5) & & 15 & 6 & 0.0 (0.0, 0.0) & & 15 & 13 & 1.5 (-0.3, 8.6) \\
+    3 & 11 & 0.0 (0.0, 0.1) & & 7 & 8 & 7.9 (3.3, 14.4) & & 14 & 15 & 6.4 (0.9, 15.5) \\
+    11 & 3 & 0.0 (0.0, 0.0) & & 8 & 7 & 11.6 (2.8, 27.8) & & 15 & 14 & 3.8 (0.0, 15.4) \\
+    \bottomrule
+\end{xltabular}
+% \end{table}
+
+\clearpage
+\begin{table}[h!]
  \centering
- \mycaption{Stationary distribution}
+ \caption[Stationary distribution of base case HMM]{\textsc{Stationary distribution of base case HMM}. The model was estimated with four independent MCMC chains with \num{4000} posterior samples, taken after removing \num{1000} burn-in samples. Values reported are the mean and \SI{95}{\percent} credible intervals.}
  \label{tab:base_case_stat_dist}
- \begin{tabular}{|rl|}
- \hline
- $i$ & $\tilde{\pi_{i}}$ \\
- \hline\hline
+ \begin{tabular}{lr}
+ \toprule
+ $i$ & $\widetilde{\pi}_{i}\ (\si{\percent})$ \\
+ \midrule
  1 & 3.2 (0.0, 44.3) \\
  2 & 10.3 (0.1, 73.4) \\
  3 & 2.5 (0.1, 12.9) \\
@@ -1031,103 +1029,103 @@ and is plotted as a function of the stationary distribution of the observed stat
  13 & 7.9 (0.9, 19.9) \\
  14 & 6.3 (0.7, 15.3) \\
  15 & 23.4 (1.6, 91.3) \\
- \hline
+ \bottomrule
  \end{tabular}
 \end{table}
 
-\subsection{Sensitivity 2}
+% \subsection{Sensitivity 2}
 
-\begin{table}
+\begin{table}[h!]
  \centering
- \mycaption{Sensitivity 2 Gelman Rubin}
- \begin{tabular}{|rrl||rrl||rrl|}
+ \caption[Convergence statistics for sensitivity 2 HMM]{\textsc{$\hat{R}$ statistics for sensitivity 2 HMM}. The model was estimated with four independent MCMC chains with \num{4000} posterior samples, taken after removing \num{1000} burn-in samples. Only the non-zero transition matrix elements are shown.}
+ \begin{tabular}{llrp{0.2cm}llrp{0.2cm}llr}
  \hline
- $i$ & $j$ & $\hat{R}$ & $i$ & $j$ & $\hat{R}$ & $i$ & $j$ & $\hat{R}$ \\
+ $i$ & $j$ & $\hat{R}$ & &  $i$ & $j$ & $\hat{R}$ & & $i$ & $j$ & $\hat{R}$ \\
  \hline\hline
- 1 & 1 & 1.01 & 4 & 13 & 1.00 & 9 & 6 & 1.06 \\
- 1 & 2 & 1.03 & 5 & 1 & 1.01 & 9 & 7 & 1.00 \\
- 1 & 3 & 1.00 & 5 & 2 & 1.01 & 9 & 8 & 1.01 \\
- 1 & 4 & 1.00 & 5 & 3 & 1.02 & 9 & 9 & 1.01 \\
- 1 & 5 & 1.00 & 5 & 5 & 1.13 & 9 & 10 & 1.01 \\
- 1 & 6 & 1.00 & 5 & 12 & 1.14 & 9 & 11 & 1.02 \\
- 1 & 7 & 1.00 & 6 & 1 & 1.01 & 9 & 13 & 1.01 \\
- 1 & 8 & 1.00 & 6 & 2 & 1.00 & 10 & 1 & 1.00 \\
- 1 & 9 & 1.00 & 6 & 3 & 1.01 & 10 & 2 & 1.00 \\
- 1 & 10 & 1.00 & 6 & 4 & 1.02 & 10 & 4 & 1.00 \\
- 1 & 11 & 1.00 & 6 & 6 & 1.07 & 10 & 6 & 1.17 \\
- 1 & 12 & 1.00 & 6 & 7 & 1.03 & 10 & 7 & 1.17 \\
- 2 & 1 & 1.02 & 6 & 8 & 1.01 & 10 & 8 & 1.06 \\
- 2 & 2 & 1.12 & 6 & 9 & 1.07 & 10 & 9 & 1.01 \\
- 2 & 3 & 1.10 & 6 & 10 & 1.04 & 10 & 10 & 1.01 \\
- 2 & 4 & 1.00 & 6 & 11 & 1.19 & 10 & 11 & 1.16 \\
- 2 & 5 & 1.00 & 6 & 13 & 1.01 & 10 & 13 & 1.00 \\
- 2 & 6 & 1.04 & 7 & 1 & 1.00 & 11 & 1 & 1.00 \\
- 2 & 7 & 1.11 & 7 & 2 & 1.10 & 11 & 2 & 1.00 \\
- 2 & 8 & 1.00 & 7 & 3 & 1.00 & 11 & 3 & 1.00 \\
- 2 & 9 & 1.00 & 7 & 4 & 1.00 & 11 & 4 & 1.00 \\
- 2 & 10 & 1.00 & 7 & 6 & 1.21 & 11 & 6 & 1.28 \\
- 2 & 11 & 1.00 & 7 & 7 & 1.04 & 11 & 7 & 1.30 \\
- 2 & 12 & 1.04 & 7 & 8 & 1.00 & 11 & 8 & 1.01 \\
- 3 & 1 & 1.00 & 7 & 9 & 1.00 & 11 & 9 & 1.02 \\
- 3 & 2 & 1.04 & 7 & 10 & 1.16 & 11 & 10 & 1.15 \\
- 3 & 3 & 1.05 & 7 & 11 & 1.28 & 11 & 11 & 1.03 \\
- 3 & 5 & 1.08 & 7 & 13 & 1.00 & 11 & 13 & 1.00 \\
- 3 & 6 & 1.00 & 8 & 1 & 1.00 & 12 & 1 & 1.01 \\
- 3 & 7 & 1.00 & 8 & 2 & 1.00 & 12 & 2 & 1.08 \\
- 3 & 11 & 1.00 & 8 & 4 & 1.00 & 12 & 3 & 1.18 \\
- 3 & 12 & 1.11 & 8 & 6 & 1.00 & 12 & 5 & 1.13 \\
- 4 & 1 & 1.00 & 8 & 7 & 1.00 & 12 & 12 & 1.17 \\
- 4 & 2 & 1.00 & 8 & 8 & 1.03 & 13 & 4 & 1.00 \\
- 4 & 4 & 1.00 & 8 & 9 & 1.03 & 13 & 6 & 1.00 \\
- 4 & 6 & 1.02 & 8 & 10 & 1.05 & 13 & 7 & 1.00 \\
- 4 & 7 & 1.00 & 8 & 11 & 1.02 & 13 & 8 & 1.00 \\
- 4 & 8 & 1.00 & 8 & 13 & 1.00 & 13 & 9 & 1.01 \\
- 4 & 9 & 1.00 & 9 & 1 & 1.00 & 13 & 10 & 1.00 \\
- 4 & 10 & 1.00 & 9 & 2 & 1.00 & 13 & 11 & 1.00 \\
- 4 & 11 & 1.00 & 9 & 4 & 1.00 & 13 & 13 & 1.01 \\
+ 1 & 1 & 1.01  & & 4 & 13 & 1.00 & & 9 & 6 & 1.06 \\
+ 1 & 2 & 1.03  & & 5 & 1 & 1.01 &  &9 & 7 & 1.00 \\
+ 1 & 3 & 1.00  & & 5 & 2 & 1.01 &  &9 & 8 & 1.01 \\
+ 1 & 4 & 1.00  & & 5 & 3 & 1.02 &  &9 & 9 & 1.01 \\
+ 1 & 5 & 1.00  & & 5 & 5 & 1.13 &  &9 & 10 & 1.01 \\
+ 1 & 6 & 1.00  & & 5 & 12 & 1.14 & & 9 & 11 & 1.02 \\
+ 1 & 7 & 1.00  & & 6 & 1 & 1.01 &  &9 & 13 & 1.01 \\
+ 1 & 8 & 1.00  & & 6 & 2 & 1.00 &  &10 & 1 & 1.00 \\
+ 1 & 9 & 1.00  & & 6 & 3 & 1.01 &  &10 & 2 & 1.00 \\
+ 1 & 10 & 1.00 &  & 6 & 4 & 1.02 & & 10 & 4 & 1.00 \\
+ 1 & 11 & 1.00 &  & 6 & 6 & 1.07 & & 10 & 6 & 1.17 \\
+ 1 & 12 & 1.00 &  & 6 & 7 & 1.03 & & 10 & 7 & 1.17 \\
+ 2 & 1 & 1.02  & & 6 & 8 & 1.01 &  &10 & 8 & 1.06 \\
+ 2 & 2 & 1.12  & & 6 & 9 & 1.07 &  &10 & 9 & 1.01 \\
+ 2 & 3 & 1.10  & & 6 & 10 & 1.04 & & 10 & 10 & 1.01 \\
+ 2 & 4 & 1.00  & & 6 & 11 & 1.19 & & 10 & 11 & 1.16 \\
+ 2 & 5 & 1.00  & & 6 & 13 & 1.01 & & 10 & 13 & 1.00 \\
+ 2 & 6 & 1.04  & & 7 & 1 & 1.00 &  &11 & 1 & 1.00 \\
+ 2 & 7 & 1.11  & & 7 & 2 & 1.10 &  &11 & 2 & 1.00 \\
+ 2 & 8 & 1.00  & & 7 & 3 & 1.00 &  &11 & 3 & 1.00 \\
+ 2 & 9 & 1.00  & & 7 & 4 & 1.00 &  &11 & 4 & 1.00 \\
+ 2 & 10 & 1.00 &  & 7 & 6 & 1.21 & & 11 & 6 & 1.28 \\
+ 2 & 11 & 1.00 &  & 7 & 7 & 1.04 & & 11 & 7 & 1.30 \\
+ 2 & 12 & 1.04 &  & 7 & 8 & 1.00 & & 11 & 8 & 1.01 \\
+ 3 & 1 & 1.00  & & 7 & 9 & 1.00 &  &11 & 9 & 1.02 \\
+ 3 & 2 & 1.04  & & 7 & 10 & 1.16 & & 11 & 10 & 1.15 \\
+ 3 & 3 & 1.05  & & 7 & 11 & 1.28 & & 11 & 11 & 1.03 \\
+ 3 & 5 & 1.08  & & 7 & 13 & 1.00 & & 11 & 13 & 1.00 \\
+ 3 & 6 & 1.00  & & 8 & 1 & 1.00 &  &12 & 1 & 1.01 \\
+ 3 & 7 & 1.00  & & 8 & 2 & 1.00 &  &12 & 2 & 1.08 \\
+ 3 & 11 & 1.00 &  & 8 & 4 & 1.00 & & 12 & 3 & 1.18 \\
+ 3 & 12 & 1.11 &  & 8 & 6 & 1.00 & & 12 & 5 & 1.13 \\
+ 4 & 1 & 1.00  & & 8 & 7 & 1.00 &  &12 & 12 & 1.17 \\
+ 4 & 2 & 1.00  & & 8 & 8 & 1.03 &  &13 & 4 & 1.00 \\
+ 4 & 4 & 1.00  & & 8 & 9 & 1.03 &  &13 & 6 & 1.00 \\
+ 4 & 6 & 1.02  & & 8 & 10 & 1.05 & & 13 & 7 & 1.00 \\
+ 4 & 7 & 1.00  & & 8 & 11 & 1.02 & & 13 & 8 & 1.00 \\
+ 4 & 8 & 1.00  & & 8 & 13 & 1.00 & & 13 & 9 & 1.01 \\
+ 4 & 9 & 1.00  & & 9 & 1 & 1.00 &  &13 & 10 & 1.00 \\
+ 4 & 10 & 1.00 &  & 9 & 2 & 1.00 & & 13 & 11 & 1.00 \\
+ 4 & 11 & 1.00 &  & 9 & 4 & 1.00 & & 13 & 13 & 1.01 \\
  \bottomrule
  \end{tabular}
  \label{tab:sens_2_gelman_rubin}
 \end{table}
 
-\begin{table}
+\begin{table}[h!]
  \centering
- \mycaption{Sensitivity 2 Rate matrix}
+ \caption[Rate matrix for sensitivity 2 HMM]{\textsc{Rate matrix for sensitivity 2 HMM}. The model was estimated with four independent MCMC chains with \num{4000} posterior samples, taken after removing \num{1000} burn-in samples. Values reported are the mean and \SI{95}{\percent} credible intervals.}
  \label{tab:sens_2_rate_matrix}
- \begin{tabular}{lllllllll}
+ \begin{tabular}{llrp{0.2cm}llrp{0.2cm}llr}
  \toprule
- $i$ & $j$ &  $k_{ij}$ & $i$ & $j$ &  $k_{ij}$ & $i$ & $j$ &  $k_{ij}$ \\
+ $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ & & $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ & & $i$ & $j$ &  $k_{ij}\ (\si{\per\micro\second})$ \\
  \midrule
- 1 & 2 & 40.79 (6.11, 109.70) & 7 & 5 & 9.15 (1.83, 20.66) & 8 & 10 & 2.79 (-0.29, 19.49) \\
- 2 & 1 & 20.65 (3.55, 53.95) & 6 & 8 & 5.84 (0.12, 23.07) & 10 & 8 & 0.61 (-0.06, 4.84) \\
- 1 & 4 & 2.89 (-0.17, 13.81) & 8 & 6 & 1.86 (0.01, 10.34) & 9 & 10 & 18.36 (6.40, 35.54) \\
- 4 & 1 & 6.79 (-0.44, 25.34) & 6 & 10 & 0.32 (0.03, 1.10) & 10 & 9 & 12.50 (4.16, 24.47) \\
- 2 & 3 & 6.44 (0.18, 21.01) & 10 & 6 & 0.02 (0.00, 0.08) & 9 & 11 & 2.04 (-0.59, 9.87) \\
- 3 & 2 & 28.28 (5.97, 65.30) & 6 & 12 & 12.49 (1.21, 38.17) & 11 & 9 & 1.72 (-0.49, 8.72) \\
- 2 & 4 & 1.46 (-1.09, 7.85) & 12 & 6 & 0.58 (0.01, 2.49) & 9 & 12 & 1.57 (-0.99, 10.84) \\
- 4 & 2 & 6.60 (-4.25, 27.34) & 7 & 8 & 5.07 (0.70, 14.02) & 12 & 9 & 0.83 (-0.53, 5.58) \\
- 3 & 4 & 83.47 (16.22, 169.61) & 8 & 7 & 9.85 (0.98, 30.24) & 9 & 13 & 0.18 (-0.87, 0.72) \\
- 4 & 3 & 77.98 (25.08, 149.90) & 7 & 9 & 18.49 (6.72, 34.04) & 13 & 9 & 0.24 (-1.15, 0.96) \\
- 3 & 6 & 11.26 (0.77, 37.39) & 9 & 7 & 9.53 (2.32, 21.49) & 10 & 12 & 20.12 (3.23, 49.00) \\
- 6 & 3 & 10.95 (0.21, 43.49) & 7 & 10 & 0.14 (-3.21, 1.05) & 12 & 10 & 16.32 (2.69, 37.19) \\
- 3 & 10 & 10.27 (0.69, 31.51) & 10 & 7 & 0.03 (-1.26, 0.41) & 10 & 13 & 16.03 (6.09, 31.32) \\
- 10 & 3 & 0.61 (0.00, 3.35) & 7 & 11 & 26.59 (12.77, 45.31) & 13 & 10 & 30.40 (8.24, 61.50) \\
- 3 & 13 & 0.85 (-0.59, 10.02) & 11 & 7 & 11.17 (2.90, 25.71) & 11 & 12 & 8.24 (1.37, 21.22) \\
- 13 & 3 & 0.09 (-0.11, 1.08) & 7 & 12 & 9.14 (2.53, 19.37) & 12 & 11 & 5.53 (1.14, 14.25) \\
- 4 & 13 & 0.06 (-0.07, 0.72) & 12 & 7 & 2.59 (0.50, 6.34) & 12 & 13 & 2.31 (-0.27, 7.07) \\
- 13 & 4 & 0.01 (-0.01, 0.09) & 8 & 9 & 5.44 (-0.09, 26.09) & 13 & 12 & 5.46 (-0.55, 17.99) \\
- 5 & 7 & 1.20 (0.32, 2.58) & 9 & 8 & 1.73 (-0.02, 8.58) & - & - &   - \\
+ 1 & 2 & 40.79 (6.11, 109.70) & & 7 & 5 & 9.15 (1.83, 20.66) & & 8 & 10 & 2.79 (-0.29, 19.49) \\
+ 2 & 1 & 20.65 (3.55, 53.95) & & 6 & 8 & 5.84 (0.12, 23.07) & & 10 & 8 & 0.61 (-0.06, 4.84) \\
+ 1 & 4 & 2.89 (-0.17, 13.81) & & 8 & 6 & 1.86 (0.01, 10.34) & & 9 & 10 & 18.36 (6.40, 35.54) \\
+ 4 & 1 & 6.79 (-0.44, 25.34) & & 6 & 10 & 0.32 (0.03, 1.10) & & 10 & 9 & 12.50 (4.16, 24.47) \\
+ 2 & 3 & 6.44 (0.18, 21.01) & & 10 & 6 & 0.02 (0.00, 0.08) & & 9 & 11 & 2.04 (-0.59, 9.87) \\
+ 3 & 2 & 28.28 (5.97, 65.30) & & 6 & 12 & 12.49 (1.21, 38.17) & & 11 & 9 & 1.72 (-0.49, 8.72) \\
+ 2 & 4 & 1.46 (-1.09, 7.85) & & 12 & 6 & 0.58 (0.01, 2.49) & & 9 & 12 & 1.57 (-0.99, 10.84) \\
+ 4 & 2 & 6.60 (-4.25, 27.34) & & 7 & 8 & 5.07 (0.70, 14.02) & & 12 & 9 & 0.83 (-0.53, 5.58) \\
+ 3 & 4 & 83.47 (16.22, 169.61) & & 8 & 7 & 9.85 (0.98, 30.24) & & 9 & 13 & 0.18 (-0.87, 0.72) \\
+ 4 & 3 & 77.98 (25.08, 149.90) & & 7 & 9 & 18.49 (6.72, 34.04) & & 13 & 9 & 0.24 (-1.15, 0.96) \\
+ 3 & 6 & 11.26 (0.77, 37.39) & & 9 & 7 & 9.53 (2.32, 21.49) & & 10 & 12 & 20.12 (3.23, 49.00) \\
+ 6 & 3 & 10.95 (0.21, 43.49) & & 7 & 10 & 0.14 (-3.21, 1.05) & & 12 & 10 & 16.32 (2.69, 37.19) \\
+ 3 & 10 & 10.27 (0.69, 31.51) & & 10 & 7 & 0.03 (-1.26, 0.41) & & 10 & 13 & 16.03 (6.09, 31.32) \\
+ 10 & 3 & 0.61 (0.00, 3.35) & & 7 & 11 & 26.59 (12.77, 45.31) & & 13 & 10 & 30.40 (8.24, 61.50) \\
+ 3 & 13 & 0.85 (-0.59, 10.02) & & 11 & 7 & 11.17 (2.90, 25.71) & & 11 & 12 & 8.24 (1.37, 21.22) \\
+ 13 & 3 & 0.09 (-0.11, 1.08) & & 7 & 12 & 9.14 (2.53, 19.37) & & 12 & 11 & 5.53 (1.14, 14.25) \\
+ 4 & 13 & 0.06 (-0.07, 0.72) & & 12 & 7 & 2.59 (0.50, 6.34) & & 12 & 13 & 2.31 (-0.27, 7.07) \\
+ 13 & 4 & 0.01 (-0.01, 0.09) & & 8 & 9 & 5.44 (-0.09, 26.09) & & 13 & 12 & 5.46 (-0.55, 17.99) \\
+ 5 & 7 & 1.20 (0.32, 2.58) & & 9 & 8 & 1.73 (-0.02, 8.58) & & -- & -- &   -- \\
  \hline
  \end{tabular}
 \end{table}
 
-\begin{table}
+\begin{table}[h!]
  \centering
- \mycaption{Sensitivity 2 stationary distribution}
+ \caption[Stationary distribution of sensitivity 2 HMM]{\textsc{Stationary distribution of sensitivity 2 HMM}. The model was estimated with four independent MCMC chains with \num{4000} posterior samples, taken after removing \num{1000} burn-in samples. Values reported are the mean and \SI{95}{\percent} credible intervals.}
  \label{tab:sens_2_stat_dist}
- \begin{tabular}{rl}
+ \begin{tabular}{lr}
  \toprule
- $i$ & $\tilde{\pi_{i}}$ \\
+ $i$ & $\widetilde{\pi}_{i}\ (\si{\percent})$ \\
  \midrule
  1 & 3.43 (0.02, 29.98) \\
  2 & 5.85 (0.04, 43.58) \\
@@ -1146,12 +1144,11 @@ and is plotted as a function of the stationary distribution of the observed stat
  \end{tabular}
 \end{table}
 
-\begin{figure}
+\begin{figure}[h!]
  \centering
- \mycaption{Overlap between sensitivity 2 hidden state 5 and the base case hidden states. }
+ \caption[Comparison of sensitivity 2 hidden state 5 with the base case hidden states]{\textsc{Comparison of sensitivity 2 hidden state $h_{5}$ and the base case hidden states}. Each distribution is a comparison of two hidden states, if the distributions all overlap then the hidden states described the same ensemble of configurations. Each panel compares sensitivity 2 $h_{5}$ with a different base case hidden state, $h_{i}$. The observations which make up the distributions are heavy atom RMSD between unique pairs of configurations, one from each hidden state. Black dashed line compares sensitivity 2 $h_{5}$ with itself (S2-S2), blue solid line compares each base case hidden state with itself (BC-BC). Yellow solid lines compare sensitivity 2 $h_{5}$ with each base case hidden state (BC-S2).}
  \label{fig:sens_2_overlap}
  \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/sensitivity_2_5_overlap.png}
-
 \end{figure}
 
 

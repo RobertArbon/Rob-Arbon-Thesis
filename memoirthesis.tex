@@ -215,27 +215,18 @@
 {\box0\lower0.4pt\box2}}
 %
 % My caption style
-
-\newcommand{\mycaption}[2][\@empty]{
-	\captionnamefont{\scshape} 
-	\changecaptionwidth
-	\captionwidth{0.9\linewidth}
-	\captiondelim{.\:} 
-	\indentcaption{0.75cm}
-	\captionstyle[\centering]{}
-	\setlength{\belowcaptionskip}{10pt}
-	\ifx \@empty#1 \caption{#2}\else \caption[#1]{#2}
-}
-%
-% My subcaption style
-\newcommand{\mysubcaption}[2][\@empty]{
-	\subcaptionsize{\small}
-	\hangsubcaption
-	\subcaptionlabelfont{\rmfamily}
-	\sidecapstyle{\raggedright}
-	\setlength{\belowcaptionskip}{10pt}
-	\ifx \@empty#1 \subcaption{#2}\else \subcaption[#1]{#2}
-}
+\usepackage{caption}
+ \captionsetup {
+ format={hang},
+ justification={justified},
+ indention=-1.5cm,
+ width={0.9\textwidth},
+ labelfont ={sc},
+ font = sf,
+ labelsep ={colon}, %newline,
+ tableposition =top,
+ skip =5pt}
+ 
 %
 % Code 
 \usepackage{listings}
@@ -338,19 +329,19 @@
 % subdirectories.
 \mainmatter
 
-% \import{chapters/introduction/}{text.tex}
-% \clearemptydoublepage
-% \import{chapters/theory/}{text.tex}
-% \clearemptydoublepage
-% \import{chapters/water_hopping/}{text.tex}
-% \clearemptydoublepage
-% \import{chapters/msm_optimization/}{text.tex}
-% \clearemptydoublepage
-% \import{chapters/hmm_selection/}{text.tex}
-% \clearemptydoublepage
-% \import{chapters/aadh/}{text.tex}
-% \clearemptydoublepage
-% \import{chapters/conclusions/}{text.tex}
+\import{chapters/introduction/}{text.tex}
+\clearemptydoublepage
+\import{chapters/theory/}{text.tex}
+\clearemptydoublepage
+\import{chapters/water_hopping/}{text.tex}
+\clearemptydoublepage
+\import{chapters/msm_optimization/}{text.tex}
+\clearemptydoublepage
+\import{chapters/hmm_selection/}{text.tex}
+\clearemptydoublepage
+\import{chapters/aadh/}{text.tex}
+\clearemptydoublepage
+\import{chapters/conclusions/}{text.tex}
 
 % And the appendix goes here
 \appendix
@@ -485,3 +476,25 @@
 % \hyphenation{hypo-the-sis}
 % \hyphenation{para-me-ters}
 % \hyphenation{sol-va-bi-li-ty}
+
+ 
+% \newcommand{\mycaption}[2][\@empty]{
+% 	\captionnamefont{\scshape} 
+% 	\changecaptionwidth
+% 	\captionwidth{0.9\linewidth}
+% 	\captiondelim{.\:} 
+% 	\indentcaption{0.75cm}
+% 	\captionstyle[\centering]{}
+% 	\setlength{\belowcaptionskip}{10pt}
+% 	\ifx \@empty#1 \caption{#2}\else \caption[#1]{#2}
+% }
+% %
+% % My subcaption style
+% \newcommand{\mysubcaption}[2][\@empty]{
+% 	\subcaptionsize{\small}
+% 	\hangsubcaption
+% 	\subcaptionlabelfont{\rmfamily}
+% 	\sidecapstyle{\raggedright}
+% 	\setlength{\belowcaptionskip}{10pt}
+% 	\ifx \@empty#1 \subcaption{#2}\else \subcaption[#1]{#2}
+% }
