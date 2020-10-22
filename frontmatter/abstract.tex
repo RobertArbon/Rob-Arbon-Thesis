@@ -13,6 +13,12 @@
 
 \chapter*{Abstract}
 \begin{SingleSpace}
-\initial{H}ere goes the abstract
+\initial{M}arkov models (MMs) are a popular technique for understanding the dynamics of systems which move through ``rough'' potentials \cite{zwanzigDiffusionRoughPotential1988}. In such cases, the system is well approximated as transitioning between discrete states with a set state-to-state probability, independent of its history. Choosing how these states relate to the coordinates of the system (the discretization) and how these are partitioned into metastable sets (the coarse graining) is of central importance to the technique. This thesis contributes to methods for making these choices in efficient and reproducible ways and applies them to two systems: water diffusion and enzyme dynamics.
+ 
+The simple, but important, system of water diffusing through viscous aerosol particles is used to demonstrate that simply discretizing Cartesian coordinates and coarse-graining according to established heuristics can lead to mechanistic insights. With experimentally verified simulations an explanation of the divergence of water diffusion from typical Stoke-Einstein behaviour are presented.
+ 
+In contrast, the approach for constructing MMs for large biomolecules typically uses a complex processing pipeline, involving many modelling choices (hyperparameters) to create discrete representations of the dynamics. This thesis demonstrates Bayesian hyperparameter optimisation and response surface methods, common within the machine learning community, to both choose hyperparameters in an efficient and reproducible way, and to describe how these hyperparameters affect model quality. Statistical model selection techniques for selecting the number of metastable states in hidden Markov model coarse-grained representations are evaluated. Theoretical and practical arguments are made in favour of the integrated complete-data likelihood criterion (ICL). A simulation of AADH, an enzyme at the heart of the debate on the role of dynamics in catalysis and tunnelling, was created and critically evaluated. Bayesian optimised discretizations and ICL selected HMMs are used to describe the conformational landscape of AADH and the relevance for understanding its kinetics are discussed.
+ 
+
 \end{SingleSpace}
 \clearpage
