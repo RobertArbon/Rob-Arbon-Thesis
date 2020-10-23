@@ -496,14 +496,14 @@ and is plotted as a function of the stationary distribution of the observed stat
 
 % \subsection{Estimating the Markov lag-time and number of metastable states}
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
  \centering
  \caption[The ratio of successive eigenvalues and implied timescales of the sensitivity reference MSM]{\textsc{The ratio of successive eigenvalues and implied timescales of the sensitivity reference MSM}. Panel (a) shows the ratio of successive eigenvalues and panel (b) the implied timescales the sensitivity case of the reference MSM with: $\tau(\textrm{MSM})=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{10}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=8$ TICA components retained, and $n=316$ microstates. Parameters were estimated using MCMC with \num{1000} posterior samples, the blue dots and error bars are the mean and \SI{95}{\percent} credible intervals respectively.}
  \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/timescale_ratios_D_sens.png}
  \label{fig:ts_ratios_d_sens}
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}[ht!]
  \centering
     \caption[The implied timescales and VAMP-2 scores of the sensitivity reference MSM]{\textsc{The implied timescales and VAMP-2 scores of the reference MSM}. Panels (a) and (b) show the implied timescales, and panels (c) and (d) shows the relative VAMP-2 scores for the reference MSM with: $\tau(\textrm{MSM})=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{10}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=10$ TICA components retained, and $n=316$ microstates. Panel (a) shows the first five implied timescales for $\tau(\mathrm{MSM})=\SIrange[range-phrase=--]{0.1}{5}{\nano\second}$, panel (b) shows the first five implied timescales for $\tau(\mathrm{MSM}) = \SIrange[range-phrase]{0.1}{50}{\nano\second}$. The solid lines and coloured shaded areas are the mean and \SI{95}{\percent} credible intervals respectively, estimated using MCMC with \num{500} posterior samples. The grey shaded area is the region for which the implied timescales are smaller than the lag time. Panel (c) and (d) show the VAMP-2 scores, scored on the first \numrange{2}{5} eigenvalues for the same ranges. The VAMP-2 scores are indexed to their value at $\tau(\mathrm{MSM})=\SI{0.1}{\nano\second}$. The colour coding is consistent between the implied timescale plots ((a) and (b)) and VAMP-2 plots ((c) and (d)). e.g. the blue line in (c) and (d) is the VAMP-2 score with two eigenvalues ($r=2$) while in (a) and (b) blue is the second implied timescale, $t_{2}$.}
  \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/implied_timescales_D_sens.png}
@@ -513,7 +513,7 @@ and is plotted as a function of the stationary distribution of the observed stat
 % \subsection{Response surface}\label{app:msm_rsm}
 
 % \subsubsection{GP model selection metrics}
-\begin{table}[h!]
+\begin{table}[ht!]
  \centering
  \caption[Gaussian process model selection metrics for the response surface of AADH using all randomly sampled hyperparameter trials]{\textsc{Gaussian process model selection metrics for the response surface of AADH using all randomly sampled hyperparameter trials, $\mathcal{D}_{361}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_all_data}
@@ -559,7 +559,7 @@ and is plotted as a function of the stationary distribution of the observed stat
 
 
 
-\begin{table}[h!]
+\begin{table}[ht!]
  \centering
  \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 1]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 1, $\mathcal{D}^{1}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_1}
@@ -603,7 +603,7 @@ and is plotted as a function of the stationary distribution of the observed stat
  \end{tabularx}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[ht!]
  \centering
  \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 2]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 2, $\mathcal{D}^{2}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_2}
@@ -648,7 +648,7 @@ and is plotted as a function of the stationary distribution of the observed stat
 \end{table}
 
 
-\begin{table}[h!]
+\begin{table}[ht!]
  \centering
  \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 3]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 3, $\mathcal{D}^{3}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_3}
@@ -693,7 +693,7 @@ and is plotted as a function of the stationary distribution of the observed stat
 \end{table}
 
 
-\begin{table}[h!]
+\begin{table}[ht!]
  \centering
  \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 4]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 4, $\mathcal{D}^{4}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_4}
@@ -737,7 +737,7 @@ and is plotted as a function of the stationary distribution of the observed stat
  \end{tabularx}
 \end{table}
 
-\begin{table}[h!]
+\begin{table}[ht!]
  \centering
  \caption[Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 5]{\textsc{Gaussian process model selection metrics for the response surface of AADH using hyperparameter trial data subset 5, $\mathcal{D}^{5}_{100}$}. The mean standardised log loss (MSLL) and standardised mean square error (SMSE) where calculated using 10 fold cross validation. Only those models which had both $\mathrm{MSLL}<0$ and $\mathrm{SMSE}<1$ were ranked. The total rank is calculated as rank of $\sqrt{R_{\mathrm{MSLL}}^{2}+R_{\mathrm{SMSE}}^2}$. Where the overall rank was tied, the first model appearing in the table was ranked higher.}
  \label{tab:aadh_rsm_metrics_iter_5}

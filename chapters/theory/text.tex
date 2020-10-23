@@ -152,10 +152,10 @@ Dimensionality reduction using TICA was introduced for improving MSM constructio
 \begin{equation}\label{eqn:trial_func}
     f(\mathbf{x}) = \sum^{N_{\mathrm{C}}}_{i}a_{i}\chi_{i}(\mathbf{x})
 \end{equation}
-The variational principle for operators with bounded eigenvalues (such as the transfer operator) states that any approximate eigenfunction will have eigenvalues less than the true eigenvalues\cite{nuskeVariationalApproachConformational2017,noeVariationalApproachModeling2013}. So choosing the coefficients $a_{i}$ to maximize the eigenvalues from using equation \ref{eqn:trial_func} will be the closest approximation to the true eigenfunctions that can be achieved with linear combinations of basis functions. Using the method of Lagrange multipliers to maximize the eigenvalues using equation \ref{eqn:trial_func} results in the following generalized eigenvalue equation\cite{nuskeVariationalApproachConformational2017}: \begin{equation}\label{eqn:general_ev_equation}
+The variational principle for operators with bounded eigenvalues (such as the transfer operator) states that any approximate eigenfunction will have eigenvalues less than the true eigenvalues\cite{noeVariationalApproachModeling2013}. So choosing the coefficients $a_{i}$ to maximize the eigenvalues from using equation \ref{eqn:trial_func} will be the closest approximation to the true eigenfunctions that can be achieved with linear combinations of basis functions. Using the method of Lagrange multipliers to maximize the eigenvalues using equation \ref{eqn:trial_func} results in the following generalized eigenvalue equation\cite{nuskeVariationalApproachMolecular2014}: \begin{equation}\label{eqn:general_ev_equation}
     \mathbf{C}\mathbf{a} = \lambda \mathbf{S}\mathbf{a}
 \end{equation}
-Solving this equation requires estimating the matrix elements of $\mathbf{C}$ and $\mathbf{S}$. The elements of $\mathbf{C}$ are the time-lagged correlation functions ($\mathrm{cor}$) between $\chi_{i}$ and $\chi_{j}$\cite{nuskeVariationalApproachConformational2017}:
+Solving this equation requires estimating the matrix elements of $\mathbf{C}$ and $\mathbf{S}$. The elements of $\mathbf{C}$ are the time-lagged correlation functions ($\mathrm{cor}$) between $\chi_{i}$ and $\chi_{j}$\cite{nuskeVariationalApproachMolecular2014}:
 \begin{equation}
     \begin{split}
         C_{ij} =& \operatorname{cor}\left(\chi_{i}, \chi_{j}, \tau\right)\\
@@ -270,7 +270,7 @@ However, using equation \ref{eqn:def_vampr}, will tend to produce overly complex
 
 Two popular techniques for mitigating over-fitting\cite{friedman2001elements} are the bootstrap\cite{efronIntroductionBootstrap1993} and cross-validation, CV\cite{arlotSurveyCrossvalidationProcedures2009}.  The idea of CV is to estimate the model parameters on a subset of the data, the training data $\mathcal{D}^{\mathrm{train}}$, and then evaluate the performance of the parameters on the remaining data $\mathcal{D}^{\mathrm{test}}$\cite{friedman2001elements}. K-fold CV is popular for MSMs\cite{schererVariationalSelectionFeatures2019,mcgibbonVariationalCrossvalidationSlow2015}. In this method, the model is trained on $K-1$ disjoint `folds' (a fold being \sfrac{1}{K} of the total data) while the score is evaluated on the single held out fold. The average score over the $K$ folds is used to evaluate the model. However, many different methods exist\cite{arlotSurveyCrossvalidationProcedures2009} and this work will use 50:50 shuffle split CV, which has been used previously in reference \cite{chenDynamicConformationalLandscape2019,husicOptimizedParameterSelection2016}. It is equivalent to repeated 2-Fold CV with a random permutation of the data in between each evaluation and is described in algorithm \ref{alg:shuffle_split}. 
 
-\begin{algorithm}\label{alg:shuffle_split}
+\begin{algorithm}
 \DontPrintSemicolon
 \SetKwInput{Par}{Parameter}
 \KwData{N independent trajectories: $\mathcal{D}=[\mathbf{s}_{1}, \mathbf{s}_{2}, \ldots, \mathbf{s}_{N}]$}
@@ -287,7 +287,7 @@ Two popular techniques for mitigating over-fitting\cite{friedman2001elements} ar
     score model on test data: $CV^{\mathrm{test}}_{i} = CV_{i}(P^{\mathrm{train}}| \mathcal{D}^{\mathrm{test}})$\;
 }
 \KwResult{Cross-validated score: $\operatorname{MCV}(\theta)=\frac{1}{J}\sum_{i}CV^{\mathrm{test}}(\theta)$}
-\caption{50:50 shuffle split cross-validation}
+\caption{50:50 shuffle split cross-validation.\label{alg:shuffle_split}}
 \end{algorithm}
 It is important to note that for CV to judge the performance of all the hyperparameters, the `estimator of model parameters' must take as its input the \emph{raw} data\cite{friedman2001elements}. For the case of MSMs, the estimator takes the cartesian coordinates, applies TICA, clusters trajectories, and then estimates the transition matrix elements.  
 
@@ -346,7 +346,7 @@ The $g$ eigenvalues and $g-1$ relaxation processes of the HMM will be the coarse
 
 \subsection{HMM estimation}
 
-\begin{algorithm}\label{alg:baum_welch}
+\begin{algorithm}
 \DontPrintSemicolon
 \SetKwInput{Par}{Parameter}
 \KwData{Initial HMM parameters: $\theta_{0} = (\widetilde{\mathbf{T}}_{0}$,  $\mathbf{E}_{0}$, $\widetilde{\bm{\pi}}^{\prime}_{0})$}
@@ -390,7 +390,7 @@ $\mathrm{ll_{0}},\ \theta,\ \mathrm{continue}   \longleftarrow 0,\ \theta_{0},\ 
     $\mathrm{ll} \longleftarrow \mathrm{ll}^{\prime}$\;
 }
 }
-\caption{The Baum-Welch algorithm}
+\caption{The Baum-Welch algorithm.\label{alg:baum_welch}}
 \end{algorithm}
 
 The Baum-Welch algorithm as used for coarse-graining reversible MSMs is given in detail in reference \cite{noeProjectedHiddenMarkov2013a}. The algorithm is sketched in algorithm \ref{alg:baum_welch} to introduce some of the important quantities used later in this thesis. In particular, the `forward' part of the algorithm calculates the $\alpha_{i}(t)$ variable which is the probability of arriving at hidden state $i$ at time $t$ \emph{and} seeing the actual observed trajectory up to that point\cite{rabinerTutorialHiddenMarkov1989}. Summing this value for $t=N_{\mathrm{T}}$ over the hidden states gives the probability of the observed trajectory given the model parameters\cite{rabinerTutorialHiddenMarkov1989}. This is equal to the likelihood of the parameters given the observed trajectory, $\mathbb{P}(\{s_{t}\}|\theta)=\mathcal{L}(\theta|\{s_{t}\})$\cite{rabinerTutorialHiddenMarkov1989}. 
