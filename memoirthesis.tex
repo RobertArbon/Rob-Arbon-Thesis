@@ -270,6 +270,8 @@
 
 %% BIBLIOGRAPHY STUFF
 \usepackage[sorting=none,citestyle=numeric-comp, bibstyle=ieee, dashed=false]{biblatex}
+% \usepackage{csquotes}
+
 \DeclareSourcemap{
   \maps[datatype=bibtex, overwrite]{
     \map{
@@ -282,9 +284,10 @@
     }
   }
 }
+
 \usepackage[colorlinks=true,
 		     allcolors=black]{hyperref}              %Creates hyperlinks in cross references
-\usepackage{csquotes}
+
 \addbibresource{thesisbiblio.bib}
 
 %
@@ -343,19 +346,19 @@
 % subdirectories.
 \mainmatter
 
-\import{chapters/introduction/}{text.tex}
-\clearemptydoublepage
-\import{chapters/theory/}{text.tex}
+% \import{chapters/introduction/}{text.tex}
+% \clearemptydoublepage
+% \import{chapters/theory/}{text.tex}
 \clearemptydoublepage
 \import{chapters/water_hopping/}{text.tex}
-\clearemptydoublepage
-\import{chapters/msm_optimization/}{text.tex}
-\clearemptydoublepage
-\import{chapters/hmm_selection/}{text.tex}
-\clearemptydoublepage
-\import{chapters/aadh/}{text.tex}
-\clearemptydoublepage
-\import{chapters/conclusions/}{text.tex}
+% \clearemptydoublepage
+% \import{chapters/msm_optimization/}{text.tex}
+% \clearemptydoublepage
+% \import{chapters/hmm_selection/}{text.tex}
+% \clearemptydoublepage
+% \import{chapters/aadh/}{text.tex}
+% \clearemptydoublepage
+% \import{chapters/conclusions/}{text.tex}
 
 % And the appendix goes here
 \appendix
