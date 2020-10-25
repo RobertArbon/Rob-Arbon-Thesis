@@ -1,5 +1,5 @@
 \let\textcircled=\pgftextcircled
-\chapter{Metastable state selection for Hidden Markov Models}
+\chapter{Metastable state selection for hidden Markov models}
 \label{chap:hmm}
 
 
@@ -188,7 +188,7 @@ where $i$ labels the $g$ hidden states and $j$ labels the $n$ observed states. T
 \end{equation}
 The reason for the difference was due to error accumulated in the values of  $\mathbf{M}$ from equation \ref{eqn:M_vs_E}. This was due to noise in the poorly sampled observed states, see section \ref{sec:app_membership_errors} and figure \ref{fig:membership_error}. However, in situations when the largest reversible connected set of hidden states is smaller than total number of hidden states, the values of $\gamma$ would need re-normalizing. In this case (in particular in chapter \ref{chap:aadh}) the second method will be more convenient. 
 
-\subsection{Model selection experiments}
+\subsection{Model selection}
 The model selection criteria were used to select the optimum number of hidden states in a maximum likelihood HMM, using the discrete trajectories sampled from the Prinz potential. Five different values of the Markov lag time were used: $\tau=5,\ 8,\ 15,\ 65,\ 130$. These values were chosen because they resolve, respectively $7,\ 5,\ 3,\ 2,\ 1$ implied timescales in the full MSM state space and as the top three of these timescales are dominant (figure \ref{fig:prinz_pot} panel (b)), these values of $\tau$ resolve $4,\ 4,\ 4,\ 3,\ 2$ metastable states  respectively \cite{noeProjectedHiddenMarkov2013a}.
 
 For each value of $\tau$ maximum likelihood HMMs were estimated with $g = 2 - 10$ hidden states. For each of the $45$ model specifications (different values of $\tau$ and $g$) the model selection criteria were calculated  and the number of hidden states selected by each was compared to the true value. 

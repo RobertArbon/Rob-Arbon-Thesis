@@ -1,5 +1,5 @@
 \let\textcircled=\pgftextcircled
-\chapter{Markov State Model Optimization}\label{chap:msm}
+\chapter{Markov state model optimization}\label{chap:msm}
 
 \section{Introduction}
 
@@ -106,7 +106,7 @@ The initial creation of the hyperparameter trial data set was performed separate
 All MSM fitting and MD trajectory analysis was performed in Python 3.7 using the packages PyEMMA (version 2.5) \cite{schererPyEMMASoftwarePackage2015a}, MDTraj (version 1.9) \cite{mcgibbonMDTrajModernOpen2015}, NumPy (version 1.19) \cite{waltNumPyArrayStructure2011}, Pandas (version 0.23) \cite{mckinneyPandasFoundationalPython2011}, Matplotlib (version 3.3) \cite{hunterMatplotlib2DGraphics2007},  Seaborn (version 0.10) \cite{michaelwaskomMwaskomSeabornV02020} and the Jupyter Project (version 4.6) \cite{kluyverJupyterNotebooksPublishing2016}.
 
 \begin{table}
-    \caption[The hyperparameter search space of alanine dipeptide]{\textsc{The hyperparameter search space of alanine dipeptide}. Prior to feature selection the Cartesian coordinates of the MD trajectories were first aligned to a single, randomly chosen, trajectory frame so that features (2) and (5) did not include spurious rotational or translational motion.  The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
+    \caption[Hyperparameter search space of alanine dipeptide]{\textsc{Hyperparameter search space of alanine dipeptide}. Prior to feature selection the Cartesian coordinates of the MD trajectories were first aligned to a single, randomly chosen, trajectory frame so that features (2) and (5) did not include spurious rotational or translational motion.  The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
     \centering
     \begin{tabularx}{0.9\textwidth}{ >{\raggedright\arraybackslash}X lll >{\raggedright\arraybackslash}X } 
     \hline
@@ -293,7 +293,7 @@ The characteristic length-scales in equation \ref{eqn:kernel_form}, $l$, each co
 
 The relevance of the MSM hyperparameters is important for understanding and visualising the response surface and so to calculate the uncertainty in $R$ a fully Bayesian approach was used. After model selection using the maximum marginal likelihood models described in section \ref{subsec:rsm}, the GP model hyperparameters were re-estimated by sampling the posterior distribution using Markov Chain Monte Carlo. A No U-Turn sampling algorithm, using two independent chains with $500$ tuning steps and $1000$ sampling steps. Convergence was checked using the R-hat statistic \cite{vehtariRanknormalizationFoldingLocalization2020}. 
 
-\subsection{Bayesian Optimization}\label{subsec:bayes_opt}
+\subsection{Bayesian optimization}\label{subsec:bayes_opt}
 
 The response surface of an MSM can be optimised using Bayesian optimisation. As discussed in the introduction to this chapter Bayesian optimisation requires two ingredients: i) a response function which models the response of the MSM to its hyperparameters, and ii) an acquisition function. The response function was chosen using the methods outlined in the previous section. The acquisition function used is the expected improvement, $\mathbb{E}\left[I\right]$ where the improvement, $I$, is defined as \cite{shahriariTakingHumanOut2016}:
 \begin{equation}
@@ -334,7 +334,7 @@ Although not extensively discussed in the theoretical literature, software packa
 
 \begin{figure}[p]
     \centering
-    \caption[The VAMP-2 scores of the hyperparameter trials for MSMs of alanine dipeptide]{\textsc{The VAMP-2 scores of the hyperparameter trials for MSMs of alanine dipeptide}. The test response, $f^{\mathrm{test}} = f(\chi, n; \mathbf{X}^{\mathrm{test}})$ is shown in blue, panels: (a), (c), (e), (g), (i),  while the degree of over-fitting, $f^{\mathrm{train}} - f^{\mathrm{test}}$, is shown in orange, panels: (b), (d), (f), (h), (j). Each row represents a different value of the feature, $\chi$, and the horizontal axis represent the number of clusters, $n$. Each trial was scored with $20$ iterations of 50:50 shuffle split cross validation. The error bars represent the $25$th and $75$th quantiles of the cross-validation folds. 
+    \caption[VAMP-2 scores of the hyperparameter trials for MSMs of alanine dipeptide]{\textsc{VAMP-2 scores of the hyperparameter trials for MSMs of alanine dipeptide}. The test response, $f^{\mathrm{test}} = f(\chi, n; \mathbf{X}^{\mathrm{test}})$ is shown in blue, panels: (a), (c), (e), (g), (i),  while the degree of over-fitting, $f^{\mathrm{train}} - f^{\mathrm{test}}$, is shown in orange, panels: (b), (d), (f), (h), (j). Each row represents a different value of the feature, $\chi$, and the horizontal axis represent the number of clusters, $n$. Each trial was scored with $20$ iterations of 50:50 shuffle split cross validation. The error bars represent the $25$th and $75$th quantiles of the cross-validation folds. 
     The features are ordered according to the mean of the their test scores.}
     \includegraphics[height=0.8\textheight]{chapters/msm_optimization/figures/ala1_train_test_results.pdf}
     \label{fig:ala1_train_test}
@@ -346,7 +346,7 @@ The difference between the train and test response, the \emph{over-fitting}, ref
 
 \begin{figure}
     \centering
-    \caption[The response surface of alanine dipeptide]{\textsc{The response surface of alanine dipeptide}. The response is shown as a function of the feature, $\chi$ (panels (a) - (e)) and number of clusters, $n$ (horizontal axis). The features are ordered according to their average response. A Mat\'{e}rn 5-2 kernel and logarithmic warping of the predictor $n$  was used. The blue line is the mean of the surface, the blue shaded bands represent the uncertainty ($\pm2\sigma$ excluding the noise term $\sigma_{n}$), and the black crosses are the observed values (the cross validated mean of VAMP-2). Note the differing vertical axis scales to allow the curvature of the response surface to be visible.}
+    \caption[Response surface of alanine dipeptide]{\textsc{Response surface of alanine dipeptide}. The response is shown as a function of the feature, $\chi$ (panels (a) - (e)) and number of clusters, $n$ (horizontal axis). The features are ordered according to their average response. A Mat\'{e}rn 5-2 kernel and logarithmic warping of the predictor $n$  was used. The blue line is the mean of the surface, the blue shaded bands represent the uncertainty ($\pm2\sigma$ excluding the noise term $\sigma_{n}$), and the black crosses are the observed values (the cross validated mean of VAMP-2). Note the differing vertical axis scales to allow the curvature of the response surface to be visible.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/ala1_response_surface.png}
     \label{fig:ala1_response}
 \end{figure}
@@ -355,7 +355,7 @@ The response surface (figure \ref{fig:ala1_response}) was modelled as a Gaussian
 
 \begin{figure}
     \centering
-    \caption[The discretization error of the second right eigenfunction of alanine dipeptide as a function of the number of microstates]{\textsc{The discretization error of the second right eigenfunction of alanine dipeptide as a function of the number of microstates}. The feature used is the $\phi$ backbone torsion. Panel (a) shows the free energy along this feature. Panels (b), (c) and (d) show the normalized MSM right eigenfunction (blue line) estimated $n=2, 10$ and $50$ cluster centers respectively. This is compared with the same eigenfunction estimated with $n=500$ cluster centers (black line). The red shaded area represents the difference between the two eigenfunctions. The discretization error, labelled $\delta$ is the integral of the red area. The $VAMP-2$ score is also labelled for comparison.}
+    \caption[Discretization error of the second right eigenfunction of alanine dipeptide as a function of the number of microstates]{\textsc{Discretization error of the second right eigenfunction of alanine dipeptide as a function of the number of microstates}. The feature used is the $\phi$ backbone torsion. Panel (a) shows the free energy along this feature. Panels (b), (c) and (d) show the normalized MSM right eigenfunction (blue line) estimated $n=2, 10$ and $50$ cluster centers respectively. This is compared with the same eigenfunction estimated with $n=500$ cluster centers (black line). The red shaded area represents the difference between the two eigenfunctions. The discretization error, labelled $\delta$ is the integral of the red area. The $VAMP-2$ score is also labelled for comparison.}
     \label{fig:ala1_evcompare}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/ala1_ev_n_compare.png}
 \end{figure}
@@ -376,7 +376,7 @@ The third feature of the response surface is the large uncertainty of response s
 
 \begin{figure}
     \centering
-    \caption[The relevance of the hyperparameters of alanine dipeptide]{\textsc{The relevance of the hyperparameters of alanine dipeptide}. The distribution of the parameters of the response surface (shown in figure \ref{fig:ala1_response}) were estimated using MCMC. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the log-transformed number of cluster centres, $n$ is shown in orange (labelled `Other').}
+    \caption[Relevance of the hyperparameters of alanine dipeptide]{\textsc{Relevance of the hyperparameters of alanine dipeptide}. The distribution of the parameters of the response surface (shown in figure \ref{fig:ala1_response}) were estimated using MCMC. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the log-transformed number of cluster centres, $n$ is shown in orange (labelled `Other').}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/ala1_relevance.png}
     \label{fig:ala1_relevance}
 \end{figure}
@@ -448,7 +448,7 @@ Bayesian optimisation was used to determine whether this maximum could be achiev
 
 \begin{table}
     \centering
-    \caption[Optimum MSM hyperparameters for alanine dipeptide pre- and post- Bayesian optimisation]{\textsc{Optimum MSM hyperparameters for alanine dipeptide pre- and post- Bayesian optimisation}.  Each row represents a BO experiment, seeded with $N_{\mathrm{seed}}$ randomly sampled hyperparameters trials. Five iterations of optimisation were run with $N_{\mathrm{seed}}=30,\ 50$ (labelled $\# 1, 2$ etc.). The number of optimisation steps is equal to the difference in the pre/post value of $N_{\mathrm{total}}$.  The optimum of the response surface estimated with all the trial data ($N_{\mathrm{total}}=500$) is included even though it was not optimised using BO. Each column is a variable or outcome with values associated with the optimum value of $\mu$, before and after BO.  
+    \caption[MSM hyperparameters for alanine dipeptide pre- and post- Bayesian optimisation]{\textsc{MSM hyperparameters for alanine dipeptide pre- and post- Bayesian optimisation}.  Each row represents a BO experiment, seeded with $N_{\mathrm{seed}}$ randomly sampled hyperparameters trials. Five iterations of optimisation were run with $N_{\mathrm{seed}}=30,\ 50$ (labelled $\# 1, 2$ etc.). The number of optimisation steps is equal to the difference in the pre/post value of $N_{\mathrm{total}}$.  The optimum of the response surface estimated with all the trial data ($N_{\mathrm{total}}=500$) is included even though it was not optimised using BO. Each column is a variable or outcome with values associated with the optimum value of $\mu$, before and after BO.  
     }
 \begin{tabular}{llrrrrrrllrr}
 \toprule
