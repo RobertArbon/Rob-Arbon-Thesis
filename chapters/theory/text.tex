@@ -104,7 +104,7 @@ These $r$ eigenfunctions are known as the \emph{dominant} eigenfunctions and the
 
 \section{Markov state models}\label{sec:theory_msm}
 
-Markov state models (MSMs) are discrete models of Markovian dynamics described in previous seciton \cite{prinzMarkovModelsMolecular2011}. The continuous quantities described above all have discrete analogues which will be described in detail in this section:
+Markov state models (MSMs) are discrete models of Markovian dynamics described in previous seciton \cite{prinzMarkovModelsMolecular2011}. The continuous quantities described above all have discrete analogues which will be described in detail in this section \cite{prinzMarkovModelsMolecular2011}:
 \begin{itemize}
     \item The system is described by a set of $n$ discrete states denoted, $i=1, \ldots, n$. Instead of the continuous vector $\mathbf{x}(t)$, each trajectory is denoted by a vector of integers $\mathbf{s}$, where each component, $s_t$, is the state at time $t$. $t$ is now a discrete quantity, an integer multiple of the time-step, $\Delta t$, used to record the coordinates in an MD trajectory: $t=k\Delta t,\ k=1, 2, \ldots$. 
     \item The system can be described by a probability mass vector, $\mathbf{p}(t)$,  instead of a probability density function $p(\mathbf{x};t)$. The $i$th component of $\mathbf{p}(t)$ is the probability of the system being in  state $s^{i}$ at time $t$.
@@ -123,7 +123,7 @@ Markov state models (MSMs) are discrete models of Markovian dynamics described i
 
 Creating an MSM starts with the collection of molecular dynamics (MD) data in the form of a set of short trajectories, with configurations saved every $\Delta t$ seconds. This thesis will consider only canonical ensemble simulations, using both over-damped Langevin dynamics \cite{ermakComputerSimulationCharged1974,ermakEquilibriumElectrostaticEffects1974} and velocity re-scaling \cite{bussiCanonicalSamplingVelocity2007} to maintain temperature. As a consequence, the momentum coordinates will be ignored as a feature for constructing MMs. 
 
-If  each trajectory has $N_{\mathrm{T}}$ frames and $N_{\mathrm{A}}$ atoms then a trajectory can be represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{N_{\mathrm{T}} \times 3N_{\mathrm{A}}}$. The trajectories  undergo a series of processing steps on the way to creating an MSM, these are: 
+If  each trajectory has $N_{\mathrm{T}}$ frames and $N_{\mathrm{A}}$ atoms then a trajectory can be represented by a data matrix, $\mathbf{X} \in \mathbb{R}^{N_{\mathrm{T}} \times 3N_{\mathrm{A}}}$. The trajectories  undergo a series of processing steps on the way to creating an MSM, these are \cite{noeMarkovModelsMolecular2019b, schererVariationalSelectionFeatures2019}: 
 \begin{enumerate}
     \item \textbf{Create features:} A set of continuous features, the ``essential degrees of freedom'' \cite{schutteDirectApproachConformational1999}, $\chi_{i}, i \in \{1,\dots, N_{\mathrm{C}} \}$ are chosen to capture the slow dynamics of the system:
     \begin{equation*}
@@ -230,7 +230,7 @@ Continuing the previous example, $\sum_{ij}c_{ij}=49$, a factor of $2$ different
 The count matrix, and therefore the method for counting,  will determine whether or not the states are ergodic. There is a path between states $a$ and $z$ if there is a set of intermediate states, $b, c, \ldots, y$ such that $c_{a,b}>0,\ c_{b, c}>0,\ \ldots,\ c_{y, z}>0$. Two states are strongly or reversibly connected if there is a path from $a\rightarrow z$ and from $z\rightarrow a$. The full set of states are ergodic if each state pair of states is strongly connected \cite{wilson1996introduction}. In all estimation procedures used in this thesis, if the full set of state are not strongly connected, then a subset of states are used such that all states within the subset are strongly connected.
 
 \subsubsection{Bayesian estimation}\label{sec:theory_bayes}
-Bayesian estimation \cite{gelmanBayesianDataAnalysis2014} uses not just the likelihood, $\mathbb{P}(\mathbf{c}|\mathbf{T})$, but the prior probability of the parameters, $\mathbb{P}(\mathbf{T})$, to estimate the posterior probability of the parameters given the data, $\mathbb{P}(\mathbf{T}|\mathbf{c})$, using Bayes' rule: 
+Bayesian estimation uses not just the likelihood, $\mathbb{P}(\mathbf{c}|\mathbf{T})$, but the prior probability of the parameters, $\mathbb{P}(\mathbf{T})$, to estimate the posterior probability of the parameters given the data, $\mathbb{P}(\mathbf{T}|\mathbf{c})$, using Bayes' rule \cite{gelmanBayesianDataAnalysis2014}: 
 \begin{equation}
     \mathbb{P}(\mathbf{T}|\mathbf{c}) \propto \mathbb{P}(\mathbf{c}|\mathbf{T})\cdot\mathbb{P}(\mathbf{T})
 \end{equation}
@@ -247,7 +247,7 @@ A method for testing the convergence of the MCMC sampling procedure is to calcul
 Here $\hat{V}$ is the pooled variance of the four chains after rank normalization (i.e., sampled values are ranked and then the rank converted to a standard normal distributed variable) and $W$ is the within-chain variance. The recommended threshold value for convergence in reference \cite{vehtariRanknormalizationFoldingLocalization2020} is \num{1.01}, i.e if the sampling is converged then $\widehat{R} < 1.01$. The more stringent convergence tests in reference \cite{vehtariRanknormalizationFoldingLocalization2020} are not considered here due to the exploratory nature of this thesis.   
 
 \subsection{Choice of Markov lag-time}
-The lag time, $\tau$, is not a hyperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For large values of $\tau$ the truncation in equation \ref{eqn:eig_decomp_to_r} becomes more accurate, or, put another way, the Markov assumption becomes more plausible \cite{prinzMarkovModelsMolecular2011}. In addition, for small values of $\tau$ the correlation between the observations will mean that the transition matrix is non-Markovian, i.e., does not obey the Chapman-Kolmogorov equation:
+The lag time, $\tau$, is not a hyperparameter of the model but rather a part of the model specification; it defines the temporal resolution of the description of the dynamics. For large values of $\tau$ the truncation in equation \ref{eqn:eig_decomp_to_r} becomes more accurate, or, put another way, the Markov assumption becomes more plausible \cite{prinzMarkovModelsMolecular2011}. In addition, for small values of $\tau$ the correlation between the observations will mean that the transition matrix is non-Markovian, i.e., does not obey the Chapman-Kolmogorov equation \cite{wasserman2013all}:
 \begin{equation}\label{eqn:ck_eqn}
 [\mathbf{T}(\tau)]^{k} = \mathbf{T}(k \tau)
 \end{equation}
@@ -411,7 +411,7 @@ $\mathrm{ll_{0}},\ \theta,\ \mathrm{continue}   \longleftarrow 0,\ \theta_{0},\ 
 The Baum-Welch algorithm as used for coarse-graining reversible MSMs is given in detail in reference \cite{noeProjectedHiddenMarkov2013a}. The algorithm is sketched in algorithm \ref{alg:baum_welch} to introduce some of the important quantities used later in this thesis. In particular, the `forward' part of the algorithm calculates the $\alpha_{i}(t)$ variable which is the probability of arriving at hidden state $i$ at time $t$ \emph{and} seeing the actual observed trajectory up to that point \cite{rabinerTutorialHiddenMarkov1989}. Summing this value for $t=N_{\mathrm{T}}$ over the hidden states gives the probability of the observed trajectory given the model parameters \cite{rabinerTutorialHiddenMarkov1989}. This is equal to the likelihood of the parameters given the observed trajectory, $\mathbb{P}(\{s_{t}\}|\theta)=\mathcal{L}(\theta|\{s_{t}\})$ \cite{rabinerTutorialHiddenMarkov1989}. 
 
 In addition to the maximum likelihood estimation of the parameters, Bayesian estimation can be used. The details of the implementation used in PyEMMA (version 2.5) \cite{schererPyEMMASoftwarePackage2015a} can be found in reference \cite{choderaBayesianHiddenMarkov2011a} and the references therein, but the broad outline for estimating a Bayesian HMM with $g$ hidden states is as follows:
-First, an MSM is estimated and the implied timescales, $t_{2},t_{3}, \ldots$, saved. Second, the trajectories are sub-sampled, or strided, to account for the correlation between observed states. The striding is by a factor $\Delta t$ given by:
+First, an MSM is estimated and the implied timescales, $t_{2},t_{3}, \ldots$, saved. Second, the trajectories are sub-sampled, or strided, to account for the correlation between observed states. The striding is by a factor $\Delta t$ given by \cite{schererPyEMMASoftwarePackage2015a}:
 \begin{equation}\label{eqn:hmm_striding}
     \Delta t = \min{\left(\tau, 2\cdot t_{g+1}\right)}. 
 \end{equation}
