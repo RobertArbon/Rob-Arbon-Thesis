@@ -10,14 +10,29 @@
 
 \hl{This thesis describes the use of statistical model selection and optimisation techniques applied to Markov models (MM) for describing the slow conformational dynamics of two biomolecular systems: water diffusing through an sucrose matrix and the conformational landscape of aromatic amine dehdyrogenase (AADH).}
 
+\section{Learning conformational dynamics from molecular simulations}
+
+\begin{highlighted}
+
+\cite{schutteDirectApproachConformational1999} Quantitatively and qualitatively describing the slow conformational dynamics of biomolecular systems is of central importance for understanding their function, chemical, physical and biological properties. For example, conformational changes are essential to the catalytic process of enzymes [], how drugs and other small molecules bind to proteins regulating their behaviour [], or how cells pump ions [] or send signals between themselves []. 
+
+Computational approaches to studying conformational dynamics are important because their allow descriptions with high temporal and spatial resolution [] beyond the scope of most experimental techniques []. Typically, one evolves the systems equations of motion using molecular dynamics (MD) to produce a set of trajectories through phase space. These trajectories can be analysed to reveal conformational transition pathways and metastable states [] and other properties of interest. 
+
+There are a wide range of techniques for understanding conformational dynamics from MD simulations which depend on current knowledge of the system and the questions being asked. Path based techniques such as transition path sampling (TPS) \cite{bolhuisTRANSITIONPATHSAMPLING2002, dellagoTransitionPathSampling1999, dellagoTransitionPathSampling2002a}, transition interface sampling (TIS) \cite{} and forward flux sampling (FFS) 
+\cite{} all start with two specified stable conformations, A & B, and can be used to estimate rate constants and reaction coordinates without previous knowledge of transition states. TPS works by first proposing an initial series of discrete states between A and B known as as transition pathway. Then a statistical ensemble of pathways is generated from this initial path using Metropolis Monte Carlo. TIS and FFS are similar but define interfaces based on an order parameter which separate A and B. These techniques have been applied \cite{} to the model protein folding system Trp-cage \cite{neidighDesigning20residueProtein2002} to elucidate the folding pathway and have replicated experimental values for the folding and unfolding rates.  
+
+TPS was used to elucidate  \cite{juraszekSamplingMultipleFolding2006} the folding mechanism of mini-protein Trp-cage . Variations of TPS, such as transition interface sampling (TIS) and forward flux sampling (FFS) have also been applied to the Trp-cage system.  Both techniques break up the pathway from A to B using interfaces   is a fast folding protein which predominantly transitions from its native (N) to unfolded state (U) via a loop intermediate (L).  Given knowledge of these states and their structures several 'path' based methods have been used to estimate rate constants and free energies as well as elucidate important conformations along the folding pathway.  FFS \cite{velez-vegaKineticsMechanismUnfolding2010}
+
+Transition path sampling  and associated techniques adapted for biomolecular systems (partial path transition interface sampling (PPTIS) ) are suited to characterising reaction mechanisms and rates, given two metastable states. They 
+% \cite{bolhuisTRANSITIONPATHSAMPLING2002,dellagoTransitionPathSampling2002}
+% \cite{moroniRateConstantsDiffusive2004}
+ZTS, FTS, MSMs, Milestoning, PCA (Kernel PCA), (MDS), Isomap, Sketch-map, Diffusion-map, locally scaled diffusion map. 
+
+\end{highlighted}
+
+
 \section{Markov models and their applications}
-\hl{Quantitatively and qualitatively describing the slow conformational dynamics of biomolecular systems is of central importance for understanding their function, chemical, physical and biological properties. For example, conformational changes are essential to the catalytic process of enzymes [], how drugs and other small molecules bind to proteins regulating their behaviour [], or how cells pump ions [] or send signals between themselves []. 
 
-Computational approaches to studying conformational dynamics are important because their allow descriptions with high temporal and spatial resolution [] beyond the scope of most experimental techniques []. Molecular dynamics simulations evolve the equations of motion after to produce trajectories through phase space which can be later analysed to reveal conformational transition pathways and metastable states []. 
-
-There are a wide range of techniques  
-
-}
 MMs provide a framework for describing the slow processes of metastable states of systems from molecular dynamics (MD) simulations \cite{prinzMarkovModelsMolecular2011}. The central idea \cite{zwanzigClassicalDynamicsContinuous1983a} is that for complex systems, over a sufficiently long periods of time, transitions rates between regions of the systems total configurational space are independent on their path history. If the configurational space is partitioned into $n$ discrete states then the dynamics of the system can be described by an $n\times n$ transition matrix $\mathbf{T}$ \cite{prinzMarkovModelsMolecular2011}. Each element of $\mathbf{T}$ describes the conditional probability of the system jumping between states over a time period, $\tau$, the Markov lag time \cite{prinzMarkovModelsMolecular2011}. It is usually the case that the chemically interesting processes are not between the $n$ individual discrete states. Rather they are between sets of discrete states for which the probability of leaving the set is low compared to the probability of remaining within the set \cite{schutteDirectApproachConformational1999}, these ``almost invariant'' sets are known as the metastable conformations or metastable states of the system. Determining these metastable states, their kinetics, and structural characteristics from MD simulations are the main goals of a MM analysis and the remain a topic of continued interest for both method development and applications \cite{husicMarkovStateModels2018,noeMarkovModelsMolecular2019b, wangConstructingMarkovState2018c}.  
 
 Applications of MMs are concentrated on biomolecular systems and form an intrinsic part of the bimolecular simulation tool-box \cite{hugginsBiomolecularSimulationsDynamics2019}. Applications include modelling both protein folding pathways \cite{singhalUsingPathSampling2004,swopeDescribingProteinFolding2004} as well as intrinsically discorded proteins \cite{schorAnalyticalMethodsStructural2016a}. 
