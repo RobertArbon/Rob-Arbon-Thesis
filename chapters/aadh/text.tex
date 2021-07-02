@@ -18,13 +18,19 @@ All work in this chapter was performed by the author of this thesis with the fol
     \label{fig:aadh_full_structure}
 \end{figure}
 
-Aromatic amine dehydrogenase (AADH) oxidizes aromatic amines to the corresponding aldehyde and ammonia \cite{masgrauAtomicDescriptionEnzyme2006} and was isolated from alcaligenses faecalis \cite{nozakiAromaticAmineDehydrogenase1987} a gram-negative soil bacterium \cite{govindarajAromaticAmineDehydrogenase1994a}. Amines are natural by-products of human activity and their degradation is an is an important part of the natural cycle which maintains their balance within organisms and the environment \cite{chistoserdovCloningSequencingMutagenesis2001}. 
+Aromatic amine dehydrogenase (AADH) oxidizes primary aromatic amines to the corresponding aldehyde and ammonia \cite{masgrauAtomicDescriptionEnzyme2006}: 
+
+ Amines are natural by-products of human activity and their degradation is an is an important part of the natural cycle which maintains their balance within organisms and the environment \cite{chistoserdovCloningSequencingMutagenesis2001}. 
 
 After isolation and structural characterisation with X-ray crystallography, previous work on AADH has focused on determining the reaction mechanism and explaining the inflated kinetic isotope effect which was discussed briefly in the introduction to this thesis. This introduction will discuss the experimental and computational work done to characterise the reaction mechanism, explain in detail the kinetic isotope effect and its link to quantum mechanical tunneling and protein dynamics, and finally link this Markov models and the aims of this chapter. 
 
 \subsection{Structure, reaction mechanism and kinetics} 
 
-AADH was first isolated from a \emph{pseudomonous} soil 
+% Various groups investigated its physical and chemical properties and specificity towards a range of substrates \cite{nozakiAromaticAmineDehydrogenase1987,shinagawaCrystallizationPropertiesAmine1988}.
+
+AADH was first isolated from a soil bacterium of the genus \emph{pseudomonous}  where its molecular weight and amino acid composition determined and a catalytic chromophore identified \cite{iwakiCrystallizationPropertiesAromatic1983} (in the references cited below however, AADH from the soil bacterium alcaligenses faecalis is used).  The chromophore was later identified as a tryptophan tryptophylquinone (TTQ) group using resonance Raman spectroscopy and comparison with methylamine dehydrogenase (MADH) which also contains a TTQ group \cite{govindarajAromaticAmineDehydrogenase1994a}.  The reaction proceeds in two stages: the first step is the reductive half-reaction where the substrate is oxidized by the TTQ group; the second stage is the oxidative half-reaction whereby two electrons are transferred to the copper containing protein Azurin. From there the electrons are transferred into the metabolic chain via a c-type cytochrome \cite{masgrauAtomicDescriptionEnzyme2006}. 
+
+The structures of the substrate-free enzyme and of several enzyme-substrate intermediates were solved to determine the mechanism of the oxidation of tryptamine \cite{masgrauAtomicDescriptionEnzyme2006} (this mechanism will be discussed further below). The structures after reaction with a number different substrates were solved in order to explore the role of conformational changes 
 
 
 AADH has an $\alpha_{2}\beta_{2}$ structure shown in figure \ref{fig:aadh_full_structure}. The larger $\alpha$ chains have a mass of $\simeq \SI{39}{\kilo\dalton}$ (shown in green and labelled A and B) while the smaller $\beta$ chains (shown in blue, labelled D and H) have a mass of $\simeq \SI{18}{\kilo\dalton}$. The D and H chains contain the TTQ prosthetic group that forms part of the active site (shown in orange, after reaction with tryptamine). 
