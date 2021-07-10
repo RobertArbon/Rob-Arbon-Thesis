@@ -490,12 +490,15 @@ and is plotted as a function of the stationary distribution of the observed stat
     \label{fig:aadh_sd_dev_by_res}
 \end{figure}
 
+
 \begin{figure}[ph!]
- \centering
- \caption[Conformational change in loop residues 92-108 of chain D]{\textsc{Conformational change in loop residues \numrange[range-phrase=\text{--}]{92}{108} of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the $\alpha$-carbon from the crystal structure. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues \numrange{92}{108} are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown). The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The \num{22} tail residues, unresolved by the crystal structure, are missing from the N-terminus.}
- \label{fig:chain_d_loop}
- \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
+    \centering
+    \caption[alpha-carbon deviation of residues from the seed trajectory at \SI{95}{\nano\second}]{\textsc{$\alpha$-carbon deviation of residues for seed trajectory at \SI{95}{\nano\second}}. Each panel depicts a separate chain of the structure from a snapshot of the seed trajectory at \SI{95}{\nano\second}. The RMSD is \SI{6.2}{\angstrom}, the highest value reached, see figure \ref{fig:rmsd_seed_traj} panel (a). In chains D and H the six residues of the active site are shown in orange and residues \numrange[range-phrase=\text{--}]{92}{108} are shown in green. The conformational change of loop \numrange[range-phrase=\text{--}]{92}{108} is shown in figure \ref{fig:chain_d_loop}}
+    \includegraphics[width=0.6\textwidth]{chapters/aadh/figures/rmsd_by_res.png}
+    \label{fig:aadh_rmsd_byres}
 \end{figure}
+
+
 
 % \section{MSM optimisation}
 
