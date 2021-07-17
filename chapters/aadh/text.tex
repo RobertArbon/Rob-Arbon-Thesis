@@ -344,8 +344,8 @@ The response surface of an MSM for the active site of AADH was estimated using t
 
 \begin{figure}[p]
     \centering
-    \caption[VAMP-2 scores of the hyperparameter trials for MSMs of AADH]{\textsc{VAMP-2 scores of the hyperparameter trials for MSMs of AADH}. The test response, $f^{\mathrm{test}}(\mathbf{x}; \mathbf{X}^{\mathrm{test}})$, is shown in blue, for (a) the $(\phi, \psi, \chi)$ dihedral angles, (c) heavy atom interatomic distances, (e) $\alpha$-carbon contact distances, (g) heavy atom contact distances, (i) root mean square deviation of heavy atoms. The difference between $f^{\mathrm{train}}$ and $f^{\mathrm{test}}$ is shown in orange for (b) the the $(\phi, \psi, \chi)$ dihedral angles and so on. The horizontal axis is the rank of the trial according to the test score. Each trial was scored with \num{20} iterations of 50:50 shuffle split cross-validation. The error bars represent the 25th and 75th quantiles of the cross-validation folds. The features are ordered according to the mean of the their test scores.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_train_test_results.png}
+    \caption[VAMP-2 scores of the hyperparameter trials for MSMs of AADH]{\textsc{VAMP-2 scores of the hyperparameter trials for MSMs of AADH}. The test response, $f^{\mathrm{test}}(\mathbf{x}; \mathbf{X}^{\mathrm{test}})$, is shown in blue, for (a) the $(\phi, \psi, \chi)$ dihedral angles, (c) heavy atom interatomic distances, (e) $\alpha$-carbon contact distances, (g) heavy atom contact distances, (i) root mean square deviation of heavy atoms. The difference between $f^{\mathrm{train}}$ and $f^{\mathrm{test}}$ is shown in orange for (b) the the $(\phi, \psi, \chi)$ dihedral angles and so on. The horizontal axis is the rank of the trial according to the test score. Each trial was scored with \num{20} iterations of 50:50 shuffle split cross-validation. The error bars represent the 25th and 75th quantiles of the cross-validation folds. The features are ordered according to the mean of the their test scores.}
     \label{fig:aad_train_test}
 \end{figure}
 
@@ -355,8 +355,8 @@ In contrast to the case of alanine dipeptide, all features show a marked degree 
 
 \begin{figure}
     \centering
-    \caption[goodness-of-fit for the GP modelled response surface of AADH]{\textsc{goodness-of-fit for the GP modelled response surface of AADH}.  Panels (a) - (d) shows the goodness-of-fit conditional on each feature. The GP uses an exponential kernel with linear input warping on $\tau, m$ and $n$. The MSLL and SMSE were $-0.01298$ and  $0.3087$ respectively. The horizontal axis ($y$) are the observed trial values and the vertical axis is the mean response ($f(\mathbf{x})$). The error bars are $\pm 2\sigma$ where $\sigma$ is the standard deviation of the response surface including the noise term $\sigma_n$.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_fit_d.png}
+    \caption[goodness-of-fit for the GP modelled response surface of AADH]{\textsc{goodness-of-fit for the GP modelled response surface of AADH}.  Panels (a) - (d) shows the goodness-of-fit conditional on each feature. The GP uses an exponential kernel with linear input warping on $\tau, m$ and $n$. The MSLL and SMSE were $-0.01298$ and  $0.3087$ respectively. The horizontal axis ($y$) are the observed trial values and the vertical axis is the mean response ($f(\mathbf{x})$). The error bars are $\pm 2\sigma$ where $\sigma$ is the standard deviation of the response surface including the noise term $\sigma_n$.}
     \label{fig:aadh_rsm_fit}
 \end{figure}
 
@@ -372,7 +372,6 @@ The covariance kernel was chosen from amongst the same set as for alanine dipept
 
 \begin{table}
     \centering
-    \caption[Posterior distributions of GP parameters]{\textsc{Posterior distributions of GP parameters}. Shown are the median and $\SI{95}{\percent}$ credible intervals for the kernel hyperparameters of the AADH response surface estimated using MCMC with \num{1000} posterior samples. The length-scale parameters in equation \ref{eqn:kernel_form} are re-written here as relevances.}
     \begin{tabular}{lrr}
     \toprule
                              Hyperparameter &  Median &     (\SI{95}{\percent}C.I.) \\
@@ -388,6 +387,7 @@ The covariance kernel was chosen from amongst the same set as for alanine dipept
                                   $\sigma_n$ &   0.011 &  (0.001-0.035) \\
     \bottomrule
     \end{tabular}
+    \caption[Posterior distributions of GP parameters]{\textsc{Posterior distributions of GP parameters}. Shown are the median and $\SI{95}{\percent}$ credible intervals for the kernel hyperparameters of the AADH response surface estimated using MCMC with \num{1000} posterior samples. The length-scale parameters in equation \ref{eqn:kernel_form} are re-written here as relevances.}
     \label{tab:aadh_rel}
 \end{table}
 
@@ -397,8 +397,8 @@ Figure \ref{fig:aadh_rsm} shows a projection of the response surface, $f(\mathbf
 
 \begin{figure}[p]
     \centering
-    \caption[Unoptimized response surface of AADH]{\textsc{Unoptimized response surface of AADH, $f\left(\mathbf{x}; \mathcal{D}_{361}\right)$}. For each feature two heat maps are shown with $\tau$ on the vertical axis and $m$ on the horizontal axis. Panel (a) shows the  $(\phi, \psi, \chi)$ feature  with $n=210$,  panel (b) for $n=1000$,  and similarly for the remaining features. The white star denotes the approximate location of the maximum of the surface, the true maximum occurs at $\tau=\SI{12.5}{\nano\second}, m=1, n=207$  The value of the response surface denoted by the color (lighter implies higher values) and with the text annotations.}
     \includegraphics[width=0.7\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d.png}
+    \caption[Unoptimized response surface of AADH]{\textsc{Unoptimized response surface of AADH, $f\left(\mathbf{x}; \mathcal{D}_{361}\right)$}. For each feature two heat maps are shown with $\tau$ on the vertical axis and $m$ on the horizontal axis. Panel (a) shows the  $(\phi, \psi, \chi)$ feature  with $n=210$,  panel (b) for $n=1000$,  and similarly for the remaining features. The white star denotes the approximate location of the maximum of the surface, the true maximum occurs at $\tau=\SI{12.5}{\nano\second}, m=1, n=207$  The value of the response surface denoted by the color (lighter implies higher values) and with the text annotations.}
     \label{fig:aadh_rsm}
 \end{figure}
 
@@ -406,7 +406,7 @@ Figure \ref{fig:aadh_rsm} shows a projection of the response surface, $f(\mathbf
 
 \begin{table}
     \centering
-    \caption[MSM hyperparameters for AADH pre- and post-Bayesian optimisation]{\textsc{MSM hyperparameters for AADH pre- and post-Bayesian optimisation}. Each column represents a Bayesian optimisation experiment, seeded with $N_{\mathrm{seed}}$ randomly sampled hyperparameter trials. Five iterations of optimisation were run with $N_{\mathrm{seed}}=100$ (labelled $\# 1, 2$ etc.) and a single iteration optimising the response surface using all the trial data ($N_{\mathrm{seed}}=361$). Each row is a variable or outcome with values associated with the optimum value of $\mu$ before and after Bayesian optimisation.}
+
     \begin{tabular}{llrrrrrr}
     \toprule
     (Hyper)parameter &$N_{\mathrm{seed}}$ & 100 & & & & &361\\
@@ -434,6 +434,7 @@ Figure \ref{fig:aadh_rsm} shows a projection of the response surface, $f(\mathbf
     &Post&10&180&10&230&540&310\\
     \bottomrule
     \end{tabular}
+    \caption[MSM hyperparameters for AADH pre- and post-Bayesian optimisation]{\textsc{MSM hyperparameters for AADH pre- and post-Bayesian optimisation}. Each column represents a Bayesian optimisation experiment, seeded with $N_{\mathrm{seed}}$ randomly sampled hyperparameter trials. Five iterations of optimisation were run with $N_{\mathrm{seed}}=100$ (labelled $\# 1, 2$ etc.) and a single iteration optimising the response surface using all the trial data ($N_{\mathrm{seed}}=361$). Each row is a variable or outcome with values associated with the optimum value of $\mu$ before and after Bayesian optimisation.}
     \label{tab:aadh_opt_results}
 \end{table}
 
@@ -445,8 +446,8 @@ In order to see whether this maximum could be reached with a fewer number of tri
 
 \begin{figure}[p]
     \centering
-    \caption[Bayesian optimisation trajectories]{\textsc{Bayesian optimisation trajectories}. Each column shows the trajectories of the incumbent $\mu^{*} \pm  2\sigma$ (panels (a) - (e)), and the accompanying value of: $\chi$ (panels (f) - (j)), $m$ (panels (k) - (o)), $\tau$ (panels (p) - (t)) and $n$ (panels (u) - (y)). The location of the final value of the trajectory is highlighted with a black star. For reference the corresponding values determined from the response surface using all the hyperparameter trials are shown as solid horizontal lines: the response surface before optimisation ($f\left(\mathbf{x}; \mathcal{D}_{361}\right)$) are shown in orange and after Bayesian optimisation ($f\left(\mathbf{x}; \mathcal{D}_{410}\right)$) in blue.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_opt_traj_act_s_d.png}
+    \caption[Bayesian optimisation trajectories]{\textsc{Bayesian optimisation trajectories}. Each column shows the trajectories of the incumbent $\mu^{*} \pm  2\sigma$ (panels (a) - (e)), and the accompanying value of: $\chi$ (panels (f) - (j)), $m$ (panels (k) - (o)), $\tau$ (panels (p) - (t)) and $n$ (panels (u) - (y)). The location of the final value of the trajectory is highlighted with a black star. For reference the corresponding values determined from the response surface using all the hyperparameter trials are shown as solid horizontal lines: the response surface before optimisation ($f\left(\mathbf{x}; \mathcal{D}_{361}\right)$) are shown in orange and after Bayesian optimisation ($f\left(\mathbf{x}; \mathcal{D}_{410}\right)$) in blue.}
     \label{fig:aadh_opt_traj_d}
 \end{figure}
 
@@ -460,8 +461,8 @@ The optimisation procedure did not strongly increase the incumbent of each itera
 
 \begin{figure}
     \centering
-    \caption[Implied timescales of the base case MSM]{\textsc{Implied timescales of the base case MSM}. Timescales were estimated using MCMC with \num{500} posterior samples. Panel (a) shows the implied timescales for $\tau_{\mathrm{M}} = \SIrange[range-phrase=\text{--}]{0.1}{5}{\nano\second}$  and panel (b) for $\tau_{\mathrm{M}} = \SIrange[range-phrase=\text{--}]{0.1}{50}{\nano\second}$. The solid lines are the mean of the posteriors, the shaded areas are the  \SI{95}{\percent} credible intervals. The grey shaded area is the region for which the implied timescales are smaller than $\tau_{\mathrm{M}}$.}\label{fig:aadh_its}
     \includegraphics[width=0.8\linewidth]{chapters/msm_optimization/figures/aadh_implied_timescales.pdf}
+    \caption[Implied timescales of the base case MSM]{\textsc{Implied timescales of the base case MSM}. Timescales were estimated using MCMC with \num{500} posterior samples. Panel (a) shows the implied timescales for $\tau_{\mathrm{M}} = \SIrange[range-phrase=\text{--}]{0.1}{5}{\nano\second}$  and panel (b) for $\tau_{\mathrm{M}} = \SIrange[range-phrase=\text{--}]{0.1}{50}{\nano\second}$. The solid lines are the mean of the posteriors, the shaded areas are the  \SI{95}{\percent} credible intervals. The grey shaded area is the region for which the implied timescales are smaller than $\tau_{\mathrm{M}}$.}\label{fig:aadh_its}
 \end{figure}
 
 So far the response surface for AADH has been modelled and optimised with a combination of random hyperparameter sampling and Bayesian optimisation under two assumptions about the model specification: that $\tau_{\mathrm{M}} = \SI{2}{\nano\second}$ and $r=4$ are reasonable assumptions about the lag time and number of slow relaxation processes. As these were established on the basis of the reference MSM it is important to test these assumptions are still reasonable with the final optimized MSM. 
@@ -476,23 +477,23 @@ The standard validation check of MSMs, the Chapman-Kolmogorov test (section \ref
 
 \begin{figure}
     \centering
-    \caption[Optimised response surface of AADH]{\textsc{Optimised response surface of AADH, $f\left(\mathbf{x}; \mathcal{D}_{410}\right)$}. The response surface was estimated using both the randomly sampled and optimised hyperparameters. For each feature a single heat map is shown for $n=310$, with $\tau$ on the vertical axis and $m$ on the horizontal axis. All values of $m$ in the range $1\le m \le 10$ are shown. The white star denotes the approximate location of the maximum of the surface, the true maximum occurs at $\tau=\SI{10}{\nano\second}, m=2, n=310$. The value of the response surface is denoted by the color (lighter implies higher values) and with the text annotations.}
     \includegraphics[width=0.6\textwidth]{chapters/msm_optimization/figures/aadh_response_surface_d_opt.png}
+    \caption[Optimised response surface of AADH]{\textsc{Optimised response surface of AADH, $f\left(\mathbf{x}; \mathcal{D}_{410}\right)$}. The response surface was estimated using both the randomly sampled and optimised hyperparameters. For each feature a single heat map is shown for $n=310$, with $\tau$ on the vertical axis and $m$ on the horizontal axis. All values of $m$ in the range $1\le m \le 10$ are shown. The white star denotes the approximate location of the maximum of the surface, the true maximum occurs at $\tau=\SI{10}{\nano\second}, m=2, n=310$. The value of the response surface is denoted by the color (lighter implies higher values) and with the text annotations.}
     \label{fig:aadh_rsm_opt}
 \end{figure}
 
 
 \begin{figure}
     \centering
-    \caption[Base case MSM]{\textsc{Base case MSM}. The MSM was estimated with the optimum hyperparameters: $\chi= (\phi, \psi, \chi)$, $\tau=\SI{10}{\nano\second}$, $m=2$ and $n=310$. Panels (a), (b) and (c) show the non-trivial eigenvectors used in the VAMP-2 score, the horizontal and vertical axes are the first two TICA components. Panel (d) are the first ten implied timescales, colored according to whether they were used in the VAMP-2 score. The error bars are the $\SI{95}{\percent}$ credible intervals.  Panel (e) is the free energy with the same axes as panels (a) - (c). The MSM was estimated using MCMC with \num{1000} posterior samples.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_best.png}
+    \caption[Base case MSM]{\textsc{Base case MSM}. The MSM was estimated with the optimum hyperparameters: $\chi= (\phi, \psi, \chi)$, $\tau=\SI{10}{\nano\second}$, $m=2$ and $n=310$. Panels (a), (b) and (c) show the non-trivial eigenvectors used in the VAMP-2 score, the horizontal and vertical axes are the first two TICA components. Panel (d) are the first ten implied timescales, colored according to whether they were used in the VAMP-2 score. The error bars are the $\SI{95}{\percent}$ credible intervals.  Panel (e) is the free energy with the same axes as panels (a) - (c). The MSM was estimated using MCMC with \num{1000} posterior samples.}
     \label{fig:aadh_msm_best}
 \end{figure}
 
 \begin{figure}
     \centering
-    \caption[Sensitivity 1 MSM]{\textsc{Sensitivity 1 MSM}. The MSM has the same hyperparameters as the base case but with $\tau_{\mathrm{M}}=\SI{20}{\nano\second}$. See caption of figure \ref{fig:aadh_msm_best} for details.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_1.png}
+    \caption[Sensitivity 1 MSM]{\textsc{Sensitivity 1 MSM}. The MSM has the same hyperparameters as the base case but with $\tau_{\mathrm{M}}=\SI{20}{\nano\second}$. See caption of figure \ref{fig:aadh_msm_best} for details.}
     \label{fig:aadh_msm_sens_1}
 \end{figure}
 
@@ -503,8 +504,8 @@ This sensitivity case is included as,  while the sign structure is the same for 
 
 \begin{figure}
     \centering
-    \caption[Sensitivity 2 MSM]{\textsc{Sensitivity 2 MSM}. This sensitivity used the best performing hyperparameters with a different value of $\chi$ to the base case. The hyperparameters were chosen to be $\chi= |\mathbf{r}_{1} - \mathbf{r}_{2}|$, $\tau = \SI{1}{\nano\second}, m=2, n=110$) and $\tau_{\mathrm{M}} \SI{2}{\nano\second}$. See caption of figure \ref{fig:aadh_msm_best} for details.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_2.png}
+    \caption[Sensitivity 2 MSM]{\textsc{Sensitivity 2 MSM}. This sensitivity used the best performing hyperparameters with a different value of $\chi$ to the base case. The hyperparameters were chosen to be $\chi= |\mathbf{r}_{1} - \mathbf{r}_{2}|$, $\tau = \SI{1}{\nano\second}, m=2, n=110$) and $\tau_{\mathrm{M}} \SI{2}{\nano\second}$. See caption of figure \ref{fig:aadh_msm_best} for details.}
     \label{fig:aadh_msm_sens_2}
 \end{figure}
 
@@ -512,15 +513,15 @@ Sensitivity 2 changed the hyperparameters to the best performing set with the in
 
 \begin{figure}
     \centering
-    \caption[Sensitivity 3 MSM]{\textsc{Sensitivity 3 MSM}. The hyperparameters were the same as the base case but with a  longer TICA lag time $\tau = \SI{85}{\nano\second}$.  See caption of figure \ref{fig:aadh_msm_best} for details.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_3.png}
+    \caption[Sensitivity 3 MSM]{\textsc{Sensitivity 3 MSM}. The hyperparameters were the same as the base case but with a  longer TICA lag time $\tau = \SI{85}{\nano\second}$.  See caption of figure \ref{fig:aadh_msm_best} for details.}
     \label{fig:aadh_msm_sens_3}
 \end{figure}
 
 \begin{figure}
     \centering
-    \caption[Comparison of the base case and sensitivity 3 TICA eigenvectors]{\textsc{Comparison of the base case and sensitivity 3 TICA eigenvectors}. The TICA lag time for the base case was $\tau=\SI{10}{\nano\second}$ (blue) and for sensitivity 3 was $\tau=\SI{85}{\nano\second}$ (orange). The individual elements correspond to the weights associated with each of the $116$ dihedral angle features. Only the absolute values are shown. The elements were ordered according to the absolute value of the elements in the base case for each TICA component to highlight the differences. The normalized overlap between the base case ($\mathbf{v}_{1}$) and sensitivity three ($\mathbf{v}_{2}$) is calculated as $\mathbf{v}_{1}\cdot\mathbf{v}_{2}/|\mathbf{v}_{1}||\mathbf{v}_{2}|$.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/aadh_msm_sens_3_tica.png}
+    \caption[Comparison of the base case and sensitivity 3 TICA eigenvectors]{\textsc{Comparison of the base case and sensitivity 3 TICA eigenvectors}. The TICA lag time for the base case was $\tau=\SI{10}{\nano\second}$ (blue) and for sensitivity 3 was $\tau=\SI{85}{\nano\second}$ (orange). The individual elements correspond to the weights associated with each of the $116$ dihedral angle features. Only the absolute values are shown. The elements were ordered according to the absolute value of the elements in the base case for each TICA component to highlight the differences. The normalized overlap between the base case ($\mathbf{v}_{1}$) and sensitivity three ($\mathbf{v}_{2}$) is calculated as $\mathbf{v}_{1}\cdot\mathbf{v}_{2}/|\mathbf{v}_{1}||\mathbf{v}_{2}|$.}
     \label{fig:aadh_msm_sens_3_tica}
 \end{figure}
 
@@ -529,7 +530,7 @@ Sensitivity 3, changed the value of $\tau$ to $\SI{85}{\nano\second}$ from $\tau
 
 \begin{table}
     \centering
-    \caption[Markov lag time and hyperparameters of selected models]{\textsc{Markov lag time and hyperparameters of selected models}. These models are the base case and sensitivity models to be coarse grained in section \ref{sec:aadh_hmm}. }
+
     \begin{tabular}{lllll}
         \toprule
         Parameter & Base case & Sensitivity 1 & Sensitivity 2 & Sensitivity 3 \\
@@ -541,6 +542,7 @@ Sensitivity 3, changed the value of $\tau$ to $\SI{85}{\nano\second}$ from $\tau
         Cluster centres, $n$ & $310$ & $310$ & $110$ & $310$ \\
         \bottomrule
     \end{tabular}
+    \caption[Markov lag time and hyperparameters of selected models]{\textsc{Markov lag time and hyperparameters of selected models}. These models are the base case and sensitivity models to be coarse grained in section \ref{sec:aadh_hmm}. }
     \label{tab:aadh_final_msm_specs}
 \end{table}
 
@@ -549,8 +551,8 @@ Sensitivity 3, changed the value of $\tau$ to $\SI{85}{\nano\second}$ from $\tau
 
 \begin{figure}
     \centering
-    \caption[Hidden state selection of AADH with the ICL]{\textsc{Hidden state selection of AADH with the ICL}. The base case is shown in panel (a), and the three sensitivity cases  in panels (b) - (c).  The coloured bars show the components of the ICL: the log-likelihood ($-2LL$) term is in blue, the BIC penalty term,  $d\cdot\log{N_{\mathrm{obs}}}$, is shown in green, and the classification entropy penalty term, $2\cdot EN$, is shown in red. The values are scaled so the minimum for each case is $1$, this value is denoted with an arrow and labelled  with number of hidden states. Models which failed to converge are missing.}
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/aadh_h_state_selection.png}
+    \caption[Hidden state selection of AADH with the ICL]{\textsc{Hidden state selection of AADH with the ICL}. The base case is shown in panel (a), and the three sensitivity cases  in panels (b) - (c).  The coloured bars show the components of the ICL: the log-likelihood ($-2LL$) term is in blue, the BIC penalty term,  $d\cdot\log{N_{\mathrm{obs}}}$, is shown in green, and the classification entropy penalty term, $2\cdot EN$, is shown in red. The values are scaled so the minimum for each case is $1$, this value is denoted with an arrow and labelled  with number of hidden states. Models which failed to converge are missing.}
     \label{fig:aadh_h_selection_results}
 \end{figure}
 
@@ -561,8 +563,8 @@ Values of the ICL for each case are shown in figure \ref{fig:aadh_h_selection_re
 
 \begin{figure}
     \centering
-    \caption[Base case HMM]{\textsc{Base case HMM}. Panel (a) shows the observed states (colour circles) in the space of the first two TICA components, IC 1 and IC 2. Each observed state, $j$ is assigned to the hidden state with the maximum a posteriori probability, i.e.  $\arg \max_{i} \mathrm{P}(h=i|s=j)$. Each colour corresponds to a hidden state, labelled $\numrange[range-phrase=\text{--}]{1}{15}$. Panel (b) shows the median lifetimes of each state with \SI{95}{\percent} credible intervals. The horizontal width of the error bars and sizes of the markers are proportional to the stationary distribution of each hidden state. The Markov lag time is shown as a black horizontal line for comparison. Panel (c) shows the dominant hidden state relaxation process, $\Psi_{2}(h)$. Each observed state assigned to a hidden state $i$ is coloured according to the value of $\Psi_{2}(i)$ . Panel (d) shows the median implied timescales of the hidden state relaxation processes with \SI{95}{\percent} credible intervals. The Markov lag time is shown as a black horizontal line for comparison.}
     \includegraphics{chapters/aadh/figures/base_case_hmm.png}
+    \caption[Base case HMM]{\textsc{Base case HMM}. Panel (a) shows the observed states (colour circles) in the space of the first two TICA components, IC 1 and IC 2. Each observed state, $j$ is assigned to the hidden state with the maximum a posteriori probability, i.e.  $\arg \max_{i} \mathrm{P}(h=i|s=j)$. Each colour corresponds to a hidden state, labelled $\numrange[range-phrase=\text{--}]{1}{15}$. Panel (b) shows the median lifetimes of each state with \SI{95}{\percent} credible intervals. The horizontal width of the error bars and sizes of the markers are proportional to the stationary distribution of each hidden state. The Markov lag time is shown as a black horizontal line for comparison. Panel (c) shows the dominant hidden state relaxation process, $\Psi_{2}(h)$. Each observed state assigned to a hidden state $i$ is coloured according to the value of $\Psi_{2}(i)$ . Panel (d) shows the median implied timescales of the hidden state relaxation processes with \SI{95}{\percent} credible intervals. The Markov lag time is shown as a black horizontal line for comparison.}
     \label{fig:base_case_hmm}
 \end{figure}
 
@@ -573,9 +575,9 @@ No Bayesian HMM with ICL selected number of hidden states could be estimated for
 
 \begin{figure}
     \centering
+    \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/sensitivity_2_hmm.png}
     \caption[Sensitivity 2 HMM]{\textsc{Sensitivity 2 HMM}.  Panel (a) shows the observed states (colour circles) in the space of the first two TICA components, IC 1 and IC 2. Each observed state, $j$ is assigned to the hidden state with the maximum a posteriori probability, i.e.  $\arg \max_{i} \mathrm{P}(h=i|s=j)$. Each colour corresponds to a hidden state, labelled \numrange{1}{13}. Panel (b) shows the median lifetimes of each state with \SI{95}{\percent} credible intervals. The horizontal width of the error bars and sizes of the markers are proportional to the stationary distribution of each hidden state. The Markov lag time is shown as a black horizontal line for comparison. Panel (c) shows the dominant hidden state relaxation process, $\Psi_{2}(i)$. Each observed state assigned to a hidden state $i$ is coloured according to the value of $\Psi_{2}(i)$ . Panel (d) shows the median implied timescales of the hidden state relaxation processes with \SI{95}{\percent} credible intervals. The Markov lag time is shown as a black horizontal line for comparison. }
     \label{fig:sensitivity_2_bhmm}
-    \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/sensitivity_2_hmm.png}
 \end{figure}
 
 A Bayesian HMM was estimated for sensitivity 2 which, after striding by  $\SI{2}{\nano\second}$ according to equation \ref{eqn:hmm_striding}, resulted in only $13$ hidden states forming a strongly connected set. Convergence of the model was mixed, \SI{60}{\percent} of the transition matrix elements were under the recommended threshold of $\hat{R}<1.01$,  however the remaining elements were unconverged with values up to $1.3$. The full list of $\hat{R}$ statistics can be found in table \ref{tab:sens_2_gelman_rubin}. The final model is shown in figure \ref{fig:sensitivity_2_bhmm}. Panel (a) shows the assignment of the observed states to the $13$ hidden states. Only $89$ of the $110$ observed states were used in the model (the missing states are shown as unfilled circles) constituting over \SI{92}{\percent} of the observed states. However, due to the striding only \SI{4}{\percent} of the observations were used. The hidden state lifetimes are shown in panel (b). All hidden states were short-lived with median lifetimes between \SIrange{8}{64}{\nano\second} except for state $h_5$, the most populous state, which has a lifetime of \SI{961}{\nano\second} [\SIrange[range-phrase=\text{--}]{416}{3310}{\nano\second}]. The dominant relaxation process, panel (c), involves population transfer between state $h_{5}$ and the four short-lived states $h_{1} - h_{4}$ with an implied timescale of \SI{1210}{\nano\second} [\SIrange[range-phrase=\text{--}]{533}{6590}{\nano\second}]. This and the remaining implied timescales are shown in panel (d). 
@@ -587,8 +589,8 @@ The sensitivity 2 HMM suffers from the same drawbacks as the the base case model
 
 \begin{figure}
     \centering
-    \caption[Donor-acceptor distances of the hidden states]{\textsc{Donor-acceptor distances of the hidden states}. The mean and \SI{95}{\percent} quantiles of the distribution for the OD1---C1 and OD2---C1  for each hidden state in the base case (panels (a) and (c) respectively) and sensitivity 2 (panels (b) and (d) respectively) HMMs. The colour scheme matches the colours in figures \ref{fig:base_case_hmm} and \ref{fig:sensitivity_2_bhmm}. In addition, the missing states $h_{-1}$ are shown in black. The horizontal blue line is distance estimated using QM/MM in reference \cite{ranaghanInitioQMMM2017}.}
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/bond_dist_h_states.png}
+    \caption[Donor-acceptor distances of the hidden states]{\textsc{Donor-acceptor distances of the hidden states}. The mean and \SI{95}{\percent} quantiles of the distribution for the OD1---C1 and OD2---C1  for each hidden state in the base case (panels (a) and (c) respectively) and sensitivity 2 (panels (b) and (d) respectively) HMMs. The colour scheme matches the colours in figures \ref{fig:base_case_hmm} and \ref{fig:sensitivity_2_bhmm}. In addition, the missing states $h_{-1}$ are shown in black. The horizontal blue line is distance estimated using QM/MM in reference \cite{ranaghanInitioQMMM2017}.}
     \label{fig:addh_bond_dist_h_state}
 \end{figure}
 
@@ -598,8 +600,8 @@ As already established in section \ref{sec:active_site_comparison} the sampled c
 
 \begin{figure}[p]
     \centering
-    \caption[Base case HMM as a network]{\textsc{Base case HMM as a network}. Each orange circle is a hidden state with area proportional to its stationary distribution. Arrows connect states $i$ and $i$ where the flux, $\tilde{\pi}_{i}\tilde{T}_{ij}$, is greater than $\SI{0.01}{\percent}$. The orientation of the states mirrors their position in the TICA plane. Representative structures are shown for $h_{-1}, h_{2}, h_{3}, h_{4}, h_{13}, h_{15}$. The most important TICA dihedrals are shown in blue. The yellow bonds are the C---OD1/OD2 on the Asp 128 residue (D128) and the CI---HI2/3 bonds on TTW 109 (X109). Rates of interconversion are shown for those states connected to $h_{3}$. }
     \includegraphics[width=0.9\textwidth]{chapters/aadh/figures/base_case_network_plot.png}
+    \caption[Base case HMM as a network]{\textsc{Base case HMM as a network}. Each orange circle is a hidden state with area proportional to its stationary distribution. Arrows connect states $i$ and $i$ where the flux, $\tilde{\pi}_{i}\tilde{T}_{ij}$, is greater than $\SI{0.01}{\percent}$. The orientation of the states mirrors their position in the TICA plane. Representative structures are shown for $h_{-1}, h_{2}, h_{3}, h_{4}, h_{13}, h_{15}$. The most important TICA dihedrals are shown in blue. The yellow bonds are the C---OD1/OD2 on the Asp 128 residue (D128) and the CI---HI2/3 bonds on TTW 109 (X109). Rates of interconversion are shown for those states connected to $h_{3}$. }
     \label{fig:aadh_base_case_network}
 \end{figure}
 
@@ -609,9 +611,9 @@ As already established in section \ref{sec:active_site_comparison} the sampled c
  
 \begin{figure}
     \centering
+    \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/base_case_important_dihedrals.pdf}
     \caption[Distribution of important dihedral angles in the base case HMM]{\textsc{Distribution of important dihedral angles in the base case HMM}. The $\chi_{1}$ dihedral angle of TTW 109 for hidden state 2, 3, 13, and 15 are shown in panels (a) - (d); the $\psi$ backbone dihedral of Val83 in panels (e)-(h); and the $\phi$ backbone dihedral of Gly85 in panels (i) - (l). Angles are shown in degrees and have been shifted so that they lie in the range \SIrange{0}{360}{\degree}.}
     \label{fig:aadh_base_case_dihedrals}
-    \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/base_case_important_dihedrals.pdf}
 \end{figure}
 
  In order to understand the slowest  relaxation process in the base case HMM, consider the pathway $h_{2}\rightarrow h_{3} \rightarrow h_{13} \rightarrow h_{15}$. This is the highest flux pathway i.e. the pathway which at each point selects the highest flux connection. The change in the dihedral angles can be seen in the accompanying structures in figure \ref{fig:aadh_base_case_network} and in the distributions plotted in figure \ref{fig:aadh_base_case_dihedrals}.
