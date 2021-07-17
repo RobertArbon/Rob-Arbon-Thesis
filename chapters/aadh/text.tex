@@ -13,25 +13,15 @@ All work in this chapter was performed by the author of this thesis with the fol
 \section{Introduction}
 \begin{figure}
     \centering
-    \caption[Crystal structure of AADH]{\textsc{Crystal structure of AADH}. PDB accession code: 2AGY \cite{masgrauAtomicDescriptionEnzyme2006}. The $\alpha$ chains, A and B, are shown in blue, the $\beta$ chains, D and H, are in green. The tryptophan tryptophyl quinone (TTQ) prosthetic groups after reaction with the substrate tryptamine are shown in orange.}
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/aadh_full_structure.png}
+    \caption[Crystal structure of AADH]{\textsc{Crystal structure of AADH}. PDB accession code: 2AGY \cite{masgrauAtomicDescriptionEnzyme2006}. The $\alpha$ chains, A and B, are shown in blue, the $\beta$ chains, D and H, are in green. The tryptophan tryptophyl quinone (TTQ) prosthetic groups after reaction with the substrate tryptamine are shown in orange.}
     \label{fig:aadh_full_structure}
 \end{figure}
 
 Aromatic amine dehydrogenase (AADH) catalyses the oxidation of primary aromatic amines, such as tryptamine, to the corresponding aldehyde and ammonia \cite{masgrauAtomicDescriptionEnzyme2006}. Amines are natural by-products of human activity and and their degradation is an is an important part of the natural cycle which maintains their balance within organisms and the environment \cite{chistoserdovCloningSequencingMutagenesis2001}. AADH containing soil bacteria utilise aromatic amines as a source of energy and carbon \cite{govindarajAromaticAmineDehydrogenase1994a} and thus play an important part in maintaining this balance. The importance of AADH as an enzyme from a chemists' point of view derives in large part from its large kinetic isotope effect and its purported link to controversy surrounding the role of protein dynamics in enzyme catalysis. This link and the role that conformational dynamics can play to resolving this controversy will be explored in the this chapter. 
 
-% \begin{equation}
-% \setchemfig{arrow coeff=1}
-% \schemestart
-%     \chemfig{(-N*4(-=--)=-=-=)} + \chemfig{H2O}
-%     \arrow{->[$k_{\mathrm{H}}$]}
-%     \chemfig{C} + \chemfig{A-[,0.75]H}
-% \schemestop
-% \end{equation}
 
 \subsection{Structure, reaction mechanism and kinetics} 
-
-% Various groups investigated its physical and chemical properties and specificity towards a range of substrates \cite{nozakiAromaticAmineDehydrogenase1987,shinagawaCrystallizationPropertiesAmine1988}.
 
 AADH was first isolated from a soil bacterium of the genus \emph{pseudomonous}  where its molecular weight and amino acid composition determined and a catalytic chromophore identified \cite{iwakiCrystallizationPropertiesAromatic1983} (in the references cited below however, AADH from the soil bacterium alcaligenses faecalis is used).  The chromophore was later identified as a tryptophan tryptophylquinone (TTQ) group using resonance Raman spectroscopy and comparison with methylamine dehydrogenase (MADH) which also contains a TTQ group \cite{govindarajAromaticAmineDehydrogenase1994a}.  The reaction proceeds in two stages: the first step is the reductive half-reaction where the substrate is oxidized by the TTQ group; the second stage is the oxidative half-reaction whereby two electrons are transferred to the copper containing protein Azurin. A a c-type cytochrome then transfers the electrons into the respiratory chain \cite{masgrauAtomicDescriptionEnzyme2006}. 
 
@@ -41,8 +31,8 @@ AADH has an $\alpha_{2}\beta_{2}$ structure and is shown in figure \ref{fig:aadh
 
 \begin{figure}[p]
     \centering
-    \caption[Proposed reaction mechanism of AADH]{\textsc{Proposed reaction mechanism of AADH}. This figure is adapted from figure 2 in reference \cite{masgrauAtomicDescriptionEnzyme2006}. The TTQ prosthetic group is shown in purple, the Asp128$\beta$ group in red and the tryptamine substrate in blue. The boxed step $4$ is the rate limiting tunnelling step and step $7$ is the oxidation step. }
     \includegraphics[ width=0.8\textwidth]{chapters/aadh/figures/aadh_mechanism.png}
+    \caption[Proposed reaction mechanism of AADH]{\textsc{Proposed reaction mechanism of AADH}. This figure is adapted from figure 2 in reference \cite{masgrauAtomicDescriptionEnzyme2006}. The TTQ prosthetic group is shown in purple, the Asp128$\beta$ group in red and the tryptamine substrate in blue. The boxed step $4$ is the rate limiting tunnelling step and step $7$ is the oxidation step.}
     \label{fig:aadh_mechanism}
 \end{figure}
 
@@ -115,7 +105,6 @@ In contrast to the full tunneling model, the authors of references \cite{glowack
 
 \begin{figure}
 \centering
-\caption[Two conformer transition state theory model]{\textsc{Two conformer transition state theory model} \cite{glowackiTakingOckhamRazor2012b}. Two enzyme substrate conformers, ES and ES$^{\prime}$, rapidly inter-convert with rates $k_{f}$ and $k_{r}$. Each conformer  can react via distinct chemical pathways with rates given by $k_{1}$ and $k_{2}$.}\label{fig:tst_two_state}
 \schemestart
 \chemfig{E + S}\arrow(EnS.north east--ES.south west){<=>}[30] \chemfig{ES}
 \arrow(@ES--ESp){<=>[*{0}$k_{f}$][*{0}$k_{r}$]}[-90]\chemfig{ES^{\prime}}
@@ -123,6 +112,7 @@ In contrast to the full tunneling model, the authors of references \cite{glowack
 \arrow(@ESp--EP2){->[$k_{2}$]} \chemfig{E + P}
 \arrow(@EnS.south east--@ESp.north west){<=>}[-30]
 \schemestop
+\caption[Two conformer transition state theory model]{\textsc{Two conformer transition state theory model} \cite{glowackiTakingOckhamRazor2012b}. Two enzyme substrate conformers, ES and ES$^{\prime}$, rapidly inter-convert with rates $k_{f}$ and $k_{r}$. Each conformer  can react via distinct chemical pathways with rates given by $k_{1}$ and $k_{2}$.}\label{fig:tst_two_state}
 \end{figure}
 The two conformers ES and ES$^{\prime}$ inter-convert rapidly compared to $k_{1}$ and $k_{2}$ which are modelled using equation \ref{eqn:tst}. They were able to show that after fitting the resultant expression for the KIE to experimental data, the estimated parameters were consistent with reasonable values for the parameters in $k_{1}$ and $k_{2}$. The kinetic scheme in figure \ref{fig:tst_two_state} has some similarity with the mechanism of AADH. As already mentioned, the rate limiting proton transfer can occur to either one of the aspartate oxyanions (OD1 or OD2) which provides a rational for identifying conformations which promote transfer to either one.  However, it should be noted that in the most recent modelling \cite{ranaghanInitioQMMM2017} the reaction pathways to OD1 and OD2 both start with very similar conformations.  In addition, previous simulations of AADH \cite{masgrauAtomicDescriptionEnzyme2006, masgrauTunnelingClassicalPaths2007} have not found any evidence for conformations favouring one pathway or the other. 
 
@@ -163,17 +153,14 @@ The coordinates and velocities at every \SIlist[list-final-separator = { ... }]{
 
 \subsection{Modelling disulphide bridges}
 A missing disulphide bridge was found in the preparation of the initial structure \emph{after} completion of the simulations. The disulphide bridge between Cys81 and Cys113 on the H chain (but not on the D chain) had not been created, instead the two thiol groups were left unoxidized. This introduced differences in the structures of the active sites which are described in full in section \ref{sec:active_site_comparison}. The conclusions of this analysis are given in section \ref{sec:md_summary}.     
-
-
 \subsection{Correlation between seeding conformations}
 
 \begin{figure}
     \centering
-    \caption[Structural similarity of seed trajectory]{\textsc{Structural similarity of seed trajectory}. A \SI{100}{\nano\second} trajectory, with coordinates saved every \SI{1}{\nano\second} was used to seed \num{100} production trajectories.  Panel (a) shows the $\alpha$-carbon RMSD of the seed trajectory relative to the crystal structure, (b) shows the distribution of all pairwise $\alpha$-Carbon RMSD within the seed trajectory. }
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/rmsd_seed_trajectory.png}
+    \caption[Structural similarity of seed trajectory]{\textsc{Structural similarity of seed trajectory}. A \SI{100}{\nano\second} trajectory, with coordinates saved every \SI{1}{\nano\second} was used to seed \num{100} production trajectories.  Panel (a) shows the $\alpha$-carbon RMSD of the seed trajectory relative to the crystal structure, (b) shows the distribution of all pairwise $\alpha$-Carbon RMSD within the seed trajectory. }
     \label{fig:rmsd_seed_traj}
 \end{figure}
-
 
 
 In order to check the degree of correlation between the structures used to seed the simulations, the structural similarity between the initial frame of the each of the 100 production trajectories was calculated and is shown in figure \ref{fig:rmsd_seed_traj}. Panel (a) shows the $\alpha$-carbon RMSD, relative to the crystal structure which shows a persistent, large deviation from the crystal structure and serial correlation between initial frames for $t>\SI{60}{\nano\second}$.  Panel (b) shows the distribution of $\alpha$-Carbon RMSD values between each pair of initial frames (i.e., there are $\sfrac{1}{2}\cdot 100\cdot 99 = 4950$ values in the histogram). This demonstrates a range of differences between the initial conformations: \SI{50}{\percent} of the initial structures have an RMSD of \SI{3.0}{\angstrom} or larger.  
@@ -186,16 +173,16 @@ Each trajectory was checked for structural stability over the course of the simu
 
 \begin{figure}
  \centering
+ \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
  \caption[Conformational change in loop residues 92-108 of chain D]{\textsc{Conformational change in loop residues \numrange[range-phrase=\text{--}]{92}{108} of chain D}. The crystal structure (left) and the seed trajectory at \SI{95}{\nano\second} (right) are shown from two different camera orientations (view 1 and view 2). The diameter of the backbone is proportional to the deviation of the $\alpha$-carbon from the crystal structure. The chart inset shows the deviation by residue of chain D, taken from figure \ref{fig:aadh_rmsd_byres}. The loop residues \numrange{92}{108} are highlighted in green, two active site residues TTW109 and Asp128 are shown in orange (the colour coding is consistent between the inset and the depicted conformations, except that four of the active site residues are not shown). The N-terminus (Glu71) and C-terminus (Lys181) are labelled. The \num{22} tail residues, unresolved by the crystal structure, are missing from the N-terminus.}
  \label{fig:chain_d_loop}
- \includegraphics[height=0.75\textheight]{chapters/aadh/figures/rmsd_seg_d.png}
 \end{figure}
 
 \begin{figure}
  \centering
+ \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/RMSF_by_residue.pdf}
  \caption[Root mean square fluctuation per residue of AADH]{\textsc{Root mean square fluctuation per residue of AADH}. Each panel shows the root mean square fluctuation of (clockwise from top left) chains D, H, B and A. Residues in loop \numrange[range-phrase=\text{--}]{92}{108} are shown in green, residues in the $\beta$-hairpin \numrange[range-phrase=\text{--}]{110}{126} are shown pink, the active site residues are in orange.}
  \label{fig:rmsf_per_residue}
- \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/RMSF_by_residue.pdf}
 \end{figure}
 
 
@@ -204,20 +191,19 @@ In order to understand the origin of the large values of RMSD seen in figure \re
 To understand the flexibility of the enzyme over the whole of the simulation data set (rather than the snapshot presented in figure \ref{fig:chain_d_loop}), the root mean square fluctuation per residue was calculated and shown in figure \ref{fig:rmsf_per_residue}. The picture presented here does not differ significantly from the that implied in the preceding analysis. There residues at the tails of each chain, particularly in chain A, exhibit extreme flexibility. The loop \numrange[range-phrase=\text{--}]{92}{108}, in both chain H and chain D shows the next highest degree of conformational flexibility. Residues \text{--}]{110}{126} correspond to a $\beta$-hairpin structure which also shows a higher than average degree of flexibility, especially in chain D.  However, the tip of this hairpin, which is the most flexible, is greater than \SI{12}{\angstrom} from the active site in the crystal structure.  
 
 
-
 \subsection{Definition and comparison of active sites}\label{sec:active_site_comparison}
 
 \begin{figure}
     \centering
-    \caption[Crystal structure of the active site of AADH]{\textsc{Crystal structure of the active site of AADH}. This definition is taken from reference \cite{ranaghanInitioQMMM2017} and consists of the following residues: Ala82, Asp84, TTW109, Asp128, Trp160 and Thr172. The yellow dashed lines show the important stabilizing hydrogen bonds as well as the H---O distances involved in the rate limiting step.  The reactive hydrogen atoms are labelled HI-2 and HI-3. The acceptor oxygen atoms are labelled OD2 and OD1 which correspond to O1 and O2 in reference \cite{masgrauAtomicDescriptionEnzyme2006} respectively. All other hydrogen atoms are hidden. Backbone carbonyl bonds may appear as single bonds due to the camera angle.}
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/aadh_active_site.png}
+    \caption[Crystal structure of the active site of AADH]{\textsc{Crystal structure of the active site of AADH}. This definition is taken from reference \cite{ranaghanInitioQMMM2017} and consists of the following residues: Ala82, Asp84, TTW109, Asp128, Trp160 and Thr172. The yellow dashed lines show the important stabilizing hydrogen bonds as well as the H---O distances involved in the rate limiting step.  The reactive hydrogen atoms are labelled HI-2 and HI-3. The acceptor oxygen atoms are labelled OD2 and OD1 which correspond to O1 and O2 in reference \cite{masgrauAtomicDescriptionEnzyme2006} respectively. All other hydrogen atoms are hidden. Backbone carbonyl bonds may appear as single bonds due to the camera angle.}
     \label{fig:aadh_active_site}
 \end{figure}
 
 \begin{figure}
     \centering
-    \caption[Comparison of the active site in chains D and H]{\textsc{Comparison of the active site in chains D and H}. The distribution of heavy atom RMSD, relative to the crystal structure of the active sites in chain D (blue) and H (orange). }
     \includegraphics[width=0.6\textwidth]{chapters/aadh/figures/rmsd_dististribution.png}
+    \caption[Comparison of the active site in chains D and H]{\textsc{Comparison of the active site in chains D and H}. The distribution of heavy atom RMSD, relative to the crystal structure of the active sites in chain D (blue) and H (orange).}
     \label{fig:as_rmsd_dist}
 \end{figure}
 
@@ -227,8 +213,8 @@ The structures of the two active sites were also compared to the crystal structu
 
 \begin{figure}
     \centering
-    \caption[Distribution of important bond distances in the active site]{\textsc{Distribution of important bond distances in the active site}. Panels (a) - (d) show the four combinations of acceptor ion (O1, O2) - proton (H1-2, H1-3) distances; panels (e) and (f) are the two donor (C1) acceptor (O1, O2) distances; the remaining panels are the hydrogen bonds in the active site.}
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/bond_distances_dist.pdf}
+    \caption[Distribution of important bond distances in the active site]{\textsc{Distribution of important bond distances in the active site}. Panels (a) - (d) show the four combinations of acceptor ion (O1, O2) - proton (H1-2, H1-3) distances; panels (e) and (f) are the two donor (C1) acceptor (O1, O2) distances; the remaining panels are the hydrogen bonds in the active site.}
     \label{fig:bond_dist}
 \end{figure}
 
@@ -258,12 +244,12 @@ The syn and anti conformations allow radically different conformational states t
 
 \begin{figure}
     \centering
-    \caption[Conformations of the TTW residue in the D and H active sites]{\textsc{Conformations of the TTW residue in the D and H active sites}. Five conformations were taken from each trajectory at intervals of \SI{20}{\nano\second} and aligned along the heavy atoms of the trypotophan part of the TTW residue.  The hydrogen atom shown is the donor atom, all other hydrogen atoms are hidden.}
     \subbottom[Active site D]{
     \includegraphics[trim={1cm, 0, 1cm, 0}, clip=True]{chapters/aadh/figures/as_d_wiggle.png}}
     \subbottom[Active site H]{
     \includegraphics[trim={1cm, 0, 1cm, 0}, clip=True]{chapters/aadh/figures/as_h_wiggle.png}
     }
+    \caption[Conformations of the TTW residue in the D and H active sites]{\textsc{Conformations of the TTW residue in the D and H active sites}. Five conformations were taken from each trajectory at intervals of \SI{20}{\nano\second} and aligned along the heavy atoms of the trypotophan part of the TTW residue.  The hydrogen atom shown is the donor atom, all other hydrogen atoms are hidden.}
     \label{fig:ttw_wiggle}
 \end{figure}
 
@@ -271,14 +257,12 @@ In summary, the two active sites show distinct differences in their accessible c
 
 \subsection{Donor-acceptor distance}
 
-
 \begin{figure}
     \centering
-    \caption[Approximate free energy over the donor-carbon--acceptor-oxygen distance]{\textsc{Approximate free energy over the donor-carbon--acceptor-oxygen distance}. The free energy was estimated by from a histogram ($h_{i}$) of bond distances with $i = 1, \ldots, 50$ equally spaced bins over the range \SIrange{2}{16}{\angstrom} with the formula $\Delta F_{i} = -\log{(h_{i})}$. \SI{95}{\percent} confidence intervals were estimated from \num{1000} bootstrap samples. Panel (a) shows the distance to acceptor OD1 and panel (b) shows the distance to OD2. Blue and green lines show the distances in chain D and chain H respectively. The grey shaded area shows the range of these distances as simulated in reference \cite{ranaghanInitioQMMM2017}. Black crosses and labels mark the distance corresponding to the free energy minima.}
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/dad_free_energy.pdf}
+    \caption[Approximate free energy over the donor-carbon--acceptor-oxygen distance]{\textsc{Approximate free energy over the donor-carbon--acceptor-oxygen distance}. The free energy was estimated by from a histogram ($h_{i}$) of bond distances with $i = 1, \ldots, 50$ equally spaced bins over the range \SIrange{2}{16}{\angstrom} with the formula $\Delta F_{i} = -\log{(h_{i})}$. \SI{95}{\percent} confidence intervals were estimated from \num{1000} bootstrap samples. Panel (a) shows the distance to acceptor OD1 and panel (b) shows the distance to OD2. Blue and green lines show the distances in chain D and chain H respectively. The grey shaded area shows the range of these distances as simulated in reference \cite{ranaghanInitioQMMM2017}. Black crosses and labels mark the distance corresponding to the free energy minima.}
     \label{fig:dad_free_energy}
 \end{figure}
-
 
 A modified definition of the donor-acceptor distance (DAD) will be utilised throughout this chapter to discuss the degree of `reactivity' of different conformations. The modified DAD is defined as the distance between C1 of the tryptamine in TTW109, which  donates the proton,  and either OD1 or OD2 of Asp128 which accept the proton during the course of reaction (i.e., the distances in panels (e) and (f) of figure \ref{fig:bond_dist}). This is related but different to the definition in previous work \cite{johannissenProtonTunnelingAromatic2007} which is the distance travelled by the proton over the course of the reaction.  In the QM/MM modelling of reference \cite{ranaghanInitioQMMM2017} the value of these distances in the reactant state are \SI{2.96}{\angstrom} and \SI{2.88}{\angstrom}; in the transition state are \SI{2.64}{\angstrom} and \SI{2.59}{\angstrom}; and in the product state are \SI{3.04}{\angstrom} and \SI{2.94}{\angstrom}. Over the course of the reaction pathway estimated in reference \cite{ranaghanInitioQMMM2017} these distances remain approximately constant. 
 
@@ -300,7 +284,6 @@ The aim of this section is to create an optimised Markov state model of the acti
 
 \subsection{Estimating the Markov lag-time and number of metastable states}\label{sec:aadh_est_tau_k}
 
-% The conformational dynamics and metastable states of the active site of AADH will be explored later chapters. In particular, chapter \ref{chap:msm} will detail the how to choose the trajectory pre-processing choices (hyperparameters) to estimate an optimal MSM. This requires fitting and evaluating a number of MSMs which in turn requires the specification of a Markov lag time ($\tau_{\mathrm{M}}$) and the number, $k$, of dominant eigenvalues. 
 Suitable values of the Markov lag-time, $\tau_{\mathrm{M}}$, and  the number of dominant relaxation processes, $r$, were estimated by inspection of the eigenvalue spectrum of a reference MSM. The following results are for the D active site only as the missing disulphide bond in the H active site rendered these trajectories invalid.
 
 The trajectories were discretized by first projecting the cartesian coordinates onto a set of features, applying TICA to reduce the dimension of the feature space and then clustering the frames into a small set of discrete states.  The features used were the bond lengths identified in reference \cite{ranaghanInitioQMMM2017} i.e., those whose histograms are depicted in panels (a) - (g), (i), (k), (l), (o) of figure \ref{fig:bond_dist}. The intramolecular hydrogen bond in panel (h), originally included in reference \cite{ranaghanInitioQMMM2017}, was excluded due to its small variance. The trajectories were strided to give a trajectory time-step \SI{0.1}{\nano\second}. TICA was applied with a lag time of $\tau=\SI{1}{\nano\second}$ and the number of components set so as to retain \SI{95}{\percent} of the kinetic variance. This equated to retaining $m=10$ components. k-means clustering was used to cluster the trajectories into $n = 316$ microstates states. The number of microstates was chosen as the square root of the number of observations, inline with the heuristic in reference  \cite{husicWardClusteringImproves2017a}. 
@@ -313,8 +296,9 @@ being independent of $\tau_{\mathrm{M}}$. However, the eigenvalue spectrum will 
 
 \begin{figure}
     \centering
-    \caption[Implied timescales and VAMP-2 scores of the reference MSM]{\textsc{Implied timescales and VAMP-2 scores of the reference MSM}. Panels (a) and (b) show the implied timescales, and panels (c) and (d) shows the relative VAMP-2 scores for the reference MSM with: $\tau_{\textrm{M}}=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{1}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=10$ TICA components retained, and $n=316$ microstates. Panel (a) shows the first five implied timescales for $\tau_{\mathrm{M}}=$\SIrange[range-phrase=\text{--}]{0.1}{5}{\nano\second}, panel (b) shows the first five implied timescales for $\tau_{\mathrm{M}} = $\SIrange[range-phrase=\text{--}]{0.1}{50}{\nano\second}. The solid lines and coloured shaded areas are the mean and \SI{95}{\percent} credible intervals respectively, estimated using MCMC with \num{500} posterior samples. The grey shaded area is the region for which the implied timescales are smaller than the lag time. Panel (c) and (d) show the VAMP-2 scores, scored on the first \numrange{2}{5} eigenvalues for the same ranges. The VAMP-2 scores are indexed to their value at $\tau_{\mathrm{M}}=\SI{0.1}{\nano\second}$. The colour coding is consistent between the implied timescale plots ((a) and (b)) and VAMP-2 plots ((c) and (d)). e.g. the blue line in (c) and (d) is the VAMP-2 score with two eigenvalues ($r=2$) while in (a) and (b) blue is the second implied timescale, $t_{2}$. }
+
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/implied_timescales_D.pdf}
+    \caption[Implied timescales and VAMP-2 scores of the reference MSM]{\textsc{Implied timescales and VAMP-2 scores of the reference MSM}. Panels (a) and (b) show the implied timescales, and panels (c) and (d) shows the relative VAMP-2 scores for the reference MSM with: $\tau_{\textrm{M}}=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{1}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=10$ TICA components retained, and $n=316$ microstates. Panel (a) shows the first five implied timescales for $\tau_{\mathrm{M}}=$\SIrange[range-phrase=\text{--}]{0.1}{5}{\nano\second}, panel (b) shows the first five implied timescales for $\tau_{\mathrm{M}} = $\SIrange[range-phrase=\text{--}]{0.1}{50}{\nano\second}. The solid lines and coloured shaded areas are the mean and \SI{95}{\percent} credible intervals respectively, estimated using MCMC with \num{500} posterior samples. The grey shaded area is the region for which the implied timescales are smaller than the lag time. Panel (c) and (d) show the VAMP-2 scores, scored on the first \numrange{2}{5} eigenvalues for the same ranges. The VAMP-2 scores are indexed to their value at $\tau_{\mathrm{M}}=\SI{0.1}{\nano\second}$. The colour coding is consistent between the implied timescale plots ((a) and (b)) and VAMP-2 plots ((c) and (d)). e.g. the blue line in (c) and (d) is the VAMP-2 score with two eigenvalues ($r=2$) while in (a) and (b) blue is the second implied timescale, $t_{2}$. }
     \label{fig:its_d}
 \end{figure}
 
@@ -322,8 +306,8 @@ A way out of this circular reasoning problem can be found by noting the followin
 
 \begin{figure}
     \centering
-    \caption[Ratio of successive eigenvalues and implied timescales of the reference MSM]{\textsc{Ratio of successive eigenvalues and implied timescales of the reference MSM}. Panel (a) shows the ratio of eigenvalues and panel (b) the implied timescales for the reference MSM with: $\tau_{\textrm{M}}=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{1}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=10$ TICA components retained, and $n=316$ microstates. Parameters were estimated using MCMC with \num{1000} posterior samples. The blue dots and error bars are the mean and \SI{95}{\percent} credible intervals respectively.}
     \includegraphics[width=0.8\textwidth]{chapters/aadh/figures/timescale_ratios_D.png}
+    \caption[Ratio of successive eigenvalues and implied timescales of the reference MSM]{\textsc{Ratio of successive eigenvalues and implied timescales of the reference MSM}. Panel (a) shows the ratio of eigenvalues and panel (b) the implied timescales for the reference MSM with: $\tau_{\textrm{M}}=\SI{2}{\nano\second}$, TICA lag time of $\tau=\SI{1}{\nano\second}$, \SI{95}{\percent} of the kinetic variance/$m=10$ TICA components retained, and $n=316$ microstates. Parameters were estimated using MCMC with \num{1000} posterior samples. The blue dots and error bars are the mean and \SI{95}{\percent} credible intervals respectively.}
     \label{fig:ts_ratios_d}
 \end{figure}
 
@@ -334,7 +318,6 @@ An alternative analysis was performed using a TICA lag time of $\tau=\SI{10}{\na
 \subsection{Response surface}\label{sec:aadh_rsm}
 
 \begin{table}[ht]
-    \caption[Hyperparameter search space for AADH]{\textsc{Hyperparameter search space for AADH}. TICA was applied to every feature except RMSD. Dihedral angles, $\theta$, were given $\left(\sin(\theta),\cos(\theta)\right)$ representations to account for their periodicity.  The Cartesian coordinates were first aligned to a single, randomly chosen, trajectory frame so that feature (5) did not include spurious rotational or translational motion. The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
     \centering
     \begin{tabularx}{0.9\textwidth}{ >{\raggedright\arraybackslash}ll>{\raggedright\arraybackslash}Xl >{\raggedright\arraybackslash}X } 
     \toprule
@@ -351,9 +334,9 @@ An alternative analysis was performed using a TICA lag time of $\tau=\SI{10}{\na
     TICA components, $m$& Integer &\numlist[list-final-separator = { ... }]{1;2;20} & & \\
     \midrule
     Cluster centres, $n$ & Integer & \numlist[list-final-separator = { ... }]{10;11;1000}& &  Clustered using k-means clustering  \\
-    
-     \bottomrule
+    \bottomrule
     \end{tabularx}
+    \caption[Hyperparameter search space for AADH]{\textsc{Hyperparameter search space for AADH}. TICA was applied to every feature except RMSD. Dihedral angles, $\theta$, were given $\left(\sin(\theta),\cos(\theta)\right)$ representations to account for their periodicity.  The Cartesian coordinates were first aligned to a single, randomly chosen, trajectory frame so that feature (5) did not include spurious rotational or translational motion. The number of dimensions, `Dim.', refers to the number of individual feature variables created by $\chi$.}
     \label{tab:aadh_searchspace}
 \end{table}
 
@@ -377,13 +360,13 @@ In contrast to the case of alanine dipeptide, all features show a marked degree 
     \label{fig:aadh_rsm_fit}
 \end{figure}
 
-The response surface as a function of the feature, $\chi$, TICA lag time, $\tau$, number of TICA components retains $m$, and the number of cluster centres, $n$ was estimated with a GP. The RMSD feature trials were removed from data set because the $\tau$ and $m$ hyperparameters do not apply, which would have created a \emph{conditional} search space \cite{bergstraAlgorithmsHyperParameterOptimizationa} which  can't easily be modelled by GPs (however, there are attempts to mitigate this \cite{swerskyRaidersLostArchitecture2014}). While this is a problem in general for this method, the poor performance of RMSD as a feature both here and with alanine dipeptide means that this will not affect finding the optimum hyperparameters. There were also a number of trials which failed to converge an MSM, these were also removed. The final hyperparameter trial data set had $N=361$ observations, $\mathcal{D}_{361}$. 
+The response surface as a function of the feature, $\chi$, TICA lag time, $\tau$, number of TICA components retains $m$, and the number of cluster centres, $n$ was estimated with a GP. The RMSD feature trials were removed from data set because the $\tau$ and $m$ hyperparameters do not apply, which would have created a \emph{conditional} search space \cite{bergstraAlgorithmsHyperParameterOptimizationa} which  ca not easily be modelled by GPs (however, there are attempts to mitigate this \cite{swerskyRaidersLostArchitecture2014}). While this is a problem in general for this method, the poor performance of RMSD as a feature both here and with alanine dipeptide means that this will not affect finding the optimum hyperparameters. There were also a number of trials which failed to converge an MSM, these were also removed. The final hyperparameter trial data set had $N=361$ observations, $\mathcal{D}_{361}$. 
 The covariance kernel was chosen from amongst the same set as for alanine dipeptide: exponential, Mat\'{e}rn 3-2, Mat\'{e}rn 5-2 and  Gaussian (equations \ref{eqn:kern_exp} - \ref{eqn:kern_gauss}). In addition, the choice of logarithmic  input warping was optionally applied to $\tau$, $m$ and $n$. The best combination, based on their combined rank using the MSLL and SMSE metrics, was an exponential kernel and a linear input transformation for $\tau, m$ and $n$. See table \ref{tab:aadh_rsm_metrics_all_data} for  all the models' selection metrics. A more intuitive assessment of the fit of the can be found in figure  \ref{fig:aadh_rsm_fit} which shows the correlation between observed and predicted values for each feature. There is clearly a good fit for all the features except for $(\phi, \psi, \chi)$ where the predicted values are slightly under and over estimated for the highest and lowest values with this feature respectively. This creates the possibility of a false bimodal response surface which must be checked when determining the optimal hyperparameters.  The relatively poor fit on this feature is likely due to the fully multiplicative nature of the kernel. More flexible kernels (as discussed in e.g., reference \cite{duvenaud2011additive}) which model lower order interactions may be able to overcome this problem in future work. 
 
 \begin{figure}
     \centering
-    \caption[Relevance of the hyperparameters of AADH]{\textsc{Relevance of the hyperparameters of AADH}. The distribution of the parameters of the response surface were estimated using MCMC with \num{1000} posterior samples. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the the other hyperparameters are shown in orange, labelled `Other'.}
     \includegraphics[width=0.8\textwidth]{chapters/msm_optimization/figures/AADH_relevance_d.png}
+    \caption[Relevance of the hyperparameters of AADH]{\textsc{Relevance of the hyperparameters of AADH}. The distribution of the parameters of the response surface were estimated using MCMC with \num{1000} posterior samples. The relevance of the features (levels of $\chi$) are shown in blue, labelled `Feature'. The relevance of the the other hyperparameters are shown in orange, labelled `Other'.}
     \label{fig:aadh_relevance}
 \end{figure}
 
@@ -410,7 +393,7 @@ The covariance kernel was chosen from amongst the same set as for alanine dipept
 
 The multidimensional nature of the response surface poses problems for visualisation and for understanding the interaction between the hyperparameters in determining the response. However, calculating the hyperparameter relevance can help by suggesting the displayed granularity of the inputs. Figure \ref{fig:aadh_relevance} shows the posterior distribution of relevance for the features (blue) and the remaining hyperparameters (orange). The median and $\SI{95}{\percent}$ credible intervals are tabulated in table \ref{tab:aadh_rel}. 
 
-Figure \ref{fig:aadh_rsm} shows a projection of the response surface, $f(\mathbf{x})$, informed by the relevance. $\tau$ and $m$ are the two highest relevance hyperparameters ($R_{\tau} = \num{0.246}\ [\numrange[range-phrase=\text{--}]{0.126}{0.474})]$, $R_{m} = \num{0.044}\ [\numrange[range-phrase=\text{--}]{0.022}{0.095}]$) so the response surface is shown as a 2D heat map with $\tau$ on the vertical and $m$ on the horizontal axis. Only odd values of $m$ are shown given the slightly lower relevance of this feature. The number of cluster features is, like the case of alanine dipeptide, the lowest relevance hyperparameter ($R_{n} = \num{0.009}\ [\numrange[range-phrase=\text{--}]{0.005}{0.018}]$ and so heat maps for only two value of $n$ are shown: the value at the maximum of the response surface ($n=207$ although the value displayed is rounded to $210$) and $n=1000$. With only four features, it is  simple to show the response surface for each of them. With a larger number of features, displaying the high relevance features and \emph{only one} of the low relevance features would be sufficient. This is because low relevance features are similar.  Note, that this doesn't mean they have a low absolute value but rather that their values are highly correlated. This is clearly borne out with this surface - the two lower relevance features, the contact distances, are very similar and including both in the visualisation is redundant. However, as all features have absolutely low relevance ($R<1$) then their response surfaces are expected to be similar. The maximum of the response surface, shown highlighted with a  white star, occurs at $\mathbf{x}=\left(\chi=(\phi, \psi, \chi), \tau = \SI{12.5}{\nano\second}, m=1, n=207\right)$ with a value of $\mu=\num{3.543 \pm 0.396}$. The features of this response surface will be discussed in the context of sensitivity analysis in section \ref{sec:aadh_sens_analysis}. 
+Figure \ref{fig:aadh_rsm} shows a projection of the response surface, $f(\mathbf{x})$, informed by the relevance. $\tau$ and $m$ are the two highest relevance hyperparameters ($R_{\tau} = \num{0.246}\ [\numrange[range-phrase=\text{--}]{0.126}{0.474})]$, $R_{m} = \num{0.044}\ [\numrange[range-phrase=\text{--}]{0.022}{0.095}]$) so the response surface is shown as a 2D heat map with $\tau$ on the vertical and $m$ on the horizontal axis. Only odd values of $m$ are shown given the slightly lower relevance of this feature. The number of cluster features is, like the case of alanine dipeptide, the lowest relevance hyperparameter ($R_{n} = \num{0.009}\ [\numrange[range-phrase=\text{--}]{0.005}{0.018}]$ and so heat maps for only two value of $n$ are shown: the value at the maximum of the response surface ($n=207$ although the value displayed is rounded to $210$) and $n=1000$. With only four features, it is  simple to show the response surface for each of them. With a larger number of features, displaying the high relevance features and \emph{only one} of the low relevance features would be sufficient. This is because low relevance features are similar.  Note, that this does not mean they have a low absolute value but rather that their values are highly correlated. This is clearly borne out with this surface - the two lower relevance features, the contact distances, are very similar and including both in the visualisation is redundant. However, as all features have absolutely low relevance ($R<1$) then their response surfaces are expected to be similar. The maximum of the response surface, shown highlighted with a  white star, occurs at $\mathbf{x}=\left(\chi=(\phi, \psi, \chi), \tau = \SI{12.5}{\nano\second}, m=1, n=207\right)$ with a value of $\mu=\num{3.543 \pm 0.396}$. The features of this response surface will be discussed in the context of sensitivity analysis in section \ref{sec:aadh_sens_analysis}. 
 
 \begin{figure}[p]
     \centering
