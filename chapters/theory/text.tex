@@ -3,12 +3,14 @@
 \chapter{Theory}
 \label{chap:theory}
 
+\section*{Contributions}\label{sec:theory_contributions}
+This chapter represents a summary of existing work and contains no original contributions by the author of this thesis. 
+
 \section{Introduction}
 This chapter sets out the theory of Markov state models (MSMs) and hidden Markov models (HMMs) to describe the dynamics of biomolecular systems. Table \ref{tab:theory_symbols} summarises the  nomenclature used in this chapter. 
 
 \begin{table}
     \centering
-    \caption[Important symbols]{\textsc{Important symbols used throughout this chapter.}}
     \begin{tabularx}{0.9\textwidth}{ |l| >{\raggedright\arraybackslash}X | } 
         \hline
         \textbf{Symbol}  &  \textbf{Definition} \\
@@ -49,6 +51,8 @@ This chapter sets out the theory of Markov state models (MSMs) and hidden Markov
         $\mathbf{E}$ & Emission matrix of HMM. $E_{i, j}= \mathbb{P}(s_t=j|h_t=i)$. \\
      \hline
      \end{tabularx}
+    \caption[Important symbols]{\textsc{Important symbols used throughout this chapter.}}
+
     \label{tab:theory_symbols}
 \end{table}
 
@@ -104,7 +108,7 @@ These $r$ eigenfunctions are known as the \emph{dominant} eigenfunctions and the
 
 \section{Markov state models}\label{sec:theory_msm}
 
-Markov state models (MSMs) are discrete models of Markovian dynamics described in previous seciton \cite{prinzMarkovModelsMolecular2011}. The continuous quantities described above all have discrete analogues which will be described in detail in this section \cite{prinzMarkovModelsMolecular2011}:
+Markov state models (MSMs) are discrete models of Markovian dynamics described in previous section \cite{prinzMarkovModelsMolecular2011}. The continuous quantities described above all have discrete analogues which will be described in detail in this section \cite{prinzMarkovModelsMolecular2011}:
 \begin{itemize}
     \item The system is described by a set of $n$ discrete states denoted, $i=1, \ldots, n$. Instead of the continuous vector $\mathbf{x}(t)$, each trajectory is denoted by a vector of integers $\mathbf{s}$, where each component, $s_t$, is the state at time $t$. $t$ is now a discrete quantity, an integer multiple of the time-step, $\Delta t$, used to record the coordinates in an MD trajectory: $t=k\Delta t,\ k=1, 2, \ldots$. 
     \item The system can be described by a probability mass vector, $\mathbf{p}(t)$,  instead of a probability density function $p(\mathbf{x};t)$. The $i$th component of $\mathbf{p}(t)$ is the probability of the system being in  state $s^{i}$ at time $t$.
@@ -140,7 +144,7 @@ If  each trajectory has $N_{\mathrm{T}}$ frames and $N_{\mathrm{A}}$ atoms then 
         \bm{\chi}^{\prime} \rightarrow \mathbf{s},\quad \mathbf{s} \in \mathbb{Z}^{N_{\mathrm{T}}}
     \end{equation*}\label{step:cluster}
     \item \textbf{MSM estimation}: The transition matrix, $\mathbf{T}$, is estimated by counting transitions between discrete states separated by a time $\tau$. 
-    \item \textbf{Coarse-graining:} The MSM is then coarse-grained by lumping the $n$ microstates into $g$ macrostates states. This thesis will exclusively consider hidden Markov models (HMMs) as a method for doing this. 
+    \item \textbf{Coarse-graining:} The MSM is then coarse-grained by grouping the $n$ microstates into $g$ macrostates states. This thesis will exclusively consider hidden Markov models (HMMs) as a method for doing this. 
 \end{enumerate}
 
 \subsection{Create features}
@@ -148,7 +152,10 @@ The choice of continuous feature $\chi$ may be determined or at least strongly s
 
 \subsection{Dimensionality reduction with TICA}
 
-Dimensionality reduction using TICA was introduced as a preprocessing step for improving MSM construction \cite{perez-hernandezIdentificationSlowMolecular2013a, schwantesImprovementsMarkovState2013}. The TICA operator is a result of variationally optimising a set of continuous basis functions, $\chi_{i}$, to estimate the eigenfunctions, $\psi_{i}$, of the transfer operator. The method can be summarised as follows: a trial function, $f$, is expanded in the basis $\chi_{i}$: 
+Dimensionality reduction using TICA was introduced as a preprocessing step for improving MSM construction \cite{perez-hernandezIdentificationSlowMolecular2013a, schwantesImprovementsMarkovState2013}. The result of a time-lagged independent component analysis is an estimate of the eigenvectors of the transfer operator. So if MD trajectories have been projected onto the contact distances of the protein, then the TICA eigenvectors are linear combinations of these distances such that the first component represents the equilibrium distribution, the second component represents the slowest relaxation process and so on. These are approximations to the true transfer operator eigenvectors because the true eigenvectors, in general, are non-linear in such features.  However, if TICA is performed then the feature trajectories can be projected onto the first $m$ TICA components (where $m$ must be chosen), creating a new, smaller set of features.  There are two advantages to this. First, the fact that the number of features has been reduced to $m$ dimensions, means that clustering will be more efficient \cite{celebiComparativeStudyEfficient2013}.  The second, more important advantage, is that  if the TICA components are scaled by their eigenvalues (a process called kinetic mapping) then distances in the space of these components approximate \emph{kinetic distances} \cite{noeKineticDistanceKinetic2015}. The kinetic distance between two conformations correlates with how slowly they interconvert.  This means that geometric similarity now implies (at least approximately) kinetic similarity. Geometrically discretizing this space means that molecular dynamics frames which are all mapped to the same discrete state, will have similar rates of interconversion to other discrete states. This fulfills the main assumption behind approximating the dynamics of a system with a discrete master equation (see equation \ref{eqn:masterequation} of the introduction) \cite{zwanzigClassicalDynamicsContinuous1983a, noeTransitionNetworksModeling2008}.  
+
+
+The TICA operator is a result of variationally optimising a set of continuous basis functions, $\chi_{i}$, to estimate the eigenfunctions, $\psi_{i}$, of the transfer operator. The method can be summarised as follows: a trial function, $f$, is expanded in the basis $\chi_{i}$: 
 \begin{equation}\label{eqn:trial_func}
     f(\mathbf{x}) = \sum^{N_{\mathrm{C}}}_{i}a_{i}\chi_{i}(\mathbf{x})
 \end{equation}
@@ -206,10 +213,10 @@ The likelihood, $\mathcal{L}(\mathbf{T}|\mathbf{s})$, is equal $\mathbb{P}(\math
     & \propto \prod_{i}\Pi_{j}T_{i, j}^{c_{ij}} \\
     & = \mathbb{P}(\mathbf{c}|\mathbf{T}) \label{eqn:msm_count_like}
 \end{align}
-So to calculate the maximum likelihood estimates (MLE) for $T_{ij}$, the count matrix $\mathbf{c}$ is estimated from the trajectories and then $T_{ij}$ are varied until a maximum $\mathcal{L}$ in $\mathcal{L}$ is found \cite{wasserman2013all}. For reversible MSMs an iterative scheme is used which ensures $\mathbf{T}$ satisfies detailed balance \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
+So to calculate the maximum likelihood estimates (MLE) for $T_{ij}$, the count matrix $\mathbf{c}$ is estimated from the trajectories and then $T_{ij}$ are varied until a maximum value of $\mathcal{L}$ is found \cite{wasserman2013all}. For reversible MSMs an iterative scheme is used which ensures $\mathbf{T}$ satisfies detailed balance \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
 
 
-As discussed in reference \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} the method for calculating the count matrix is important for estimating errors when. In this case, correlation between frames means that pairs of states  This is typically the case in molecular dynamics simulations as molecular motions are correlated at short times and MD frames can be recorded with almost arbitrary temporal resolution .  
+% As discussed in reference \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b} the method for calculating the count matrix is important for estimating errors . In this case, correlation between frames means that pairs of states  This is typically the case in molecular dynamics simulations as molecular motions are correlated at short times and MD frames can be recorded with almost arbitrary temporal resolution .  
 
 
 \subsubsection{Count matrix}\label{sec:theory_count_mat}
@@ -225,9 +232,9 @@ The \emph{sample count} method uses the only the states separated by $\tau$:
 \begin{equation*}
     (s_{0}, s_{\tau}),\ (s_{\tau}, s_{2\tau}),\ (s_{2\tau}, s_{3\tau})
 \end{equation*}
-Continuing the previous example, $\sum_{ij}c_{ij}=49$, a factor of $2$ different to the sliding window method. This leads to the confidence intervals being over-estimated. A third method, \emph{effective counting}, uses the sliding window method but scales count matrix elements by a factor, $I_{ij}$, to account for correlation between the observations \cite{noeStatisticalInefficiencyMarkov,trendelkamp-schroerEstimationUncertaintyReversible2015b}. Continuing the previous example, if the observations separated by $t<\tau$ are weakly correlated then the effective count matrix will be close the sliding window estimate and $I_{ij} \lesssim 1$; if the observations are highly correlated the count matrix will be closer to the sample count method and $I_{ij}<1$. This method has been shown to give more accurate confidence intervals \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
+Continuing the previous example, $\sum_{ij}c_{ij}=49$, a factor of $2$ different to the sliding window method. This leads to the confidence intervals being over-estimated. A third method, \emph{effective counting}, uses the sliding window method but scales count matrix elements by a factor, $I_{ij}$, to account for correlation between the observations \cite{noeStatisticalInefficiencyMarkov,trendelkamp-schroerEstimationUncertaintyReversible2015b}. Continuing the previous example, if the observations separated by $t<\tau$ are weakly correlated then the effective count matrix will be close to the sliding window estimate and $I_{ij} \lesssim 1$; if the observations are highly correlated the count matrix will be closer to the sample count method and $I_{ij}<1$. This method has been shown to give more accurate confidence intervals \cite{trendelkamp-schroerEstimationUncertaintyReversible2015b}. 
 
-The count matrix, and therefore the method for counting,  will determine whether or not the states are ergodic. There is a path between states $a$ and $z$ if there is a set of intermediate states, $b, c, \ldots, y$ such that $c_{a,b}>0,\ c_{b, c}>0,\ \ldots,\ c_{y, z}>0$. Two states are strongly or reversibly connected if there is a path from $a\rightarrow z$ and from $z\rightarrow a$. The full set of states are ergodic if each state pair of states is strongly connected \cite{wilson1996introduction}. In all estimation procedures used in this thesis, if the full set of state are not strongly connected, then a subset of states are used such that all states within the subset are strongly connected.
+The method of counting transitions between states, will determine whether or not those states are ergodic. There is a path between states $a$ and $z$ if there is a set of intermediate states, $b, c, \ldots, y$ such that $c_{a,b}>0,\ c_{b, c}>0,\ \ldots,\ c_{y, z}>0$. Two states are strongly or reversibly connected if there is a path from $a\rightarrow z$ and from $z\rightarrow a$. The full set of states are ergodic if each state pair of states is strongly connected \cite{wilson1996introduction}. In all estimation procedures used in this thesis, if the full set of state are not strongly connected, then a subset of states are used such that all states within the subset are strongly connected.
 
 \subsubsection{Bayesian estimation}\label{sec:theory_bayes}
 Bayesian estimation uses not just the likelihood, $\mathbb{P}(\mathbf{c}|\mathbf{T})$, but the prior probability of the parameters, $\mathbb{P}(\mathbf{T})$, to estimate the posterior probability of the parameters given the data, $\mathbb{P}(\mathbf{T}|\mathbf{c})$, using Bayes' rule \cite{gelmanBayesianDataAnalysis2014}: 
@@ -253,7 +260,7 @@ The lag time, $\tau$, is not a hyperparameter of the model but rather a part of 
 \end{equation}
 However, if $\tau$ is too large then there may be processes of interest with timescales, $t_{i}<\tau$ which will not be captured \cite{prinzMarkovModelsMolecular2011}.
 
-As a compromise $\tau$ is chosen by inspection of the data through an \emph{implied timescale plot} \cite{prinzMarkovModelsMolecular2011,swopeDescribingProteinFolding2004a}. Starting from a given discrete trajectory, $\{s_{t}\}$ the implied timescales, $t_{i}$, are estimated for a range of different values of $\tau$. The lag time is chosen the smallest $\tau$ such that $\frac{d t_{i}}{d \tau} \simeq 0$, where the range of $i$ is determined by the number of number slow relaxation processes. 
+As a compromise, $\tau$ is chosen by inspection of the data through an \emph{implied timescale plot} \cite{prinzMarkovModelsMolecular2011,swopeDescribingProteinFolding2004a}. Starting from a given discrete trajectory, $\{s_{t}\}$ the implied timescales, $t_{i}$, are estimated for a range of different values of $\tau$. The lag time is chosen as the smallest $\tau$ such that $\frac{d t_{i}}{d \tau} \simeq 0$, where the range of $i$ is determined by the number of number slow relaxation processes. 
 
 \subsection{Choice of hyperparameters}\label{sec:theory_choice_hyp}
 The hyperparameters of the MSM are the modelling choices which transform the raw MD data into the $n$ discrete states, $s^{i}$, used in MSM estimation. This work will consider only the following hyperparameters: 
@@ -263,12 +270,17 @@ The hyperparameters of the MSM are the modelling choices which transform the raw
     \item $m$ the number of retained TICA components, 
     \item $n$ the number of cluster centers. 
 \end{enumerate}
-In principle, there are a large number of modelling choices which will have an effect on the final definition the discrete states. These will described in the relevant sections later in this thesis. However, two important choices which will be kept fixed are: 
+In principle, there are a large number of modelling choices which will have an effect on the final definition of the discrete states. These will described in the relevant sections later in this thesis. However, two important choices which will be kept fixed are: 
 \begin{enumerate}
-    \item the scaling of the TICA components. Each component will be scaled by their eigenvalues  so that euclidean distances in the TICA space will correspond to kinetic distances \cite{noeKineticDistanceKinetic2015} (the ``kinetic mapping'' option in PyEMMA \cite{schererPyEMMASoftwarePackage2015a});
+    \item the scaling of the TICA components. Each component will be scaled by their eigenvalues (the ``kinetic mapping'' option in PyEMMA \cite{schererPyEMMASoftwarePackage2015a});
     \item the k-means \cite{lloydLeastSquaresQuantization1982} algorithm will be used to cluster the TICA transformed trajectories into the discrete states. 
 \end{enumerate}
-Kinetic mapping is recommended for TICA dimensionality reduction \cite{noeKineticDistanceKinetic2015}, however, its utility in improving model performance is data set dependent \cite{husicOptimizedParameterSelection2016}. Both k-means and Ward clustering have been shown to give good performance in MSMs \cite{husicWardClusteringImproves2017a}. Fixing both of these hyperparameters reflects an arbitrary decision to keep the number of hyperparameters to a minimum.
+
+
+Kinetic mapping is recommended for TICA dimensionality reduction \cite{noeKineticDistanceKinetic2015}, however a recent study which looked at the quality of MSM models created with and without kinetic mapping  \cite{husicOptimizedParameterSelection2016} for a number of different 
+
+
+however, its utility in improving model performance is data set dependent. Both k-means and Ward clustering have been shown to give good performance in MSMs \cite{husicWardClusteringImproves2017a}. Fixing both of these hyperparameters reflects an arbitrary decision to keep the number of hyperparameters to a minimum.
 
 The variational principle, used previously to optimize the coefficients in the basis function expansion, equation \ref{eqn:trial_func}, can also be used to optimize the basis functions themselves \cite{schererVariationalSelectionFeatures2019,husicOptimizedParameterSelection2016}. In order to do this objective functions known as the VAMP (variational approach to Markov processes) scores \cite{wuVariationalApproachLearning2020c} were derived which reach their upper limit when the resulting eigenfunctions become the exact eigenfunctions of the transfer operator. The VAMP scores generalize previous work on variationally optimising basis functions using the generalized matrix Rayleigh coefficient, GMRQ \cite{mcgibbonVariationalCrossvalidationSlow2015}. The VAMP scores are a family of scores, parameterized by an integer $w$ \cite{wuVariationalApproachLearning2020c}:
 \begin{equation}\label{eqn:def_vampr}
