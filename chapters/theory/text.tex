@@ -328,8 +328,8 @@ where $\left\| \mathbf{A}\right\|_{2}^{2}$ is the square of the Frobenius norm o
 \subsection{HMM definition}
 \begin{figure}
     \centering
-    \caption[Example hidden Markov model]{\textsc{Example hidden Markov model}. A schematic representation of a HMM with $g=2$ hidden states and $n=4$ observed states. The dashed circles represent the hidden states, the solid circles the observed states. Transition probabilities (from $\widetilde{\mathbf{T}}$) between hidden states label the dashed arrows; emission probabilities (from $\mathbf{E}$) label the solid arrows. }
     \includegraphics[width=0.8\textwidth]{chapters/theory/figures/hmm.png}
+    \caption[Example hidden Markov model]{\textsc{Example hidden Markov model}. A schematic representation of a HMM with $g=2$ hidden states and $n=4$ observed states. The dashed circles represent the hidden states, the solid circles the observed states. Transition probabilities (from $\widetilde{\mathbf{T}}$) between hidden states label the dashed arrows; emission probabilities (from $\mathbf{E}$) label the solid arrows. }
     \label{fig:theory_hmm}
 \end{figure}
 Hidden Markov models (HMMs) are models of a dynamic process consisting of the following elements\footnote{This treatment focuses exclusively on discrete hidden Markov processes.} \cite{rabinerTutorialHiddenMarkov1989}:
@@ -419,7 +419,7 @@ $\mathrm{ll_{0}},\ \theta,\ \mathrm{continue}   \longleftarrow 0,\ \theta_{0},\ 
     $\mathrm{ll} \longleftarrow \mathrm{ll}^{\prime}$\;
 }
 }
-\caption{The Baum-Welch algorithm.\label{alg:baum_welch}}
+\caption{The Baum-Welch algorithm.}\label{alg:baum_welch}
 \end{algorithm}
 
 The Baum-Welch algorithm as used for coarse-graining reversible MSMs is given in detail in reference \cite{noeProjectedHiddenMarkov2013a}. The algorithm is sketched in algorithm \ref{alg:baum_welch} to introduce some of the important quantities used later in this thesis. In particular, the `forward' part of the algorithm calculates the $\alpha_{i}(t)$ variable which is the probability of arriving at hidden state $i$ at time $t$ \emph{and} seeing the actual observed trajectory up to that point \cite{rabinerTutorialHiddenMarkov1989}. Summing this value for $t=N_{\mathrm{T}}$ over the hidden states gives the probability of the observed trajectory given the model parameters \cite{rabinerTutorialHiddenMarkov1989}. This is equal to the likelihood of the parameters given the observed trajectory, $\mathbb{P}(\{s_{t}\}|\theta)=\mathcal{L}(\theta|\{s_{t}\})$ \cite{rabinerTutorialHiddenMarkov1989}. 
